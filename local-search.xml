@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Linux 基础操作</title>
+    <link href="/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
+    <url>/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
+    
+    <content type="html"><![CDATA[<h2 id="关机重启"><a href="#关机重启" class="headerlink" title="关机重启"></a>关机重启</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">shutdown -h now <span class="hljs-regexp">//</span>立刻关机<br>shutdown -h <span class="hljs-number">1</span>   <span class="hljs-regexp">//</span><span class="hljs-number">1</span> 分钟后关机<br>shutdown -r now <span class="hljs-regexp">//</span>现在重启<br>halt            <span class="hljs-regexp">//</span>关机，与上面一样<br>reboot          <span class="hljs-regexp">//</span>现在重启，与上面一样<br>sync            <span class="hljs-regexp">//</span>将内存的数据同步到磁盘<br></code></pre></td></tr></table></figure><h2 id="用户登录和注销"><a href="#用户登录和注销" class="headerlink" title="用户登录和注销"></a>用户登录和注销</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>一般最好不要用 root 登录，因为这东西的权限最大。为避免操作失误，尽量少用。</p><p>登录的时候可以用普通用户登录，然后再用</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">su - 用户名<br><span class="hljs-regexp">//</span>例如 su - root<br></code></pre></td></tr></table></figure><p>命令来切换成系统管理员身份。</p><h3 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h3><p>相应地，可以用</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">logout</span><br></code></pre></td></tr></table></figure><p>来注销用户。</p><p>需要说明的是，这个命令不能在图像界面使用。并且在最后一个用户的时候使用的话会直接<strong>退出</strong>系统。</p><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LC 899. 有序队列</title>
     <link href="/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/"/>
     <url>/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/</url>

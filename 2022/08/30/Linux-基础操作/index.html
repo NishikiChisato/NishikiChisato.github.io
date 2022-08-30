@@ -18,26 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+    <meta name="description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 899. 有序队列">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/index.html">
+<meta property="og:title" content="Linux 基础操作">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+<meta property="og:description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-03T13:35:42.691Z">
-<meta property="article:modified_time" content="2022-08-03T13:47:26.317Z">
+<meta property="article:published_time" content="2022-08-30T14:33:26.000Z">
+<meta property="article:modified_time" content="2022-08-30T14:33:26.000Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="字符串">
-<meta property="article:tag" content="残留">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 899. 有序队列 - Chisato 的成长日记</title>
+  <title>Linux 基础操作 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 899. 有序队列"></span>
+            <span id="subtitle" data-typed-text="Linux 基础操作"></span>
           
         </div>
 
@@ -222,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-03 21:35" pubdate>
-          2022年8月3日 晚上
+        <time datetime="2022-08-30 22:33" pubdate>
+          2022年8月30日 晚上
         </time>
       </span>
     
@@ -234,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          859 字
+          286 字
         
       </span>
     
@@ -245,7 +243,7 @@
         
         
         
-          8 分钟
+          3 分钟
         
       </span>
     
@@ -293,29 +291,26 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 899. 有序队列</h1>
+            <h1 style="display: none">Linux 基础操作</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="899-有序队列"><a href="#899-有序队列" class="headerlink" title="899. 有序队列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/orderly-queue/">899. 有序队列</a></h4><p>给定一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以从 <code>s</code> 的前 <code>k</code> 个字母中选择一个，并把它加到字符串的末尾。</p>
-<p>返回 <em>在应用上述步骤的任意数量的移动后，字典上最小的字符串</em> 。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">输入：s = <span class="hljs-string">&quot;cba&quot;</span>, k = <span class="hljs-number">1</span><br>输出：<span class="hljs-string">&quot;acb&quot;</span><br>解释：<br>在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “<span class="hljs-keyword">bac”。</span><br><span class="hljs-keyword"></span>在第二步中，我们将第一个字符（“<span class="hljs-keyword">b”）移动到最后，获得最终结果 </span>“acb”。<br></code></pre></td></tr></table></figure>
+                <h2 id="关机重启"><a href="#关机重启" class="headerlink" title="关机重启"></a>关机重启</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">shutdown -h now <span class="hljs-regexp">//</span>立刻关机<br>shutdown -h <span class="hljs-number">1</span>   <span class="hljs-regexp">//</span><span class="hljs-number">1</span> 分钟后关机<br>shutdown -r now <span class="hljs-regexp">//</span>现在重启<br>halt            <span class="hljs-regexp">//</span>关机，与上面一样<br>reboot          <span class="hljs-regexp">//</span>现在重启，与上面一样<br>sync            <span class="hljs-regexp">//</span>将内存的数据同步到磁盘<br></code></pre></td></tr></table></figure>
 
 
 
-<h4 id="暴力循环"><a href="#暴力循环" class="headerlink" title="暴力循环"></a>暴力循环</h4><p>这个题乍一看觉得无从下手，实际上简单的要死。</p>
-<p>我们分开来看，先看 <code>k = 1</code> 的情况</p>
-<p>这时，我们每次都会把第一个字符放到字符串的最后一位，这会生成 <code>n</code> 个字符串，我们只需要取这 <code>n</code> 个字符串中最小的那个就行。就是最简单的打擂台。这个地方的时间复杂度为 <em>O( $n^2$ )</em> ，因为需要遍历一遍这个字符串的同时，还需要进行插入，因此是 $n^2$ 。</p>
-<p>然后，当 <code>k = 2</code> 时，<strong>我们可以从前面两个中选择一个放到最后一位</strong>，那么只需要我们每次都选择两个中较大的那个，把它放到最后去，是不是相当于把这个字符串整体进行一次排序？</p>
-<p>当然 <code>k &gt; 2</code> 的情况同理，这时的时间复杂度为 <em>O( $nlogn$ )</em> 。</p>
-<p>代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">string <span class="hljs-title">orderlyQueue</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-function">string <span class="hljs-title">ret</span><span class="hljs-params">(s)</span></span>;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				s.<span class="hljs-built_in">insert</span>(s.<span class="hljs-built_in">end</span>(), s[<span class="hljs-number">0</span>]);<br>				s.<span class="hljs-built_in">erase</span>(s.<span class="hljs-built_in">begin</span>());<br>				<span class="hljs-keyword">if</span> (s &lt; ret)<br>					ret = s;<br>			&#125;<br>			<span class="hljs-keyword">return</span> ret;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-built_in">sort</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>());<br>			<span class="hljs-keyword">return</span> s;<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="用户登录和注销"><a href="#用户登录和注销" class="headerlink" title="用户登录和注销"></a>用户登录和注销</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>一般最好不要用 root 登录，因为这东西的权限最大。为避免操作失误，尽量少用。</p>
+<p>登录的时候可以用普通用户登录，然后再用</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">su - 用户名<br><span class="hljs-regexp">//</span>例如 su - root<br></code></pre></td></tr></table></figure>
 
-<p>时间复杂度：<em>O( $n^2$ )</em></p>
-<p>空间复杂度：<em>O( $n$ )</em> </p>
-<p>这个题可以用最小表示法来解，但是那个玩意我看不懂。。。。。过一段时间再来看看把。</p>
+<p>命令来切换成系统管理员身份。</p>
+<h3 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h3><p>相应地，可以用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">logout</span><br></code></pre></td></tr></table></figure>
 
+<p>来注销用户。</p>
+<p>需要说明的是，这个命令不能在图像界面使用。并且在最后一个用户的时候使用的话会直接<strong>退出</strong>系统。</p>
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2>
                 
               </div>
             
@@ -333,7 +328,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
   
   
 
@@ -348,11 +343,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Algorithm/">#Algorithm</a>
-      
-        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
-      
-        <a href="/tags/%E6%AE%8B%E7%95%99/">#残留</a>
+        <a href="/tags/Linux/">#Linux</a>
       
     </div>
   
@@ -364,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 899. 有序队列</div>
-      <div>https://nishikichisato.github.io/2022/08/03/LC-899.-有序队列/</div>
+      <div>Linux 基础操作</div>
+      <div>https://nishikichisato.github.io/2022/08/30/Linux-基础操作/</div>
     </div>
     <div class="license-meta">
       
@@ -377,14 +368,9 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月3日</div>
+          <div>2022年8月30日</div>
         </div>
       
-      
-        <div class="license-meta-item license-meta-date">
-          <div>更新于</div>
-          <div>2022年8月3日</div>
-        </div>
       
       <div class="license-meta-item">
         <div>许可协议</div>
@@ -418,18 +404,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="Linux 基础操作">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux 基础操作</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/02/LC-622.-%E8%AE%BE%E8%AE%A1%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/" title="LC 622. 设计循环队列">
-                        <span class="hidden-mobile">LC 622. 设计循环队列</span>
+                      <a href="/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/" title="LC 899. 有序队列">
+                        <span class="hidden-mobile">LC 899. 有序队列</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
