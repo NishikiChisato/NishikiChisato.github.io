@@ -26,7 +26,7 @@
 <meta property="og:description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-30T14:33:26.000Z">
-<meta property="article:modified_time" content="2022-08-31T02:33:03.000Z">
+<meta property="article:modified_time" content="2022-08-31T07:39:10.030Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -357,7 +357,7 @@
 
 
 
-<h3 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h3><p>在 Linux 中，如果多个用户拥有相同的权限，除了一个一个设置权限外还有一种方法是：<strong>将所以的用户拉到一个组，对这个组赋予权限</strong></p>
+<h2 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h2><p>在 Linux 中，如果多个用户拥有相同的权限，除了一个一个设置权限外还有一种方法是：<strong>将所以的用户拉到一个组，对这个组赋予权限</strong></p>
 <p>因此我们说，用户组的作用是允许<strong>系统对有相同权限的多个用户进行统一管理</strong></p>
 <h4 id="创建组"><a href="#创建组" class="headerlink" title="创建组"></a>创建组</h4><p>一般的命令是这个：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">groupadd</span> 组名<br></code></pre></td></tr></table></figure>
@@ -411,7 +411,7 @@
 <ol>
 <li>那个组内用户列表是看不到的，被隐藏起来了</li>
 </ol>
-<h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>运行级别说明：</p>
+<h2 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h2><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>运行级别说明：</p>
 <p>0 ：关机</p>
 <p>1 ：单用户（可以用于找回丢失的密码）</p>
 <p>2 ：多用户状态但没有网络服务（几乎不用）</p>
@@ -426,7 +426,7 @@
 <p><code>multi-user.target</code> 相当于运行级别 3 ，也就是多用户有网络服务</p>
 <p><code>graphical.target</code> 相当于运行级别 5 ，即图形化界面</p>
 <p>还有就是，后面那个运行级别需要写英文，不能写数字</p>
-<h3 id="帮助指令"><a href="#帮助指令" class="headerlink" title="帮助指令"></a>帮助指令</h3><ul>
+<h2 id="帮助指令"><a href="#帮助指令" class="headerlink" title="帮助指令"></a>帮助指令</h2><ul>
 <li>man 获得帮助信息</li>
 </ul>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-keyword">man</span> 命令或配置文件<br></code></pre></td></tr></table></figure>
