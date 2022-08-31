@@ -18,24 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
+    <meta name="description" content="416. 分割等和子集给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 123输入：nums &#x3D; [1,5,11,5]输出：true解释：数组可以分割成 [1, 5, 5] 和 [11] 。    0-1 背包这道题其实是可以转换成背包问题的 我们需要将这个数组分割成两个元素和相等的子集。也就是说，假如这个数组的所有元素和为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux 基础操作">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:title" content="LC 416.分割等和子集">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/08/31/LC-416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
+<meta property="og:description" content="416. 分割等和子集给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 123输入：nums &#x3D; [1,5,11,5]输出：true解释：数组可以分割成 [1, 5, 5] 和 [11] 。    0-1 背包这道题其实是可以转换成背包问题的 我们需要将这个数组分割成两个元素和相等的子集。也就是说，假如这个数组的所有元素和为">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-30T14:33:26.000Z">
-<meta property="article:modified_time" content="2022-08-31T02:33:03.000Z">
+<meta property="article:published_time" content="2022-08-31T07:24:04.931Z">
+<meta property="article:modified_time" content="2022-08-31T07:24:07.229Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Algorithm Solution">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Linux 基础操作 - Chisato 的成长日记</title>
+  <title>LC 416.分割等和子集 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Linux 基础操作"></span>
+            <span id="subtitle" data-typed-text="LC 416.分割等和子集"></span>
           
         </div>
 
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-30 22:33" pubdate>
-          2022年8月30日 晚上
+        <time datetime="2022-08-31 15:24" pubdate>
+          2022年8月31日 下午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.3k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          16 分钟
+          11 分钟
         
       </span>
     
@@ -291,154 +291,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Linux 基础操作</h1>
+            <h1 style="display: none">LC 416.分割等和子集</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="关机重启"><a href="#关机重启" class="headerlink" title="关机重启"></a>关机重启</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">shutdown -h now <span class="hljs-regexp">//</span>立刻关机<br>shutdown -h <span class="hljs-number">1</span>   <span class="hljs-regexp">//</span><span class="hljs-number">1</span> 分钟后关机<br>shutdown -r now <span class="hljs-regexp">//</span>现在重启<br>halt            <span class="hljs-regexp">//</span>关机，与上面一样<br>reboot          <span class="hljs-regexp">//</span>现在重启，与上面一样<br>sync            <span class="hljs-regexp">//</span>将内存的数据同步到磁盘<br></code></pre></td></tr></table></figure>
+                <h4 id="416-分割等和子集"><a href="#416-分割等和子集" class="headerlink" title="416. 分割等和子集"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-equal-subset-sum/">416. 分割等和子集</a></h4><p>给你一个 <strong>只包含正整数</strong> 的 <strong>非空</strong> 数组 <code>nums</code> 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：nums = <span class="hljs-comment">[1,5,11,5]</span><br>输出：true<br>解释：数组可以分割成 <span class="hljs-comment">[1, 5, 5]</span> 和 <span class="hljs-comment">[11]</span> 。<br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="用户登录和注销"><a href="#用户登录和注销" class="headerlink" title="用户登录和注销"></a>用户登录和注销</h2><h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>一般最好不要用 root 登录，因为这东西的权限最大。为避免操作失误，尽量少用。</p>
-<p>登录的时候可以用普通用户登录，然后再用</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">su - 用户名<br><span class="hljs-regexp">//</span>例如 su - root<br></code></pre></td></tr></table></figure>
-
-<p>命令来切换成系统管理员身份</p>
-<h3 id="注销"><a href="#注销" class="headerlink" title="注销"></a>注销</h3><p>相应地，可以用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">logout</span><br></code></pre></td></tr></table></figure>
-
-<p>来注销用户</p>
-<p>需要说明的是，这个命令不能在图像界面使用。并且在最后一个用户的时候使用的话会直接<strong>退出</strong>系统</p>
-<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">useradd</span> 用户名<br></code></pre></td></tr></table></figure>
-
-<p>这一条指令会自动在 <code>home</code> 目录下面创建默认的家目录</p>
-<p>家目录的文件名默认为用户名称，如果需要进行更改，可以输入：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">useradd</span> -d 文件名 用户名<br></code></pre></td></tr></table></figure>
+<h4 id="0-1-背包"><a href="#0-1-背包" class="headerlink" title="0-1 背包"></a>0-1 背包</h4><p>这道题其实是可以转换成背包问题的</p>
+<p>我们需要将这个数组分割成两个<strong>元素和相等的子集</strong>。也就是说，假如这个数组的所有元素和为 <code>sum</code> ，我现在要做的就是<strong>确定能否用这个数组的元素凑出 <code>sum / 2</code> 。</strong></p>
+<p>也就是说，我从这个集合当中随便选择元素，是否能够满足其元素和为 <code>sum / 2</code> 。</p>
+<p>因此问题转换成了，给一个可以装 <code>n</code> 个物品的背包，每个物品的重量为 <code>nums[i]</code> ，背包最大载重为 <code>sum / 2</code> ，问能否将这个背包恰好装满。</p>
+<p>然后，我们确定 <code>dp</code> 数组的含义：<code>dp[i][j]</code> 表示在前 <code>i</code> 个物品当中任意挑选，能否恰好将重量为 <code>j</code> 的背包装满。</p>
+<p>我们再来看看 base case 。</p>
+<p>显然，对于 <code>dp[i][0]</code> 而言，背包最大载重为 0 ，那么这个背包可以认为一直是满的。</p>
+<p>对于 <code>dp[0][j]</code> 而言，由于可供挑选的物品是 0 ，因此认为不可能将该背包装满。</p>
+<p>最后我们分析一下放与不放这两种情况要如何处理。在 0- 1 背包的模型当中我们是取二者的最大值。这是很显然的，毕竟我是要让背包的价值达到最大。在这里，不管是放还是不放，只要能将背包装满，我们就认为这种情况下是 <code>true</code> 。</p>
+<p>全部代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-comment">//给一个可以装target和n个物品的背包，每个物品重量为nums[i]，是否存在一种装法可以恰好把背包装满</span><br>		<span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(target + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++)<br>			dp[i][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= target; j++)<br>				<span class="hljs-keyword">if</span> (j - nums[i - <span class="hljs-number">1</span>] &gt;= <span class="hljs-number">0</span>)<span class="hljs-comment">//背包容量足够</span><br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] || dp[i - <span class="hljs-number">1</span>][j - nums[i - <span class="hljs-number">1</span>]];<br>				<span class="hljs-keyword">else</span>                     <span class="hljs-comment">//背包容量不够</span><br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];<br>		<span class="hljs-keyword">return</span> dp[n][target];<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n : nums)<br>			sum += n;<br>		<span class="hljs-keyword">if</span> (sum % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">check</span>(sum / <span class="hljs-number">2</span>, nums);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 
 
-<p>在 Ubuntu 下直接用这一个命令<strong>只会创建用户而不会创建家目录</strong>，需要写：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">useradd</span> -m 用户名<br></code></pre></td></tr></table></figure>
-
-<p>相应的，我们可以修改用户密码：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">passwd</span> 用户名<br></code></pre></td></tr></table></figure>
-
-<p>如果不在后面加用户名的话，会默认修改当前用户的密码</p>
-<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">userdel</span> 用户名<br></code></pre></td></tr></table></figure>
-
-<p>上面这个是基本指令，但实际上的删除用户有两种情况：</p>
-<ul>
-<li>保留家目录</li>
-<li>不保留家目录</li>
-</ul>
-<p>对于前者，我们直接输入</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">userdel</span> 用户名<br></code></pre></td></tr></table></figure>
-
-<p>就行，这个是默认保留家目录</p>
-<p>对于后者，我们需要输入</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">userdel</span> -r 用户名<br></code></pre></td></tr></table></figure>
-
-<p>这样就会将家目录一起删除</p>
-<h3 id="查询用户"><a href="#查询用户" class="headerlink" title="查询用户"></a>查询用户</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">id</span> 用户名<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">su</span> - 用户名<br></code></pre></td></tr></table></figure>
-
-<p>从权限高的用户切换到权限低的用户，不需要输入密码，反之需要</p>
-<p>如果需要返回原来的用户，可以输入</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">exit</span><br><span class="hljs-regexp">//</span>或者<br>logout<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="查看当前用户信息"><a href="#查看当前用户信息" class="headerlink" title="查看当前用户信息"></a>查看当前用户信息</h3><p>如果需要查看目前正在登录的用户信息，可以输入</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">whoami<br><span class="hljs-regexp">//</span>或者<br>who am i<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="用户组"><a href="#用户组" class="headerlink" title="用户组"></a>用户组</h3><p>在 Linux 中，如果多个用户拥有相同的权限，除了一个一个设置权限外还有一种方法是：<strong>将所以的用户拉到一个组，对这个组赋予权限</strong></p>
-<p>因此我们说，用户组的作用是允许<strong>系统对有相同权限的多个用户进行统一管理</strong></p>
-<h4 id="创建组"><a href="#创建组" class="headerlink" title="创建组"></a>创建组</h4><p>一般的命令是这个：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">groupadd</span> 组名<br></code></pre></td></tr></table></figure>
-
-<p>当然，我们也给定一个参数来指明这个组的 <code>group id</code> ，即：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">groupadd -g 组<span class="hljs-built_in">id</span> 组名<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">groupdel</span> 组名<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="将用户添加到组"><a href="#将用户添加到组" class="headerlink" title="将用户添加到组"></a>将用户添加到组</h4><p>我们可以在添加一个用户的时候直接将其加入到一个组里面，即：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">useradd</span> -g 用户组 用户名<br></code></pre></td></tr></table></figure>
-
-<p>需要说明的是，如果在添加用户的时候没有指定组，那么会<strong>默认创建一个与该用户名相同的组</strong></p>
-<h4 id="修改用户的组"><a href="#修改用户的组" class="headerlink" title="修改用户的组"></a>修改用户的组</h4><p>我们可以将一个用户的组进行修改，即：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">usermod</span> -g 用户组 用户名<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="用户和组的相关文件"><a href="#用户和组的相关文件" class="headerlink" title="用户和组的相关文件"></a>用户和组的相关文件</h4><ul>
-<li>&#x2F;etc&#x2F;passwd 文件</li>
-</ul>
-<p>用户（ user ）的配置文件，记录用户的各种信息</p>
-<p>每行含义：用户 ：口令 ：用户标识号 ：组标识号 ：注释性描述 ：主目录 ：登陆Shell</p>
-<p>解释：</p>
-<ol>
-<li>口令一般加密，只会显示 X</li>
-<li>用户标识号是用户的 uid</li>
-<li>组标识号是组的 uid </li>
-<li>Shell 可以理解成一个将控制台指令翻译成 Linux 内核可以理解的代码的工具，一般使用 bash</li>
-</ol>
-<ul>
-<li>&#x2F;etc&#x2F;shadow 文件</li>
-</ul>
-<p>用户口令的配置文件（这东西看不懂的）</p>
-<p>每行含义：登录名 ：加密口令 ：最后一次修改时间 ：最小时间间隔 ：警告时间 ：不活动时间 ：失效时间 ：标志</p>
-<p>说明：</p>
-<ol>
-<li>这里的加密口令是加密过的，如果没有设置密码的话这里为空</li>
-<li>后面的部分全部都是一些特殊的数字，看不懂</li>
-</ol>
-<ul>
-<li>&#x2F;etc&#x2F;group 文件</li>
-</ul>
-<p>组的配置文件，记录 Linux 包含的组的信息</p>
-<p>每行含义：组名 ：口令 ：组标识号 ：组内用户列表</p>
-<p>说明：</p>
-<ol>
-<li>那个组内用户列表是看不到的，被隐藏起来了</li>
-</ol>
-<h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>运行级别说明：</p>
-<p>0 ：关机</p>
-<p>1 ：单用户（可以用于找回丢失的密码）</p>
-<p>2 ：多用户状态但没有网络服务（几乎不用）</p>
-<p>3 ：多用户状态有网络服务（用的最多）</p>
-<p>4 ：系统未使用保留给用户（这个没用）</p>
-<p>5 ：图形界面（用的最多）</p>
-<p>6 ：系统重启</p>
-<p>常用的运行级别是 3 和 5 ，当然也可以制定默认运行级别</p>
-<h4 id="查看默认运行级别"><a href="#查看默认运行级别" class="headerlink" title="查看默认运行级别"></a>查看默认运行级别</h4><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">systemctl</span> <span class="hljs-built_in">get-default</span> 运行级别<br></code></pre></td></tr></table></figure>
-
-<p>这里需要说明的是：</p>
-<p><code>multi-user.target</code> 相当于运行级别 3 ，也就是多用户有网络服务</p>
-<p><code>graphical.target</code> 相当于运行级别 5 ，即图形化界面</p>
-<p>还有就是，后面那个运行级别需要写英文，不能写数字</p>
-<h3 id="帮助指令"><a href="#帮助指令" class="headerlink" title="帮助指令"></a>帮助指令</h3><ul>
-<li>man 获得帮助信息</li>
-</ul>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-keyword">man</span> 命令或配置文件<br></code></pre></td></tr></table></figure>
-
-<p>举个例子，我们需要查看 ls 命令的帮助信息，可以用</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">man</span> <span class="hljs-built_in">ls</span><br></code></pre></td></tr></table></figure>
-
-<p>补充：Linux 下以 <code>.</code> 开头的文件表示隐藏文件</p>
-<ul>
-<li>help 命令</li>
-</ul>
-<p>这个可以用于获取 shell 内置命令的帮助信息</p>
+<p>时间复杂度：$ O(n * target) $ ，$n$ 为数组的元素个数，$target$ 为所有元素和的一半  </p>
+<p>空间复杂度：$ O(n * target) $ ，同上</p>
 
                 
               </div>
@@ -457,8 +335,22 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Linux/" class="category-chain-item">Linux</a>
+  <a href="/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="category-chain-item">动态规划</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E8%83%8C%E5%8C%85/" class="category-chain-item">背包</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E8%83%8C%E5%8C%85/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+
+  
+
   
 
       </span>
@@ -472,7 +364,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Linux/">#Linux</a>
+        <a href="/tags/Algorithm-Solution/">#Algorithm Solution</a>
       
     </div>
   
@@ -484,8 +376,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Linux 基础操作</div>
-      <div>https://nishikichisato.github.io/2022/08/30/Linux-基础操作/</div>
+      <div>LC 416.分割等和子集</div>
+      <div>https://nishikichisato.github.io/2022/08/31/LC-416.分割等和子集/</div>
     </div>
     <div class="license-meta">
       
@@ -497,7 +389,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月30日</div>
+          <div>2022年8月31日</div>
         </div>
       
       
@@ -538,18 +430,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/31/LC-416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/" title="LC 416.分割等和子集">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 416.分割等和子集</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/" title="LC 899. 有序队列">
-                        <span class="hidden-mobile">LC 899. 有序队列</span>
+                      <a href="/2022/08/30/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="Linux 基础操作">
+                        <span class="hidden-mobile">Linux 基础操作</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
