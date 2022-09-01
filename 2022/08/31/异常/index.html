@@ -18,26 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+    <meta name="description" content="异常程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常 异常机制异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常的处理由">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 899. 有序队列">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/08/03/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/index.html">
+<meta property="og:title" content="异常">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/08/31/%E5%BC%82%E5%B8%B8/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+<meta property="og:description" content="异常程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常 异常机制异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常的处理由">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-03T13:35:42.691Z">
-<meta property="article:modified_time" content="2022-08-03T13:47:26.317Z">
+<meta property="article:published_time" content="2022-08-31T14:31:17.284Z">
+<meta property="article:modified_time" content="2022-09-01T01:42:03.643Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="字符串">
-<meta property="article:tag" content="残留">
+<meta property="article:tag" content="C++ Primer Plus">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 899. 有序队列 - Chisato 的成长日记</title>
+  <title>异常 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 899. 有序队列"></span>
+            <span id="subtitle" data-typed-text="异常"></span>
           
         </div>
 
@@ -222,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-03 21:35" pubdate>
-          2022年8月3日 晚上
+        <time datetime="2022-08-31 22:31" pubdate>
+          2022年8月31日 晚上
         </time>
       </span>
     
@@ -234,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          859 字
+          1.7k 字
         
       </span>
     
@@ -245,7 +243,7 @@
         
         
         
-          8 分钟
+          15 分钟
         
       </span>
     
@@ -293,29 +291,48 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 899. 有序队列</h1>
+            <h1 style="display: none">异常</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="899-有序队列"><a href="#899-有序队列" class="headerlink" title="899. 有序队列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/orderly-queue/">899. 有序队列</a></h4><p>给定一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以从 <code>s</code> 的前 <code>k</code> 个字母中选择一个，并把它加到字符串的末尾。</p>
-<p>返回 <em>在应用上述步骤的任意数量的移动后，字典上最小的字符串</em> 。</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">输入：s = <span class="hljs-string">&quot;cba&quot;</span>, k = <span class="hljs-number">1</span><br>输出：<span class="hljs-string">&quot;acb&quot;</span><br>解释：<br>在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “<span class="hljs-keyword">bac”。</span><br><span class="hljs-keyword"></span>在第二步中，我们将第一个字符（“<span class="hljs-keyword">b”）移动到最后，获得最终结果 </span>“acb”。<br></code></pre></td></tr></table></figure>
+                <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。</p>
+<p>异常应当的方式有三种，前两种分别是：调用 <code>abort</code> 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。</p>
+<p>我们着重看通过<strong>异常机制</strong>来处理异常</p>
+<h3 id="异常机制"><a href="#异常机制" class="headerlink" title="异常机制"></a>异常机制</h3><p><strong>异常提供了将控制权从程序的一个部分传递到另一个部分的途径</strong>。C++ 对于异常的处理由 <code>try</code> 块和 <code>catch</code> 块组成。</p>
+<ul>
+<li><p><code>try</code> 块用于表示下面这段代码可能会引发异常，通常在后面会跟一个 <code>throw</code> 语句（也可以没有）。</p>
+<ul>
+<li>如果 <code>try</code> 块当中引发了异常，则会直接<strong>跳转</strong>到后面的 <code>catch</code> 块。如果没有引发异常，则会直接<strong>跳过</strong>后面<strong>所有的</strong> <code>catch</code> 块</li>
+</ul>
+</li>
+<li><p><code>throw</code> 语句是跳转的意思，命令程序跳转到另一条语句。<code>throw</code> 后面的类型（<strong>字符串类型或者类类型</strong>）指出的是异常的特征。</p>
+<ul>
+<li>我们这里解释一下跳转的含义：执行 <code>throw</code> 语句类似于执行返回语句，但并<strong>不是将控制流返回到调用函数</strong>，而是<strong>沿着函数的调用序列后退</strong>，直到找到包含 <code>try</code> 块的函数。</li>
+</ul>
+</li>
+<li><p><code>catch</code> 块是对异常处理的程序，后面位于括号内的是<strong>类型声明</strong>，这个表示<strong>需要用哪一个 <code>catch</code> 块来处理这个异常</strong>。即 <code>throw</code> 抛出的值会有 <code>catch</code> 后面对应的<strong>类型</strong>接住。如果 <code>catch</code> 后面的类型声明不知道写什么，可以写 <code>catch(...)</code> 这表示任何类型都由这个部分来处理。</p>
+</li>
+</ul>
+<h3 id="将对象用作异常类型"><a href="#将对象用作异常类型" class="headerlink" title="将对象用作异常类型"></a>将对象用作异常类型</h3><p>我们可以在 <code>throw</code> 后面的语句内写上一个<strong>自定义类型</strong>，这么做的好处是显然的，我们可以很方便的知道该异常所代表的含义。</p>
+<p>需要注意的是，如果<strong>是将对象作为异常类型</strong>，在 <code>catch</code> 块捕获的时候一定要写上<strong>引用</strong>。具体的例子看下面的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">bad_cal</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> a, b;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">bad_cal</span>(<span class="hljs-type">int</span> e1 = <span class="hljs-number">0</span>, <span class="hljs-type">int</span> e2 = <span class="hljs-number">0</span>)<br>		:<span class="hljs-built_in">a</span>(e1), <span class="hljs-built_in">b</span>(e2)<br>	&#123;  &#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mesg</span><span class="hljs-params">()</span> </span>&#123; cout &lt;&lt; <span class="hljs-string">&quot;error&quot;</span> &lt;&lt; endl; &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> m)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span> (n != m)<br>		<span class="hljs-keyword">return</span> n + m;<br>	<span class="hljs-keyword">throw</span> <span class="hljs-built_in">bad_cal</span>(n, m);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n, m;<br>	<span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; m)<br>	&#123;<br>		<span class="hljs-keyword">try</span><br>		&#123;<br>			cout &lt;&lt; <span class="hljs-built_in">cal</span>(n, m) &lt;&lt; endl;<br>		&#125;<br>		<span class="hljs-built_in">catch</span> (bad_cal&amp; bc)<span class="hljs-comment">//最好是引用</span><br>		&#123;<br>			bc.<span class="hljs-built_in">mesg</span>();<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
-<h4 id="暴力循环"><a href="#暴力循环" class="headerlink" title="暴力循环"></a>暴力循环</h4><p>这个题乍一看觉得无从下手，实际上简单的要死。</p>
-<p>我们分开来看，先看 <code>k = 1</code> 的情况</p>
-<p>这时，我们每次都会把第一个字符放到字符串的最后一位，这会生成 <code>n</code> 个字符串，我们只需要取这 <code>n</code> 个字符串中最小的那个就行。就是最简单的打擂台。这个地方的时间复杂度为 <em>O( $n^2$ )</em> ，因为需要遍历一遍这个字符串的同时，还需要进行插入，因此是 $n^2$ 。</p>
-<p>然后，当 <code>k = 2</code> 时，<strong>我们可以从前面两个中选择一个放到最后一位</strong>，那么只需要我们每次都选择两个中较大的那个，把它放到最后去，是不是相当于把这个字符串整体进行一次排序？</p>
-<p>当然 <code>k &gt; 2</code> 的情况同理，这时的时间复杂度为 <em>O( $nlogn$ )</em> 。</p>
-<p>代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">string <span class="hljs-title">orderlyQueue</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-function">string <span class="hljs-title">ret</span><span class="hljs-params">(s)</span></span>;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				s.<span class="hljs-built_in">insert</span>(s.<span class="hljs-built_in">end</span>(), s[<span class="hljs-number">0</span>]);<br>				s.<span class="hljs-built_in">erase</span>(s.<span class="hljs-built_in">begin</span>());<br>				<span class="hljs-keyword">if</span> (s &lt; ret)<br>					ret = s;<br>			&#125;<br>			<span class="hljs-keyword">return</span> ret;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-built_in">sort</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>());<br>			<span class="hljs-keyword">return</span> s;<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="异常规范和-C-11"><a href="#异常规范和-C-11" class="headerlink" title="异常规范和 C++ 11"></a>异常规范和 C++ 11</h3><p>有时候，一项理论看似很有前途，但在实际应用当中往往不是这样，到最后就慢慢地被摒弃了。这指的就是异常规范。异常规范是在 C++98 被加入到标准当中，但在 C++11 却被摒弃了。这意味着这项功能目前仍可能处在标准当中但未来可能会被废除，不建议使用。</p>
+<p>我们直接举两个例子说明这个吧：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//函数声明如下</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">()</span> <span class="hljs-title">throw</span><span class="hljs-params">()</span></span>;       <span class="hljs-comment">//说明该函数不会抛出异常</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cla</span><span class="hljs-params">()</span> <span class="hljs-title">throw</span><span class="hljs-params">(bad_cal)</span></span>;<span class="hljs-comment">//说明该函数可能会抛出 bad_cal 类型的异常</span><br></code></pre></td></tr></table></figure>
 
-<p>时间复杂度：<em>O( $n^2$ )</em></p>
-<p>空间复杂度：<em>O( $n$ )</em> </p>
-<p>这个题可以用最小表示法来解，但是那个玩意我看不懂。。。。。过一段时间再来看看把。</p>
+<p>这样看的话你会觉得这东西还有点用，但下面我要说这东西的定义是什么，看完之后。。。。我对这东西的评价是：早点废除吧。</p>
+<p>异常规范的作用之一是，告诉用户需要使用 <code>try</code> 块，也就是说这个函数可能引发异常，对应于第二个例子。但这个功能吧。。。。你直接用注释不好吗？</p>
+<p>异常规范的另一个作用是，让编译器添加程序在运行阶段检查的代码，确定该函数是否违反了异常规范。但这个功能，你想啊，你写的这个函数它没有报错，但这个函数调用的另一个函数报错了，这样就<strong>很难检查</strong>了。</p>
+<p>当然，C++11 支持另一种异常规范，可以<strong>用 <code>noexcept</code> 关键字来指出函数不会引发异常</strong>（这东西是关键字），这就跟上面的第一点一样。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span>;<br></code></pre></td></tr></table></figure>
 
+
+
+<h3 id="栈解退"><a href="#栈解退" class="headerlink" title="栈解退"></a>栈解退</h3>
                 
               </div>
             
@@ -333,7 +350,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/Study-Notes/" class="category-chain-item">Study Notes</a>
   
   
 
@@ -348,11 +365,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Algorithm/">#Algorithm</a>
-      
-        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
-      
-        <a href="/tags/%E6%AE%8B%E7%95%99/">#残留</a>
+        <a href="/tags/C-Primer-Plus/">#C++ Primer Plus</a>
       
     </div>
   
@@ -364,8 +377,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 899. 有序队列</div>
-      <div>https://nishikichisato.github.io/2022/08/03/LC-899.-有序队列/</div>
+      <div>异常</div>
+      <div>https://nishikichisato.github.io/2022/08/31/异常/</div>
     </div>
     <div class="license-meta">
       
@@ -377,13 +390,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月3日</div>
+          <div>2022年8月31日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年8月3日</div>
+          <div>2022年9月1日</div>
         </div>
       
       <div class="license-meta-item">
@@ -418,9 +431,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/31/LC-416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/" title="LC 416.分割等和子集">
+                      <a href="/2022/09/01/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="Linux 基础操作">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 416.分割等和子集</span>
+                        <span class="hidden-mobile">Linux 基础操作</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -428,8 +441,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/02/LC-622.-%E8%AE%BE%E8%AE%A1%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/" title="LC 622. 设计循环队列">
-                        <span class="hidden-mobile">LC 622. 设计循环队列</span>
+                      <a href="/2022/08/31/LC-416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/" title="LC 416.分割等和子集">
+                        <span class="hidden-mobile">LC 416.分割等和子集</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
