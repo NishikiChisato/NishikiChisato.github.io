@@ -25,8 +25,8 @@
 <meta property="og:site_name" content="Chisato 的成长日记">
 <meta property="og:description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-02T03:19:38.000Z">
-<meta property="article:modified_time" content="2022-09-02T03:19:38.000Z">
+<meta property="article:published_time" content="2022-09-02T06:22:06.000Z">
+<meta property="article:modified_time" content="2022-09-02T06:22:06.000Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-02 11:19" pubdate>
-          2022年9月2日 上午
+        <time datetime="2022-09-02 14:22" pubdate>
+          2022年9月2日 下午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.1k 字
+          5.5k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          43 分钟
+          46 分钟
         
       </span>
     
@@ -729,6 +729,35 @@
 <p>解压到指定目录：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">tar -zxvf xxx<span class="hljs-selector-class">.tar</span><span class="hljs-selector-class">.gz</span> -C 目录名<br></code></pre></td></tr></table></figure>
 
+
+
+<h2 id="组管理和权限管理"><a href="#组管理和权限管理" class="headerlink" title="组管理和权限管理"></a>组管理和权限管理</h2><p>Linux 中，每个用户都会所在一个组，反过来，组可以更方便地管理用户</p>
+<p>Linux 中的每个文件均有三个概念：所有者，所在组，其他组</p>
+<ul>
+<li>所有者是指该文件的创建用户是谁</li>
+<li>所在组是指该文件的创建用户所在的组</li>
+<li>其他组是指除了该文件所在的组以外的其他组</li>
+</ul>
+<h3 id="chown-指令"><a href="#chown-指令" class="headerlink" title="chown 指令"></a>chown 指令</h3><p><code>change own</code> 改变所有者，该指令可以修改一个<strong>文件或目录</strong>的所有者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> 所有者 文件名<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="chgrp-指令"><a href="#chgrp-指令" class="headerlink" title="chgrp 指令"></a>chgrp 指令</h3><p><code>change group</code> 修改所在组，该指令可以修改一个<strong>文件或目录</strong>的所在组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chgrp</span> 组名 文件名<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="修改用户所在组"><a href="#修改用户所在组" class="headerlink" title="修改用户所在组"></a>修改用户所在组</h3><p>在添加用户时，我们可以指定用户所在组，即：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">useradd</span> -g 组名 用户名<br></code></pre></td></tr></table></figure>
+
+<p>除此之外，我们可以用 <code>root</code> 权限更改某个用户所在组</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">usermod</span> -g 新组名 用户名<br></code></pre></td></tr></table></figure>
+
+<p>除此之外，<code>usermod</code> 还可以修改用户的初始登录目录，即：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">usermod</span> -d 目录名 用户名<br></code></pre></td></tr></table></figure>
+
+<p>需要注意的是，用户必须要有能够进入该目录的权限，否则会修改失败</p>
 
                 
               </div>
