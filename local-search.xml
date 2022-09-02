@@ -4,6 +4,83 @@
   
   
   <entry>
+    <title>CSAPP 第一章 计算机系统漫游（本书碎碎念）</title>
+    <link href="/2022/09/02/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/"/>
+    <url>/2022/09/02/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<p>源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。</p><p>由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。</p><p>操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：</p><ol><li>文件是对 I&#x2F;O 设备的抽象</li><li>虚拟内存是对主存和磁盘的抽象</li><li>进程是处理器、主存、I&#x2F;O 设备的抽象</li></ol><p>下面是碎碎念时间</p><p>今晚把第一章看完了，不多，也就 20 页</p><p>这里面全部都是概述性的东西，我也实在是记不了什么笔记，只想大概写一些我看完之后的感受</p><p>说实话，我看完之后对这本书期待挺高的</p><p>我之前一直在想，到底是用 <code>swich case</code> 的速度快还是用一堆 <code>if else</code> 的速度快；调用函数的系统开销到底有多大；<code>while</code> 和 <code>for</code> 这两个循环到底有啥区别；除此之外还有很多</p><p>这些问题并不涉及到很深的部分，但以我目前所学的知识无法解答，然后我看到这本书会对这些问题进行解答</p><p>说实话，看到这个部分的时候我对这本书就有一点点的兴趣了</p><p>希望，希望不要给我划大饼</p><p>具体就这些吧，往后的慢慢再看，我争取两个月看完这本书。当然，笔记和每一章的总结不会少，这种书单单只做笔记不做总结的话，我感觉跟没看似的</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSAPP</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSAPP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LC 63.不同路径II</title>
+    <link href="/2022/09/02/LC-63.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/"/>
+    <url>/2022/09/02/LC-63.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/</url>
+    
+    <content type="html"><![CDATA[<h4 id="63-不同路径-II"><a href="#63-不同路径-II" class="headerlink" title="63. 不同路径 II"></a><a href="https://leetcode.cn/problems/unique-paths-ii/">63. 不同路径 II</a></h4><p>一个机器人位于一个 <code>m x n</code> 网格的左上角 （起始点在下图中标记为 “Start” ）。</p><p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。</p><p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p><p>网格中的障碍物和空位置分别用 <code>1</code> 和 <code>0</code> 来表示。</p><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs clean">输入：obstacleGrid = [[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>]]<br>输出：<span class="hljs-number">2</span><br>解释：<span class="hljs-number">3</span>x3 网格的正中间有一个障碍物。<br>从左上角到右下角一共有 <span class="hljs-number">2</span> 条不同的路径：<br><span class="hljs-number">1.</span> 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下<br><span class="hljs-number">2.</span> 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右<br></code></pre></td></tr></table></figure><h4 id="DP"><a href="#DP" class="headerlink" title="DP"></a>DP</h4><p>这个题，就是在 <a href="https://leetcode.cn/problems/unique-paths/">62. 不同路径</a> 的基础上修改了一点点，基本思路一模一样</p><p>我们唯一需要注意的是，<code>obstacleGrid[i][j] == 1</code> 的时候，<code>dp[i][j]</code> 必须为 0 ，也就是默认值</p><p>这一步并不需要额外设置，我们只需要在最前面加一个判断 <code>obstacleGrid[i][j] == 0</code> 就行</p><p>具体代码如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">uniquePathsWithObstacles</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; obstacleGrid)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-type">int</span> m = obstacleGrid.<span class="hljs-built_in">size</span>(), n = obstacleGrid[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();<br>vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = obstacleGrid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] == <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>&#123;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>&#123;<br><span class="hljs-keyword">if</span> (obstacleGrid[i][j] == <span class="hljs-number">0</span>)<br>&#123;<br><span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; j &gt; <span class="hljs-number">0</span>)<br>dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] + dp[i][j - <span class="hljs-number">1</span>];<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span>)<br>dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>dp[i][j] = dp[i][j - <span class="hljs-number">1</span>];<br>&#125;<br>&#125;<br>&#125;<br><span class="hljs-keyword">return</span> dp[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];<br>&#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：$O(n^2)$</p><p>空间复杂度：$O(n^2)$ </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>动态规划</tag>
+      
+      <tag>路径问题</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LC 687.最长同值路径</title>
+    <link href="/2022/09/02/LC-687.%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84/"/>
+    <url>/2022/09/02/LC-687.%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84/</url>
+    
+    <content type="html"><![CDATA[<h4 id="687-最长同值路径"><a href="#687-最长同值路径" class="headerlink" title="687. 最长同值路径"></a><a href="https://leetcode.cn/problems/longest-univalue-path/">687. 最长同值路径</a></h4><p>给定一个二叉树的 <code>root</code> ，返回 <em>最长的路径的长度</em> ，这个路径中的 <em>每个节点具有相同值</em> 。 这条路径可以经过也可以不经过根节点。</p><p><strong>两个节点之间的路径长度</strong> 由它们之间的边数表示。</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：root = <span class="hljs-string">[5,4,5,1,1,5]</span><br>输出：<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure><h4 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h4><p>对于二叉树中任意一个节点 <code>root</code> ，我们想要找到包含它的最长同值路径，我们就必须要知道「<code>root-&gt;left</code> 与 <code>root-&gt;right</code> 其本身为<strong>起点</strong>」的路径长度 <code>ans</code> ，并将这两个 <code>ans</code> 相加</p><p>进一步，我们需要知道这两个 <code>ans</code> 的<strong>较大值</strong>才能确定<strong>以该节点为起点</strong>的路径长度</p><p>根据这一点，我们可以很容易确定这里需要用<strong>后序遍历</strong></p><p>然后我们再维护一个变量 <code>cur</code> ，用来记录包含此节点 <code>root</code> 的最长路径的值</p><p>如此这般，取最大的 <code>cur</code> 作为最后输出即可</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><span class="hljs-type">int</span> curmax = <span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">traveral</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>)<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> left = <span class="hljs-built_in">traveral</span>(root-&gt;left);<br><span class="hljs-type">int</span> right = <span class="hljs-built_in">traveral</span>(root-&gt;right);<br><span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>, cur = <span class="hljs-number">0</span>;     <span class="hljs-comment">//ans 表示其左右孩子以它们本身为起点的最长路径</span><br>                          <span class="hljs-comment">//cur 表示包含当前节点的最长路径</span><br>          <span class="hljs-comment">//ans 与 cur 必须初始化为 0 ，因为我们是对这个节点进行讨论</span><br><span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;left-&gt;val == root-&gt;val)<br>&#123;<br>ans = left + <span class="hljs-number">1</span>;<span class="hljs-comment">//因为相同的缘故，所以要加 1</span><br>cur += ans;<br>&#125;<br><span class="hljs-keyword">if</span> (root-&gt;right != <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;right-&gt;val == root-&gt;val)<br>&#123;<br>ans = <span class="hljs-built_in">max</span>(ans, right + <span class="hljs-number">1</span>);<span class="hljs-comment">//对 ans 取较大值，后面将其返回给上一层</span><br>cur += right + <span class="hljs-number">1</span>;<br>&#125;<br>curmax = curmax &gt; cur ? curmax : cur;<span class="hljs-comment">//取 cur 最大值</span><br><span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestUnivaluePath</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-built_in">traveral</span>(root);<br><span class="hljs-keyword">return</span> curmax;<br>&#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：$O(n)$ ，仅仅是遍历这棵二叉树</p><p>空间复杂度：$O(1)$ ，申请了常数量级的空间</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>二叉树</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Linux 基础操作</title>
     <link href="/2022/09/02/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
     <url>/2022/09/02/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
