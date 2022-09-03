@@ -18,25 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="64. 最小路径和给定一个包含非负整数的 *m* x *n* 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 123输入：grid &#x3D; [[1,3,1],[1,5,1],[4,2,1]]输出：7解释：因为路径 1→3→1→1→1 的总和最小。    DP这题目跟前面的 63. 不同路径 II 基本不差吧，思路是一样的 我们定义">
+    <meta name="description" content="信息存储大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序我们知道，一个对象肯定不">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 64.最小路径和">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/03/LC-64.%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/index.html">
+<meta property="og:title" content="CSAPP 第二章 信息的表示和处理">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/03/CSAPP-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="64. 最小路径和给定一个包含非负整数的 *m* x *n* 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。 说明：每次只能向下或者向右移动一步。 123输入：grid &#x3D; [[1,3,1],[1,5,1],[4,2,1]]输出：7解释：因为路径 1→3→1→1→1 的总和最小。    DP这题目跟前面的 63. 不同路径 II 基本不差吧，思路是一样的 我们定义">
+<meta property="og:description" content="信息存储大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序我们知道，一个对象肯定不">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-03T08:32:54.962Z">
-<meta property="article:modified_time" content="2022-09-03T08:32:55.139Z">
+<meta property="article:published_time" content="2022-09-03T12:56:37.852Z">
+<meta property="article:modified_time" content="2022-09-03T12:56:39.900Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="动态规划">
-<meta property="article:tag" content="路径问题">
+<meta property="article:tag" content="CASPP">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 64.最小路径和 - Chisato 的成长日记</title>
+  <title>CSAPP 第二章 信息的表示和处理 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 64.最小路径和"></span>
+            <span id="subtitle" data-typed-text="CSAPP 第二章 信息的表示和处理"></span>
           
         </div>
 
@@ -221,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-03 16:32" pubdate>
-          2022年9月3日 下午
+        <time datetime="2022-09-03 20:56" pubdate>
+          2022年9月3日 晚上
         </time>
       </span>
     
@@ -233,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          954 字
+          1.1k 字
         
       </span>
     
@@ -244,7 +243,7 @@
         
         
         
-          8 分钟
+          9 分钟
         
       </span>
     
@@ -292,30 +291,75 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 64.最小路径和</h1>
+            <h1 style="display: none">CSAPP 第二章 信息的表示和处理</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="64-最小路径和"><a href="#64-最小路径和" class="headerlink" title="64. 最小路径和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-path-sum/">64. 最小路径和</a></h4><p>给定一个包含非负整数的 <code>*m* x *n*</code> 网格 <code>grid</code> ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
-<p><strong>说明：</strong>每次只能向下或者向右移动一步。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">输入：grid = <span class="hljs-string">[[1,3,1],[1,5,1],[4,2,1]]</span><br>输出：<span class="hljs-number">7</span><br>解释：因为路径 <span class="hljs-number">1</span>→<span class="hljs-number">3</span>→<span class="hljs-number">1</span>→<span class="hljs-number">1</span>→<span class="hljs-number">1</span> 的总和最小。<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="DP"><a href="#DP" class="headerlink" title="DP"></a>DP</h4><p>这题目跟前面的 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths-ii/">63. 不同路径 II</a> 基本不差吧，思路是一样的</p>
-<p>我们定义 $dp[i][j]$ 表示机器人到达点 $(i,j)$ 所需的<strong>最小</strong>路径和</p>
-<p>机器人站在某一点处不外乎有三种选择：</p>
-<ul>
-<li>该位置只能向下走，则 $dp[i][j] &#x3D; dp[i - 1][j] + grid[i][j]$ ，我们求的是路径和，一定要加上 $grid$ 的值</li>
-<li>该位置只能向右走，则 $dp[i][j] &#x3D; dp[i][j - 1] + grid[i][j]$ </li>
-<li>该位置即能向下也能向右，则 $dp[i][j] &#x3D; min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]$</li>
-</ul>
-<p>这三点明确之后，代码就很简单了</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; grid)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> m = grid.<span class="hljs-built_in">size</span>(), n = grid[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>		dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = grid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; j &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = <span class="hljs-built_in">min</span>(dp[i - <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>]) + grid[i][j];<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] + grid[i][j];<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = dp[i][j - <span class="hljs-number">1</span>] + grid[i][j];<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：$O(m * n)$ </p>
-<p>空间复杂度：$O(m * n)$ </p>
+                <h2 id="信息存储"><a href="#信息存储" class="headerlink" title="信息存储"></a>信息存储</h2><p>大多数计算机使用 8 位的字节作为<strong>最小的可寻址的内存单位</strong>，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为<em>虚拟内存</em>。内存当中的<strong>每个字节</strong>都用唯一的数字来进行标识，这称为该字节的<em>地址</em>，所有可能的地址集合就是<em>虚拟地址空间</em>。</p>
+<p>这里的虚拟地址空间只是给机器级程序的一个<strong>概念性</strong>的映射，具体的底层实现由硬件来处理。</p>
+<h3 id="寻址和字节顺序"><a href="#寻址和字节顺序" class="headerlink" title="寻址和字节顺序"></a>寻址和字节顺序</h3><p>我们知道，一个对象肯定不可能只占一个字节，那么对于多字节的程序对象，我们必须建立两个规则：这个对象的地址是什么，以及在内存当中该如何存储这些字节。</p>
+<p>多字节对象大多被存储为<strong>连续</strong>的字节序列，该对象的地址就是所使用的连续的字节序列当中<strong>最小</strong>的地址。例如，一个 <code>int</code> 类型的变量占 4 个字节，分别是 0x100 、0x101、0x102、0x103，那么在这里面，0x100 就是这个变量的地址。</p>
+<p>我们考虑一个有 <strong>$\omega$ 位</strong>的整数，其位表示为 $[\ x_{\omega-1},\ x_{\omega-2},\ \cdots,x_1\ ,x_0\ ]$ 。我们假设 $\omega$ 是 8 的倍数（不够的位数补 0 ） ，那么该整数的最高<strong>字节</strong>为 $[\ x_{\omega-1},\ x_{\omega-2},\ \cdots,\ x_{\omega-7},\ x_{\omega-8}\ ]$ ，最低位<strong>字节</strong>为 $[\ x_7,\ x_6,\ \cdots,\ x_1,\ x_0\ ]$ 。如果一台机器将<strong>低位有效字节存储低地址</strong>处（0x100 处），那么该机器为<strong>小端存储</strong>，如果将<strong>高位有效字节存储在低地址</strong>处，那么为大端<strong>存储</strong>。</p>
+<h3 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h3><p>我们给出四种最基本的布尔运算结果：</p>
+<table>
+<thead>
+<tr>
+<th align="center">~</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center">&amp;</th>
+<th align="center">1</th>
+<th align="center">0</th>
+<th align="center"></th>
+<th align="center">|</th>
+<th align="center">1</th>
+<th align="center">0</th>
+<th align="center"></th>
+<th align="center">^</th>
+<th align="center">1</th>
+<th align="center">0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p>我们着重说一下异或，只有当 $P$ 、$Q$ 不同时为真时，$P \oplus Q$ 才为真。</p>
+<p>整数运算的一个属性是每一个数都存在一个加法逆元 $-x$ ，使得 $x\ + \ (-x)\ &#x3D;\ 0$ 。在布尔运算里面也有相同的属性，这里面的加法就是异或 $\oplus$ 。</p>
+<p>对任意值 $a$ 而言，有 $a \ \oplus \ a \ &#x3D;\ 0$  、$a\ \oplus \ 0 \ &#x3D;\ a$ 。</p>
+<p>并且异或类似于集合当中的补集，举个例子就是：</p>
+<p> $0x11223344\ \oplus\ 0\ &#x3D;\ 0x11223344$ 、$0x87654321\ \oplus \ 0xffffffff\ &#x3D;\ 0x789abcde$ </p>
+<p>即 8 + 7 &#x3D; 15 、9 + 6 &#x3D; 15 、1 + e &#x3D; 15，所以说异或具有补集的性质。</p>
 
                 
               </div>
@@ -334,7 +378,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/CSAPP/" class="category-chain-item">CSAPP</a>
   
   
 
@@ -349,9 +393,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
-      
-        <a href="/tags/%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">#路径问题</a>
+        <a href="/tags/CASPP/">#CASPP</a>
       
     </div>
   
@@ -363,8 +405,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 64.最小路径和</div>
-      <div>https://nishikichisato.github.io/2022/09/03/LC-64.最小路径和/</div>
+      <div>CSAPP 第二章 信息的表示和处理</div>
+      <div>https://nishikichisato.github.io/2022/09/03/CSAPP-第二章-信息的表示和处理/</div>
     </div>
     <div class="license-meta">
       
@@ -417,18 +459,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/03/CSAPP-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/" title="CSAPP 第二章 信息的表示和处理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CSAPP 第二章 信息的表示和处理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/03/RTTI/" title="RTTI">
-                        <span class="hidden-mobile">RTTI</span>
+                      <a href="/2022/09/03/LC-64.%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" title="LC 64.最小路径和">
+                        <span class="hidden-mobile">LC 64.最小路径和</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

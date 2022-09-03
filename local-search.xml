@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>CSAPP 第二章 信息的表示和处理</title>
+    <link href="/2022/09/03/CSAPP-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/"/>
+    <url>/2022/09/03/CSAPP-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h2 id="信息存储"><a href="#信息存储" class="headerlink" title="信息存储"></a>信息存储</h2><p>大多数计算机使用 8 位的字节作为<strong>最小的可寻址的内存单位</strong>，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为<em>虚拟内存</em>。内存当中的<strong>每个字节</strong>都用唯一的数字来进行标识，这称为该字节的<em>地址</em>，所有可能的地址集合就是<em>虚拟地址空间</em>。</p><p>这里的虚拟地址空间只是给机器级程序的一个<strong>概念性</strong>的映射，具体的底层实现由硬件来处理。</p><h3 id="寻址和字节顺序"><a href="#寻址和字节顺序" class="headerlink" title="寻址和字节顺序"></a>寻址和字节顺序</h3><p>我们知道，一个对象肯定不可能只占一个字节，那么对于多字节的程序对象，我们必须建立两个规则：这个对象的地址是什么，以及在内存当中该如何存储这些字节。</p><p>多字节对象大多被存储为<strong>连续</strong>的字节序列，该对象的地址就是所使用的连续的字节序列当中<strong>最小</strong>的地址。例如，一个 <code>int</code> 类型的变量占 4 个字节，分别是 0x100 、0x101、0x102、0x103，那么在这里面，0x100 就是这个变量的地址。</p><p>我们考虑一个有 <strong>$\omega$ 位</strong>的整数，其位表示为 $[\ x_{\omega-1},\ x_{\omega-2},\ \cdots,x_1\ ,x_0\ ]$ 。我们假设 $\omega$ 是 8 的倍数（不够的位数补 0 ） ，那么该整数的最高<strong>字节</strong>为 $[\ x_{\omega-1},\ x_{\omega-2},\ \cdots,\ x_{\omega-7},\ x_{\omega-8}\ ]$ ，最低位<strong>字节</strong>为 $[\ x_7,\ x_6,\ \cdots,\ x_1,\ x_0\ ]$ 。如果一台机器将<strong>低位有效字节存储低地址</strong>处（0x100 处），那么该机器为<strong>小端存储</strong>，如果将<strong>高位有效字节存储在低地址</strong>处，那么为大端<strong>存储</strong>。</p><h3 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h3><p>我们给出四种最基本的布尔运算结果：</p><table><thead><tr><th align="center">~</th><th align="center"></th><th align="center"></th><th align="center">&amp;</th><th align="center">1</th><th align="center">0</th><th align="center"></th><th align="center">|</th><th align="center">1</th><th align="center">0</th><th align="center"></th><th align="center">^</th><th align="center">1</th><th align="center">0</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">1</td><td align="center"></td><td align="center">1</td><td align="center">1</td><td align="center">0</td><td align="center"></td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center"></td><td align="center">1</td><td align="center">0</td><td align="center">1</td></tr><tr><td align="center">1</td><td align="center">0</td><td align="center"></td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center"></td><td align="center">0</td><td align="center">1</td><td align="center">0</td><td align="center"></td><td align="center">0</td><td align="center">1</td><td align="center">0</td></tr></tbody></table><p>我们着重说一下异或，只有当 $P$ 、$Q$ 不同时为真时，$P \oplus Q$ 才为真。</p><p>整数运算的一个属性是每一个数都存在一个加法逆元 $-x$ ，使得 $x\ + \ (-x)\ &#x3D;\ 0$ 。在布尔运算里面也有相同的属性，这里面的加法就是异或 $\oplus$ 。</p><p>对任意值 $a$ 而言，有 $a \ \oplus \ a \ &#x3D;\ 0$  、$a\ \oplus \ 0 \ &#x3D;\ a$ 。</p><p>并且异或类似于集合当中的补集，举个例子就是：</p><p> $0x11223344\ \oplus\ 0\ &#x3D;\ 0x11223344$ 、$0x87654321\ \oplus \ 0xffffffff\ &#x3D;\ 0x789abcde$ </p><p>即 8 + 7 &#x3D; 15 、9 + 6 &#x3D; 15 、1 + e &#x3D; 15，所以说异或具有补集的性质。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSAPP</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CASPP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LC 64.最小路径和</title>
     <link href="/2022/09/03/LC-64.%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/"/>
     <url>/2022/09/03/LC-64.%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</url>
