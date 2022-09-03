@@ -21,12 +21,12 @@
     <meta name="description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 基础操作">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/02/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/03/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
 <meta property="og:description" content="关机重启123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘    用户登录和注销登录一般最好不要用 root 登录，因为这东西的权限最">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-02T06:22:06.000Z">
-<meta property="article:modified_time" content="2022-09-02T06:22:06.000Z">
+<meta property="article:published_time" content="2022-09-03T01:52:36.000Z">
+<meta property="article:modified_time" content="2022-09-03T01:52:36.000Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-02 14:22" pubdate>
-          2022年9月2日 下午
+        <time datetime="2022-09-03 09:52" pubdate>
+          2022年9月3日 上午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.5k 字
+          6.5k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          46 分钟
+          55 分钟
         
       </span>
     
@@ -448,10 +448,7 @@
 <p>参数：</p>
 <p><code>-a</code> ：显示当前目录的所有文件和目录，包括隐藏的</p>
 <p><code>-l</code> ：以列表的方式显示信息</p>
-<ul>
-<li>cd 指令</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> 目录<br></code></pre></td></tr></table></figure>
+<h3 id="cd-指令"><a href="#cd-指令" class="headerlink" title="cd 指令"></a>cd 指令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> 目录<br></code></pre></td></tr></table></figure>
 
 <p>切换到指定目录</p>
 <p><code>cd ~</code> 或者 <code>cd</code> 这两个都是回到自己的家目录。比如，如果是 root 用户，则会回到 root 的家目录 <code>/root</code></p>
@@ -741,10 +738,22 @@
 <h3 id="chown-指令"><a href="#chown-指令" class="headerlink" title="chown 指令"></a>chown 指令</h3><p><code>change own</code> 改变所有者，该指令可以修改一个<strong>文件或目录</strong>的所有者</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> 所有者 文件名<br></code></pre></td></tr></table></figure>
 
+<p>当然也可以同时更改一个<strong>文件或目录</strong>的所有者和所在组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> 所有者:所在组 文件名<br></code></pre></td></tr></table></figure>
+
+<p>例如：<code>chown chisato:chisato test</code> </p>
+<p>如果需要对<strong>整个目录</strong>的所有者或所在组进行修改的话，可以加 <code>-R</code> 选项来让操作递归下去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> -R 所有者 文件名<br></code></pre></td></tr></table></figure>
+
 
 
 <h3 id="chgrp-指令"><a href="#chgrp-指令" class="headerlink" title="chgrp 指令"></a>chgrp 指令</h3><p><code>change group</code> 修改所在组，该指令可以修改一个<strong>文件或目录</strong>的所在组</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chgrp</span> 组名 文件名<br></code></pre></td></tr></table></figure>
+
+<p>如果需要更改一个目录当中的所有的文件，可以加上 <code>-R</code> 参数，即：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chgrp</span> -R 组名 目录名<br></code></pre></td></tr></table></figure>
+
+
 
 
 
@@ -758,6 +767,83 @@
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">usermod</span> -d 目录名 用户名<br></code></pre></td></tr></table></figure>
 
 <p>需要注意的是，用户必须要有能够进入该目录的权限，否则会修改失败</p>
+<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><p>用 <code>ls -l</code> 指令显示内容后，第一列（一共 10 个字母）表示该文件或目录的权限</p>
+<p>0 - 9 位的详细说明：</p>
+<ol>
+<li><p>第 0 位表示文件类型</p>
+<ul>
+<li><p><code>l</code> 是链接，对应 <code>windows</code> 里的快捷方式</p>
+</li>
+<li><p><code>d</code> 是目录，也就是文件夹</p>
+</li>
+<li><p><code>c</code> 是字符设备文件、鼠标、键盘</p>
+</li>
+<li><p><code>b</code> 是块设备，比如硬盘</p>
+</li>
+<li><p><code>-</code> 表示该文件就是一个普通文件</p>
+</li>
+</ul>
+</li>
+<li><p>第 1 - 3 位为该文件<strong>所有者</strong>对该文件的权限</p>
+</li>
+<li><p>第 4 - 6 位为该文件<strong>所在组</strong>中的用户对该文件的权限</p>
+</li>
+<li><p>第 7 - 9 位为该文件<strong>其他组</strong>中的用户对该文件的权限</p>
+</li>
+</ol>
+<p>第 1 - 9 位均是描述权限，权限有三种：<code>r</code> 、<code>w</code> 、<code>x</code> </p>
+<p><code>r</code> 表示 <code>read</code> ，可读</p>
+<p><code>w</code> 表示 <code>write</code> ，可写</p>
+<p><code>x</code> 表示 <code>execute</code> ，可执行</p>
+<p><code>rwx</code> 作用到文件与作用到目录是不一样的，具体如下：</p>
+<ul>
+<li><code>rwx</code> 作用到文件<ul>
+<li><code>r</code> 表示可读：允许对该文件进行读取、查看</li>
+<li><code>w</code> 表示可写：允许对该文件进行修改，但<strong>不能删除</strong>。如果要删除文件需要对该文件所在的目录有 <code>w</code> 的权限</li>
+<li><code>e</code> 表示可执行：允许该文件被执行</li>
+</ul>
+</li>
+<li><code>rwx</code> 作用到目录<ul>
+<li><code>r</code> 表示可读：允许读取、查看该目录的内容</li>
+<li><code>w</code> 表示可写：允许对该目录内的文件进行创建、删除的操作，还允许对该目录进行重命名</li>
+<li><code>x</code> 表是可执行：允许用户进入到这个目录。如果没有 <code>x</code> 权限则用户无法进入该目录</li>
+</ul>
+</li>
+</ul>
+<p>Linux 中还可以用数字来表示权限，如：<code>r = 4</code> 、<code>w = 2</code> 、<code>x = 1</code> ，因此 <code>rwx = 7</code> </p>
+<h3 id="chmod-指令"><a href="#chmod-指令" class="headerlink" title="chmod 指令"></a>chmod 指令</h3><p>通过 <code>chmod</code> 指令，可以修改文件或者目录的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> [选项] 文件名<br></code></pre></td></tr></table></figure>
+
+<p>有两种方式可以对权限进行修改</p>
+<ul>
+<li>用 <code>+</code> 、<code>-</code> 、<code>=</code> 进行修改<ul>
+<li><code>u</code> 表示 <code>user</code> ，即该文件的所有者</li>
+<li><code>g</code> 表示 <code>group</code> ，即该文件的所在组</li>
+<li><code>o</code> 表示 <code>other</code> ，即该文件的其他组</li>
+<li><code>a</code> 表示 <code>all</code> ，即全部</li>
+<li><code>+</code> 表示添加该权限，<code>-</code> 表示去掉该权限，<code>=</code> 就是直接赋值</li>
+</ul>
+</li>
+</ul>
+<p>例如：</p>
+<p>对所有者赋予 <code>rwx</code> ，所在组赋予 <code>rw</code> ，其他组赋予 <code>x</code> </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">chmod <span class="hljs-attribute">u</span>=rwx,g=rw,o=x 文件名<br></code></pre></td></tr></table></figure>
+
+<p>对所有人去除 <code>x</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> a-x 文件名<br></code></pre></td></tr></table></figure>
+
+<p>这里的<strong>各个参数之间是不允许打空格的</strong></p>
+<ul>
+<li>用数字变更权限<ul>
+<li><code>r</code> 用 4 表示，<code>w</code> 用 2 表示，<code>x</code> 用 1 表示</li>
+<li>可以通过数字的加法来实现权限的更改</li>
+</ul>
+</li>
+</ul>
+<p>对所有者赋予 <code>rwx</code> ，所在组赋予 <code>rw</code> ，其他组赋予 <code>x</code> </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chmod</span> <span class="hljs-number">761</span> 文件名<br></code></pre></td></tr></table></figure>
+
+<p>同样<strong>不能打空格</strong></p>
 
                 
               </div>
@@ -804,7 +890,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux 基础操作</div>
-      <div>https://nishikichisato.github.io/2022/09/02/Linux-基础操作/</div>
+      <div>https://nishikichisato.github.io/2022/09/03/Linux-基础操作/</div>
     </div>
     <div class="license-meta">
       
@@ -816,7 +902,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月2日</div>
+          <div>2022年9月3日</div>
         </div>
       
       
@@ -852,9 +938,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/02/LC-687.%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84/" title="LC 687.最长同值路径">
+                      <a href="/2022/09/03/RTTI/" title="RTTI">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 687.最长同值路径</span>
+                        <span class="hidden-mobile">RTTI</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -862,8 +948,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/01/LC-62.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/" title="LC 62.不同路径">
-                        <span class="hidden-mobile">LC 62.不同路径</span>
+                      <a href="/2022/09/02/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/" title="CSAPP 第一章 计算机系统漫游（本书碎碎念）">
+                        <span class="hidden-mobile">CSAPP 第一章 计算机系统漫游（本书碎碎念）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
