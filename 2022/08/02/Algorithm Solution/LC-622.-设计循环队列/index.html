@@ -18,15 +18,15 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="622. 设计循环队列设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。 循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。 你的实现应该支持如下操作">
+    <meta name="description" content="622. 设计循环队列 设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。 循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。 你的实现应该支持如下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LC 622. 设计循环队列">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/08/02/Algorithm%20Solution/LC-622.-%E8%AE%BE%E8%AE%A1%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="622. 设计循环队列设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。 循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。 你的实现应该支持如下操作">
+<meta property="og:description" content="622. 设计循环队列 设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。 循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。 你的实现应该支持如下">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-02T08:27:49.427Z">
-<meta property="article:modified_time" content="2022-09-01T03:10:54.881Z">
+<meta property="article:modified_time" content="2022-09-04T16:11:44.960Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="数据结构设计">
 <meta name="twitter:card" content="summary_large_image">
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -296,7 +298,8 @@
             
               <div class="markdown-body">
                 
-                <h4 id="622-设计循环队列"><a href="#622-设计循环队列" class="headerlink" title="622. 设计循环队列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-circular-queue/">622. 设计循环队列</a></h4><p>设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。</p>
+                <h4 id="622-设计循环队列"><a class="markdownIt-Anchor" href="#622-设计循环队列"></a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-circular-queue/">622. 设计循环队列</a></h4>
+<p>设计你的循环队列实现。 循环队列是一种线性数据结构，其操作表现基于 FIFO（先进先出）原则并且队尾被连接在队首之后以形成一个循环。它也被称为“环形缓冲器”。</p>
 <p>循环队列的一个好处是我们可以利用这个队列之前用过的空间。在一个普通队列里，一旦一个队列满了，我们就不能插入下一个元素，即使在队列前面仍有空间。但是使用循环队列，我们能使用这些空间去存储新的值。</p>
 <p>你的实现应该支持如下操作：</p>
 <ul>
@@ -314,11 +317,8 @@
 <p>这里我们简单解释一下：<code>(front + 1) % capacity</code> 会回到最初的位置，而 <code>rear</code> 每次指向的都是一个空位置。因此这个时候 <code>rear</code> 也会回到最初的位置。</p>
 <p>然后这个循环队列的大小为 <code>(rear - front + capacity) % capacity</code> 。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCircularQueue</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    vector&lt;<span class="hljs-type">int</span>&gt;num;<br>    <span class="hljs-type">int</span> front, rear, capacity;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">MyCircularQueue</span>(<span class="hljs-type">int</span> k) <br>    &#123;<br>        capacity = k + <span class="hljs-number">1</span>;<br>        num = <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(capacity);<br>        front = rear = <span class="hljs-number">0</span>;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">enQueue</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isFull</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        num[rear] = value;<br>        rear = (rear + <span class="hljs-number">1</span>) % capacity;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">deQueue</span><span class="hljs-params">()</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isEmpty</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        front = (front + <span class="hljs-number">1</span>) % capacity;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Front</span><span class="hljs-params">()</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isEmpty</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">return</span> num[front];<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Rear</span><span class="hljs-params">()</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isEmpty</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">return</span> num[(rear - <span class="hljs-number">1</span> + capacity) % capacity];<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> front == rear;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isFull</span><span class="hljs-params">()</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> (rear + <span class="hljs-number">1</span>) % capacity == front;<br>    &#125;<br><br>&#125;;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>时间复杂度：每项操作时间均为 <em>O( $1$ )</em> 。</p>
-<p>空间复杂度：<em>O( $k$ )</em> ，其中 <em>k</em> 为给定的循环队列大小。</p>
+<p>时间复杂度：每项操作时间均为 <em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> )</em> 。</p>
+<p>空间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> )</em> ，其中 <em>k</em> 为给定的循环队列大小。</p>
 
                 
               </div>
@@ -337,7 +337,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm-Solution</a>
   
   
 
@@ -383,7 +383,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月1日</div>
+          <div>2022年9月5日</div>
         </div>
       
       <div class="license-meta-item">
@@ -477,7 +477,6 @@
 
   
   
-
 
 
 
@@ -671,40 +670,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

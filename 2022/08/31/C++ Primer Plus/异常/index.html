@@ -18,12 +18,12 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="异常程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常 异常机制异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常的处理由">
+    <meta name="description" content="异常 程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常  异常机制 异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异常">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/08/31/C++%20Primer%20Plus/%E5%BC%82%E5%B8%B8/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="异常程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常 异常机制异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常的处理由">
+<meta property="og:description" content="异常 程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。 异常应当的方式有三种，前两种分别是：调用 abort 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。 我们着重看通过异常机制来处理异常  异常机制 异常提供了将控制权从程序的一个部分传递到另一个部分的途径。C++ 对于异常">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-31T14:31:17.284Z">
 <meta property="article:modified_time" content="2022-09-02T15:05:36.344Z">
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -296,57 +298,59 @@
             
               <div class="markdown-body">
                 
-                <h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><p>程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。</p>
+                <h2 id="异常"><a class="markdownIt-Anchor" href="#异常"></a> 异常</h2>
+<p>程序几乎不可避免地会出现异常，就比如你写了一个除法程序，保不齐会有人手贱非得去试一下分母为 0 会发生什么事情。因此应当异常就显得尤为重要。</p>
 <p>异常应当的方式有三种，前两种分别是：调用 <code>abort</code> 强行退出、返回错误码。这两个，emmmm，说实话，没啥技术含量，我们跳过。</p>
 <p>我们着重看通过<strong>异常机制</strong>来处理异常</p>
-<h3 id="异常机制"><a href="#异常机制" class="headerlink" title="异常机制"></a>异常机制</h3><p><strong>异常提供了将控制权从程序的一个部分传递到另一个部分的途径</strong>。C++ 对于异常的处理由 <code>try</code> 块和 <code>catch</code> 块组成。</p>
+<h3 id="异常机制"><a class="markdownIt-Anchor" href="#异常机制"></a> 异常机制</h3>
+<p><strong>异常提供了将控制权从程序的一个部分传递到另一个部分的途径</strong>。C++ 对于异常的处理由 <code>try</code> 块和 <code>catch</code> 块组成。</p>
 <ul>
-<li><p><code>try</code> 块用于表示下面这段代码可能会引发异常，通常在后面会跟一个 <code>throw</code> 语句（也可以没有）。</p>
+<li>
+<p><code>try</code> 块用于表示下面这段代码可能会引发异常，通常在后面会跟一个 <code>throw</code> 语句（也可以没有）。</p>
 <ul>
 <li>如果 <code>try</code> 块当中引发了异常，则会直接<strong>跳转</strong>到后面的 <code>catch</code> 块。如果没有引发异常，则会直接<strong>跳过</strong>后面<strong>所有的</strong> <code>catch</code> 块</li>
 </ul>
 </li>
-<li><p><code>throw</code> 语句是<strong>跳转的意思，命令程序跳转到另一条语句</strong>。<code>throw</code> 后面的类型（<strong>字符串类型或者类类型</strong>）指出的是异常的特征。</p>
+<li>
+<p><code>throw</code> 语句是<strong>跳转的意思，命令程序跳转到另一条语句</strong>。<code>throw</code> 后面的类型（<strong>字符串类型或者类类型</strong>）指出的是异常的特征。</p>
 <ul>
 <li>我们这里解释一下跳转的含义：执行 <code>throw</code> 语句类似于执行返回语句，但并<strong>不是将控制流返回到调用函数</strong>，而是<strong>沿着函数的调用序列后退</strong>，直到找到包含 <code>try</code> 块的函数。</li>
 </ul>
 </li>
-<li><p><code>catch</code> 块是对异常处理的程序，后面位于括号内的是<strong>类型声明</strong>，这个表示<strong>需要用哪一个 <code>catch</code> 块来处理这个异常</strong>。即 <code>throw</code> 抛出的值会有 <code>catch</code> 后面对应的<strong>类型</strong>接住。如果 <code>catch</code> 后面的类型声明不知道写什么，可以写 <code>catch(...)</code> 这表示任何类型都由这个部分来处理。</p>
+<li>
+<p><code>catch</code> 块是对异常处理的程序，后面位于括号内的是<strong>类型声明</strong>，这个表示<strong>需要用哪一个 <code>catch</code> 块来处理这个异常</strong>。即 <code>throw</code> 抛出的值会有 <code>catch</code> 后面对应的<strong>类型</strong>接住。如果 <code>catch</code> 后面的类型声明不知道写什么，可以写 <code>catch(...)</code> 这表示任何类型都由这个部分来处理。</p>
 </li>
 </ul>
-<h3 id="将对象用作异常类型"><a href="#将对象用作异常类型" class="headerlink" title="将对象用作异常类型"></a>将对象用作异常类型</h3><p>我们可以在 <code>throw</code> 后面的语句内写上一个<strong>自定义类型</strong>，这么做的好处是显然的，我们可以很方便的知道该异常所代表的含义。</p>
+<h3 id="将对象用作异常类型"><a class="markdownIt-Anchor" href="#将对象用作异常类型"></a> 将对象用作异常类型</h3>
+<p>我们可以在 <code>throw</code> 后面的语句内写上一个<strong>自定义类型</strong>，这么做的好处是显然的，我们可以很方便的知道该异常所代表的含义。</p>
 <p>需要注意的是，如果<strong>是将对象作为异常类型</strong>，在 <code>catch</code> 块捕获的时候一定要写上<strong>引用</strong>。具体的例子看下面的代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">bad_cal</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> a, b;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">bad_cal</span>(<span class="hljs-type">int</span> e1 = <span class="hljs-number">0</span>, <span class="hljs-type">int</span> e2 = <span class="hljs-number">0</span>)<br>		:<span class="hljs-built_in">a</span>(e1), <span class="hljs-built_in">b</span>(e2)<br>	&#123;  &#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mesg</span><span class="hljs-params">()</span> </span>&#123; cout &lt;&lt; <span class="hljs-string">&quot;error&quot;</span> &lt;&lt; endl; &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> m)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span> (n != m)<br>		<span class="hljs-keyword">return</span> n + m;<br>	<span class="hljs-keyword">throw</span> <span class="hljs-built_in">bad_cal</span>(n, m);<span class="hljs-comment">//引发异常时编译器会创建一个临时拷贝，就算下面指定的是引用</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n, m;<br>	<span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; m)<br>	&#123;<br>		<span class="hljs-keyword">try</span><br>		&#123;<br>			cout &lt;&lt; <span class="hljs-built_in">cal</span>(n, m) &lt;&lt; endl;<br>		&#125;<br>		<span class="hljs-built_in">catch</span> (bad_cal&amp; bc)<span class="hljs-comment">//这会指向一个编译器创建的临时副本，并不会指向原对象</span><br>		&#123;<br>			bc.<span class="hljs-built_in">mesg</span>();<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
 <p>你肯定会说，既然是一个副本，那我用引用指向它有什么用呢，引用本身就是为了不希望创建副本。</p>
 <p>实际上这里用引用的考量并不是在这里，引用还有一个重要用途是：基类指针可以指向派生类对象。所以，如果我们有一个由继承所组成的异常类体系，只需要一个基类引用就可以指向所有的派生类对象，这不是很方便吗？</p>
 <p>我们来看这个例子：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">bad1</span> &#123;&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">bad2</span> : <span class="hljs-keyword">public</span> bad1 &#123;&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">bad3</span> : <span class="hljs-keyword">public</span> bad2 &#123;&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        <span class="hljs-keyword">if</span>()<br>            <span class="hljs-keyword">throw</span> bad1;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>()<br>            <span class="hljs-keyword">throw</span> bad2;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">throw</span> bad3;<br>    &#125;<br>    <span class="hljs-built_in">catch</span>(bad3) &#123;  &#125;<br>    <span class="hljs-built_in">catch</span>(bad2) &#123;  &#125;<br>    <span class="hljs-built_in">catch</span>(bad1) &#123;  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>需要注意的是，<strong>引发异常的对象将被第一个与之匹配的 <code>catch</code> 块捕获</strong>，因此后面 <code>catch</code> 块中的顺序需要与继承的顺序相反。即捕获位于层次结构<strong>最下面</strong>的异常类的 <code>catch</code> 块将放在最上面，捕获基类异常的 <code>catch</code> 块将放在在下面。</p>
-<h3 id="异常规范和-C-11"><a href="#异常规范和-C-11" class="headerlink" title="异常规范和 C++ 11"></a>异常规范和 C++ 11</h3><p>有时候，一项理论看似很有前途，但在实际应用当中往往不是这样，到最后就慢慢地被摒弃了。这指的就是异常规范。异常规范是在 C++98 被加入到标准当中，但在 C++11 却被摒弃了。这意味着这项功能目前仍可能处在标准当中但未来可能会被废除，不建议使用。</p>
+<h3 id="异常规范和-c-11"><a class="markdownIt-Anchor" href="#异常规范和-c-11"></a> 异常规范和 C++ 11</h3>
+<p>有时候，一项理论看似很有前途，但在实际应用当中往往不是这样，到最后就慢慢地被摒弃了。这指的就是异常规范。异常规范是在 C<ins>98 被加入到标准当中，但在 C</ins>11 却被摒弃了。这意味着这项功能目前仍可能处在标准当中但未来可能会被废除，不建议使用。</p>
 <p>我们直接举两个例子说明这个吧：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//函数声明如下</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">()</span> <span class="hljs-title">throw</span><span class="hljs-params">()</span></span>;       <span class="hljs-comment">//说明该函数不会抛出异常</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cla</span><span class="hljs-params">()</span> <span class="hljs-title">throw</span><span class="hljs-params">(bad_cal)</span></span>;<span class="hljs-comment">//说明该函数可能会抛出 bad_cal 类型的异常</span><br></code></pre></td></tr></table></figure>
-
 <p>这样看的话你会觉得这东西还有点用，但下面我要说这东西的定义是什么，看完之后。。。。我对这东西的评价是：早点废除吧。</p>
 <p>异常规范的作用之一是，告诉用户需要使用 <code>try</code> 块，也就是说这个函数可能引发异常，对应于第二个例子。但这个功能吧。。。。你直接用注释不好吗？</p>
 <p>异常规范的另一个作用是，让编译器添加程序在运行阶段检查的代码，确定该函数是否违反了异常规范。但这个功能，你想啊，你写的这个函数它没有报错，但这个函数调用的另一个函数报错了，这样就<strong>很难检查</strong>了。</p>
 <p>当然，C++11 支持另一种异常规范，可以<strong>用 <code>noexcept</code> 关键字来指出函数不会引发异常</strong>（这东西是关键字），这就跟上面的第一点一样。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cal</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span>;<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="栈解退"><a href="#栈解退" class="headerlink" title="栈解退"></a>栈解退</h3><p>假设 <code>try</code> 块没有直接调用引发异常的函数，而是调用了对引发异常的函数进行调用的函数，则程序控制流就会从引发异常的函数开始回退，直到找到包含 <code>try</code> 块和处理模块的函数为止，这一过程我们称之为栈解退。</p>
+<h3 id="栈解退"><a class="markdownIt-Anchor" href="#栈解退"></a> 栈解退</h3>
+<p>假设 <code>try</code> 块没有直接调用引发异常的函数，而是调用了对引发异常的函数进行调用的函数，则程序控制流就会从引发异常的函数开始回退，直到找到包含 <code>try</code> 块和处理模块的函数为止，这一过程我们称之为栈解退。</p>
 <p>当涉及到函数调用时，编译器会为被调用函数在栈中为其开辟一块地址，并将这块地址的起始地址保存在调用函数中。之后，程序控制流将会跳转到被调用函数，往后会对该函数进行执行。如此这般，便是函数嵌套调用的底层实现。</p>
 <p>当被调用函数执行完毕后，会<strong>释放所有的自动变量</strong>，控制流将自动回到调用函数，继续执行。</p>
 <p>假设被调用函数引发了异常，那么该函数在栈中的空间将会<strong>直接被释放</strong>，不会执行引发异常后面的代码，多重嵌套调用也是同理。编译器会将该异常一直回退，直到找到包含 <code>try</code> 块和 <code>catch</code> 块为止。</p>
 <p>上面的「直接被释放」的意思是，自动变量会直接释放，类对象会调用其析构函数。</p>
-<h3 id="exception-类"><a href="#exception-类" class="headerlink" title="exception 类"></a>exception 类</h3><p><code>exception</code> 头文件定义了 <code>exception</code> 类，代码可以引发 <code>exception</code> 异常，也可以将 <code>exception</code> 类用作基类。</p>
+<h3 id="exception-类"><a class="markdownIt-Anchor" href="#exception-类"></a> exception 类</h3>
+<p><code>exception</code> 头文件定义了 <code>exception</code> 类，代码可以引发 <code>exception</code> 异常，也可以将 <code>exception</code> 类用作基类。</p>
 <p><code>exception</code> 类的底层实现是一个 <code>string</code> 类型的对象，因此可以直接用 <code>string</code> 对象来对其进行初始化。除此之外，<code>exception</code> 类中还包含一个虚函数成员 <code>what</code> ，它会返回一个字符串，其具体的值随实现而异。</p>
 <p>C++ 定义了很多基于 <code>exception</code> 的异常类型，我们这里简单说明一下，使用起来很简单。</p>
-<h4 id="stdexcept-异常类"><a href="#stdexcept-异常类" class="headerlink" title="stdexcept 异常类"></a>stdexcept 异常类</h4><p>头文件 <code>stdexcept</code> 定义了两个异常类：<code>logic_error</code> 和 <code>runtime_error</code> ，它们均是 <code>exception</code> 类派生而来。</p>
+<h4 id="stdexcept-异常类"><a class="markdownIt-Anchor" href="#stdexcept-异常类"></a> stdexcept 异常类</h4>
+<p>头文件 <code>stdexcept</code> 定义了两个异常类：<code>logic_error</code> 和 <code>runtime_error</code> ，它们均是 <code>exception</code> 类派生而来。</p>
 <p><code>logic_error</code> 派生了如下类：</p>
 <ul>
 <li>domain_error ，定义域（domain）错误，</li>
@@ -362,15 +366,15 @@
 </ul>
 <p>一般来说浮点数会有一个可以表示的最小非零值，当计算结果比这个值还小的时候会引发下溢（underflow）错误。</p>
 <p>同理，浮点数有一个所能表示的最大量级，当计算结果大于这个数时，会发生上溢（overflow）错误。</p>
-<p>当计算结果不在函数所能允许的范围内，但没有发生上溢和下溢错误，则可以用 <code>range_error</code> </p>
-<h4 id="bad-alloc-和-new"><a href="#bad-alloc-和-new" class="headerlink" title="bad_alloc 和 new"></a>bad_alloc 和 new</h4><p>对于 <code>new</code> 引发的申请空间所导致的异常，C++ 最新的处理方法是让 <code>new</code> 抛出一个 <code>bad_alloc</code> 异常，如：</p>
+<p>当计算结果不在函数所能允许的范围内，但没有发生上溢和下溢错误，则可以用 <code>range_error</code></p>
+<h4 id="bad_alloc-和-new"><a class="markdownIt-Anchor" href="#bad_alloc-和-new"></a> bad_alloc 和 new</h4>
+<p>对于 <code>new</code> 引发的申请空间所导致的异常，C++ 最新的处理方法是让 <code>new</code> 抛出一个 <code>bad_alloc</code> 异常，如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">try</span><br>&#123;<br>    <span class="hljs-keyword">auto</span> pt = <span class="hljs-keyword">new</span> somthing<br>&#125;<br><span class="hljs-built_in">catch</span>(bad_alloc &amp; r)<br>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>原先的处理方式是 <code>new</code> 在申请失败时返回空指针。处于兼容性的需要，编译器提供了一个标记让用户自己选择所需要的行为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> pt = <span class="hljs-built_in">new</span> (std::nothrow) somthing<br><span class="hljs-keyword">if</span>(pt == <span class="hljs-number">0</span>)<br>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>这样就不能用异常处理程序了。</p>
-<h3 id="异常导致的问题"><a href="#异常导致的问题" class="headerlink" title="异常导致的问题"></a>异常导致的问题</h3><p>异常被引发后，在两种情况下会导致问题。如果异常是由带有异常规范的函数所引发的，则它引发的异常必须与异常规范列表中的某个异常相匹配（在继承体系中，派生类异常可以与基类异常相匹配），否则称为异常意外。默认情况下会导致程序终止。</p>
+<h3 id="异常导致的问题"><a class="markdownIt-Anchor" href="#异常导致的问题"></a> 异常导致的问题</h3>
+<p>异常被引发后，在两种情况下会导致问题。如果异常是由带有异常规范的函数所引发的，则它引发的异常必须与异常规范列表中的某个异常相匹配（在继承体系中，派生类异常可以与基类异常相匹配），否则称为异常意外。默认情况下会导致程序终止。</p>
 <p>如果异常不是在函数中引发的，必须捕获它。如果没有捕获（没有与异常匹配的 <code>catch</code> 块时），则该异常称为未捕获异常。默认情况下，这将导致程序终止。</p>
 <p>实际上，异常意外与未捕获异常所导致的行为是可以修改的，但我们这里对此不过多赘述，直接去 C++ Primer Plus 的 517 页看就行。</p>
 
@@ -531,7 +535,6 @@
 
   
   
-
 
 
 
@@ -725,40 +728,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

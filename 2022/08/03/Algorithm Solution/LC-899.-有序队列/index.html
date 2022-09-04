@@ -18,15 +18,15 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+    <meta name="description" content="899. 有序队列 给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LC 899. 有序队列">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/08/03/Algorithm%20Solution/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="899. 有序队列给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个字符">
+<meta property="og:description" content="899. 有序队列 给定一个字符串 s 和一个整数 k 。你可以从 s 的前 k 个字母中选择一个，并把它加到字符串的末尾。 返回 在应用上述步骤的任意数量的移动后，字典上最小的字符串 。 12345输入：s &#x3D; &quot;cba&quot;, k &#x3D; 1输出：&quot;acb&quot;解释：在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “bac”。在第二步中，我们将第一个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-03T13:35:42.691Z">
-<meta property="article:modified_time" content="2022-09-01T03:11:04.478Z">
+<meta property="article:modified_time" content="2022-09-04T16:11:58.989Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="字符串">
 <meta property="article:tag" content="残留">
@@ -47,6 +47,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -233,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          859 字
+          873 字
         
       </span>
     
@@ -297,22 +299,20 @@
             
               <div class="markdown-body">
                 
-                <h4 id="899-有序队列"><a href="#899-有序队列" class="headerlink" title="899. 有序队列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/orderly-queue/">899. 有序队列</a></h4><p>给定一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以从 <code>s</code> 的前 <code>k</code> 个字母中选择一个，并把它加到字符串的末尾。</p>
+                <h4 id="899-有序队列"><a class="markdownIt-Anchor" href="#899-有序队列"></a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/orderly-queue/">899. 有序队列</a></h4>
+<p>给定一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以从 <code>s</code> 的前 <code>k</code> 个字母中选择一个，并把它加到字符串的末尾。</p>
 <p>返回 <em>在应用上述步骤的任意数量的移动后，字典上最小的字符串</em> 。</p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">输入：s = <span class="hljs-string">&quot;cba&quot;</span>, k = <span class="hljs-number">1</span><br>输出：<span class="hljs-string">&quot;acb&quot;</span><br>解释：<br>在第一步中，我们将第一个字符（“c”）移动到最后，获得字符串 “<span class="hljs-keyword">bac”。</span><br><span class="hljs-keyword"></span>在第二步中，我们将第一个字符（“<span class="hljs-keyword">b”）移动到最后，获得最终结果 </span>“acb”。<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="暴力循环"><a href="#暴力循环" class="headerlink" title="暴力循环"></a>暴力循环</h4><p>这个题乍一看觉得无从下手，实际上简单的要死。</p>
+<h4 id="暴力循环"><a class="markdownIt-Anchor" href="#暴力循环"></a> 暴力循环</h4>
+<p>这个题乍一看觉得无从下手，实际上简单的要死。</p>
 <p>我们分开来看，先看 <code>k = 1</code> 的情况</p>
-<p>这时，我们每次都会把第一个字符放到字符串的最后一位，这会生成 <code>n</code> 个字符串，我们只需要取这 <code>n</code> 个字符串中最小的那个就行。就是最简单的打擂台。这个地方的时间复杂度为 <em>O( $n^2$ )</em> ，因为需要遍历一遍这个字符串的同时，还需要进行插入，因此是 $n^2$ 。</p>
+<p>这时，我们每次都会把第一个字符放到字符串的最后一位，这会生成 <code>n</code> 个字符串，我们只需要取这 <code>n</code> 个字符串中最小的那个就行。就是最简单的打擂台。这个地方的时间复杂度为 <em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> )</em> ，因为需要遍历一遍这个字符串的同时，还需要进行插入，因此是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> 。</p>
 <p>然后，当 <code>k = 2</code> 时，<strong>我们可以从前面两个中选择一个放到最后一位</strong>，那么只需要我们每次都选择两个中较大的那个，把它放到最后去，是不是相当于把这个字符串整体进行一次排序？</p>
-<p>当然 <code>k &gt; 2</code> 的情况同理，这时的时间复杂度为 <em>O( $nlogn$ )</em> 。</p>
+<p>当然 <code>k &gt; 2</code> 的情况同理，这时的时间复杂度为 <em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> )</em> 。</p>
 <p>代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">string <span class="hljs-title">orderlyQueue</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-function">string <span class="hljs-title">ret</span><span class="hljs-params">(s)</span></span>;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				s.<span class="hljs-built_in">insert</span>(s.<span class="hljs-built_in">end</span>(), s[<span class="hljs-number">0</span>]);<br>				s.<span class="hljs-built_in">erase</span>(s.<span class="hljs-built_in">begin</span>());<br>				<span class="hljs-keyword">if</span> (s &lt; ret)<br>					ret = s;<br>			&#125;<br>			<span class="hljs-keyword">return</span> ret;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-built_in">sort</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>());<br>			<span class="hljs-keyword">return</span> s;<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：<em>O( $n^2$ )</em></p>
-<p>空间复杂度：<em>O( $n$ )</em> </p>
+<p>时间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span> )</em></p>
+<p>空间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> )</em></p>
 <p>这个题可以用最小表示法来解，但是那个玩意我看不懂。。。。。过一段时间再来看看把。</p>
 
                 
@@ -332,7 +332,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm-Solution</a>
   
   
 
@@ -380,7 +380,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月1日</div>
+          <div>2022年9月5日</div>
         </div>
       
       <div class="license-meta-item">
@@ -474,7 +474,6 @@
 
   
   
-
 
 
 
@@ -668,40 +667,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
