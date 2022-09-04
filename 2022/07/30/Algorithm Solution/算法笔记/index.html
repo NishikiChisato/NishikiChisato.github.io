@@ -1,0 +1,1474 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="算法性能分析大O的定义 大O的定义指的是一个算法最坏的运行时间的上界，而我们通常说所的时间复杂度为一般情况，并不是严格的上界  由于时间复杂度会忽略常数项，因此并不是时间复杂度越低越好  这是因为大O衡量的是数据量级非常大的情况下所表现出来的时间复杂度，此时常数项已经不起作用 对于一个复杂的大O表达式，我们只取最高量级的数并且忽略掉它的常数    一个例子找出n个字符串中相同的两个字符串（假设这里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法笔记">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/07/30/Algorithm%20Solution/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Chisato 的成长日记">
+<meta property="og:description" content="算法性能分析大O的定义 大O的定义指的是一个算法最坏的运行时间的上界，而我们通常说所的时间复杂度为一般情况，并不是严格的上界  由于时间复杂度会忽略常数项，因此并不是时间复杂度越低越好  这是因为大O衡量的是数据量级非常大的情况下所表现出来的时间复杂度，此时常数项已经不起作用 对于一个复杂的大O表达式，我们只取最高量级的数并且忽略掉它的常数    一个例子找出n个字符串中相同的两个字符串（假设这里">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201209193909426.png">
+<meta property="article:published_time" content="2022-07-30T11:18:31.646Z">
+<meta property="article:modified_time" content="2022-09-02T15:06:47.237Z">
+<meta property="article:author" content="Chisato">
+<meta property="article:tag" content="算法笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201209193909426.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>算法笔记 - Chisato 的成长日记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chisato 的成长日记</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="算法笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-30 19:18" pubdate>
+          2022年7月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          34k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          280 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">算法笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="算法性能分析"><a href="#算法性能分析" class="headerlink" title="算法性能分析"></a>算法性能分析</h2><h3 id="大O的定义"><a href="#大O的定义" class="headerlink" title="大O的定义"></a>大O的定义</h3><ul>
+<li><p>大O的定义指的是一个算法最坏的运行时间的上界，而我们通常说所的时间复杂度为一般情况，并不是严格的上界</p>
+</li>
+<li><p>由于时间复杂度会忽略常数项，<strong>因此并不是时间复杂度越低越好</strong></p>
+<ul>
+<li>这是因为大O衡量的是数据量级非常大的情况下所表现出来的时间复杂度，此时常数项已经不起作用</li>
+<li>对于一个复杂的大O表达式，我们只取最高量级的数并且忽略掉它的常数</li>
+</ul>
+</li>
+</ul>
+<h4 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h4><p>找出n个字符串中相同的两个字符串（假设这里只有两个相同的字符串）</p>
+<ul>
+<li><p>通过暴力枚举的话需要O(n^2)，但这里涉及到两个字符串的逐字节比较的问题，因此需要再乘上字符串的长度m，即O(m * n^2)</p>
+</li>
+<li><p>如果我们采取先排序再查找的思路，对于快排而言，由于是字符串排序，时间复杂度为O(m * n * logn)，由于是按照字典序排列的，因此相同的两个字符串是排在一起的，因此只需在在排序的基础上加上遍历n个字符串与比较两个字符串所花的时间即可，因此总时间复杂度为O(m * n * logn + m * n)，比直接暴力枚举要快</p>
+</li>
+</ul>
+<hr>
+<p>##递归算法的时间复杂度分析</p>
+<ul>
+<li>递归算法时间复杂度本质上是看<code>递归的次数 * 每次递归中的操作次数</code></li>
+</ul>
+<p>例如，我需要求x的n次方</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fact</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-type">int</span> temp = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>	temp *= x;<br><span class="hljs-keyword">return</span> temp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>我们可以写出该代码的递归代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fact1</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>)<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">else</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">fact1</span>(x, n - <span class="hljs-number">1</span>) * n;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>该代码的执行次数为n-1，每一次只执行一次乘法，因此总的时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fact2</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>)<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>)<span class="hljs-comment">//n is odd</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">fact2</span>(x, n / <span class="hljs-number">2</span>) * <span class="hljs-built_in">fact2</span>(x, n / <span class="hljs-number">2</span>) * x;<br><span class="hljs-keyword">else</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">fact2</span>(x, n / <span class="hljs-number">2</span>) * <span class="hljs-built_in">fact2</span>(x, n / <span class="hljs-number">2</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>满二叉树相关结论</strong></p>
+<p>&#96;</p>
+<ul>
+<li>二叉树的层数从1开始计算，深度为最大的层数</li>
+<li>第k层最多有2的k-1次方个节点</li>
+<li>总节点为n的满二叉数，其深度为logn下取整加1</li>
+<li>若满二叉树的深度为h，则其总结点个数为2的h次方减1<br>&#96;</li>
+</ul>
+<p>该代码可以看成一个满二叉树，即：</p>
+<p><img src="https://img-blog.csdnimg.cn/20201209193909426.png" srcset="/img/loading.gif" lazyload alt="满二叉树"></p>
+<p>设x为总节点个数，h为满二叉树的深度，有<code>x = 2^h - 1, h = log 2 n + 1</code><br>带入得到<code>x = 2n - 1</code>因此时间复杂度为O(n)</p>
+<p>上面的递归中<code>fact2</code>算了两次，其实我们可以用一个变量记录它的值，然后让该变量自乘一次便可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fact3</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> n)</span>	</span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>)<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> temp = <span class="hljs-built_in">fact3</span>(x, n / <span class="hljs-number">2</span>);<br><span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>)<span class="hljs-comment">//n is odd</span><br>	<span class="hljs-keyword">return</span> temp * temp * x;<br><span class="hljs-keyword">else</span><br>	<span class="hljs-keyword">return</span> temp * temp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>这里的递归次数为<code>O(logn)</code>，每一次递归乘法的运算为<code>O(2)</code>，因此总的时间复杂度为<code>O(logn)</code></p>
+<hr>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="二分查找的写法"><a href="#二分查找的写法" class="headerlink" title="二分查找的写法"></a>二分查找的写法</h2><p>二分查找有两种区间写法，左闭右闭与左闭右开。对于循环部分的判断以及mid的跳转一定要按照区间来写</p>
+<h3 id="左闭右闭"><a href="#左闭右闭" class="headerlink" title="左闭右闭"></a>左闭右闭</h3><p>左闭右闭说明了<strong>区间的左右端点都在数组当中有数值对应</strong>，即左端点对应第一个数，右端点对应最后一个数</p>
+<ul>
+<li><p>对于循环部分，应写<code>while(left &lt;= right)</code>。这是因为当<code>left = right</code>时，区间依旧有意义（它是一个点）</p>
+</li>
+<li><p>对于mid的跳转部分，应写<code>left = mid + 1</code>。这是因为如果<code>while(nums[mid] &lt; target)</code>时，说明<code>nums[mid]</code>一定不是target，并且不需要再去检测<code>nums[mid]</code>，即区间的左端点直接跳到<code>mid + 1</code>就行</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<span class="hljs-comment">//闭区间[left,right]写法，nums[right]为数组最后一个元素</span><br>    <span class="hljs-keyword">while</span> (left &lt;= right)<span class="hljs-comment">//对于区间[left,right]而言，区间左端点left与右端点right重合依旧有意义</span><br>    &#123;<br>        <span class="hljs-type">int</span> mid = right + (left - right) &gt;&gt; <span class="hljs-number">1</span>;<span class="hljs-comment">//直接用加号会溢出</span><br>        <span class="hljs-keyword">if</span> (nums[mid] &gt; target)<span class="hljs-comment">//nums[mid]一定不是target，表明target在[left,mid-1]当中</span><br>            right = mid - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target)<span class="hljs-comment">//nums[mid]一定不是target，target落在[mid+1,right]中</span><br>            left = mid + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> mid;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<span class="hljs-comment">//循环结束，说明没有找到，直接返回-1</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="左闭右开"><a href="#左闭右开" class="headerlink" title="左闭右开"></a>左闭右开</h3><p>左闭右开说明<strong>区间的右端点不是数组最后一个元素，而是最后一个元素的下一个</strong>，即<code>右端点-1</code>才是数组当中最后一个元素</p>
+<ul>
+<li><p>对于循环部分，写<code>while(left &lt; right)</code>。因为当<code>left = right</code>时，区间无意义</p>
+</li>
+<li><p>对于区间左端点的跳转部分，当<code>while(nums[mid] &lt; target)</code>时，<code>nums[mid]</code>不是target，由于区间是<strong>左闭</strong>的属性，因此<code>left = mid + 1</code></p>
+</li>
+<li><p>对于区间右端点的跳转部分，当<code>while(nums[mid] &gt; target)</code>时，<code>nums[mid]</code>不是target，但由于区间右端点必须是开区间，因此<code>right = mid</code></p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">while</span> (left &lt; right)<br>	&#123;<br>		<span class="hljs-type">int</span> mid = right + (left - right) &gt;&gt; <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">if</span> (nums[mid] &gt; target)<span class="hljs-comment">//target落在区间[left,mid)当中，由于右端点不在检测数组内</span><br>		                       <span class="hljs-comment">//因此right = mid  </span><br>		right = mid;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target)<span class="hljs-comment">//target落在区间(mid,right)，由于左端点为闭区间</span><br>		                            <span class="hljs-comment">//因此left = mid + 1</span><br>		left = mid + <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> mid;<br>	&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>二分查找本质上是对查找区间的不断缩小</strong>，最终一定会变成区间含有三个或者四个元素的情况（区间两端点均为闭区间）。</p>
+<ul>
+<li><p>对于前者，下一步的<code>left</code>或者<code>right</code>将会重合。假设<code>left=0, right=2</code>，这时<code>mid=1</code>，即与<code>target</code>比较的元素为<strong>区间的中点</strong>。那么下一步将会变成<code>left=0, right=0</code>，即二者重合，在进行一次判断，这时会产生<code>left&gt;right</code></p>
+</li>
+<li><p>对于后者，假设<code>left=0, right=3</code>，这时<code>mid=1</code>，即与<code>target</code>比较的元素为<strong>中间偏右</strong>。下一步将变成<code>left=0, right=0</code>，二者重合，之后的情况与上面一样。</p>
+</li>
+</ul>
+<blockquote>
+<p>力扣34</p>
+<p>给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
+<p>如果数组中不存在目标值 target，返回 [-1, -1]。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">searchRange</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-type">int</span> left = <span class="hljs-built_in">Getleft</span>(nums, target);<span class="hljs-comment">//加一才是下标位置</span><br>	<span class="hljs-type">int</span> right = <span class="hljs-built_in">Getright</span>(nums, target);<span class="hljs-comment">//这个是序号位置，下标位置要减一</span><br>	<span class="hljs-keyword">if</span> (left == <span class="hljs-number">-2</span> || right == <span class="hljs-number">-2</span>) <span class="hljs-keyword">return</span> &#123; <span class="hljs-number">-1</span>,<span class="hljs-number">-1</span> &#125;;<span class="hljs-comment">//只要有一个等于-2，说明target一定超界</span><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((right - <span class="hljs-number">1</span>) - (left + <span class="hljs-number">1</span>) &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123; left + <span class="hljs-number">1</span>,right - <span class="hljs-number">1</span> &#125;;<span class="hljs-comment">//正常情况，两个数开始与结束相差值大于0（两个数可以相等）</span><br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> &#123; <span class="hljs-number">-1</span>,<span class="hljs-number">-1</span> &#125;;<span class="hljs-comment">//对于这种数组中找不到的情况，想不明白，直接用else</span><br>&#125;<br><span class="hljs-keyword">private</span>:<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Getright</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>	<span class="hljs-type">int</span> border = <span class="hljs-number">-2</span>;<br>	<span class="hljs-keyword">while</span> (left &lt;= right)<br>	&#123;<br>		<span class="hljs-type">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>		<span class="hljs-keyword">if</span> (nums[mid] &gt; target)<span class="hljs-comment">//这里必须是右边界移动，下面的左边界加一才是结果</span><br>			right = mid - <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">else</span><span class="hljs-comment">//相等的话，我们要让左边界向右移动一位</span><br>		&#123;<br>			left = mid + <span class="hljs-number">1</span>;<br>			border = left;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> border;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Getleft</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;nums, <span class="hljs-type">int</span> target)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>	<span class="hljs-type">int</span> border = <span class="hljs-number">-2</span>;<br>	<span class="hljs-keyword">while</span> (left &lt;= right)<br>	&#123;<br>		<span class="hljs-type">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>		<span class="hljs-keyword">if</span> (nums[mid] &lt; target)<br>			left = mid + <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			right = mid - <span class="hljs-number">1</span>;<br>			border = right;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> border;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="左右指针操作数组"><a href="#左右指针操作数组" class="headerlink" title="左右指针操作数组"></a>左右指针操作数组</h2><p>如果需要移动（或覆盖）一个数组当中的元素，我们可以采取双指针来操作这个数组。左指针为待覆盖元素，右指针为被检测元素（即该元素是否应该去覆盖左指针所指的元素）。</p>
+<p>左右指针可同向行进，也可相向行进。</p>
+<blockquote>
+<p>力扣（26）</p>
+<p>给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。</p>
+<p>由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 k 个元素，那么 nums 的前 k 个元素应该保存最终结果。</p>
+<p>将最终结果插入 nums 的前 k 个位置后返回 k 。</p>
+<p>不要使用额外的空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">removeDuplicates</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> right = <span class="hljs-number">1</span>; right &lt; nums.<span class="hljs-built_in">size</span>(); right++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (nums[right] != nums[left])<br>		&#123;<br>			nums[++left] = nums[right];<br>		&#125;<br>	&#125;<br>    <span class="hljs-keyword">return</span> left + <span class="hljs-number">1</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>字符串的遍历（对于string类）</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> c : str)<span class="hljs-comment">//相当于用c对str进行遍历</span><br><br><span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> &amp;c : str)<span class="hljs-comment">//同上，不过上面会将str复制一次，这个不用</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>二维数组的初始化</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">ret</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>))<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="滑动窗口、左右指针"><a href="#滑动窗口、左右指针" class="headerlink" title="滑动窗口、左右指针"></a>滑动窗口、左右指针</h2><blockquote>
+<p>力扣209</p>
+<p>给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的 连续 子数组，并</p>
+<p>返回其长度。如果不存在符合条件的子数组，返回 0。</p>
+</blockquote>
+<p>我们定义两个指针，通过不断移动两个指针来得到最优解的过程称之为滑动窗口</p>
+<p>需要明确的是：</p>
+<ul>
+<li><p>窗口内的内容是什么</p>
+</li>
+<li><p>窗口的右边界确定什么，以及什么时候移动</p>
+</li>
+<li><p>窗口的左边界确定什么，以及什么时候移动</p>
+</li>
+</ul>
+<blockquote>
+<p>对于这道题，<strong>窗口的右边界就是遍历数组的指针，它用来一直寻找最优解，需要一直移动</strong>，窗口内容是<strong>一个和大于<code>target</code>的子序列</strong>，左边界指针<strong>用来确定当前最优解，即当窗口内容符合条件时，左指针移动</strong></p>
+</blockquote>
+<blockquote>
+<p>三数之和<br>给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c &#x3D; 0 ？请你找出所有和为 0 且不重复的三元组</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">threeSum</span>(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)<br>&#123;<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;ret;<br>    <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>());<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (nums[i] &gt; <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">return</span> ret;<br>        <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; nums[i] == nums[i - <span class="hljs-number">1</span>])<br>            <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-type">int</span> left = i + <span class="hljs-number">1</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span> (left &lt; right)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (nums[i] + nums[left] + nums[right] &gt; <span class="hljs-number">0</span>)<br>            &#123;<br>                right--;<br>                <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right + <span class="hljs-number">1</span>])<br>                    right--;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[i] + nums[left] + nums[right] &lt; <span class="hljs-number">0</span>)<br>            &#123;<br>                left++;<br>                <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left - <span class="hljs-number">1</span>])<br>                    left++;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                ret.<span class="hljs-built_in">push_back</span>(&#123; nums[i], nums[left], nums[right] &#125;);<br>                <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left + <span class="hljs-number">1</span>])<br>                    left++;<br>                <span class="hljs-keyword">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right - <span class="hljs-number">1</span>])<br>                    right--;<br>                left++;<br>                right--;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ret;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注：由于用的是<code>if elseif else</code>语句，在条件成立后<strong>只会走一条路</strong>，因此前面两个的去重是为了保证<strong>找到下一个不同于当前重复数子的数</strong><br>第三个的去重是为了保证<strong>在当前重复的数子中，现在的<code>right</code>指向的是重复区间的最后一个数字</strong></p>
+<blockquote>
+<p>在判断<code>nums[i] + nums[left] + nums[right] &gt; 0</code>之后的去重部分为什么是<code>nums[right] == nums[right + 1]</code></p>
+</blockquote>
+<p>对于循环，当<strong>条件不满足的时候才会跳出</strong>，因此跳出之后的情况就是<strong>不满足循环判断部分的条件</strong>。<br>当<code>nums[i] + nums[left] + nums[right] &gt; 0</code>判断完之后，我需要让<code>right</code><strong>跳到下一位</strong>（<strong>不同于</strong>上一位）<br>因此<strong>在结束循环后</strong>，我需要的状况为<code>nums[right] ！= nums[right + 1]</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录大小</span><br>	<span class="hljs-type">int</span> length = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录当前长度</span><br>	<span class="hljs-type">int</span> ret = INT32_MAX;<span class="hljs-comment">//目前已记录的最短长度</span><br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>;<span class="hljs-comment">//左指针初始化</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> right = <span class="hljs-number">0</span>; right &lt; nums.<span class="hljs-built_in">size</span>(); right++)<br>	&#123;<br>		sum += nums[right];<span class="hljs-comment">//不需要对sum进行初始化</span><br>		<span class="hljs-keyword">while</span> (sum &gt;= target)<br>		&#123;<br>			length = right - left + <span class="hljs-number">1</span>;<br>			ret = ret &lt; length ? ret : length;<br>			sum -= nums[left++];<span class="hljs-comment">//sum减去left的值并且left向右移动</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> ret == INT32_MAX ? <span class="hljs-number">0</span> : ret;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>在使用左右指针的时候我们需要明确左指针与右指针<strong>什么时候需要移动</strong>，以及我需要<strong>通过这两个指针来操作什么</strong></p>
+<ul>
+<li><p>如果我是想要移动数组，那么就右指针赋值给左指针（相当于<strong>删除</strong>元素）或者左指针赋值给右指针（相当于<strong>扩充</strong>元素）</p>
+</li>
+<li><p>如果我想删除链表当中的某个元素（不是特定值，而是正数第几个倒数第几个），我可以先让右指针<strong>向右移动一段距离</strong>，然后再让左右指针<strong>同时</strong>移动，当右指针移动到链表结尾时左指针恰好移动到待删除元素的<strong>节点上</strong></p>
+</li>
+</ul>
+<hr>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><p>由于对链表操作时通常<strong>涉及到该节点的前一个节点，但头节点并没有前一个节点这种概念</strong>，因此我们可以在链表创建时设立一个虚拟头节点<code>dummyhead</code>，这个节点不存储数据，第一个存储数据的节点为<code>dummyhead-&gt;next</code>，这么做的好处时在对链表进行操作时<strong>不需要对头节点进行单独操作</strong></p>
+<blockquote>
+<p>关于代码规范上：需要加入的节点写为<code>NewNode</code>，临时指针为<code>tmp</code>，遍历指针为<code>cur</code></p>
+</blockquote>
+<p>写链表的算法时一定要明确，我设立虚拟头节点的目的是为了对每个节点的操作是可以<strong>复制</strong>的，即<strong>我对任意一个或多个节点的操作都是相同的</strong></p>
+<h2 id="删除倒数第n个节点"><a href="#删除倒数第n个节点" class="headerlink" title="删除倒数第n个节点"></a>删除倒数第n个节点</h2><blockquote>
+<p>例：给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。</p>
+</blockquote>
+<p>删除倒数第n个节点，这种题是典型的双指针的应用</p>
+<p>通常想法是先把链表的总大小给统计出来，然后得出指针<code>cur</code>需要移动的步数</p>
+<p>其实还有一种更简单的方法：</p>
+<p>考虑到，如果我定义两个指针：<code>fast</code>与<code>slow</code>，我<strong>让两个指针同时运动</strong>，两个指针之间相差一定的步数，只要<code>fast</code>指向空的时候<code>slow</code>正好指向<strong>待删除节点的前一个节点</strong>，那么我们便可以实现节点的删除<br>注：<strong>删除一个节点只需要一个指针</strong></p>
+<blockquote>
+<p>通过画图我们可以得知，只需要让<code>fast</code>指针移动<code>n+1</code>步就可以让两个指针同时移动了</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function">ListNode* <span class="hljs-title">removeNthFromEnd</span><span class="hljs-params">(ListNode* head, <span class="hljs-type">int</span> n)</span> </span><br><span class="hljs-function"></span>&#123;<br>    ListNode* dummyhead = <span class="hljs-keyword">new</span> ListNode;<br>    dummyhead-&gt;next = head;<br>    ListNode* fast = dummyhead, *slow = dummyhead;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n + <span class="hljs-number">1</span>; i++)<br>        fast = fast-&gt;next;<br>    <span class="hljs-keyword">while</span>(fast)<br>    &#123;<br>        fast = fast-&gt;next;<br>        slow = slow-&gt;next;<br>    &#125;<br>    ListNode* tmp = slow-&gt;next;<br>    slow-&gt;next = tmp-&gt;next;<br>    <span class="hljs-keyword">delete</span> tmp;<br>    <span class="hljs-keyword">return</span> dummyhead-&gt;next;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用虚拟头节点在返回的时候可以之间返回<code>dummyhead-&gt;next</code>，这样子更方便</p>
+</blockquote>
+<hr>
+<p>对链表（一个与两个链表均同理）用双指针的时候，我们两个指针可以<strong>同时同地移动</strong>，也可以<strong>同时不同地移动</strong></p>
+<p>对于前者，我们可以让<strong>两个指针在链表的开始节点移动</strong>（数组的话可以在尾部开始移动）</p>
+<p>对于后者，我们定义两个指针<code>fast</code>与<code>slow</code>，<strong>我们让<code>fast</code>与<code>slow</code>相差一定的节点数</strong>（可以是题目给的数也可以是两个链表的长度差），<strong>之后再让两指针同时移动</strong></p>
+<p>当然，我们也可以定义两个指针<code>slow</code>与<code>fast</code>，我们让**<code>fast</code>一次走两个节点<strong>，</strong><code>slow</code>一次走一个节点*<em>，他们一定会相遇，这种通常用在循环链表上。</em>见力扣142*</p>
+<h2 id="链表反转"><a href="#链表反转" class="headerlink" title="链表反转"></a>链表反转</h2><p>递归实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(head == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(head-&gt;next == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> head;<br>    ListNode* tmp = <span class="hljs-built_in">reverseList</span>(head-&gt;next);<br>    head-&gt;next-&gt;next = head;<br>    head-&gt;next = <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">return</span> tmp;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为什么要写<code>head-&gt;next-&gt;next = head</code></p>
+</blockquote>
+<p>tmp<strong>始终</strong>记录的都是头节点，因此只能是用head-&gt;next-&gt;next来表示<strong>当前节点</strong>（该节点可以移动），而<code>head</code>则表示<strong>当前节点的前一个节点</strong></p>
+<blockquote>
+<p>为什么判断<code>head-&gt;next == NULL</code>之后是返回<code>head</code></p>
+</blockquote>
+<p>我们<code>tmp</code>的最终值只能是最后一个节点，由于<code>tmp = reverseList(head-&gt;next)</code>，因此在<code>head-&gt;next</code>为空指针的时候我就要返回<code>head</code></p>
+<p>双指针实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(head == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    ListNode* pre = <span class="hljs-literal">NULL</span>, *cur = head;<span class="hljs-comment">//cur为当前处理的节点，pre为该节点的前一个节点</span><br>    <span class="hljs-keyword">while</span>(cur)<span class="hljs-comment">//我对某个节点处理，只能是对这个节点进行判断</span><br>    &#123;<br>        ListNode* tmp = cur-&gt;next;<br>        cur-&gt;next = pre;<br>        pre = cur;<br>        cur = tmp;<br>    &#125;<br>    <span class="hljs-keyword">return</span> pre;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>双指针递归实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">reverse</span>(<span class="hljs-literal">NULL</span>, head);<br>&#125;<br><br><span class="hljs-function">ListNode* <span class="hljs-title">reverse</span><span class="hljs-params">(ListNode* pre, ListNode* cur)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span>(cur == <span class="hljs-literal">NULL</span>)<br>		<span class="hljs-keyword">return</span> pre;<br>	ListNode* tmp = cur-&gt;next;<br>	cur-&gt;next = pre;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">reverse</span>(cur, tmp);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为什么在判断<code>cur == NULL</code>之后返回的是<code>pre</code></p>
+</blockquote>
+<p>由于<code>pre</code>总表示<code>cur</code>的前一个节点，因此当<code>cur</code>为<code>NULL</code>时，说明<code>pre</code>已经到达最后一个节点，由于需要直接返回最后一个节点，因此我需要返回<code>pre</code></p>
+<hr>
+<h1 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h1><p>哈希表是一种用于查询的工具，具体来说，我将数据录入哈希表当中，每个数据对应一个索引key值，在我需要判断某个元素是否存在这个哈希表当中时，我直接去找它的索引就行</p>
+<p><strong>也就是说，当我需要快速判断一个元素是否在一个集合当中时，我就可以考虑用哈希表了</strong></p>
+<p>在引入哈希表前，我们需要先介绍四个容器<strong>（这四个容器均不涉及哈希表）</strong></p>
+<blockquote>
+<p><code>set</code></p>
+<blockquote>
+<p>插入容器当中的数据会<strong>自动排序（默认从小到大）</strong>，元素不能更改，并且<strong>不允许相同的元素出现</strong></p>
+</blockquote>
+</blockquote>
+<h2 id="相关操作"><a href="#相关操作" class="headerlink" title="相关操作"></a>相关操作</h2><pre><code class="hljs">begin()--返回指向第一个元素的迭代器
+
+clear()--清除所有元素
+
+count()--返回某个值元素的个数
+
+empty()--如果集合为空，返回true
+
+end()--返回指向最后一个元素的迭代器
+
+equal_range()--返回集合中与给定值相等的上下限的两个迭代器
+
+erase()--删除集合中的元素
+
+find()--返回一个指向被查找到元素的迭代器
+
+get_allocator()--返回集合的分配器
+
+insert()--在集合中插入元素
+
+lower_bound()--返回指向大于（或等于）某值的第一个元素的迭代器
+
+key_comp()--返回一个用于元素间值比较的函数
+
+max_size()--返回集合能容纳的元素的最大限值
+
+rbegin()--返回指向集合中最后一个元素的反向迭代器
+
+rend()--返回指向集合中第一个元素的反向迭代器
+
+size()--集合中元素的数目
+
+swap()--交换两个集合变量
+
+upper_bound()--返回大于某个值元素的迭代器
+
+value_comp()--返回一个用于比较元素间的值的函数
+</code></pre>
+<blockquote>
+<p><code>mutilset</code>跟<code>set</code>一样，只不过<code>mutilset</code><strong>允许相同的元素</strong></p>
+</blockquote>
+<hr>
+<blockquote>
+<p><code>map</code>容器当中的每一个元素均为一个<strong>对组</strong>，即每个元素成对出现</p>
+<blockquote>
+<p><code>map</code>容器当中，对组的<code>first</code>为索引<code>key</code>值，<code>second</code>为<code>value</code>值</p>
+</blockquote>
+<blockquote>
+<p><code>map</code>会<strong>按照<code>key</code>值来对元素进行排序</strong>，并且<code>map</code><strong>不允许有相同的<code>key</code>值出现</strong></p>
+</blockquote>
+<blockquote>
+<p><code>map</code>只检测<code>key</code>值是否相同，它允许有相同的<code>value</code>值</p>
+</blockquote>
+<blockquote>
+<p><code>map</code>当中的<code>value</code>值是可以更改的，<code>set</code>当中的不行</p>
+<blockquote>
+<p>相关操作</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code class="hljs">begin()         返回指向map头部的迭代器
+
+ clear(）        删除所有元素
+
+ count()         返回指定元素出现的次数
+
+ empty()         如果map为空则返回true
+
+ end()           返回指向map末尾的迭代器
+
+ equal_range()   返回特殊条目的迭代器对
+
+ erase()         删除一个元素(按照key值删除而不是按照value值删除)
+
+ find()          查找一个元素（按照key值查找，返回迭代器）
+
+ get_allocator() 返回map的配置器
+
+ insert()        插入元素
+
+ key_comp()      返回比较元素key的函数
+
+ lower_bound()   返回键值&gt;=给定元素的第一个位置
+
+ max_size()      返回可以容纳的最大元素个数
+
+ rbegin()        返回一个指向map尾部的逆向迭代器
+
+ rend()          返回一个指向map头部的逆向迭代器
+
+ size()          返回map中元素的个数
+
+ swap()           交换两个map
+
+ upper_bound()    返回键值&gt;给定元素的第一个位置
+
+ value_comp()     返回比较元素value的函数
+</code></pre>
+<p>好了，下面我们引入两个容器，其底层实现为哈希表</p>
+<blockquote>
+<p><code>unordered_set</code>跟<code>set</code>一样，不过它的元素是无序的，并且不允许相同元素出现，相关操作跟<code>set</code>一样</p>
+<p><code>unordered_set</code><strong>不允许<code>value</code>值被修改</strong></p>
+<p><code>unordered_map</code>跟<code>map</code>一样，不过不会按照<code>key</code>值进行排序</p>
+<p><code>unordered_map</code>的查找是根据<code>key</code>值进行查找的，而不是根据<code>value</code>值进行查找</p>
+<p><code>unordered_map</code>支持用中括号来访问<code>value</code>值，如果该<code>key</code>值对应的<code>value</code>值不存在，那么它会自动创建一个<code>value</code>值<strong>并赋值为0</strong>，并且<code>value</code>值是可以被修改的</p>
+</blockquote>
+<p>在实际解题当中，由于<code>unordered_set</code>与<code>unordered_map</code>都是哈希表，但前者仅仅只是具备查询功能，后者可以实现<strong>对元素出现次数的记录</strong>，因此，<strong>如果不需要对元素出现次数进行考虑时，我们一般选择前者</strong></p>
+<p>不管是用哈希表还是二分查找，我们都需要<strong>知道一个确定的元素才可以进行查找</strong></p>
+<p>注：<code>vector</code>的删除是<strong>按照元素删除</strong>，<code>map</code>与<code>set</code>是<strong>按照<code>key</code>值删除</strong></p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实数组也是一种简易的哈希表，当我们在处理字符串的时候，如果<strong>都是小写字符</strong>或<strong>都是大写字符</strong>，那么我们就可以用数组来解（对于每个字符，直接减去字符a或A就可以直接得到对应下标），至于为什么不用<code>map</code>或者<code>set</code>，因为这两个底层都是红黑树，十分耗时（这种的话可以不用<code>unordered_set</code>与<code>unordered_map</code>）</p>
+<blockquote>
+<p>对应题目：力扣242、383</p>
+</blockquote>
+<p>如果题目中<strong>没有限制数组的大小</strong>，那么这个时候就不能用数组（虽然<code>vector</code>具有自动扩容的功能，<strong>但这个数组本质上我是想把它当成哈希表一样对待</strong>，因此<strong>我需要用到数组的下标以及下标对应的元素</strong>，而一旦涉及到使用数组的下标，我就必须要对这个数组进行初始化，<strong>对于大小不确定的数组，我无法对其初始化</strong>）</p>
+<p>除此之外还有一点，数组是连续的空间，一旦哈希值跨度很大（即数组下标跨度很大），就会造成浪费空间</p>
+<blockquote>
+<p>对应题目：力扣349</p>
+</blockquote>
+<p><code>set</code>与<code>map</code>、<code>mutilset</code>与<code>mutilmap</code>、<code>unordered_set</code>与<code>unordered_map</code>均可以做哈希表，分<code>set</code>与<code>map</code>来说（因为<code>unordered_set</code>与<code>unordered_map</code>均可以看成<code>set</code>与<code>map</code>的无序版本）</p>
+<p>对于<code>set</code>而言，它是集合，只有<code>key</code>值的概念，并且它的<code>key</code>值是有序的。如果我<strong>仅仅需要看一个数是否在数组当中时</strong>，我便可以用<code>set</code></p>
+<blockquote>
+<p>对应题目：力扣349、202</p>
+</blockquote>
+<p>对于<code>map</code>而言，它有<code>key</code>值与<code>value</code>值的概念，并且它是按<code>key</code>值进行排序的。如果涉及到<strong>一个数字出现的次数等需要记录两个数据的情况</strong>，<code>set</code>便不再适用</p>
+<p>用<code>map</code>的话一般是用<code>key</code>值表示<strong>数组元素</strong>，用<code>value</code>值表示<strong>数组下标</strong>，在这种情况下，如果不要求数组元素有序的话可以选用<code>unordered_map</code>（因为<code>map</code>与<code>mutilmap</code>均会对<code>key</code>值进行排序）</p>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><p>字符串跟数组是一样的，<code>vector&lt;char&gt;</code>跟<code>string</code>并没有区别，只不过<code>string</code>类增加了很多对字符的操作</p>
+<p>正因为字符串跟数组一样的特性，因此需要删除数组当中<strong>特定元素</strong>的话可以直接用<strong>双指针</strong></p>
+<blockquote>
+<p>力扣27</p>
+<p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。</p>
+<p>不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</p>
+<p>元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p>
+</blockquote>
+<p>下面给出我的思路：</p>
+<blockquote>
+<p>一个最直接的想法是直接一层循环，当我找到特定元素之后再在里面套一层循环来更新数组（把<strong>后面的数字</strong>往前面移动，不过这<strong>一层循环需要把整个数组遍历一遍</strong>）。当内层循环结束之后，外层指针加一，不断循环这一过程。</p>
+</blockquote>
+<p>可以看到，这里增加时间复杂度的主要原因是<strong>只要数组当中出现了特定值，我就需要把数组的后面部分整个往前移动</strong>。也就是说我们移动的是后面的整个部分，即从<strong>出现特定值</strong>之后就要开始移动了。而两层循环实际上就是两个指针，在没有出现特定值的时候，两个指针同时移动。如果一旦出现特定值，我们让内层指针跳过这个特定值之后不断地对外层指针进行赋值，这样便实现了数组的移动。处于统一操作的需要，我们让两个指针同时移动的时候也直接赋值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>   <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">removeElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> val)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> right = <span class="hljs-number">0</span>; right &lt; nums.<span class="hljs-built_in">size</span>(); right++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (nums[right] != val)<br>			nums[left++] = nums[right];<br>	&#125;<br>	<span class="hljs-keyword">return</span> left;<br>&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">strStr</span><span class="hljs-params">(string haystack, string needle)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (needle.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> next[<span class="hljs-number">10000</span>] = &#123; <span class="hljs-number">0</span> &#125;;<br>        <span class="hljs-built_in">GetNext</span>(next, needle);<br>        <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; haystack.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; needle[j] != haystack[i])<br>                j = next[j - <span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">if</span> (needle[j] == haystack[i])<br>                j++;<br>            <span class="hljs-keyword">if</span> (j == needle.<span class="hljs-built_in">size</span>())<br>                <span class="hljs-keyword">return</span> i - needle.<span class="hljs-built_in">size</span>() + <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">GetNext</span><span class="hljs-params">(<span class="hljs-type">int</span>* next, string&amp; s)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>        next[<span class="hljs-number">0</span>] = j;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; s.<span class="hljs-built_in">size</span>(); i++)<span class="hljs-comment">//j表示前缀字符串的末尾，i表示后缀字符串的末尾</span><br>        &#123;<br>            <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; s[j] != s[i])<br>                j = next[j - <span class="hljs-number">1</span>];<span class="hljs-comment">//j跳到j前面(不包括j)的字符串中最大相同前后缀的值所对应的字符处，相当于减小前缀的长度</span><br>                                <span class="hljs-comment">//为什么是按照next数组的值来进行跳动?</span><br>                                <span class="hljs-comment">//由于next数组里面的值均为该字符之前(包括该字符)的字符串当中最大相同前后缀的值，这样我便可以直接跳过</span><br>                                <span class="hljs-comment">//重复段(前后缀相同)</span><br>            <span class="hljs-keyword">if</span> (s[j] == s[i])<br>                j++;<br>            next[i] = j;<span class="hljs-comment">//将前缀长度赋给i, j+1表示前缀长度</span><br>        &#125;<br><br>    &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<h1 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在进入栈与队列前，我们需要先回答四个问题</p>
+<ol>
+<li><p>C++中的stack是容器吗</p>
+</li>
+<li><p>我们使用的stack是属于哪个版本的<code>STL</code></p>
+</li>
+<li><p>我们使用的<code>STL</code>中的stack是如何实现的</p>
+</li>
+<li><p>stack提供迭代器来遍历stack空间吗</p>
+</li>
+</ol>
+<p>首先我们先介绍三个最普遍的<code>STL</code>版本</p>
+<ol>
+<li><p><code>HP STL</code> 其他版本的C++ <code>STL</code>，一般是以<code>HP STL</code>为蓝本实现出来的，<code>HP STL</code>是C++ <code>STL</code>的第一个实现版本，而且开放源代码。</p>
+</li>
+<li><p><code>P.J.Plauger STL </code>由<code>P.J.Plauger</code>参照<code>HP STL</code>实现出来的，被Visual C++编译器所采用，不是开源的。</p>
+</li>
+<li><p><code>SGI STL</code> 由Silicon Graphics Computer Systems公司参照<code>HP STL</code>实现，被Linux的C++编译器<code>GCC</code>所采用，<code>SGI STL</code>是开源软件，源码可读性甚高。</p>
+</li>
+</ol>
+<p>我们先讨论栈</p>
+<p>栈是先进后出，即它提供<code>push</code>和<code>pop</code>接口来实现对元素的操作，<strong>所有的元素都必须满足此性质</strong>，因此栈不提供随机访问的功能，也不提供迭代器</p>
+<p>其次，<strong>栈是以底层容器完成其所有的工作，对外统一提供接口，底层容器是可以替换的（也就是说我们可以选择使用哪种容器来实现栈的功能）</strong></p>
+<p>基于此，<code>STL</code>中的栈往往不被归类为容器，而是<code>container adapter</code>（容器适配器）</p>
+<p>那么问题是，<code>STL</code>中的栈的底层实现是用什么容器</p>
+<p>实际上，栈的底层实现可以是<code>vector</code>、<code>deque</code>、<code>list</code>，主要是数组与链表</p>
+<p>我们常用的<code>SGI STL</code>，如果没有指定底层实现的话默认是用<code>deque</code>为底层结构</p>
+<p>当然，我们也可以指定其底层实现为<code>vector</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::stack&lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt; &gt;s;<br></code></pre></td></tr></table></figure>
+
+<p><code>STL</code>中的<code>list</code>与<code>stack</code>一样，默认是用<code>deque</code>来实现队列功能，指定其底层实现也跟<code>stack</code>一样</p>
+<h2 id="string与vector跟stack的联系"><a href="#string与vector跟stack的联系" class="headerlink" title="string与vector跟stack的联系"></a>string与vector跟stack的联系</h2><ul>
+<li><p><code>string</code>跟<code>vector</code>一样，都支持<code>push_back</code>与<code>pop_back</code>的操作</p>
+</li>
+<li><p><code>push_back</code>与<code>pop_back</code>分别是尾插和尾删，即我们可以认为<code>vector</code>是一个<strong>支持随机访问的栈</strong>，<strong>栈顶元素为最后一个元素</strong></p>
+</li>
+</ul>
+<h2 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h2><p>我们定义这样一个队列：<strong>队列内的元素一定单调增或单调减</strong>，这样的队列称之为单调队列</p>
+<p>单调队列的底层容器我们默认用<code>deque</code>容器来实现</p>
+<p>值得注意的是，单调队列中不一定<code>push</code>就不能删除队列中的元素，<code>pop</code>就不能增加队列当中的元素。即<code>push</code>和<code>pop</code>函数的定义可以是</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span></span>;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pop</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><code>push</code>表示添加值为<code>val</code>的元素，<code>pop</code>表示删除值为<code>val</code>的容器</p>
+<p>由于单调队列的实现各不相同，因此这里我们给出一种具体实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">humdrumqueue</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    deque&lt;<span class="hljs-type">int</span>&gt;deq;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pop</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (!deq.<span class="hljs-built_in">empty</span>() &amp;&amp; deq.<span class="hljs-built_in">front</span>() == value)<br>            deq.<span class="hljs-built_in">pop_front</span>();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">while</span> (!deq.<span class="hljs-built_in">empty</span>() &amp;&amp; deq.<span class="hljs-built_in">back</span>() &lt; value)<br>            deq.<span class="hljs-built_in">pop_back</span>();<br>        deq.<span class="hljs-built_in">push_back</span>(value);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">front</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> deq.<span class="hljs-built_in">front</span>();<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="关于vector的补充"><a href="#关于vector的补充" class="headerlink" title="关于vector的补充"></a>关于vector的补充</h3><p><code>vector</code>中的<code>insert</code>和<code>emplace</code>都可以插入元素</p>
+<ul>
+<li><p><code>insert</code>的插入是先将该元素单独生成，然后再复制到指定位置，即会调用该对象的<strong>构造函数</strong>和<strong>拷贝构造函数</strong></p>
+</li>
+<li><p><code>emplace</code>是直接在指定位置生成该元素，只调用<strong>构造函数</strong></p>
+</li>
+</ul>
+<p>因此<code>emplace</code>的速度快于<code>insert</code></p>
+<p><code>push_back</code>同理</p>
+<h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h2 id="递归的写法"><a href="#递归的写法" class="headerlink" title="递归的写法"></a>递归的写法</h2><p>二叉树经常会涉及到递归的问题，在这里我们详细总结一下递归的写法</p>
+<ul>
+<li><p><strong>确定递归函数的参数与返回值</strong>。我们需要知道在递归中哪些<strong>参数是需要不断改变的</strong>，那么就将这些参数放到递归函数里面。同理，我们需要明确每次<strong>递归的返回值</strong>是什么进而确定<strong>递归函数的返回值</strong>（递归的返回值与递归函数的返回值并不相同）</p>
+</li>
+<li><p><strong>确定终止条件</strong></p>
+</li>
+<li><p><strong>确定单层递归的逻辑</strong>。这里的单层递归指的是递归函数每次重复使用的部分</p>
+</li>
+</ul>
+<h2 id="二叉树的翻转问题"><a href="#二叉树的翻转问题" class="headerlink" title="二叉树的翻转问题"></a>二叉树的翻转问题</h2><blockquote>
+<p>给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点</p>
+</blockquote>
+<p>这道题我们既可以用递归，也可以用迭代</p>
+<p>递归的话只支持<strong>先序和后序</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">invertTree</span><span class="hljs-params">(TreeNode* root)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> root;<br>    <span class="hljs-built_in">swap</span>(root-&gt;left, root-&gt;right);  <span class="hljs-comment">// 中</span><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;left);         <span class="hljs-comment">// 左</span><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;right);        <span class="hljs-comment">// 右</span><br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>迭代的话我们用统一迭代法，<strong>前中后三种都可以</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">invertTree</span><span class="hljs-params">(TreeNode* root)</span> </span><br><span class="hljs-function"></span>&#123;<br>    stack&lt;TreeNode*&gt; st;<br>    <span class="hljs-keyword">if</span> (root != <span class="hljs-literal">NULL</span>) st.<span class="hljs-built_in">push</span>(root);<br>    <span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>()) &#123;<br>        TreeNode* node = st.<span class="hljs-built_in">top</span>();<br>        <span class="hljs-keyword">if</span> (node != <span class="hljs-literal">NULL</span>) &#123;<br>            st.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-keyword">if</span> (node-&gt;right) st.<span class="hljs-built_in">push</span>(node-&gt;right);  <span class="hljs-comment">// 右</span><br>            <span class="hljs-keyword">if</span> (node-&gt;left) st.<span class="hljs-built_in">push</span>(node-&gt;left);    <span class="hljs-comment">// 左</span><br>            st.<span class="hljs-built_in">push</span>(node);                          <span class="hljs-comment">// 中</span><br>            st.<span class="hljs-built_in">push</span>(<span class="hljs-literal">NULL</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            st.<span class="hljs-built_in">pop</span>();<br>            node = st.<span class="hljs-built_in">top</span>();<br>            st.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-built_in">swap</span>(node-&gt;left, node-&gt;right);          <span class="hljs-comment">// 节点处理逻辑</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>相应地，我们也可以用层次遍历来实现，原理跟迭代相同</p>
+<blockquote>
+<p>为什么前中后三种顺序均可以</p>
+</blockquote>
+<p>迭代的是用栈来实现的，那么在不考虑将元素出栈的条件下，我将所有的节点全部压入栈中，然后挨个交换它们的左右孩子。我们发现，这个过程是不涉及<strong>节点之间的先后顺序的</strong>，因此前中后三种顺序都可以</p>
+<blockquote>
+<p>为什么不能用中序递归</p>
+</blockquote>
+<p>上面递归调用中对应的中序遍历的代码为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">invertTree</span><span class="hljs-params">(TreeNode* root)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> root;<br><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;left);         <span class="hljs-comment">// 左</span><br>    <span class="hljs-built_in">swap</span>(root-&gt;left, root-&gt;right);  <span class="hljs-comment">// 中</span><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;right);        <span class="hljs-comment">// 右</span><br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>不难发现，我会先遍历某个节点的<strong>左指针</strong>，此时<strong>左指针指向左孩子</strong>。</p>
+<p>然后我会交换了该节点的左右孩子，此时 <strong>原先的左指针指向的是右孩子，原先的右指针指向的是左孩子</strong>。</p>
+<p>接着，我再去遍历该节点<strong>右指针</strong>，我们会发现此时的<strong>右指针指向的是左孩子</strong>，这里就会导致该节点<strong>右孩子遍历不到的问题</strong></p>
+<p>实际上，我们的代码应该这么写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">invertTree</span><span class="hljs-params">(TreeNode* root)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> root;<br><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;left);         <span class="hljs-comment">// 左</span><br>    <span class="hljs-built_in">swap</span>(root-&gt;left, root-&gt;right);  <span class="hljs-comment">// 中</span><br>    <span class="hljs-built_in">invertTree</span>(root-&gt;left);         <span class="hljs-comment">// 左</span><br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里要说明一点，我们通常说的遍历左孩子、右孩子只是简单的表述，实际上应该是<strong>通过左指针去遍历左孩子</strong>，<strong>通过右指针去遍历右孩子</strong></p>
+<h2 id="二叉树最大、最小深度问题"><a href="#二叉树最大、最小深度问题" class="headerlink" title="二叉树最大、最小深度问题"></a>二叉树最大、最小深度问题</h2><p>关于这个问题，用层次遍历可以很容易得出结果</p>
+<p>最大深度就遍历完所有层，最小深度就是当遍历到叶子节点的时候之间返回</p>
+<p>我们重点分析递归</p>
+<p>先讨论最大深度的问题</p>
+<p>按照上面的递归三部曲，我们需要确定的是单层递归的逻辑</p>
+<p>对于一个节点而言，我们的做法是<strong>先得到其左右子树的高度</strong>，再加一，最后再返回</p>
+<p>这里<strong>先得到其左右子树的高度</strong>，实际上就是指我们要用到<strong>后序遍历</strong></p>
+<p>想到这里代码也就不难写了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> right = <span class="hljs-built_in">maxDepth</span>(root-&gt;right);<br>    <span class="hljs-type">int</span> left = <span class="hljs-built_in">maxDepth</span>(root-&gt;left);<br>    <span class="hljs-keyword">return</span> right &gt; left ? right + <span class="hljs-number">1</span> : left + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以简单一点，两行解决</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxdepth</span><span class="hljs-params">(treenode* root)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (root == null) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(<span class="hljs-built_in">maxdepth</span>(root-&gt;left), <span class="hljs-built_in">maxdepth</span>(root-&gt;right));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于最小深度，实际上我们递归的逻辑是不变的，也是后序遍历，只不过在返回的时候会有改变</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minDepth</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> left = <span class="hljs-built_in">minDepth</span>(root-&gt;left);<br>    <span class="hljs-type">int</span> right = <span class="hljs-built_in">minDepth</span>(root-&gt;right);<br>    <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right != <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//左边为空，递归向右拐</span><br>        <span class="hljs-keyword">return</span> right + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//右边为空，递归向左拐</span><br>        <span class="hljs-keyword">return</span> left + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-built_in">min</span>(left, right);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于一个节点，如果我已知它的左右子树的高度，我需要取的是<strong>二者的较小值</strong>，但这里有个问题是如果一个节点有某一个子树为空，就会导致该节点向上返回的时候必定返回0，因此我们在这种情况下要让递归转弯</p>
+<h2 id="关于二叉树的递归与回溯问题"><a href="#关于二叉树的递归与回溯问题" class="headerlink" title="关于二叉树的递归与回溯问题"></a>关于二叉树的递归与回溯问题</h2><p>在二叉树递归的时候，<strong>如果我是需要遍历整一颗树，那么我的递归函数就不能有返回值</strong>，<strong>如果仅仅是遍历某一条线路，则我的递归函数就一定有返回值</strong></p>
+<p>二叉树的递归往往隐藏着回溯（如果代码简短的话）。事实上，有递归的地方就一定会有回溯，只是看这个回溯要如何理解</p>
+<p>对于有返回值的函数，<strong>其回溯往往指的是该函数的返回值</strong>。（这种情况下我们通常是用<strong>后序遍历</strong>这个二叉树）这个时候我已经得到<strong>在该节点上我所需要得到的信息</strong>，之后我再对这些信息进行操作</p>
+<p>对于没有返回值的函数，<strong>其回溯会体现在该函数的参数部分</strong>。这时的回溯我们可以理解为：我先递归往下走，<strong>最后我一定会回到我目前这个位置</strong>，即我最终还是对这个位置所能获取的信息进行处理。</p>
+<blockquote>
+<p>给定一个二叉树的 根节点 root，请找出该二叉树的<strong>最底层最左边</strong>节点的值</p>
+</blockquote>
+<p>我们先用递归来解决这个问题。首先我们需要找到<strong>最底层最左边</strong>的节点，既然是最底层，那么我们可以通过比较深度来实现</p>
+<p>只要当前深度比目前已记录的最大深度大，我们就赋值（对深度和可能满足题目条件的节点）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> <br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> Maxdep = INT32_MIN;<br>    <span class="hljs-type">int</span> val = <span class="hljs-number">0</span>;<br>    <br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Travel</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> depth)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">if</span> (depth &gt; Maxdep)<br>        &#123;<br>            Maxdep = depth;<br>            val = root-&gt;val;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (root-&gt;left)<br>            <span class="hljs-built_in">Travel</span>(root-&gt;left, depth + <span class="hljs-number">1</span>);<span class="hljs-comment">//回溯隐藏在这里</span><br>        <span class="hljs-keyword">if</span> (root-&gt;right)<br>            <span class="hljs-built_in">Travel</span>(root-&gt;right, depth + <span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findBottomLeftValue</span><span class="hljs-params">(TreeNode* root)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">Travel</span>(root, <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> val;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>上面这个代码实际上是<strong>先序遍历</strong></p>
+<blockquote>
+<p>这个代码能够保证一定得到的就是最左边的节点的值吗</p>
+</blockquote>
+<p>我最后的返回值是<code>val</code>，我是先对该节点的左子树进行遍历并且我只在高度更新的时候才对<code>val</code>赋值。如果最底层有多个叶子，由于高度没变，因此也不会赋值给<code>val</code></p>
+<hr>
+<ul>
+<li>当我需要遍历二叉树的一个路径的时候，我们递归函数的返回值可以用<code>bool</code>类型。我们将该函数放在<strong>if的判断部分</strong>，对于它的终止条件，我们<strong>只有在条件成立的情况下才返回<code>true</code>，否则都返回<code>false</code></strong></li>
+</ul>
+<p>通常函数递归的逻辑如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(递归函数(root-&gt;left))<br>    <span class="hljs-keyword">return</span>;<br><span class="hljs-keyword">if</span>(递归函数(root-&gt;right))<br>    <span class="hljs-keyword">return</span>;<br></code></pre></td></tr></table></figure>
+
+<p>函数返回为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(条件成立)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br><span class="hljs-comment">//内容</span><br>    <br><span class="hljs-comment">//最后</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>当我们递归整颗二叉树时，我们用回溯的写法如下</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">返回值类型 left = 递归函数(root-&gt;left);<br>返回值类型 right = 递归函数(root-&gt;right);<br><span class="hljs-comment">//下面对left与right进行逻辑处理</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>注：</p>
+<ul>
+<li>回溯相当于是将这棵树<strong>自下而上</strong>开始遍历，这对应<strong>后序遍历</strong></li>
+<li>如果要<strong>自上而下</strong>开始遍历这棵树，则用到<strong>先序遍历</strong></li>
+</ul>
+<h2 id="递归函数返回值问题"><a href="#递归函数返回值问题" class="headerlink" title="递归函数返回值问题"></a>递归函数返回值问题</h2><p>关于这个问题，我们总结以下几点：</p>
+<ul>
+<li>我需要<strong>遍历整棵树</strong>并且我<strong>不需要</strong>对递归的结果进行处理，那么我不用写返回值</li>
+</ul>
+<p>参考<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-bottom-left-tree-value/">513. 找树左下角的值 - 力扣（LeetCode）</a></p>
+<ul>
+<li>我需要<strong>遍历整棵树</strong>并且我<strong>需要</strong>对递归的结果进行处理，那么我需要写返回值</li>
+</ul>
+<p>参考<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/">222. 完全二叉树的节点个数 - 力扣（LeetCode）</a></p>
+<p>由于代码简写，实际上是将返回值作为结果返回</p>
+<ul>
+<li>如果递归仅涉及一条路线，那么<strong>必须要有返回值</strong>并且条件合适要<strong>及时</strong>返回</li>
+</ul>
+<p>参考<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum/">112. 路径总和 - 力扣（LeetCode）</a></p>
+<p>这里我们以第三点为例进行说明，我们主要看回溯                                                                      </p>
+<blockquote>
+<p>给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。</p>
+<p>叶子节点 是指没有子节点的节点。</p>
+</blockquote>
+<h3 id="递归写法"><a href="#递归写法" class="headerlink" title="递归写法"></a>递归写法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> <br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">Traversal</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> ant)</span><span class="hljs-comment">//这里我们将ant的初始值设为targetsum，不从0开始是因为那样太麻烦</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">NULL</span> &amp;&amp; ant == <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">if</span> (root-&gt;left)<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Traversal</span>(root-&gt;left, ant - root-&gt;left-&gt;val))<span class="hljs-comment">//回溯体现在这里</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-comment">//实际上这里我们的代码是简写了，实际上应该是</span><br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">        if(root-&gt;left)</span><br><span class="hljs-comment">        &#123;</span><br><span class="hljs-comment">        	ant -= root-&gt;left-&gt;val;</span><br><span class="hljs-comment">        	if(Traversal(root-&gt;left, ant))</span><br><span class="hljs-comment">        		return true;</span><br><span class="hljs-comment">        	ant += root-&gt;left-&gt;val;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">        先加后减，这才是真正的回溯</span><br><span class="hljs-comment">        */</span><br>        <span class="hljs-keyword">if</span> (root-&gt;right)<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Traversal</span>(root-&gt;right, ant - root-&gt;right-&gt;val))<span class="hljs-comment">//上面的ant没有变化使得这里的ant也不会发生改变</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> targetSum)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Traversal</span>(root, targetSum - root-&gt;val);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>我们着重分析当<strong>递归函数为<code>bool</code>类型的时候的情况</strong>。当递归函数为<code>bool</code>类型时，我们不能像<code>void</code>那样直接调用，而是应当将其放在<code>if</code>的条件判断内，至于<code>if</code>的返回值，则根据情况进行判断</p>
+<h3 id="迭代写法"><a href="#迭代写法" class="headerlink" title="迭代写法"></a>迭代写法</h3><p>首先这里不能用层次遍历，只能用<code>stack</code>来模拟递归</p>
+<p>再者，与递归类似，我们需要一个值来记录每个节点对应的数值（从根节点到该节点的数值总和）</p>
+<p>这里有一个问题是该数值必须要与节点对应</p>
+<p>因此我们可以使用对组来解决这个问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> targetSum)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    stack&lt;pair&lt;TreeNode*, <span class="hljs-type">int</span>&gt; &gt;st;<span class="hljs-comment">//用对组来存储，前者为节点指针，后者为从根节点到该节点的路径总和</span><br>    st.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">pair</span>&lt;TreeNode*, <span class="hljs-type">int</span>&gt;(root, root-&gt;val));<br>    <span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>())<br>    &#123;<br>        pair&lt;TreeNode*, <span class="hljs-type">int</span>&gt; cur = st.<span class="hljs-built_in">top</span>();<br>        st.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-keyword">if</span> (cur.first-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; cur.first-&gt;right == <span class="hljs-literal">NULL</span> &amp;&amp; cur.second == targetSum)<br>            <span class="hljs-comment">//是否为叶子节点是前置条件</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span> (cur.first-&gt;left != <span class="hljs-literal">NULL</span>)<br>            st.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">pair</span>&lt;TreeNode*, <span class="hljs-type">int</span>&gt;(cur.first-&gt;left, cur.second + cur.first-&gt;left-&gt;val));<br>        <span class="hljs-keyword">if</span> (cur.first-&gt;right != <span class="hljs-literal">NULL</span>)<br>            st.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">pair</span>&lt;TreeNode*, <span class="hljs-type">int</span>&gt;(cur.first-&gt;right, cur.second + cur.first-&gt;right-&gt;val));<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二叉排序树的分析"><a href="#二叉排序树的分析" class="headerlink" title="二叉排序树的分析"></a>二叉排序树的分析</h2><p>关于二叉排序树，其中序遍历后得到的数组一定是<strong>有序的</strong></p>
+<p>因此如果需要判断一个二叉树是不是二叉排序树，我们只能通过<strong>中序遍历</strong>来解决这个问题</p>
+<h3 id="求任意两节点的最小差值"><a href="#求任意两节点的最小差值" class="headerlink" title="求任意两节点的最小差值"></a>求任意两节点的最小差值</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-absolute-difference-in-bst/">530. 二叉搜索树的最小绝对差 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给你一个二叉搜索树的根节点 <code>root</code> ，返回 <strong>树中任意两不同节点值之间的最小差值</strong> 。</p>
+<p>差值是一个正数，其数值等于两值之差的绝对</p>
+</blockquote>
+<h4 id="递归写法-1"><a href="#递归写法-1" class="headerlink" title="递归写法"></a>递归写法</h4><p>递归的话我们不简要说明：先<strong>中序</strong>遍历得到数组后我们再判断该数组是否是有序的。<em>该数组的元素一定是递增的，并且我们只需要比较相邻的两个元素即可</em></p>
+<p>这里需要说明的是，由于题目让我们返回<strong>任意两个不同节点的最小差值</strong>。如果是比较一个节点的两个孩子的话，其差值必定&gt;&#x3D;2，如果比较的是该节点与它的其中一个孩子，那么差值必定&gt;&#x3D;1，因此我们只需要比较数组中的相邻两个值即可</p>
+<p>我们着重讨论迭代的情况</p>
+<p>迭代的话可用的数据结构有stack和queue，stack是用于<strong>模拟递归的</strong>，queue是用于<strong>层序遍历的</strong></p>
+<p>因此如果我们需要模拟递归，则用stack，如果需要层序遍历这颗二叉树，则用queue</p>
+<p>这里我们应当是模拟递归，选用stack，并且只能用中序遍历</p>
+<p>由于需要比较的节点有两个(当前节点cur和前一个结点pre)，因此我们需要两个指针</p>
+<p>只要当前节点不为NULL，这就说明我们需要将<strong>该节点的左孩子压入stack中</strong>，该操作会一直进行直到cur为NULL(这里是<strong>左</strong>的操作)</p>
+<p>如果当前节点为NULL，说明已经到达<strong>最左端</strong>，此时我们需要取出栈顶结点，将其赋值给cur(这里是<strong>中</strong>的操作)</p>
+<p>然后我们再将cur与pre的差值与目前已记录的最小值进行比较，此时我们还需要一个变量来记录<strong>目前的最小值</strong></p>
+<p>最后我们更新cur和pre(先pre后cur)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getMinimumDifference</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function"></span>&#123;<br>    stack&lt;TreeNode*&gt;st;<br>    TreeNode* cur = root;<span class="hljs-comment">//前一个节点</span><br>    TreeNode* pre = <span class="hljs-literal">NULL</span>;<span class="hljs-comment">//当前处理节点</span><br>    <span class="hljs-type">int</span> ret = INT32_MAX;<br>    <span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() || cur != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (cur != <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            st.<span class="hljs-built_in">push</span>(cur);<br>            cur = cur-&gt;left;<span class="hljs-comment">//左</span><br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            cur = st.<span class="hljs-built_in">top</span>();<span class="hljs-comment">//取栈顶元素，中</span><br>            st.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-keyword">if</span> (pre != <span class="hljs-literal">NULL</span>)<br>                ret = <span class="hljs-built_in">min</span>(ret, cur-&gt;val - pre-&gt;val);<br>            pre = cur;<br>            cur = cur-&gt;right;<span class="hljs-comment">//右</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ret;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="求二叉树中的众数"><a href="#求二叉树中的众数" class="headerlink" title="求二叉树中的众数"></a>求二叉树中的众数</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-mode-in-binary-search-tree/">501. 二叉搜索树中的众数 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给你一个含重复值的二叉搜索树（BST）的根节点 root ，找出并返回 BST 中的所有 众数（即，出现频率最高的元素）。</p>
+<p>如果树中有不止一个众数，可以按 任意顺序 返回。</p>
+<p>假定 BST 满足如下定义：</p>
+<ul>
+<li>结点左子树中所含节点的值 小于等于 当前节点的值</li>
+<li>结点右子树中所含节点的值 大于等于 当前节点的值</li>
+<li>左子树和右子树都是二叉搜索树</li>
+</ul>
+</blockquote>
+<h4 id="递归写法-2"><a href="#递归写法-2" class="headerlink" title="递归写法"></a>递归写法</h4><p>我们首先讨论如何求一个数组当中的众数(不止一个众数)</p>
+<p>我们可以先遍历一次数组，找出这个数组当中一个数出现的maxCount(最大频率)。然后我们再遍历一遍这个数组，将**出现频率等于maxCount的数放入结果数组中</p>
+<p>上面这种方法遍历了两遍数组，当然我们也可以遍历一遍</p>
+<p>我们定义两个变量：当前这个数的频率(count)，目前的最大频率(maxCount)。只要当前这个count等于maxCount，我们就将这个数加入到结果数组中</p>
+<p>那么这样就会有一个问题，我目前的maxCount不是<strong>真正的最大频率</strong>怎么办</p>
+<p>在这种情况下，我们需要更新maxCount并且将结果数组<strong>清空</strong>(这是因为之前的数全部不符合条件)</p>
+<p>具体写法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span> (count == maxCount) <span class="hljs-comment">// 如果和最大值相同，放进result中</span><br>&#123;<br>    result.<span class="hljs-built_in">push_back</span>(cur-&gt;val);<br>&#125;<br><span class="hljs-keyword">if</span> (count &gt; maxCount) <span class="hljs-comment">// 如果计数大于最大值</span><br>&#123;<br>    maxCount = count;   <span class="hljs-comment">// 更新最大频率</span><br>    result.<span class="hljs-built_in">clear</span>();     <span class="hljs-comment">// 很关键的一步，不要忘记清空result，之前result里的元素都失效了</span><br>    result.<span class="hljs-built_in">push_back</span>(cur-&gt;val);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>完整代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> <br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录目前这个数出现的次数</span><br>    <span class="hljs-type">int</span> Maxcount = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录目前最大的频率</span><br>    TreeNode* pre = <span class="hljs-literal">NULL</span>;<span class="hljs-comment">//记录前一个节点</span><br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Traversal</span><span class="hljs-params">(TreeNode* root, vector&lt;<span class="hljs-type">int</span>&gt;&amp; ret)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">if</span> (root-&gt;left)<br>            <span class="hljs-built_in">Traversal</span>(root-&gt;left, ret);<br>        <span class="hljs-keyword">if</span> (pre == <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//此时已到达最左端的节点</span><br>            count = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;val == pre-&gt;val)<span class="hljs-comment">//与前一个节点相同</span><br>            count++;<br>        <span class="hljs-keyword">else</span><span class="hljs-comment">//与前一个节点不同，将当前节点的频率设为1</span><br>            count = <span class="hljs-number">1</span>;<br><br>        pre = root;<span class="hljs-comment">//更新pre</span><br><br>        <span class="hljs-keyword">if</span> (count == Maxcount)<span class="hljs-comment">//目前的count已到达已记录的Maxcount</span><br>            ret.<span class="hljs-built_in">push_back</span>(root-&gt;val);<br>        <span class="hljs-keyword">if</span> (count &gt; Maxcount)<br>        &#123;<br>            ret.<span class="hljs-built_in">clear</span>();<span class="hljs-comment">//直接重置</span><br>            Maxcount = count;<span class="hljs-comment">//更新Maxcount</span><br>            ret.<span class="hljs-built_in">push_back</span>(root-&gt;val);<br>        &#125;<br>        <span class="hljs-built_in">Traversal</span>(root-&gt;right, ret);<br>    &#125;<br><br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">findMode</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function">    </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt;ret;<br>        <span class="hljs-built_in">Traversal</span>(root, ret);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="插入一个节点"><a href="#插入一个节点" class="headerlink" title="插入一个节点"></a>插入一个节点</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-into-a-binary-search-tree/">701. 二叉搜索树中的插入操作 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给定二叉搜索树（BST）的根节点 root 和要插入树中的值 value ，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 输入数据 保证 ，新值和原始二叉搜索树中的任意节点值都不同。</p>
+<p>注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回 任意有效的结果 。</p>
+</blockquote>
+<h4 id="递归写法-3"><a href="#递归写法-3" class="headerlink" title="递归写法"></a>递归写法</h4><p>对于二叉搜索树的<strong>插入与删除</strong>操作，我们都可以用<strong>先序遍历</strong>来实现</p>
+<p>我们在遍历的时候只要<code>root-&gt;val &gt; key</code>，那么我们就<strong>向右走</strong>，只要<code>root-&gt;val &lt; key</code>，我们就<strong>向左走</strong></p>
+<p>那么这里有一个问题是，我们该如何具体实现向右走和向左走的代码呢</p>
+<p>由于我们用的是递归来实现，那么递归就一定会有返回值。<strong>当这一层的逻辑处理完之后将此节点返回上去</strong>，在调用递归函数的那一层我们可以用该节点的<strong>左孩子或右孩子接住其返回值</strong>，这样便实现了向左向右走</p>
+<p>具体代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">insertIntoBST</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        TreeNode* cur = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(val);<br>        <span class="hljs-keyword">return</span> cur;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (root-&gt;val &gt; val)<br>        root-&gt;left = <span class="hljs-built_in">insertIntoBST</span>(root-&gt;left, val);<br>    <span class="hljs-keyword">if</span> (root-&gt;val &lt; val)<br>        root-&gt;right = <span class="hljs-built_in">insertIntoBST</span>(root-&gt;right, val);<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="迭代写法-1"><a href="#迭代写法-1" class="headerlink" title="迭代写法"></a>迭代写法</h4><p>当然，我们也可以用迭代来实现，这就是对指针进行具体的赋值，很简单，直接上代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">insertIntoBST</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        TreeNode* cur = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(val);<br>        <span class="hljs-keyword">return</span> cur;<br>    &#125;<br>    TreeNode* pre = <span class="hljs-literal">NULL</span>;<br>    TreeNode* cur = root;<br>    <span class="hljs-keyword">while</span> (cur != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        pre = cur;<br>        <span class="hljs-keyword">if</span> (cur-&gt;val &lt; val)<br>            cur = cur-&gt;right;<br>        <span class="hljs-keyword">else</span> cur = cur-&gt;left;<br>    &#125;<br>    TreeNode* node = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(val);<br>    <span class="hljs-keyword">if</span> (pre-&gt;val &lt; val)<br>        pre-&gt;right = node;<br>    <span class="hljs-keyword">else</span> pre-&gt;left = node;<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除一个节点"><a href="#删除一个节点" class="headerlink" title="删除一个节点"></a>删除一个节点</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-node-in-a-bst/">450. 删除二叉搜索树中的节点 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。</p>
+<p>一般来说，删除节点可分为两个步骤：</p>
+<ol>
+<li>首先找到需要删除的节点；</li>
+<li>如果找到了，删除它。</li>
+</ol>
+</blockquote>
+<h4 id="递归写法-4"><a href="#递归写法-4" class="headerlink" title="递归写法"></a>递归写法</h4><p>删除一个节点我们会有五种情况</p>
+<ul>
+<li><p>此节点为<code>NULL</code>的情况</p>
+<ol>
+<li>直接返回<code>NULL</code></li>
+</ol>
+</li>
+<li><p>此节点<code>非NULL</code>的情况</p>
+<ol start="2">
+<li><p>左右孩子均为<code>NULL</code>。直接删除该节点并返回<code>NULL</code></p>
+</li>
+<li><p>左孩子不为<code>NULL</code>，右孩子为<code>NULL</code>。删除该节点，返回左孩子</p>
+</li>
+<li><p>左孩子为<code>NULL</code>，右孩子不为<code>NULL</code>。删除该节点，返回右孩子</p>
+</li>
+<li><p>左右孩子均不为<code>NULL</code>。我们找到右子树中最靠左边的节点，将整个左子树挂在该节点的左孩子上</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>我们着重分析第五种情况</p>
+<p>由于二叉搜索树的特性，一个节点的<strong>左孩子的所有值一定小于该节点</strong>，<strong>右节点的所有值一定大于该节点</strong></p>
+<p><strong>对于任意一个节点，均有此性质</strong>，那么我们便可以导出如下结论：</p>
+<ul>
+<li><p>对于一颗子树，它的<strong>最小值一定在最左边的节点</strong>，<strong>最大值一定在最右边的节点</strong></p>
+</li>
+<li><p>对于一个节点的左右子树而言，<strong>左子树的所有值一定小于该节点的值</strong>，<strong>右子树的所有值一定大于该节点的值</strong></p>
+</li>
+</ul>
+<p>基于这两点，如果我们想删除一个节点的话（该节点的左右孩子均存在），我们可以将<strong>该节点的左子树接到该节点右子树中最靠左边的节点的左孩子上</strong></p>
+<p>这里有一点要注意的是：最靠左，说明不能够向右走</p>
+<p>具体代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> key)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<span class="hljs-comment">//Preorder Traversal</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span> (root-&gt;val == key)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            <span class="hljs-keyword">delete</span> root;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right != <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            TreeNode* cur = root-&gt;right;<br>            <span class="hljs-keyword">delete</span> root;<br>            <span class="hljs-keyword">return</span> cur;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">NULL</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            TreeNode* cur = root-&gt;left;<br>            <span class="hljs-keyword">delete</span> root;<br>            <span class="hljs-keyword">return</span> cur;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            TreeNode* cur = root-&gt;right;<br>            <span class="hljs-keyword">while</span> (cur-&gt;left)<br>                cur = cur-&gt;left;<br>            cur-&gt;left = root-&gt;left;<br>            TreeNode* node = root-&gt;right;<br>            <span class="hljs-keyword">delete</span> root;<br>            <span class="hljs-keyword">return</span> node;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (root-&gt;val &lt; key)<br>        root-&gt;right = <span class="hljs-built_in">deleteNode</span>(root-&gt;right, key);<br>    <span class="hljs-keyword">if</span> (root-&gt;val &gt; key)<br>        root-&gt;left = <span class="hljs-built_in">deleteNode</span>(root-&gt;left, key);<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="普通二叉树的删除"><a href="#普通二叉树的删除" class="headerlink" title="普通二叉树的删除"></a>普通二叉树的删除</h4><p>对于一个待删除的节点，我们首先先将该节点与<strong>其右子树中最靠左边的节点交换数组</strong>（第一次操作）</p>
+<p>然后，我们第二次递归到该节点的时候删除该节点，如果此时该节点的右孩子不为空，则<strong>重复这两步</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-type">int</span> key)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> root;<br>    <span class="hljs-keyword">if</span> (root-&gt;val == key) &#123;<br>        <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) &#123; <span class="hljs-comment">// 这里第二次操作目标值：最终删除的作用</span><br>            <span class="hljs-keyword">return</span> root-&gt;left;<br>        &#125;<br>        TreeNode *cur = root-&gt;right;<br>        <span class="hljs-keyword">while</span> (cur-&gt;left) &#123;<br>            cur = cur-&gt;left;<br>        &#125;<br>        <span class="hljs-built_in">swap</span>(root-&gt;val, cur-&gt;val); <span class="hljs-comment">// 这里第一次操作目标值：交换目标值其右子树最左面节点。</span><br>    &#125;<br>    root-&gt;left = <span class="hljs-built_in">deleteNode</span>(root-&gt;left, key);<br>    root-&gt;right = <span class="hljs-built_in">deleteNode</span>(root-&gt;right, key);<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h1><h2 id="组合、分割、子集问题"><a href="#组合、分割、子集问题" class="headerlink" title="组合、分割、子集问题"></a>组合、分割、子集问题</h2><p>回溯实际上是一种暴力搜索的方法，对于回溯的理解，我们可以将其类比成一个 n 叉树。树的深度表示递归的层数，树的宽度（叶子节点）表示所有可能出现的结果。</p>
+<p>明白这一点后，简单的回溯代码也就会写了。那么我们更进一步，在回溯的基础上考虑<strong>去重</strong></p>
+<p>首先对于这颗 n 叉树而言（ <em>各个数已经排好序</em> ），<strong>一条树枝表示一个结果</strong>，<strong>同一层的各个节点表示上一次或者下一次所选择的数</strong>。那么我们的剪枝就有两种情况：对于第一种就是结果集合<strong>不能重复</strong>，对于第二种就是<strong>在这一层上不能两次都选择相同的数</strong></p>
+<p>具体看下面这道题</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/">40. 组合总和 II - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给定一个候选人编号的集合 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。</p>
+<p>candidates 中的每个数字在每个组合中只能使用 一次 。</p>
+<p>注意：解集不能包含重复的组合。</p>
+</blockquote>
+<p>这道题里面，结果集合当中可以有重复的数字，但不允许存在两个相同的解集，<strong>即在同一层上不允许选择同一个数</strong></p>
+<p>那么我们该如何去重呢？一个很自然的想法就是只要 <code>candidates[i-1] == candidates[i]</code> 我们便 continue 。</p>
+<p>但如果我们这么做的话就会导致在<strong>解集当中也不允许出现相同的数字了</strong>，因为当我递归到下一层的时候，初始的位置相对于这一层而言就是<code>[i+1]</code> ，这会导致下一层会直接跳过这个数字</p>
+<p>那么这个地方，其实我们可以用一个 bool 类型的数组来表示每个数字是否被使用过。</p>
+<p>初始时， used 数组的值都是 false ，在我进入递归的时候将其设置为 true ，那么在下一层的递归函数看来就表示<code>[i-1]</code>已经使用过了，此时<code>used[i-1]</code>为 true。递归会一直向下执行，知道这个数所对应的全部结果都搜寻完毕。</p>
+<p>之后就会走到回溯代码，也就是说此时<code>used[i-1]</code>又会变为 false ，<strong>这里表示在这一层而言，上一个数字已经被选过了</strong>。而对于已经排好序的数组而言，上一个数字跟这个数字相同的情况下自然就可以跳过当前这个数</p>
+<p>具体代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;<span class="hljs-type">int</span>&gt;path;<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;ret;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; candidates, <span class="hljs-type">int</span> target, <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> sum, vector&lt;<span class="hljs-type">bool</span>&gt;&amp; used)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (sum == target)<br>        &#123;<br>            ret.<span class="hljs-built_in">push_back</span>(path);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = start; i &lt; candidates.<span class="hljs-built_in">size</span>() &amp;&amp; sum + candidates[i] &lt;= target; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; candidates[i] == candidates[i - <span class="hljs-number">1</span>] &amp;&amp; !used[i - <span class="hljs-number">1</span>])<br>            &#123;<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            path.<span class="hljs-built_in">push_back</span>(candidates[i]);<br>            sum += candidates[i];<br>            used[i] = <span class="hljs-literal">true</span>;<br>            <span class="hljs-built_in">backtracking</span>(candidates, target, i + <span class="hljs-number">1</span>, sum, used);<br>            used[i] = <span class="hljs-literal">false</span>;<br>            sum -= candidates[i];<br>            path.<span class="hljs-built_in">pop_back</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">combinationSum2</span>(vector&lt;<span class="hljs-type">int</span>&gt;&amp; candidates, <span class="hljs-type">int</span> target)<br>    &#123;<br>        <span class="hljs-built_in">sort</span>(candidates.<span class="hljs-built_in">begin</span>(), candidates.<span class="hljs-built_in">end</span>());<br>        vector&lt;<span class="hljs-type">bool</span>&gt;<span class="hljs-built_in">used</span>(candidates.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">false</span>);<br>        <span class="hljs-built_in">backtracking</span>(candidates, target, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, used);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>需要特殊说明的是</p>
+<ul>
+<li><code>used[i-1] == true</code> 表示在一个解集内去重，<strong>这能保证一个解集内不会出现两个一样的数字</strong></li>
+<li><code>used[i-1] == false</code>表示在同一层去重，<strong>这能保证不会出现两个一样的解集</strong></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/">78. 子集 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给你一个整数数组 <code>nums</code> ，数组中的元素 <strong>互不相同</strong> 。返回该数组所有可能的子集（幂集）。</p>
+<p>解集 <strong>不能</strong> 包含重复的子集。你可以按 <strong>任意顺序</strong> 返回解集。</p>
+</blockquote>
+<p>写回溯算法的收集部分时，要看清楚是<strong>收集叶子</strong>还是收集<strong>各个节点</strong></p>
+<p>如果是收集叶子，那么我们需要加上判断条件，此条件即为我们的<strong>收集条件</strong></p>
+<p>如果是收集树的各个节点，那什么都不需要写，直接往里面压就行</p>
+<p>具体代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;<span class="hljs-type">int</span>&gt;path;<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;ret;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> start)</span></span><br><span class="hljs-function">    </span>&#123;<br>        ret.<span class="hljs-built_in">push_back</span>(path);<span class="hljs-comment">//什么都不用管，直接往里面放，这就是收集树的各个节点</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = start; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            path.<span class="hljs-built_in">push_back</span>(nums[i]);<br>            <span class="hljs-built_in">backtracking</span>(nums, i + <span class="hljs-number">1</span>);<br>            path.<span class="hljs-built_in">pop_back</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">subsets</span>(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)<br>    &#123;<br>        <span class="hljs-built_in">backtracking</span>(nums, <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="树层去重和树枝去重"><a href="#树层去重和树枝去重" class="headerlink" title="树层去重和树枝去重"></a>树层去重和树枝去重</h2><p>在讨论这个问题之前，我们需要明确一点：在收集阶段，无论我是收集节点还是收集树叶，<strong>这两个动作都与去重无关</strong></p>
+<p>实际上，<strong>收集动作发生在 for 循环之前</strong>，收集节点还是收集树叶的区别仅仅在于是否有 if 判断。而<strong>去重的动作则发生在 for 循环之内</strong></p>
+<p>（当然，我们假定数组已经排序完毕）实际上，树枝去重是保证<strong>结果集合当中的数字不能有重复</strong>，而树层去重则是保证<strong>不会出现两个一模一样的结果集合</strong>。</p>
+<h2 id="排列问题"><a href="#排列问题" class="headerlink" title="排列问题"></a>排列问题</h2><p>我们以这道题为例</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations/">46. 全排列 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给定一个不含重复数字的数组 <code>nums</code> ，返回其 <em>所有可能的全排列</em> 。你可以 <strong>按任意顺序</strong> 返回答案。</p>
+</blockquote>
+<p>排列问题相对于前面不同的是：<code>nums[i]</code> 后面的数字<strong>以及前面</strong>的数字都有可能从新被选到，而如果写 <code>strat</code> 就选不到 <code>nums[i]</code> 前面的数字。因此对于排列问题，**不能写 <code>tart</code> **。</p>
+<p>既然没有了 <code>start</code> ，那么对应的去重逻辑就要发生变化。原先 i 会加一，因此我们看的是 <code>i - 1</code>的情况。而现在没有了 <code>start</code> 的限制，i 会从 0 开始递增，<strong>只要 <code>used[i]</code> 是被选过的，那么我们就直接跳过</strong>。具体代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;<span class="hljs-type">int</span>&gt;path;<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;ret;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">bool</span>&gt;&amp; used)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (path.<span class="hljs-built_in">size</span>() == nums.<span class="hljs-built_in">size</span>())<br>        &#123;<br>            ret.<span class="hljs-built_in">push_back</span>(path);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (used[i] == <span class="hljs-literal">true</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            path.<span class="hljs-built_in">push_back</span>(nums[i]);<br>            used[i] = <span class="hljs-literal">true</span>;<br>            <span class="hljs-built_in">backtracking</span>(nums, used);<br>            used[i] = <span class="hljs-literal">false</span>;<br>            path.<span class="hljs-built_in">pop_back</span>();<br>        &#125;<br>    &#125;<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">permute</span>(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)<br>    &#123;<br>        vector&lt;<span class="hljs-type">bool</span>&gt;<span class="hljs-built_in">used</span>(nums.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">false</span>);<br>        <span class="hljs-built_in">backtracking</span>(nums, used);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码中 <code>used[i] == true</code> 的意思是：<strong>下一层不要选到与上一层相同的数</strong></p>
+<p>上面这道题比较简单，毕竟元素没有重复。我们来看一道元素重复的</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations-ii/">47. 全排列 II - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>给定一个可包含重复数字的序列 <code>nums</code> ，<em><strong>按任意顺序</strong></em> 返回所有不重复的全排列。</p>
+</blockquote>
+<p>首先一点：<strong>去重，一定要排序</strong>。</p>
+<p>其次，我们知道：树层去重可以使得结果数组中不存在两个相同的。</p>
+<p>这里是求全排列， i 会从 0 开始遍历整个数组，那么其结果数组必然不能有两个相同的，因此树层去重是必要的，即<code>used[i-1] == false</code></p>
+<p>其次，参考没有重复的情况，我们必须保证已经选过的数字不能再选一次，即 <code>used[i] == true</code>。</p>
+<p>去重逻辑明白后，这道题就很简单了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt;path;<br>vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;ret;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtracking</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">bool</span>&gt;&amp; used)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (path.<span class="hljs-built_in">size</span>() == nums.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        ret.<span class="hljs-built_in">push_back</span>(path);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> ((i &gt; <span class="hljs-number">0</span> &amp;&amp; nums[i - <span class="hljs-number">1</span>] == nums[i] &amp;&amp; used[i - <span class="hljs-number">1</span>] == <span class="hljs-literal">false</span>) || used[i] == <span class="hljs-literal">true</span>)<br>            <span class="hljs-keyword">continue</span>;<br>        used[i] = <span class="hljs-literal">true</span>;<br>        path.<span class="hljs-built_in">push_back</span>(nums[i]);<br>        <span class="hljs-built_in">backtracking</span>(nums, used);<br>        path.<span class="hljs-built_in">pop_back</span>();<br>        used[i] = <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br><br>vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">permuteUnique</span>(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)<br>&#123;<br>    vector&lt;<span class="hljs-type">bool</span>&gt;<span class="hljs-built_in">used</span>(nums.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">false</span>);<br>    <span class="hljs-built_in">backtracking</span>(nums, used);<br>    <span class="hljs-keyword">return</span> ret;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里我们再补充两点：</p>
+<ul>
+<li>在全排列中，树层去重和树枝去重的结果相同，但前者更快</li>
+</ul>
+<p>对于树枝去重，我们可以想象这是一个满 n 叉树，只有叶子节点当中存在相同的数，那么它就不会进入到结果数组中</p>
+<ul>
+<li>对于我上面写的代码，那个 <code>used[i] == true</code> 是必要的</li>
+</ul>
+<p>因为这个条件是为了保证下一层的 i 循环到的数字与上一层所选数字相同时可以跳过</p>
+<h2 id="N-皇后"><a href="#N-皇后" class="headerlink" title="N 皇后"></a>N 皇后</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-queens/">51. N 皇后 - 力扣（LeetCode）</a></p>
+<blockquote>
+<p>按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。</p>
+<p>n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。</p>
+<p>给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。</p>
+<p>每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。</p>
+</blockquote>
+<p>我们来看一道 N 皇后问题。</p>
+<p>这里我想说的是<strong>回溯函数的返回值问题</strong>。</p>
+<p>我们通常会把回溯这一过程等效为一棵 N 叉树，而<strong>回溯的收集部分要么是节点，要么是叶子</strong>。</p>
+<p>这两种情况下所对应的返回值是 <code>void</code> ，自然也不需要注意。我想说的是如果我<strong>只需要这棵 N 叉树的一个树枝或者其中一个叶子节点</strong>，那么我们的返回值就应该写 <code>bool</code> 。</p>
+<p>即如果我们需要找出所有的情况，则应该是 <code>void</code> ，如果只找一种情况，则为 <code>bool</code> 。</p>
+<p>显然，这里应为 <code>void</code> 。</p>
+<p>将 N 个皇后放在 N * N 的棋盘上，<strong>必须是每行放置一个</strong>，否则就会出现同一行出现两个皇后这种情况。</p>
+<p>那么，我们定义一个变量 <code>row</code> ，用来表示<strong>当前所递归的行数</strong>，而终止条件为 <code>row = n</code> 。此时我们应该将结果放入结果数组当中。</p>
+<p>遍历的时候，我们从每一行的最左边开始遍历，<strong>在保证合法的情况下进入下一层的递归</strong>。</p>
+<p>在检验合法性的时候，我们需要对这个位置的同一行、同一列、两个斜对角进行判重</p>
+<p>同一行这个条件可以省略，因为本身我就是一行一行遍历的。前面如果有皇后，那么这一行就结束了，而某一位置的后面不可能会有皇后（因为还没有循环到那里）。</p>
+<p>我们着重对两个斜对角进行考虑。同样地道理，这一行以下的部分并没有放置皇后，因此我们只需要对这一行<strong>往上</strong>的两个对角进行判重即可，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;string&gt;&gt;ret;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">backtarcking</span><span class="hljs-params">(vector&lt;string&gt;&amp; board, <span class="hljs-type">int</span> row, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (row == n)<br>        &#123;<br>            ret.<span class="hljs-built_in">push_back</span>(board);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> col = <span class="hljs-number">0</span>; col &lt; board.<span class="hljs-built_in">size</span>(); col++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">IsValid</span>(board, row, col))<br>            &#123;<br>                board[row][col] = <span class="hljs-string">&#x27;Q&#x27;</span>;<br>                <span class="hljs-built_in">backtarcking</span>(board, row + <span class="hljs-number">1</span>, n);<br>                board[row][col] = <span class="hljs-string">&#x27;.&#x27;</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">IsValid</span><span class="hljs-params">(vector&lt;string&gt;&amp; board, <span class="hljs-type">int</span> row, <span class="hljs-type">int</span> col)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= row; i++)<br>            <span class="hljs-keyword">if</span> (board[i][col] == <span class="hljs-string">&#x27;Q&#x27;</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = row - <span class="hljs-number">1</span>, j = col - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &gt;= <span class="hljs-number">0</span>; i--, j--)<br>            <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;Q&#x27;</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = row - <span class="hljs-number">1</span>, j = col + <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt;= board.<span class="hljs-built_in">size</span>(); i--, j++)<br>            <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;Q&#x27;</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    vector&lt;vector&lt;string&gt;&gt; <span class="hljs-built_in">solveNQueens</span>(<span class="hljs-type">int</span> n)<br>    &#123;<br>        vector&lt;string&gt;<span class="hljs-built_in">board</span>(n, <span class="hljs-built_in">string</span>(n, <span class="hljs-string">&#x27;.&#x27;</span>));<br>        <span class="hljs-built_in">backtarcking</span>(board, <span class="hljs-number">0</span>, n);<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>我们首先来讨论一下一个问题是否能用动态规划来求解</p>
+<p>能有动态规划的一个非常重要的条件是：存在<strong>「重叠子问题」</strong>，什么意思？</p>
+<p>意思是：当我把一个问题拆分为多个子问题后，<strong>对于子问题的处理依旧可以采取与原问题相同的拆分思路</strong>。即对于原问题的处理与对于子问题的处理方法<strong>完全一致</strong>。这便是判断一道题能否用动态规划的关键。</p>
+<p>我们通常使用动态规划的目的是为了求<strong>最值</strong>，既然是最值，那么我们需要将所有的可能<strong>全部列出来</strong>。也就是说，我们需要遍历所有的<strong>「状态」</strong>。</p>
+<p>然后，我们需要着重理解一下动态规划当中的<strong>「状态」</strong>，这里的<strong>状态</strong>体现在 <code>dp</code> 数组当中，即当下标取 <code>i</code> 时，<code>dp[i]</code> 的含义是什么？</p>
+<p>接着，我们需要找到 <code>dp[i]</code> 与其子问题之间的联系，即用 <code>dp[i]</code> 的子问题 <code>dp[i - 1]</code> 或其他来<strong>表示</strong> <code>dp[i]</code> 。这便是<strong>「状态转移方程」</strong>。当然，在列这玩意之前需要<strong>初始化</strong>。</p>
+<p>嘛，上面我说的这些都是属于一个很直接的想法，在实际做题的时候我们要按照下面的步骤来走</p>
+<ol>
+<li>明确「状态」<ul>
+<li>这里的状态指的是 <code>dp</code> 数组中下标取某一数值时的<strong>含义</strong>。</li>
+</ul>
+</li>
+<li>明确「选择」<ul>
+<li>选择，即是<strong>导致状态改变的动作</strong>。</li>
+</ul>
+</li>
+<li>明确 base case<ul>
+<li>也就是初始化</li>
+</ul>
+</li>
+<li>列状态转移方程。我们给出如下目标</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//自顶向下式的。这种采用的是函数</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dp</span><span class="hljs-params">(状态<span class="hljs-number">1</span>, 状态<span class="hljs-number">2</span>, 状态<span class="hljs-number">3</span>, ...)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> 做出选择 to 所能做出选择的所有范围<br>        <span class="hljs-comment">//此时状态会发生改变</span><br>        result = 求最值(result, <span class="hljs-built_in">dp</span>(状态<span class="hljs-number">1</span>, 状态<span class="hljs-number">2</span>, 状态<span class="hljs-number">3</span>, ...));<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-comment">//自底向上式的。这种采取迭代</span><br>初始化 base <span class="hljs-keyword">case</span><br><span class="hljs-keyword">for</span> 状态<span class="hljs-number">1</span> to 状态<span class="hljs-number">1</span>的所有情况<br>    <span class="hljs-keyword">for</span> 状态<span class="hljs-number">2</span> to 状态<span class="hljs-number">2</span>的所有情况<br>        <span class="hljs-keyword">for</span> 状态<span class="hljs-number">3</span> to 状态<span class="hljs-number">3</span>的所有情况<br>            ...<br>            dp[状态<span class="hljs-number">1</span>][状态<span class="hljs-number">2</span>][状态<span class="hljs-number">3</span>][...] = 求最值(选择<span class="hljs-number">1</span>, 选择<span class="hljs-number">2</span>, 选择<span class="hljs-number">3</span>, ...)<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" class="category-chain-item">算法笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">#算法笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>算法笔记</div>
+      <div>https://nishikichisato.github.io/2022/07/30/Algorithm Solution/算法笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月30日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年9月2日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/31/Algorithm%20Solution/LC-1161.%E6%9C%80%E5%A4%A7%E5%B1%82%E5%86%85%E5%85%83%E7%B4%A0%E5%92%8C/" title="LC 1161. 最大层内元素和">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LC 1161. 最大层内元素和</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/" title="小林图解网络笔记">
+                        <span class="hidden-mobile">小林图解网络笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
