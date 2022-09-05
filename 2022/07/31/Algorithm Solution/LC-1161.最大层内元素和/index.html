@@ -18,12 +18,12 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1161. 最大层内元素和 给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。 输入：root &#x3D; [1,7,0,7,-8,null,null] 输出：2 解释： 第 1 层各元素之和为 1， 第 2 层各元素之和为 7 + 0 &#x3D; 7， 第 3 层各元">
+    <meta name="description" content="1161. 最大层内元素和 给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。 输入：root &#x3D; [1,7,0,7,-8,null,null] 输出：2 解释： 第 1 层各元素之和为 1， 第 2 层各元素之和为 7 + 0 &#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LC 1161. 最大层内元素和">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/07/31/Algorithm%20Solution/LC-1161.%E6%9C%80%E5%A4%A7%E5%B1%82%E5%86%85%E5%85%83%E7%B4%A0%E5%92%8C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="1161. 最大层内元素和 给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。 输入：root &#x3D; [1,7,0,7,-8,null,null] 输出：2 解释： 第 1 层各元素之和为 1， 第 2 层各元素之和为 7 + 0 &#x3D; 7， 第 3 层各元">
+<meta property="og:description" content="1161. 最大层内元素和 给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。 请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。 输入：root &#x3D; [1,7,0,7,-8,null,null] 输出：2 解释： 第 1 层各元素之和为 1， 第 2 层各元素之和为 7 + 0 &#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-31T14:46:02.113Z">
 <meta property="article:modified_time" content="2022-09-05T14:50:45.676Z">
@@ -46,8 +46,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -298,23 +296,29 @@
             
               <div class="markdown-body">
                 
-                <h4 id="1161-最大层内元素和"><a class="markdownIt-Anchor" href="#1161-最大层内元素和"></a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree/">1161. 最大层内元素和</a></h4>
-<p>给你一个二叉树的根节点 <code>root</code>。设根节点位于二叉树的第 <code>1</code> 层，而根节点的子节点位于第 <code>2</code> 层，依此类推。</p>
-<p>请返回层内元素之和 <strong>最大</strong> 的那几层（可能只有一层）的层号，并返回其中 <strong>最小</strong> 的那个。</p>
+                <h4 id="最大层内元素和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree/">1161.
+最大层内元素和</a></h4>
+<p>给你一个二叉树的根节点 <code>root</code>。设根节点位于二叉树的第
+<code>1</code> 层，而根节点的子节点位于第 <code>2</code>
+层，依此类推。</p>
+<p>请返回层内元素之和 <strong>最大</strong>
+的那几层（可能只有一层）的层号，并返回其中 <strong>最小</strong>
+的那个。</p>
 <pre><code class="hljs">输入：root = [1,7,0,7,-8,null,null]
 输出：2
 解释：
 第 1 层各元素之和为 1，
 第 2 层各元素之和为 7 + 0 = 7，
 第 3 层各元素之和为 7 + -8 = -1，
-所以我们返回第 2 层的层号，它的层内元素之和最大。
-</code></pre>
-<h4 id="bfs"><a class="markdownIt-Anchor" href="#bfs"></a> BFS</h4>
+所以我们返回第 2 层的层号，它的层内元素之和最大。</code></pre>
+<h4 id="bfs">BFS</h4>
 <p>既然是找每一层的最大值，那么我们直接用层序遍历即可并用一个下标来记录当前层的最大和所对应的层数，最后返回即可。还蛮简单的</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxLevelSum</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		queue&lt;TreeNode*&gt;que;<br>		que.<span class="hljs-built_in">push</span>(root);<br>		<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录每层的元素和</span><br>		<span class="hljs-type">int</span> maxsum = INT32_MIN, index = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录最大那一层的元素和以及相应的下标</span><br>		<span class="hljs-type">int</span> deep = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录层数</span><br>		<span class="hljs-keyword">while</span> (!que.<span class="hljs-built_in">empty</span>())<br>		&#123;<br>			<span class="hljs-type">int</span> size = que.<span class="hljs-built_in">size</span>();<br>			deep++;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>			&#123;<br>				TreeNode* cur = que.<span class="hljs-built_in">front</span>();<br>				que.<span class="hljs-built_in">pop</span>();<br>				sum += cur-&gt;val;<br>				<span class="hljs-keyword">if</span> (cur-&gt;left)<br>					que.<span class="hljs-built_in">push</span>(cur-&gt;left);<br>				<span class="hljs-keyword">if</span> (cur-&gt;right)<br>					que.<span class="hljs-built_in">push</span>(cur-&gt;right);<br>			&#125;<br>			<span class="hljs-keyword">if</span> (sum &gt; maxsum)<br>			&#123;<br>				maxsum = sum;<br>				index = deep;<br>			&#125;<br>            sum = <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-keyword">return</span> index;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> )</em> ，n 为二叉树节点个数。</p>
-<p>空间复杂的：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> )</em> ，n 为二叉树节点个数，最坏情况下，需要申请 n 个空间的队列。</p>
-<h4 id="dfs"><a class="markdownIt-Anchor" href="#dfs"></a> DFS</h4>
+<p>时间复杂度：<em>O( <span class="math inline">\(n\)</span> )</em> ，n
+为二叉树节点个数。</p>
+<p>空间复杂的：<em>O( <span class="math inline">\(n\)</span> )</em> ，n
+为二叉树节点个数，最坏情况下，需要申请 n 个空间的队列。</p>
+<h4 id="dfs">DFS</h4>
 <p>当然，这道题我们也可以用递归来解决</p>
 <p>这道题我们需要解决的问题只有一个：<strong>记录每一层的所有元素和及该层的层数</strong>。</p>
 <p>那么，我们完全可以用一个数组来解决。用数组下标来表示层数，下标所对应的值表示该层所有元素的和，那么最后的结果就是这个数组中最大元素所对应的下标。</p>
@@ -323,8 +327,11 @@
 <p>当层数等于数组大小时，说明该元素在新的一层，需要插入到数组的末尾。</p>
 <p>当层数小于数组大小时，直接让对应元素相加即可。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	vector&lt;<span class="hljs-type">int</span>&gt;ret;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">DFS</span><span class="hljs-params">(TreeNode* cur, <span class="hljs-type">int</span> deep)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (ret.<span class="hljs-built_in">size</span>() == deep)<br>			ret.<span class="hljs-built_in">push_back</span>(cur-&gt;val);<span class="hljs-comment">//在后面插入</span><br>		<span class="hljs-keyword">else</span><br>			ret[deep] += cur-&gt;val;<br>		<span class="hljs-keyword">if</span> (cur-&gt;left)<br>			<span class="hljs-built_in">DFS</span>(cur-&gt;left, deep + <span class="hljs-number">1</span>);<span class="hljs-comment">//这里不能写deep++, 因为会影响到下面cur右边的递归</span><br>		<span class="hljs-keyword">if</span> (cur-&gt;right)              <span class="hljs-comment">//这里不能写else, 因为我们需要保证该节点的两个子树都能递归到</span><br>			<span class="hljs-built_in">DFS</span>(cur-&gt;right, deep + <span class="hljs-number">1</span>);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxLevelSum</span><span class="hljs-params">(TreeNode* root)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-built_in">DFS</span>(root, <span class="hljs-number">0</span>);<br>		<span class="hljs-type">int</span> index = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; ret.<span class="hljs-built_in">size</span>(); i++)<br>			<span class="hljs-keyword">if</span> (ret[index] &lt; ret[i])<br>				index = i;<br>		<span class="hljs-keyword">return</span> index + <span class="hljs-number">1</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> )</em> ，n 为二叉树节点个数。有 n 个节点，每个节点的操作为 O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ) 。</p>
-<p>空间复杂度：<em>O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> )</em> ，n 为二叉树节点个数。这里省略常数了，最坏情况是一条链，数组以及递归的空间复杂度都是 O( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> ) 。</p>
+<p>时间复杂度：<em>O( <span class="math inline">\(n\)</span> )</em> ，n
+为二叉树节点个数。有 n 个节点，每个节点的操作为 O( <span class="math inline">\(1\)</span> ) 。</p>
+<p>空间复杂度：<em>O( <span class="math inline">\(n\)</span> )</em> ，n
+为二叉树节点个数。这里省略常数了，最坏情况是一条链，数组以及递归的空间复杂度都是
+O( <span class="math inline">\(n\)</span> ) 。</p>
 
                 
               </div>
@@ -483,6 +490,7 @@
 
   
   
+
 
 
 
@@ -676,6 +684,40 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

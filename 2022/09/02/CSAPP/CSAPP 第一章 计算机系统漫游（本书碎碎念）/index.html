@@ -18,12 +18,12 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。 由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。 操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：  文件是对 I&#x2F;O 设备的抽象 虚拟内存是对主存和磁盘的抽象 进程是处理器、主存、I&#x2F;O 设备的抽象  下面是碎碎念时间 今">
+    <meta name="description" content="源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。 由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。 操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：  文件是对 I&#x2F;O 设备的抽象 虚拟内存是对主存和磁盘的抽象 进程是处理器、主存、I&#x2F;O 设备的抽象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSAPP 第一章 计算机系统漫游（本书碎碎念）">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/09/02/CSAPP/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。 由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。 操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：  文件是对 I&#x2F;O 设备的抽象 虚拟内存是对主存和磁盘的抽象 进程是处理器、主存、I&#x2F;O 设备的抽象  下面是碎碎念时间 今">
+<meta property="og:description" content="源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。 由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。 操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：  文件是对 I&#x2F;O 设备的抽象 虚拟内存是对主存和磁盘的抽象 进程是处理器、主存、I&#x2F;O 设备的抽象">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-02T12:19:06.000Z">
 <meta property="article:modified_time" content="2022-09-02T12:19:06.000Z">
@@ -46,8 +46,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -298,10 +296,12 @@
             
               <div class="markdown-body">
                 
-                <p>源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1 组，称之为字节。每个字节用于表示程序中的某些文本字符。</p>
-<p>由 ASCII 字符构成的文件成为文本文件，所有其他文件都称为二进制文件。</p>
+                <p>源程序是由值 0 和 1 组成的位序列（也成为比特序列）。8 个位被组织成 1
+组，称之为字节。每个字节用于表示程序中的某些文本字符。</p>
+<p>由 ASCII
+字符构成的文件成为文本文件，所有其他文件都称为二进制文件。</p>
 <p>操作系统内核是应用程序和硬件之间的媒介。它提供三种基本的抽象：</p>
-<ol>
+<ol type="1">
 <li>文件是对 I/O 设备的抽象</li>
 <li>虚拟内存是对主存和磁盘的抽象</li>
 <li>进程是处理器、主存、I/O 设备的抽象</li>
@@ -310,7 +310,10 @@
 <p>今晚把第一章看完了，不多，也就 20 页</p>
 <p>这里面全部都是概述性的东西，我也实在是记不了什么笔记，只想大概写一些我看完之后的感受</p>
 <p>说实话，我看完之后对这本书期待挺高的</p>
-<p>我之前一直在想，到底是用 <code>swich case</code> 的速度快还是用一堆 <code>if else</code> 的速度快；调用函数的系统开销到底有多大；<code>while</code> 和 <code>for</code> 这两个循环到底有啥区别；除此之外还有很多</p>
+<p>我之前一直在想，到底是用 <code>swich case</code> 的速度快还是用一堆
+<code>if else</code>
+的速度快；调用函数的系统开销到底有多大；<code>while</code> 和
+<code>for</code> 这两个循环到底有啥区别；除此之外还有很多</p>
 <p>这些问题并不涉及到很深的部分，但以我目前所学的知识无法解答，然后我看到这本书会对这些问题进行解答</p>
 <p>说实话，看到这个部分的时候我对这本书就有一点点的兴趣了</p>
 <p>希望，希望不要给我划大饼</p>
@@ -468,6 +471,7 @@
 
   
   
+
 
 
 
@@ -661,6 +665,40 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

@@ -18,15 +18,15 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="63. 不同路径 II 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 123456输入：obstacleGrid">
+    <meta name="description" content="120. 三角形最小路径和 每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。 12345678输入：triangle &#x3D; [[2],[3,4],[6,5,7],[4,1,8,3]]输出：11解释：如下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 63.不同路径II">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/02/Algorithm%20Solution/LC-63.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/index.html">
+<meta property="og:title" content="120. 三角形最小路径和">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/05/Algorithm%20Solution/120.-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="63. 不同路径 II 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？ 网格中的障碍物和空位置分别用 1 和 0 来表示。 123456输入：obstacleGrid">
+<meta property="og:description" content="120. 三角形最小路径和 每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1 。 12345678输入：triangle &#x3D; [[2],[3,4],[6,5,7],[4,1,8,3]]输出：11解释：如下">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-02T08:06:58.217Z">
-<meta property="article:modified_time" content="2022-09-05T14:49:43.855Z">
+<meta property="article:published_time" content="2022-09-05T15:24:30.810Z">
+<meta property="article:modified_time" content="2022-09-05T15:24:37.898Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="路径问题">
 <meta property="article:tag" content="动态规划">
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 63.不同路径II - Chisato 的成长日记</title>
+  <title>120. 三角形最小路径和 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 63.不同路径II"></span>
+            <span id="subtitle" data-typed-text="120. 三角形最小路径和"></span>
           
         </div>
 
@@ -221,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-02 16:06" pubdate>
-          2022年9月2日 下午
+        <time datetime="2022-09-05 23:24" pubdate>
+          2022年9月5日 晚上
         </time>
       </span>
     
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          2.5k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          9 分钟
+          22 分钟
         
       </span>
     
@@ -292,32 +292,86 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 63.不同路径II</h1>
+            <h1 style="display: none">120. 三角形最小路径和</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="不同路径-ii"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths-ii/">63. 不同路径
-II</a></h4>
-<p>一个机器人位于一个 <code>m x n</code> 网格的左上角
-（起始点在下图中标记为 “Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为
-“Finish”）。</p>
-<p>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
-<p>网格中的障碍物和空位置分别用 <code>1</code> 和 <code>0</code>
-来表示。</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs clean">输入：obstacleGrid = [[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>],[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>]]<br>输出：<span class="hljs-number">2</span><br>解释：<span class="hljs-number">3</span>x3 网格的正中间有一个障碍物。<br>从左上角到右下角一共有 <span class="hljs-number">2</span> 条不同的路径：<br><span class="hljs-number">1.</span> 向右 -&gt; 向右 -&gt; 向下 -&gt; 向下<br><span class="hljs-number">2.</span> 向下 -&gt; 向下 -&gt; 向右 -&gt; 向右<br></code></pre></td></tr></table></figure>
-<h4 id="dp">DP</h4>
-<p>这个题，就是在 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths/">62. 不同路径</a>
-的基础上修改了一点点，基本思路一模一样</p>
-<p>我们唯一需要注意的是，<code>obstacleGrid[i][j] == 1</code>
-的时候，<code>dp[i][j]</code> 必须为 0 ，也就是默认值</p>
-<p>这一步并不需要额外设置，我们只需要在最前面加一个判断
-<code>obstacleGrid[i][j] == 0</code> 就行</p>
+                <h4 id="三角形最小路径和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/triangle/">120.
+三角形最小路径和</a></h4>
+<p>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与
+上一层结点下标 相同或者等于 上一层结点下标 + 1
+的两个结点。也就是说，如果正位于当前行的下标 i
+，那么下一步可以移动到下一行的下标 i 或 i + 1 。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：triangle = <span class="hljs-comment">[<span class="hljs-comment">[2]</span>,<span class="hljs-comment">[3,4]</span>,<span class="hljs-comment">[6,5,7]</span>,<span class="hljs-comment">[4,1,8,3]</span>]</span><br>输出：11<br>解释：如下面简图所示：<br>   2<br>  3 4<br> 6 5 7<br>4 1 8 3<br>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。<br></code></pre></td></tr></table></figure>
+<h4 id="dp-数组">DP 数组</h4>
+<p>前面做了那么多道的最短路径，现在这种题目已经是轻车熟路了</p>
+<p>我们定义 <code>dp[i][j]</code> 表示到达点 <span class="math inline">\((i,\ j)\)</span> 所需的最短路径和</p>
+<p>在这道题里面，我们需要找出自顶向下的最短路径和，也就是我们需要找出
+<code>dp</code> 数组最后一行当中的最小值，即 <code>dp[n-1][j]</code>
+的最小值</p>
+<p>然后我们来考虑一下状态转移方程。这种路径问题，做多了真的是有感觉</p>
+<p>我们考虑<strong>其它点应该如何转移到点</strong> <span class="math inline">\((i,\ j)\)</span> 这个问题，即对于所求
+<code>dp[i][j]</code> ，我们有且仅有如下两种方式转移过来</p>
+<ul>
+<li>正上方</li>
+<li>左上方</li>
+</ul>
+<p>接着我们考虑这两种情况的限制条件，不难想到：</p>
+<p>对于位置第 <code>j = 0</code>
+列，<strong>只可以</strong>正上方转移过来</p>
+<p>对于位置 <code>j == i</code>
+，<strong>只可以</strong>从左上方转移过来</p>
+<p>我们用区间的角度来理解这两句话就是：</p>
+<p>若 <code>j == 0</code> ，则只能从正上方转移</p>
+<p>若 <code>0 &lt; j &lt; i</code> ，则既可以从正上也可以从左上转移</p>
+<p>若 <code>j == i</code> ，即只能从左上转移</p>
+<p>实际上，有这三句就已经足够我们写转移方程了，但这里还可以继续讨论</p>
+<p>刚刚我们是从区间也就是 <code>j</code>
+的取值来考虑所得到的结果，对于这个结果，我们从<strong>「可以从哪个方向转移过来」</strong>来考虑
+<code>j</code> 的取值</p>
+<p>若<strong>一定能</strong>从正上方转移，则 <code>j &lt; i</code>
+，只需要把只能从左上方转移过来的条件排除在外即可，其转移方程为
+<code>dp[i][j] = dp[i - 1][j]</code></p>
+<p>若<strong>一定能</strong>从左上方转移过来，则 <code>j &gt; 0</code>
+，同理，把只能从正上方转移过来的情况排除，其转移方程为
+<code>dp[i][j] = dp[i - 1][j - 1]</code></p>
+<p>讨论到这里，最主要的就已经结束了，还有一个细节：</p>
+<p>上面这两种情况是相互独立的，也就是分别由两个 <code>if</code>
+来进行判断</p>
+<p>我们最终的 <code>dp[i][j]</code>
+的取值需要取二者的较小值（如果二者均成立）</p>
+<p>我原先的想法是，分别用两个变量记录下这两个数（没有成立的那个用最大值标记），然后在对
+<code>dp[i][j]</code> 赋值的时候对这两个变量取较小值即可</p>
+<p>实际上还有更简单的办法：先对 <code>dp[i][j]</code>
+赋最大值，然后分别于那两个转移过来的值作比较即可，这样一定可以取到最小值</p>
+<p>就算那两个 <code>if</code>
+都不成立，在下一层当中也会直接忽略掉这个值（因为它是最大值）</p>
 <p>具体代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">uniquePathsWithObstacles</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; obstacleGrid)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> m = obstacleGrid.<span class="hljs-built_in">size</span>(), n = obstacleGrid[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>		dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = obstacleGrid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] == <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (obstacleGrid[i][j] == <span class="hljs-number">0</span>)<br>				&#123;<br>					<span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; j &gt; <span class="hljs-number">0</span>)<br>						dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] + dp[i][j - <span class="hljs-number">1</span>];<br>					<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span>)<br>						dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];<br>					<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>						dp[i][j] = dp[i][j - <span class="hljs-number">1</span>];<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; triangle)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = triangle.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>		dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = triangle[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= i; j++)<br>			&#123;<br>				dp[i][j] = INT32_MAX;<br>				<span class="hljs-type">int</span> val = triangle[i][j];<br>				<span class="hljs-keyword">if</span> (j &lt; i)<br>					dp[i][j] = <span class="hljs-built_in">min</span>(dp[i][j], dp[i - <span class="hljs-number">1</span>][j] + val);<br>				<span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = <span class="hljs-built_in">min</span>(dp[i][j], dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] + val);<br>			&#125;<br>		&#125;<br>		<span class="hljs-type">int</span> ret = INT32_MAX;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> m : dp[n - <span class="hljs-number">1</span>])<span class="hljs-comment">//求最小值</span><br>			ret = <span class="hljs-built_in">min</span>(ret, m);<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
 <p>空间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
+<h4 id="dp-数组-滚动数组压缩">DP 数组 + 滚动数组压缩</h4>
+<p>滚动数组的状态压缩没有任何的思维难度，至少看起来是这样</p>
+<p>我们直接将<strong>第一维</strong>从 <code>i</code> 改为
+<code>2</code></p>
+<p>然后将所有的 <code>dp[i]</code> 全部改为 <code>dp[i % 2]</code> 或者
+<code>dp[i &amp; 1]</code> ，这里推荐用后者，毕竟可移植性好</p>
+<p>最起码，从做法上看，没有任何难度，但我还是解释一下</p>
+<p>我们单单看 <code>dp</code> 数组的第一维，<code>dp[i]</code>
+的取值<strong>只依靠</strong><code>dp[i - 1]</code>
+，也就是该位置前面那一个的值（记住，我们只看第一维）</p>
+<p>那么，对于原 <code>dp</code>
+数组当中的<strong>某一行</strong>，我把所有<strong>奇数索引</strong>对应的值投影到
+<code>dp[1]</code> ，所有<strong>偶数索引</strong>对应的值投影到
+<code>dp[0]</code> ，由于每一次对 <code>dp[i]</code>
+的赋值只依靠前一个的值，那么我们让 <code>dp[0]</code> 和
+<code>dp[1]</code> 的值不断更新即可，这也就是滚动数组嘛</p>
+<p>根本没有任何的思维难度。。。。。。</p>
+<p>具体代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; triangle)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = triangle.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>		dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = triangle[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= i; j++)<br>			&#123;<br>				dp[i &amp; <span class="hljs-number">1</span>][j] = INT32_MAX;<br>				<span class="hljs-type">int</span> val = triangle[i][j];<br>				<span class="hljs-keyword">if</span> (j &lt; i)<br>					dp[i &amp; <span class="hljs-number">1</span>][j] = <span class="hljs-built_in">min</span>(dp[i &amp; <span class="hljs-number">1</span>][j], dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][j] + val);<br>				<span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>					dp[i &amp; <span class="hljs-number">1</span>][j] = <span class="hljs-built_in">min</span>(dp[i &amp; <span class="hljs-number">1</span>][j], dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] + val);<br>			&#125;<br>		&#125;<br>		<span class="hljs-type">int</span> ret = INT32_MAX;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> m : dp[(n - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>])<br>			ret = <span class="hljs-built_in">min</span>(ret, m);<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
 
                 
               </div>
@@ -365,8 +419,8 @@ II</a></h4>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 63.不同路径II</div>
-      <div>https://nishikichisato.github.io/2022/09/02/Algorithm Solution/LC-63.不同路径II/</div>
+      <div>120. 三角形最小路径和</div>
+      <div>https://nishikichisato.github.io/2022/09/05/Algorithm Solution/120.-三角形最小路径和/</div>
     </div>
     <div class="license-meta">
       
@@ -378,7 +432,7 @@ II</a></h4>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月2日</div>
+          <div>2022年9月5日</div>
         </div>
       
       
@@ -419,18 +473,12 @@ II</a></h4>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/02/CSAPP/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/" title="CSAPP 第一章 计算机系统漫游（本书碎碎念）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CSAPP 第一章 计算机系统漫游（本书碎碎念）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/02/Algorithm%20Solution/LC-687.%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84/" title="LC 687.最长同值路径">
-                        <span class="hidden-mobile">LC 687.最长同值路径</span>
+                      <a href="/2022/09/04/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E5%88%9D%E5%A7%8B%E5%91%A8-2022.8.31---2022.9.4/" title="大二上 初始周 2022.8.31 - 2022.9.4">
+                        <span class="hidden-mobile">大二上 初始周 2022.8.31 - 2022.9.4</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
