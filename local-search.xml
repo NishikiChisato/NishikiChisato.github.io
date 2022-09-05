@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>关于子序列问题的总结</title>
+    <link href="/2022/09/06/Algorithm%20Solution/%E5%85%B3%E4%BA%8E%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93/"/>
+    <url>/2022/09/06/Algorithm%20Solution/%E5%85%B3%E4%BA%8E%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<p>前面我们写了两道子序列的题目，分别是 <a href="https://nishikichisato.github.io/2022/09/04/Algorithm%20Solution/LC-516.最长回文子序列/">LC516.最长回文子序列</a> 和 <a href="https://nishikichisato.github.io/2022/09/04/Algorithm%20Solution/LC-1143.最长公共子序列/">LC1143.最长公共子序列</a></p><p>这两道题所用的 <code>dp</code> 数组均是二维 <code>dp</code>，其定义分别为：</p><p>若有两数组 <code>arr1</code> 与数组 <code>arr2</code> ，在区间<code>arr1[0..i]</code> 和区间 <code>arr[0..j]</code> 中，我们定义<code>dp[i][j]</code> 为所求子序列长度</p><p>若只有一数组 <code>arr</code> ，在区间 <code>arr[i..j]</code>，我们定义 <code>dp[i][j]</code> 为所求子序列长度</p><p>二者的遍历方式因题目而异，在这里只讨论定义</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>动态规划</tag>
+      
+      <tag>总结</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>120. 三角形最小路径和</title>
     <link href="/2022/09/05/Algorithm%20Solution/120.-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/"/>
     <url>/2022/09/05/Algorithm%20Solution/120.-%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/</url>
