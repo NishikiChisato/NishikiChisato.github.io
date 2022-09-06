@@ -26,7 +26,7 @@
 <meta property="og:description" content="信息存储 大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序 我们知道，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-03T12:56:37.852Z">
-<meta property="article:modified_time" content="2022-09-04T16:03:28.143Z">
+<meta property="article:modified_time" content="2022-09-06T12:57:01.238Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CASPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3.8k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          20 分钟
+          32 分钟
         
       </span>
     
@@ -452,6 +452,45 @@ x_{\omega-2},\ \cdots,\ x_1,\ x_0\ ]\)</span> 而言，有：</p>
 <p>原码有一个问题是会将 <span class="math inline">\([00 \cdots
 0]\)</span> 与 <span class="math inline">\([10 \cdots0]\)</span>
 都解释为 0</p>
+<h3 id="拓展一个数字的位表示">拓展一个数字的位表示</h3>
+<p>对于无符号数的转换，只需要简单地在开头添加 0 ，这也被称为零拓展</p>
+<p>无符号数的零拓展：</p>
+<p>定义宽度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u\ =\ [\ u_{\omega-1},\ u_{\omega-2},\
+\cdots,\ u_1,\ u_0\ ]\)</span> 和宽度为 <span class="math inline">\(\omega&#39;\)</span> 的位向量 <span class="math inline">\(u&#39;\ =\ [\ {\color{violet}0},\
+{\color{violet}0},\ \cdots,\ {\color{violet}0},\ u_{\omega-1},\
+u_{\omega-2},\ \cdots,\ u_1,\ u_0\ ]\)</span> ，其中 <span class="math inline">\(\omega&#39;\ &gt;\ \omega\)</span> ，有：<span class="math inline">\(B2U_{\omega}(\vec u)\ =\ B2U_{\omega&#39;}(\vec
+u&#39;)\)</span></p>
+<p>补码数的符号拓展：</p>
+<p>定义宽度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u\ =\ [\ u_{\omega-1},\ u_{\omega-2},\
+\cdots,\ u_1,\ u_0\ ]\)</span> 和宽度为 <span class="math inline">\(\omega&#39;\)</span> 的位向量 <span class="math inline">\(u&#39;\ =\ [\ {\color{violet}u_{\omega-1}},\
+{\color{violet}u_{\omega-1}},\ \cdots,\ {\color{violet}u_{\omega-1}},\
+u_{\omega-1},\ u_{\omega-2},\ \cdots,\ u_1,\ u_0\ ]\)</span> ，其中
+<span class="math inline">\(\omega&#39;\ &gt;\ \omega\)</span>
+，有：<span class="math inline">\(B2T_{\omega}(\vec u)\ =\
+B2T_{\omega&#39;}(\vec u&#39;)\)</span></p>
+<p>这个的证明很妙，去看原书第 55 页</p>
+<h3 id="截断数字">截断数字</h3>
+<p>截断无符号数：</p>
+<p>设 <span class="math inline">\(\vec x\ =\ [\ x_{\omega-1},\
+x_{\omega-2},\ \cdots,\ x_0\ ]\)</span> ，而 <span class="math inline">\(\vec x&#39;\)</span> 为将其截断<strong>为</strong>
+<span class="math inline">\(k\)</span> 位后的结果，即 <span class="math inline">\(\vec x&#39;\ =\ [\ x_{k-1},\ x_{k-2},\ \cdots,\
+x_1,\ x_0\ ]\)</span> 。我们令 <span class="math inline">\(x\ =\
+B2U_{\omega}(\vec x)\)</span> ，<span class="math inline">\(x&#39;\ =\
+B2U_{k}(\vec x&#39;)\)</span> ，有：<span class="math inline">\(x&#39;\
+=\ x\ mod\ 2^k\)</span></p>
+<p>这个的证明也很秒，这里简单说一下</p>
+<p>由于无符号值是通过加法一个一个加起来的，而我们模 <span class="math inline">\(k\)</span> 的话，位数小于 <span class="math inline">\(k\)</span> 的还是原来的数，位数大于等于 <span class="math inline">\(k\)</span> 的全部变成零</p>
+<p>太妙了</p>
+<p>截断补码数值：</p>
+<p>设 <span class="math inline">\(\vec x\ =\ [\ x_{\omega-1},\
+x_{\omega-2},\ \cdots,\ x_0\ ]\)</span> ，而 <span class="math inline">\(\vec x&#39;\)</span> 为将其截断<strong>为</strong>
+<span class="math inline">\(k\)</span> 位后的结果，即 <span class="math inline">\(\vec x&#39;\ =\ [\ x_{k-1},\ x_{k-2},\ \cdots,\
+x_1,\ x_0\ ]\)</span> 。我们令 <span class="math inline">\(x\ =\
+B2U_{\omega}(\vec x)\)</span> ，<span class="math inline">\(x&#39;\ =\
+B2T_{k}(\vec x&#39;)\)</span> ，有：<span class="math inline">\(x&#39;\
+=\ U2T_k(x\ mod\ 2^k)\)</span></p>
+<p>简单来说，对于补码的截断，我们<strong>先对其做无符号截断，再从补码的角度看待剩下的位向量</strong>即可（括号里面是无符号截断，外面的
+<span class="math inline">\(U2T\)</span> 是从补码的角度进行翻译）</p>
 
                 
               </div>
@@ -516,7 +555,7 @@ x_{\omega-2},\ \cdots,\ x_1,\ x_0\ ]\)</span> 而言，有：</p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月5日</div>
+          <div>2022年9月6日</div>
         </div>
       
       <div class="license-meta-item">
