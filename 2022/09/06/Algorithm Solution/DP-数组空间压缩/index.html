@@ -18,25 +18,25 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="62. 不同路径 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。 问总共有多少条不同的路径？ 1234567输入：m &#x3D; 3, n &#x3D; 2输出：3解释：从左上角开始，总共有 3 条路径可以到达右下角。1. 向右 -&gt; 向下 -&gt;">
+    <meta name="description" content="我们在 120. 三角形最小路径和 这里说过一种 dp 数组压缩的方式：滚动数组压缩 其实质是将所有的偶数位全部投影到 dp[0] ，所有奇数位全部投影到 dp[1] 在实现上并无具体难度，只是单纯地将第一维改为 dp[i &amp; 1] 就行 不过这么做的前提是 dp[i][j] 的值只依赖其相邻位置，不过也正是因为这一点才允许空间压缩，所有这里也没什么好说的 我们来看另一种">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 62.不同路径">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/01/Algorithm%20Solution/LC-62.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:title" content="DP 数组空间压缩">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/06/Algorithm%20Solution/DP-%E6%95%B0%E7%BB%84%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="62. 不同路径 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。 问总共有多少条不同的路径？ 1234567输入：m &#x3D; 3, n &#x3D; 2输出：3解释：从左上角开始，总共有 3 条路径可以到达右下角。1. 向右 -&gt; 向下 -&gt;">
+<meta property="og:description" content="我们在 120. 三角形最小路径和 这里说过一种 dp 数组压缩的方式：滚动数组压缩 其实质是将所有的偶数位全部投影到 dp[0] ，所有奇数位全部投影到 dp[1] 在实现上并无具体难度，只是单纯地将第一维改为 dp[i &amp; 1] 就行 不过这么做的前提是 dp[i][j] 的值只依赖其相邻位置，不过也正是因为这一点才允许空间压缩，所有这里也没什么好说的 我们来看另一种">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-01T14:59:24.589Z">
-<meta property="article:modified_time" content="2022-09-05T14:49:36.444Z">
+<meta property="article:published_time" content="2022-09-06T08:14:06.022Z">
+<meta property="article:modified_time" content="2022-09-06T08:14:06.163Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="动态规划">
-<meta property="article:tag" content="路径问题">
+<meta property="article:tag" content="总结">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 62.不同路径 - Chisato 的成长日记</title>
+  <title>DP 数组空间压缩 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 62.不同路径"></span>
+            <span id="subtitle" data-typed-text="DP 数组空间压缩"></span>
           
         </div>
 
@@ -221,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-01 22:59" pubdate>
-          2022年9月1日 晚上
+        <time datetime="2022-09-06 16:14" pubdate>
+          2022年9月6日 下午
         </time>
       </span>
     
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.5k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          9 分钟
+          13 分钟
         
       </span>
     
@@ -292,40 +292,58 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 62.不同路径</h1>
+            <h1 style="display: none">DP 数组空间压缩</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="不同路径"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths/">62. 不同路径</a></h4>
-<p>一个机器人位于一个 <code>m x n</code> 网格的左上角
-（起始点在下图中标记为 “Start” ）。</p>
-<p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为
-“Finish” ）。</p>
-<p>问总共有多少条不同的路径？</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs clean">输入：m = <span class="hljs-number">3</span>, n = <span class="hljs-number">2</span><br>输出：<span class="hljs-number">3</span><br>解释：<br>从左上角开始，总共有 <span class="hljs-number">3</span> 条路径可以到达右下角。<br><span class="hljs-number">1.</span> 向右 -&gt; 向下 -&gt; 向下<br><span class="hljs-number">2.</span> 向下 -&gt; 向下 -&gt; 向右<br><span class="hljs-number">3.</span> 向下 -&gt; 向右 -&gt; 向下<br></code></pre></td></tr></table></figure>
-<h4 id="dp">DP</h4>
-<p>我们定义 <span class="math inline">\(f[i][j]\)</span> 表示到达点
-<span class="math inline">\((i, j)\)</span> 的所有路径数。显然有，<span class="math inline">\(f[0][0] = 1\)</span> ，并且最终的答案为 <span class="math inline">\(f[m - 1][n - 1]\)</span></p>
-<p>这个机器人每次只能「向下」、「向右」移动一次。显然，我们可以得出机器人在某个状态的所有移动可能</p>
-<ol type="1">
-<li>当前位置<strong>只能</strong>「向下」移动，那么 <span class="math inline">\(f[i][j] = f[i - 1][j]\)</span> ，只要
-<code>i &gt; 0</code> 就可以满足这种情况</li>
-<li>当前位置<strong>只能</strong>「向右」移动，那么 <span class="math inline">\(f[i][j] = f[i][j - 1]\)</span> ，只要
-<code>j &gt; 0</code> 就可以满足这种情况</li>
-<li>当前位置<strong>既可以</strong>「向下」<strong>也可以</strong>「向右」移动，那么
-<span class="math inline">\(f[i][j] = f[i - 1][j] + f[i][j - 1]\)</span>
-，这需要 <code>i &gt; 0, j &gt; 0</code></li>
-</ol>
-<p>因此总代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">uniquePaths</span><span class="hljs-params">(<span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>		dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; j &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] + dp[i][j - <span class="hljs-number">1</span>];<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>)<br>					dp[i][j] = dp[i][j - <span class="hljs-number">1</span>];<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(m * n)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(m * n)\)</span></p>
-<h5 id="总结">总结：</h5>
-<p>由于 <code>dp</code> 是一个递推的过程，因此可以通过数据量来判断
-<code>dp</code> 数组的维数。一般来说，当数据量为 <span class="math inline">\(10^5 \sim 10^6\)</span> 时是一维 <code>dp</code>
-，当数据量为 <span class="math inline">\(10^2 \sim 10^4\)</span>
-时是二维 <code>dp</code></p>
+                <p>我们在 <a href="https://nishikichisato.github.io/2022/09/05/Algorithm%20Solution/120.-三角形最小路径和/">120.
+三角形最小路径和</a> 这里说过一种 <code>dp</code>
+数组压缩的方式：滚动数组压缩</p>
+<p>其实质是将所有的偶数位全部投影到 <code>dp[0]</code>
+，所有奇数位全部投影到 <code>dp[1]</code></p>
+<p>在实现上并无具体难度，只是单纯地将第一维改为
+<code>dp[i &amp; 1]</code> 就行</p>
+<p>不过这么做的前提是 <code>dp[i][j]</code>
+的值只依赖其相邻位置，不过也正是因为这一点才允许空间压缩，所有这里也没什么好说的</p>
+<p>我们来看另一种空间压缩，这里以 <a href="https://nishikichisato.github.io/2022/09/04/Algorithm%20Solution/LC-516.最长回文子序列/">LC
+516.最长回文子序列</a> 为例，我们将代码拿过来：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestPalindromeSubseq</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n = s.<span class="hljs-built_in">length</span>();<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n &amp;&amp; j &lt; n; i++, j++)<br>        dp[i][j] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (s[i] == s[j])<br>                dp[i][j] = <span class="hljs-number">2</span> + dp[i + <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">else</span> dp[i][j] = <span class="hljs-built_in">max</span>(dp[i + <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][n - <span class="hljs-number">1</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们来考虑一个问题：我们真的需要 <span class="math inline">\(n^2\)</span> 的空间来存储 <code>dp</code>
+数组吗？</p>
+<p>事实上，对于 <code>dp[i][j]</code>
+的值，我们真正需要用到的数据<strong>只有两行</strong>：<code>dp[i]</code>
+行与 <code>dp[i - 1]</code> 行</p>
+<p>也就是说，前面从 0 到 <code>i - 2</code> 行的数据都可以被压缩</p>
+<p>接着再考虑一个问题：我们对 <code>dp</code>
+数组的推导主要是通过赋值来实现，如果只用一维 <code>dp</code>
+的话，那么赋值前的 <code>dp</code> 数组里面的数值有什么含义？</p>
+<p>显然，我们当前是需要对 <code>dp</code> 数组进行更新的，也就是求出
+<code>dp[i]</code>
+的所有值，那么没赋值前的值就是上一次循环结束后遗留下来的值，也就是
+<code>dp[i - 1]</code></p>
+<p>到此为止，我们问题已经解决一大半了</p>
+<p>接着考虑状态转移，我们说 <code>dp[i][j]</code> 的值是由
+<code>dp[i + 1][j - 1]</code> 、<code>dp[i][j - 1]</code> 和
+<code>dp[i + 1][j]</code></p>
+<p>我们<strong>从行的视角来考虑</strong>，<code>dp[i + 1][j]</code> 是
+<code>dp[i][j]</code> 未赋值前的值，我们已知</p>
+<p><code>dp[i - 1][j]</code> 是已经先于 <code>dp[i][j]</code>
+赋值的，就在它前面，我们也已知</p>
+<p>现在有问题的只有 <code>dp[i + 1][j - 1]</code> ，这个值是在对
+<code>dp[i - 1][j]</code>
+赋值的时候掩盖掉的，也就是说我们需要将这个值保留下来才行</p>
+<p>在<strong>内层循环里面但还没开始</strong>前，我们需要用临时变量
+<code>tmp</code> 把 <code>dp[j]</code>
+的值记录下来，并在此次<strong>内层循环结束</strong>之后赋值给
+<code>pre</code> （仍在内层循环内）</p>
+<p><code>pre</code> 会在<strong>每次进入内层循环之前</strong>就初始化成
+0 ，然后让 <code>pre</code> 替代 <code>dp[i + 1][j - 1]</code> 即可</p>
+<p>需要注意的是，我们的<strong>循环是不需要改变的</strong>！！！这一点很重要</p>
+<p>完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestPalindromeSubseq</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = s.<span class="hljs-built_in">length</span>();<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">dp</span>(n, <span class="hljs-number">1</span>);<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>		&#123;<br>			<span class="hljs-type">int</span> pre = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)<br>			&#123;<br>				<span class="hljs-type">int</span> tmp = dp[j];<br>				<span class="hljs-keyword">if</span> (s[i] == s[j])<br>					dp[j] = <span class="hljs-number">2</span> + pre;<br>				<span class="hljs-keyword">else</span> dp[j] = <span class="hljs-built_in">max</span>(dp[j], dp[j - <span class="hljs-number">1</span>]);<br>				pre = tmp;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[n - <span class="hljs-number">1</span>];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
 
                 
               </div>
@@ -361,7 +379,7 @@
       
         <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
       
-        <a href="/tags/%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">#路径问题</a>
+        <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
       
     </div>
   
@@ -373,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 62.不同路径</div>
-      <div>https://nishikichisato.github.io/2022/09/01/Algorithm Solution/LC-62.不同路径/</div>
+      <div>DP 数组空间压缩</div>
+      <div>https://nishikichisato.github.io/2022/09/06/Algorithm Solution/DP-数组空间压缩/</div>
     </div>
     <div class="license-meta">
       
@@ -386,13 +404,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月1日</div>
+          <div>2022年9月6日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月5日</div>
+          <div>2022年9月6日</div>
         </div>
       
       <div class="license-meta-item">
@@ -427,18 +445,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/02/Algorithm%20Solution/LC-687.%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84/" title="LC 687.最长同值路径">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 687.最长同值路径</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/01/Algorithm%20Solution/LC-1475.%E5%95%86%E5%93%81%E6%8A%98%E6%89%A3%E5%90%8E%E7%9A%84%E6%9C%80%E7%BB%88%E4%BB%B7%E6%A0%BC/" title="LC 1475.商品折扣后的最终价格">
-                        <span class="hidden-mobile">LC 1475.商品折扣后的最终价格</span>
+                      <a href="/2022/09/06/Algorithm%20Solution/%E5%85%B3%E4%BA%8E%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93/" title="关于子序列问题的总结">
+                        <span class="hidden-mobile">关于子序列问题的总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
