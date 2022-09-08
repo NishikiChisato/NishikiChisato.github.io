@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1575. 统计所有可行路径 给你一个 互不相同 的整数数组，其中 locations[i] 表示第 i 个城市的位置。同时给你 start，finish 和 fuel 分别表示出发城市、目的地城市和你初始拥有的汽油总量 每一步中，如果你在城市 i ，你可以选择任意一个城市 j ，满足 j !&#x3D; i 且 0 &lt;&#x3D; j &lt; locations.length ，并移动到城市">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LC 1575.统计所有可行路径">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/08/Algorithm%20Solution/LC-1575.%E7%BB%9F%E8%AE%A1%E6%89%80%E6%9C%89%E5%8F%AF%E8%A1%8C%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="Chisato 的成长日记">
+<meta property="og:description" content="1575. 统计所有可行路径 给你一个 互不相同 的整数数组，其中 locations[i] 表示第 i 个城市的位置。同时给你 start，finish 和 fuel 分别表示出发城市、目的地城市和你初始拥有的汽油总量 每一步中，如果你在城市 i ，你可以选择任意一个城市 j ，满足 j !&#x3D; i 且 0 &lt;&#x3D; j &lt; locations.length ，并移动到城市">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-08T13:49:37.375Z">
+<meta property="article:modified_time" content="2022-09-08T13:49:37.506Z">
+<meta property="article:author" content="Chisato">
+<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="路径问题">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="记忆化搜索">
+<meta property="article:tag" content="模板">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>LC 1575.统计所有可行路径 - Chisato 的成长日记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chisato 的成长日记</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LC 1575.统计所有可行路径"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-08 21:49" pubdate>
+          2022年9月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LC 1575.统计所有可行路径</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="统计所有可行路径"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-all-possible-routes/">1575.
+统计所有可行路径</a></h4>
+<p>给你一个 <strong>互不相同</strong> 的整数数组，其中
+<code>locations[i]</code> 表示第 <code>i</code> 个城市的位置。同时给你
+<code>start</code>，<code>finish</code> 和 <code>fuel</code>
+分别表示出发城市、目的地城市和你初始拥有的汽油总量</p>
+<p>每一步中，如果你在城市 <code>i</code> ，你可以选择任意一个城市
+<code>j</code> ，满足 <code>j != i</code> 且
+<code>0 &lt;= j &lt; locations.length</code> ，并移动到城市
+<code>j</code> 。从城市 <code>i</code> 移动到 <code>j</code>
+消耗的汽油量为
+<code>|locations[i] - locations[j]|</code>，<code>|x|</code> 表示
+<code>x</code> 的绝对值。</p>
+<p>请注意， <code>fuel</code> 任何时刻都 <strong>不能</strong>
+为负，且你 <strong>可以</strong> 经过任意城市超过一次（包括
+<code>start</code> 和 <code>finish</code> ）。</p>
+<p>请你返回从 <code>start</code> 到 <code>finish</code>
+所有可能路径的数目。</p>
+<p>由于答案可能很大， 请将它对 <code>10^9 + 7</code> 取余后返回。</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs clean">输入：locations = [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>], start = <span class="hljs-number">1</span>, finish = <span class="hljs-number">3</span>, fuel = <span class="hljs-number">5</span><br>输出：<span class="hljs-number">4</span><br>解释：以下为所有可能路径，每一条都用了 <span class="hljs-number">5</span> 单位的汽油：<br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<h4 id="dfs-记忆化搜索">DFS + 记忆化搜索</h4>
+<p>我们先讨论一下什么时候会用到 DFS</p>
+<p>DFS ，也就是暴力搜索，通过<strong>以 <code>n</code>
+叉树的形式</strong>将所有可能出现的情况全部列举出来（必然会有重复），进而得到最终的答案</p>
+<p>既然涉及到 <code>n</code> 叉树，那就肯定会涉及到递归与循环</p>
+<p>因此，DFS 有两个特定：</p>
+<ul>
+<li>由于使用递归加循环，因此可以暴力穷举出<strong>仅仅通过嵌套
+<code>for</code> 循环无法实现的穷举</strong></li>
+<li>在不剪枝的情况下，时间复杂度为<strong>指数级</strong>（一般来讲是
+<code>n</code> 叉数，高度为 <code>m</code>）</li>
+</ul>
+<p>所有，在不进行剪枝的情况下，使用 DFS 的数据量级<strong>不能超过
+30</strong></p>
+<p>对 DFS
+进行剪枝的操作，叫做「记忆化搜索」，也就是我们之前一直使用的「备忘录」</p>
+<p>回到这道题，我们需要给出所有从 <code>start</code> 到
+<code>finish</code> 的路径</p>
+<p>我们从起点开始考虑这个问题。假设我当前处于 <code>start</code>
+处，我有 <code>n-1</code> 种选择去走下一步（姑且不考虑油量的问题）</p>
+<p>当我走下一步之后，又会有 <code>n-1</code>
+种选择（因为一个点可以多次到达）</p>
+<p>所以我们可以确定一点：这道题很难通过嵌套 <code>for</code>
+循环得到最终的结果，也就是说，我们需要想到用 DFS 来暴力枚举所有可能</p>
+<p>即 DFS
+函数的返回值就是<strong>当前位置到终点的所有路径和</strong></p>
+<p>​</p>
+<p>关于 DFS 的实现，我们需要注意以下三个问题：</p>
+<ul>
+<li><p>确定「参数」的含义</p></li>
+<li><p>确定递归函数的出口（也就是 Base Case）</p></li>
+<li><p>编写「最小递归单元」的处理逻辑</p></li>
+</ul>
+<p>我们先看第一个，容易发现，我们每次移动的时候会发生改变的位置有两个，一个是当前位置
+<code>pos</code> ，另一个是当前油量 <code>fuel</code></p>
+<p>显然，这两个就需要加入到参数部分</p>
+<p>除此之外，我们还需要确定是否到达终点 <code>end</code> 以及输入数组
+<code>lc</code> （location）</p>
+<p>接着我们看递归的出口部分，也就是去找 Base Case</p>
+<p>在这个部分，我们需要确定的是：<strong>什么情况下，此次递归是有效或者无效的</strong></p>
+<p>有效的情况非常简单，只要当前位置 <code>pos</code> 到达
+<code>end</code> ，我们就让路径数加 1</p>
+<p>无效的情况稍微复杂一点</p>
+<p>一个很容易想到的是，当前油量 <code>fuel</code> 为负数，直接返回 0</p>
+<p>还有一个是，当前油量 <code>fuel</code>
+不为负数，但无法去到任何地方，这个也需要返回 0</p>
+<p>至于「最小递归单元」的处理问题，由于我们是需要对<strong>当前位置以外的所有位置进行遍历</strong>，因此我们将遍历得到的结果求和返回即可</p>
+<p>​</p>
+<p>然后，我们来看看「记忆化搜索」的部分</p>
+<p>从上面的分析当中得知，我们目前有两个量（<code>pos</code> 和
+<code>fuel</code>）是会发生改变的</p>
+<p>而我们 DFS
+函数的返回值的意义为：从当前位置出发到达终点的所有路径和</p>
+<p>因此我们设置一共缓存数组 <code>cache</code> ，其定义为：从当前位置
+<code>pos</code> 在拥有油量为 <code>fuel</code>
+的情况下到达终点的所有路径和为 <code>cache[pos][fuel]</code></p>
+<p>​</p>
+<p>总体代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cache;<span class="hljs-comment">//处于pos位置且油量为fuel, 到达end的路径数</span><br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1000000007</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; lc, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> end, <span class="hljs-type">int</span> fuel)</span><span class="hljs-comment">//pos fuel 为当前位置与油量, end 为终点</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (cache[pos][fuel] != <span class="hljs-number">-1</span>)<br>			<span class="hljs-keyword">return</span> cache[pos][fuel];<br>		<span class="hljs-keyword">if</span> (pos != end &amp;&amp; fuel &lt; <span class="hljs-number">0</span>)<br>		&#123;<br>			cache[pos][fuel] = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br><br>		<span class="hljs-type">int</span> n = lc.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-type">bool</span> gonext = <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>			<span class="hljs-keyword">if</span> (i != pos)<br>			&#123;<br>				<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[i] - lc[pos]);<br>				<span class="hljs-keyword">if</span> (fuel &gt;= need)<br>				&#123;<br>					gonext = <span class="hljs-literal">true</span>;<br>					<span class="hljs-keyword">break</span>;<br>				&#125;<br>			&#125;<br>		<span class="hljs-keyword">if</span> (fuel &gt; <span class="hljs-number">0</span> &amp;&amp; !gonext)<br>		&#123;<br>			cache[pos][fuel] = pos == end ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">return</span> cache[pos][fuel];<br>		&#125;<br><br>		<span class="hljs-type">int</span> sum = pos == end ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<span class="hljs-comment">//如果当前就是end, 那么我们需要返回1</span><br>		<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (pos != i)<br>			&#123;<br>				<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[i] - lc[pos]);<br>				<span class="hljs-keyword">if</span> (fuel &gt;= need)<br>				&#123;<br>					sum += <span class="hljs-built_in">dfs</span>(lc, i, end, fuel - need);<br>					sum %= mod;<br>				&#125;<br>			&#125;<br>		&#125;<br>		cache[pos][fuel] = sum;<br>		<span class="hljs-keyword">return</span> sum;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countRoutes</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; locations, <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> finish, <span class="hljs-type">int</span> fuel)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = locations.<span class="hljs-built_in">size</span>();<br>		cache.<span class="hljs-built_in">assign</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(fuel + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">dfs</span>(locations, start, finish, fuel);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n^2*fuel)\)</span>
+，最坏的情况下，我们有 <span class="math inline">\(n*fuel\)</span>
+个状态需要去遍历（填满 <span class="math inline">\(fuel\)</span>
+数组），对每个状态而言又需要去遍历一次 <span class="math inline">\(locations\)</span> 数组</p>
+<p>空间复杂度：<span class="math inline">\(O(n^2*fuel)\)</span>
+，由于是树型结构，因此有多少个状态就需要多少的空间</p>
+<h4 id="dfs-记忆化搜索base-case-优化">DFS + 记忆化搜索（Base Case
+优化）</h4>
+<p>这里是可以在 Base Case 的部分进行优化的</p>
+<p>思考一个问题：如果下一步无法到达终点，还有机会到达吗</p>
+<p>假设当前油量为 <span class="math inline">\(fuel\)</span>
+，到达终点所需油量为两地位置差的绝对值，即： <span class="math inline">\(need=|lc[end]-lc[pos]|\)</span></p>
+<p>此时有 <span class="math inline">\(fuel&lt;need\)</span></p>
+<p>当我每次移动到一个新位置时，所花费油量均有 <span class="math inline">\(cost&gt;0\)</span></p>
+<p>因此到达新位置的油量为 <span class="math inline">\(fuel&#39;=fuel-cost&lt;fuel\)</span>
+，此时到达终点所需油量为 <span class="math inline">\(need&#39;=lc[end]-lc[new]=need-cost\)</span>
+（题目当中有说任意两个地点的值不相同）</p>
+<p>即：<span class="math inline">\(\Delta fuel = \Delta need\)</span>
+，也就是说，只要当前位置无法一步到达终点，走其他路也无法到达</p>
+<p>完整代码如下：</p>
+<p>​</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cache;<span class="hljs-comment">//处于pos位置且油量为fuel, 到达end的路径数</span><br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1000000007</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; lc, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> end, <span class="hljs-type">int</span> fuel)</span><span class="hljs-comment">//pos fuel 为当前位置与油量, end 为终点</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (cache[pos][fuel] != <span class="hljs-number">-1</span>)<br>			<span class="hljs-keyword">return</span> cache[pos][fuel];<br><br>		<span class="hljs-type">int</span> n = lc.<span class="hljs-built_in">size</span>();<br><br>		<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[pos] - lc[end]);<span class="hljs-comment">//改动在这里</span><br>		<span class="hljs-keyword">if</span> (fuel &lt; need)<br>		&#123;<br>			cache[pos][fuel] = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br><br>		<span class="hljs-type">int</span> sum = pos == end ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>		<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (pos != i)<br>			&#123;<br>				<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[i] - lc[pos]);<br>				<span class="hljs-keyword">if</span> (fuel &gt;= need)<br>				&#123;<br>					sum += <span class="hljs-built_in">dfs</span>(lc, i, end, fuel - need);<br>					sum %= mod;<br>				&#125;<br>			&#125;<br>		&#125;<br>		cache[pos][fuel] = sum;<br>		<span class="hljs-keyword">return</span> sum;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countRoutes</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; locations, <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> finish, <span class="hljs-type">int</span> fuel)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = locations.<span class="hljs-built_in">size</span>();<br>		cache.<span class="hljs-built_in">assign</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(fuel + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">dfs</span>(locations, start, finish, fuel);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时空复杂度与上面一致</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
+      
+        <a href="/tags/%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">#路径问题</a>
+      
+        <a href="/tags/DFS/">#DFS</a>
+      
+        <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">#记忆化搜索</a>
+      
+        <a href="/tags/%E6%A8%A1%E6%9D%BF/">#模板</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LC 1575.统计所有可行路径</div>
+      <div>https://nishikichisato.github.io/2022/09/08/Algorithm Solution/LC-1575.统计所有可行路径/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年9月8日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/07/Algorithm%20Solution/LC-1289.%E4%B8%8B%E9%99%8D%E8%B7%AF%E5%BE%84%E6%9C%80%E5%B0%8F%E5%92%8C-II/" title="LC 1289.下降路径最小和 II">
+                        <span class="hidden-mobile">LC 1289.下降路径最小和 II</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
