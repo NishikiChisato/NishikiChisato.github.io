@@ -26,7 +26,7 @@
 <meta property="og:description" content="信息存储 大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序 我们知道，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-03T12:56:37.852Z">
-<meta property="article:modified_time" content="2022-09-07T13:14:13.312Z">
+<meta property="article:modified_time" content="2022-09-08T03:18:25.144Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CASPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.1k 字
+          8.1k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          51 分钟
+          68 分钟
         
       </span>
     
@@ -513,7 +513,7 @@ B2T_{k}(\vec x&#39;)\)</span> ，有：</p>
 均为<strong>无符号数</strong>，有：</p>
 <p><span class="math inline">\(x+^u_{\omega}y=(x+y)\ mod\
 2^{\omega}\)</span></p>
-<h3 id="关于无符号数加法溢出的检测">关于无符号数加法溢出的检测</h3>
+<h4 id="关于无符号数加法溢出的检测">关于无符号数加法溢出的检测</h4>
 <p>设 <span class="math inline">\(0\le x,\ y\le UMax_{\omega}\)</span>
 ，我们令 <span class="math inline">\(s=x+^{u}_{\omega}y\)</span>
 ，当且仅当 <span class="math inline">\(s &lt; x\)</span> （或者等价条件
@@ -542,7 +542,7 @@ x+y&lt;2^{\omega-1}&amp;\text{正常}\\x+y+2^{\omega},&amp;x+y&lt;-2^{\omega-1}&
 与 <span class="math inline">\(y\)</span>
 均为<strong>补码数</strong>，有</p>
 <p><span class="math inline">\(x+^t_{\omega}y=U2T_{\omega}(T2U(x)_{\omega}+^u_{\omega}T2U_{\omega}(y))\)</span></p>
-<h3 id="补码加法溢出的检测">补码加法溢出的检测</h3>
+<h4 id="补码加法溢出的检测">补码加法溢出的检测</h4>
 <p>设 <span class="math inline">\(TMin_{\omega}\le x,\ y\le
 TMax_{\omega}\)</span> ，令 <span class="math inline">\(s=x+^{t}_{\omega}y\)</span></p>
 <p>注意到，当发生正溢出时，<span class="math inline">\(s&lt;0\)</span>
@@ -582,6 +582,79 @@ u-^{t}_{\omega}\vec v)\)</span> 时（这里我们以补码视角看待最终结
 v)=B2T_{\omega}(\vec u+^{t}_{\omega}(-^{t}_{\omega}x))\)</span></p>
 <p>由于 <span class="math inline">\(\vec u\)</span> 和 <span class="math inline">\(-^t_{\omega}x\)</span>
 均可以<strong>单独算出一个值</strong>，因此这便成了两个补码数的加法，按照加法原则相加即可</p>
+<h4 id="补码非位级的快速计算">补码非位级的快速计算</h4>
+<p>考虑一个问题：假设我已知一个补码的位级表示，如何快速求出其非的位级表示</p>
+<p>一个显而易见的结果是：先对其每一位取反，再将结果加 1 ，即：</p>
+<p><span class="math inline">\(-x=(\sim x)+1\)</span></p>
+<p>这是最朴素的做法，其实还有一种更加方便的</p>
+<p>考虑一个位向量 <span class="math inline">\(\vec x\ =\ [\
+x_{\omega-1},\ x_{\omega-2},\ \cdots,\ x_0\ ]\)</span>
+。假设从右边数第一个为 1 的数是第 <span class="math inline">\(k\)</span>
+位，即：<span class="math inline">\(\vec x\ =\ [\ x_{\omega-1},\
+x_{\omega-2},\ \cdots,\ x_0\ ]\ =\ [\ x_{\omega-1},\ x_{\omega-2},\
+\cdots,\ 1,\ 0,\ 0,\ \cdots,\ 0]\)</span></p>
+<p>那么，我们只需要从第 <span class="math inline">\(k+1\)</span>
+位起将左边的位全部取反</p>
+<p>例如：<span class="math inline">\([1101]=-3,\ [0011]=3\)</span></p>
+<h3 id="无符号乘法">无符号乘法</h3>
+<p>无符号乘法可以表述为：将两个数先相乘再对其结果做 <span class="math inline">\(\omega\)</span> 位数截断，数学定义如下：</p>
+<p>设 <span class="math inline">\(0\le x,\ y\le UMax_{\omega}\)</span>
+，有：</p>
+<p><span class="math inline">\(x*^{u}_{\omega}y=(x*y)\ mod\
+2^{\omega}\)</span></p>
+<h3 id="补码乘法">补码乘法</h3>
+<p>补码乘法相当于先将两个数做无符号乘法，再从补码的角度去看待结果，其数学定义如下：</p>
+<p>设 <span class="math inline">\(TMin_{\omega}\le x,\ y\le
+TMax_{\omega}\)</span> ，有：</p>
+<p><span class="math inline">\(x*^{t}_{\omega}y=U2T_{\omega}((x*y)\ mod\
+2^{\omega})\)</span></p>
+<h3 id="乘以常数">乘以常数</h3>
+<p>我们首先来讨论乘以 <span class="math inline">\(2^k\)</span>
+的情况</p>
+<p>设无符号数 <span class="math inline">\(x\)</span> 和 无符号数 <span class="math inline">\(k\)</span> ，运算 <span class="math inline">\(x&lt;&lt;k\)</span> 的值等价于 <span class="math inline">\(x*^u_{\omega}2^k\)</span>
+（这里会自动做位数截断）</p>
+<p>设补码数 <span class="math inline">\(x\)</span> 和无符号数 <span class="math inline">\(k\)</span> ，运算 <span class="math inline">\(x&lt;&lt;k\)</span> 的值等价于 <span class="math inline">\(x*^t_{\omega}2^k\)</span></p>
+<p>也就是说，对于无符号数与补码数而言，乘以 <span class="math inline">\(2^k\)</span> ，相当于将其对应的位向量左移 <span class="math inline">\(k\)</span> 位</p>
+<p>接着，我们来讨论乘以任意数 <span class="math inline">\(K\)</span>
+的情况</p>
+<p>在给出具体分析之前，我们首先要知道一点：CPU
+计算加法、减法、移位的速度远快于直接计算乘法除法等运算，因此我们需要尽可能将乘以任意数
+<span class="math inline">\(K\)</span> 转化成加法、减法、移位的运算</p>
+<p>对于任意数 <span class="math inline">\(K\)</span>
+，我们可以很轻易地给出其位向量 <span class="math inline">\(\vec
+k=[k_{\omega-1},\ k_{\omega-2},\cdots,\ k_1,\ k_0]\)</span>
+，也就是说，<span class="math inline">\(K\)</span> 可以表示为</p>
+<p><span class="math inline">\(K=\sum^{\omega-1}_{i=0}k_i2^k\)</span>
+，那么我们便可以通过移位来描述这个过程：</p>
+<p><span class="math inline">\(x*K=x*\sum^{\omega-1}_{i=0}k_i2^k=\sum^{\omega-1}_{i=0}(x&lt;&lt;k_i)\)</span></p>
+<p>举个例子：</p>
+<p><span class="math inline">\(K=[1010]\)</span> ，那么 <span class="math inline">\(x*K=(x&lt;&lt;3)+(x&lt;&lt;1)\)</span></p>
+<p><span class="math inline">\(K=[1011]\)</span> ，那么 <span class="math inline">\(x*K=(x&lt;&lt;3)+(x&lt;&lt;1)+(x&lt;&lt;0)=(x&lt;&lt;3)+(x&lt;&lt;1)+x\)</span></p>
+<p>我们用更一般化的语言来描述这个过程，考虑一组从位位置 <span class="math inline">\(n\)</span> 到位位置 <span class="math inline">\(m\)</span> 的一组<strong>连续</strong>的 1 （<span class="math inline">\(14=(0\cdots 0)(111)(0)\)</span>，在这里，<span class="math inline">\(n=1,\ m=1\)</span>）</p>
+<p>那么，<span class="math inline">\(x*K\)</span>
+可以有下面两种表述：</p>
+<p><span class="math inline">\(x*K=(x&lt;&lt;n)+(x&lt;&lt;(n-1))+\cdots+(x&lt;&lt;m)\)</span></p>
+<p><span class="math inline">\(x*K=(x&lt;&lt;(n+1))-(x&lt;&lt;m)\)</span></p>
+<p>到此为止，我们给出了乘以任意数的数学表述</p>
+<h3 id="除以-2-的幂">除以 2 的幂</h3>
+<p>我们定义 <span class="math inline">\(\lfloor x \rfloor\)</span> 表示
+<span class="math inline">\(x-1\le \lfloor x \rfloor&lt;x\)</span>
+，<span class="math inline">\(\lceil x \rceil\)</span> 表示 <span class="math inline">\(x-1&lt;\lceil x \rceil \le x\)</span>
+，我们有如下结论：</p>
+<p>对于正数，除法为向下舍入，即 <span class="math inline">\(x&gt;0,\
+y&gt;0\)</span> ，有：<span class="math inline">\(x/y=\lfloor
+x/y\rfloor\)</span></p>
+<p>对于负数，除法为向上舍入，即 <span class="math inline">\(x&gt;0,\
+y&lt;0\)</span> ，有：<span class="math inline">\(x/y=\lceil
+x/y\rceil\)</span></p>
+<p>这里的证明，去看原书 72 页</p>
+<p>设无符号数值 <span class="math inline">\(x\)</span> 和无符号数值
+<span class="math inline">\(k\)</span> ，运算 <span class="math inline">\(x&gt;&gt;k\)</span> 的值等价于 <span class="math inline">\(\lfloor x/2^k \rfloor\)</span></p>
+<p>对于补码数值 <span class="math inline">\(x\)</span> 和无符号数值
+<span class="math inline">\(k\)</span> ，运算 <span class="math inline">\((x+(1&lt;&lt;k)-1)&gt;&gt;k\)</span> 的值等价于
+<span class="math inline">\(\lceil x/2^k \rceil\)</span></p>
+<p>这里的证明，去看原书 73 页</p>
+<p>例如，假设 <span class="math inline">\(k=4\)</span> ，那么 <span class="math inline">\(x/2^4=(x+(1&lt;&lt;4)-1)&gt;&gt;4=(x+15)&gt;&gt;4\)</span></p>
 
                 
               </div>
@@ -646,7 +719,7 @@ v)=B2T_{\omega}(\vec u+^{t}_{\omega}(-^{t}_{\omega}x))\)</span></p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月7日</div>
+          <div>2022年9月8日</div>
         </div>
       
       <div class="license-meta-item">
