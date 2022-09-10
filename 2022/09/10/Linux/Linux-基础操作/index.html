@@ -21,12 +21,12 @@
     <meta name="description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 基础操作">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/03/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/10/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
 <meta property="og:description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-03T01:52:36.000Z">
-<meta property="article:modified_time" content="2022-09-03T01:52:36.000Z">
+<meta property="article:published_time" content="2022-09-10T01:15:15.000Z">
+<meta property="article:modified_time" content="2022-09-09T19:18:43.547Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-03 09:52" pubdate>
-          2022年9月3日 上午
+        <time datetime="2022-09-10 09:15" pubdate>
+          2022年9月10日 上午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.4k 字
+          7.7k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          54 分钟
+          65 分钟
         
       </span>
     
@@ -872,6 +872,80 @@
 ，其他组赋予 <code>x</code></p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chmod</span> <span class="hljs-number">761</span> 文件名<br></code></pre></td></tr></table></figure>
 <p>同样<strong>不能打空格</strong></p>
+<h3 id="关于目录的-rwx-的讨论">关于目录的 rwx 的讨论</h3>
+<p><code>x</code> 表示可以进入到该目录，可以执行 <code>cd</code></p>
+<p><code>r</code> 表示可以读取该目录的文件，可以执行 <code>ls</code></p>
+<p><code>w</code> 表示可以对该目录当中的文件进行增加或修改</p>
+<h2 id="crond-任务调度">crond 任务调度</h2>
+<p>如果我们希望系统<strong>自动定时</strong>帮我们去做一些任务，可以通过
+<code>crontab</code> 进行定时任务设置</p>
+<p>任务调度：指系统在某个时间执行特点的命令或程序</p>
+<p>任务调度分为系统工作和个别用户工作，前者是指某些工作必须要周而复始地执行，例如病毒扫描；后者是指个别用户希望执行某些程序，例如数据库备份</p>
+<h3 id="crontab-指令">crontab 指令</h3>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">crontab</span><span class="hljs-meta"> [选项]</span><br></code></pre></td></tr></table></figure>
+<p>常用选项：</p>
+<p><code>-e</code> ：编辑 <code>crontab</code> 定时任务</p>
+<p><code>-l</code> ：查询 <code>crontab</code> 任务</p>
+<p><code>-r</code> ：删除当前用户所有 <code>crontab</code> 任务</p>
+<p>这里关于时间的设置我们需要重点记一下</p>
+<p>一般我们会这么写：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">crontab -e<br>* * * * * ls -l <span class="hljs-regexp">/home/</span> &gt; <span class="hljs-regexp">/home/</span>log.txt<br></code></pre></td></tr></table></figure>
+<p>后面是一个重定向，我们重点看前面那 5 个 <code>*</code> 号</p>
+<p>第一个 * ，表示一小时当中的第几分钟</p>
+<p>第二个 * ，表示一天当中的第几小时</p>
+<p>第三个 * ，表示一个月当中的第几天</p>
+<p>第四个 * ，表示一年当中的第几月</p>
+<p>第五个 * ，表示一周当中的星期几，范围：0 - 7（0 与 7
+均表示星期天）</p>
+<p>特殊符号说明：</p>
+<p><code>*</code> 表示任何时间</p>
+<p><code>,</code> 表示不连续的时间</p>
+<p><code>-</code> 表示时间范围</p>
+<p><code>*/n</code> 表示多久执行一次</p>
+<h2 id="硬盘分区">硬盘分区</h2>
+<p>Linux
+的文件系统中，最上层的是一个根目录，其他目录是在根目录之下可以通过根目录来进行访问的存在。但这仅仅是文件系统的结构，我们还需要将硬盘的存储空间与每个目录之间联系起来</p>
+<p>Linux
+采用了一种称为『载入』的处理办法。硬盘当中可以对空间进行划分，得到一个一个分区，Linux
+可以将分区直接『挂载』到对应的目录下，这样便可以通过目录来访问对应的硬盘空间了</p>
+<h3 id="硬盘说明">硬盘说明</h3>
+<p>Linux 分 IDE 硬盘和 SCSI 硬盘，目前基本上都是后者</p>
+<p>对于 IDE 硬盘，标识符为 hdx~ ；对于 SCSI 硬盘，标识符为 sdx~</p>
+<p>这里我们介绍 SCSI ，IDE 同理</p>
+<ul>
+<li>sd 用来表示分区所在设备的类型（指 SCSI 硬盘）</li>
+<li>x 为盘号（a 为基本盘，b为基本从属盘，c 为辅助主盘，d
+为辅助从属盘）</li>
+<li>~ 表示分区，前四个分区用数字 1 到 4
+表示，它们表示主分区或拓展分区，从第 5 开始是逻辑分区</li>
+</ul>
+<h3 id="lsblk-指令">lsblk 指令</h3>
+<p>我们可以用 <code>lsblk</code> 或者 <code>lsblk -l</code>
+来查看<strong>分区情况</strong>，即：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">lsblk</span><br><span class="hljs-attribute">lsblk -l</span><br></code></pre></td></tr></table></figure>
+<h3 id="df--h-指令">df -h 指令</h3>
+<p>查询系统整体<strong>硬盘</strong>使用情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -h<br></code></pre></td></tr></table></figure>
+<p>当分区使用率到达百分之八十以上，需要去删除文件或者拓展分区</p>
+<h3 id="du--h-指令">du -h 指令</h3>
+<p>用于查询指定目录的硬盘占用情况，默认为当前目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span> [选项] 目录名<br></code></pre></td></tr></table></figure>
+<p>常用选项：</p>
+<ul>
+<li><code>-s</code> ：指定目录占用大小汇总</li>
+<li><code>-h</code> ：带计量单位</li>
+<li><code>-a</code> ：含文件</li>
+<li><code>--max-depth=</code> ：子目录列举深度，建议写 1</li>
+<li><code>-c</code> ：列出明细的同时，增加汇总值</li>
+</ul>
+<h3 id="磁盘查询常用指令">磁盘查询常用指令</h3>
+<p>统计 <code>/home</code> 目录下文件的个数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l | grep <span class="hljs-string">&quot;^-&quot;</span> | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
+<p>统计 <code>/home</code> 目录下文件夹的个数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -l | grep <span class="hljs-string">&quot;^d&quot;</span> | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
+<p>统计 <code>/home</code> 目录下的文件个数，包括子文件夹内的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -Rl | grep <span class="hljs-string">&quot;^-&quot;</span> | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
+<p><code>ls</code> 那里的 <code>R</code> 表示递归列举</p>
 
                 
               </div>
@@ -918,7 +992,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux 基础操作</div>
-      <div>https://nishikichisato.github.io/2022/09/03/Linux/Linux-基础操作/</div>
+      <div>https://nishikichisato.github.io/2022/09/10/Linux/Linux-基础操作/</div>
     </div>
     <div class="license-meta">
       
@@ -930,9 +1004,14 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月3日</div>
+          <div>2022年9月10日</div>
         </div>
       
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年9月10日</div>
+        </div>
       
       <div class="license-meta-item">
         <div>许可协议</div>
@@ -966,18 +1045,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/03/C++%20Primer%20Plus/RTTI/" title="RTTI">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">RTTI</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/02/CSAPP/CSAPP%20%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8%EF%BC%88%E6%9C%AC%E4%B9%A6%E7%A2%8E%E7%A2%8E%E5%BF%B5%EF%BC%89/" title="CSAPP 第一章 计算机系统漫游（本书碎碎念）">
-                        <span class="hidden-mobile">CSAPP 第一章 计算机系统漫游（本书碎碎念）</span>
+                      <a href="/2022/09/08/Algorithm%20Solution/LC-1575.%E7%BB%9F%E8%AE%A1%E6%89%80%E6%9C%89%E5%8F%AF%E8%A1%8C%E8%B7%AF%E5%BE%84/" title="LC 1575.统计所有可行路径">
+                        <span class="hidden-mobile">LC 1575.统计所有可行路径</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

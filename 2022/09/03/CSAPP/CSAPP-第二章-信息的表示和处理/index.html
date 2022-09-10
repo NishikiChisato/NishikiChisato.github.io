@@ -26,7 +26,7 @@
 <meta property="og:description" content="信息存储 大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序 我们知道，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-03T12:56:37.852Z">
-<meta property="article:modified_time" content="2022-09-08T03:18:25.144Z">
+<meta property="article:modified_time" content="2022-09-09T11:36:11.250Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CASPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -655,6 +655,8 @@ x/y\rceil\)</span></p>
 <span class="math inline">\(\lceil x/2^k \rceil\)</span></p>
 <p>这里的证明，去看原书 73 页</p>
 <p>例如，假设 <span class="math inline">\(k=4\)</span> ，那么 <span class="math inline">\(x/2^4=(x+(1&lt;&lt;4)-1)&gt;&gt;4=(x+15)&gt;&gt;4\)</span></p>
+<p>除以 2
+的幂，我们可以用移位来解决，但除以任意数的话，并不能通过这种方式来实现</p>
 
                 
               </div>
@@ -719,7 +721,7 @@ x/y\rceil\)</span></p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月8日</div>
+          <div>2022年9月9日</div>
         </div>
       
       <div class="license-meta-item">

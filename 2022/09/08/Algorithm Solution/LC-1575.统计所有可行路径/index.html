@@ -26,7 +26,7 @@
 <meta property="og:description" content="1575. 统计所有可行路径 给你一个 互不相同 的整数数组，其中 locations[i] 表示第 i 个城市的位置。同时给你 start，finish 和 fuel 分别表示出发城市、目的地城市和你初始拥有的汽油总量 每一步中，如果你在城市 i ，你可以选择任意一个城市 j ，满足 j !&#x3D; i 且 0 &lt;&#x3D; j &lt; locations.length ，并移动到城市">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-08T13:49:37.375Z">
-<meta property="article:modified_time" content="2022-09-08T13:49:37.506Z">
+<meta property="article:modified_time" content="2022-09-09T12:17:48.232Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="动态规划">
 <meta property="article:tag" content="路径问题">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          5.1k 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          33 分钟
+          43 分钟
         
       </span>
     
@@ -320,6 +320,7 @@
 所有可能路径的数目。</p>
 <p>由于答案可能很大， 请将它对 <code>10^9 + 7</code> 取余后返回。</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs clean">输入：locations = [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>], start = <span class="hljs-number">1</span>, finish = <span class="hljs-number">3</span>, fuel = <span class="hljs-number">5</span><br>输出：<span class="hljs-number">4</span><br>解释：以下为所有可能路径，每一条都用了 <span class="hljs-number">5</span> 单位的汽油：<br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">3</span><br><span class="hljs-number">1</span> -&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>​</p>
 <h4 id="dfs-记忆化搜索">DFS + 记忆化搜索</h4>
 <p>我们先讨论一下什么时候会用到 DFS</p>
 <p>DFS ，也就是暴力搜索，通过<strong>以 <code>n</code>
@@ -385,6 +386,7 @@
 数组），对每个状态而言又需要去遍历一次 <span class="math inline">\(locations\)</span> 数组</p>
 <p>空间复杂度：<span class="math inline">\(O(n^2*fuel)\)</span>
 ，由于是树型结构，因此有多少个状态就需要多少的空间</p>
+<p>​</p>
 <h4 id="dfs-记忆化搜索base-case-优化">DFS + 记忆化搜索（Base Case
 优化）</h4>
 <p>这里是可以在 Base Case 的部分进行优化的</p>
@@ -402,6 +404,42 @@
 <p>​</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cache;<span class="hljs-comment">//处于pos位置且油量为fuel, 到达end的路径数</span><br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1000000007</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; lc, <span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> end, <span class="hljs-type">int</span> fuel)</span><span class="hljs-comment">//pos fuel 为当前位置与油量, end 为终点</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (cache[pos][fuel] != <span class="hljs-number">-1</span>)<br>			<span class="hljs-keyword">return</span> cache[pos][fuel];<br><br>		<span class="hljs-type">int</span> n = lc.<span class="hljs-built_in">size</span>();<br><br>		<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[pos] - lc[end]);<span class="hljs-comment">//改动在这里</span><br>		<span class="hljs-keyword">if</span> (fuel &lt; need)<br>		&#123;<br>			cache[pos][fuel] = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br><br>		<span class="hljs-type">int</span> sum = pos == end ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>		<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (pos != i)<br>			&#123;<br>				<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(lc[i] - lc[pos]);<br>				<span class="hljs-keyword">if</span> (fuel &gt;= need)<br>				&#123;<br>					sum += <span class="hljs-built_in">dfs</span>(lc, i, end, fuel - need);<br>					sum %= mod;<br>				&#125;<br>			&#125;<br>		&#125;<br>		cache[pos][fuel] = sum;<br>		<span class="hljs-keyword">return</span> sum;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countRoutes</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; locations, <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> finish, <span class="hljs-type">int</span> fuel)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = locations.<span class="hljs-built_in">size</span>();<br>		cache.<span class="hljs-built_in">assign</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(fuel + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">dfs</span>(locations, start, finish, fuel);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时空复杂度与上面一致</p>
+<p>​</p>
+<h4 id="dp-数组">DP 数组</h4>
+<p>其实上面记忆化搜索的模块是为了引出下面这个用 <code>DP</code>
+数组实现的方案</p>
+<p>这道题就属于路径规划里面那种没办法直接猜出 <code>DP</code>
+数组的定义的情况</p>
+<p>毕竟这玩意的定义，全靠经验</p>
+<p>而算法题是，只要这道题我没做过类似的题目，那么我大概率这道题做不出来</p>
+<p>所有，我们需要一种可以得到 <code>DP</code>
+数组定义的方法，这个方法就是记忆化搜索</p>
+<p>当然，用 <code>DP</code> 数组可以解的题目，记忆化搜索都可以解</p>
+<p>我们不是说去用记忆化搜索去解题（用也没关系啦），而是借用这种思考方式来引出
+<code>DP</code> 数组的定义</p>
+<p>根据上面的分析，我们目前手里有两个变量：当前位置 <span class="math inline">\(pos\)</span> 和剩余油量 <span class="math inline">\(fuel\)</span> ，那么我们可以仿照上面
+<code>dfs</code> 函数的定义，来写一个 <code>DP</code> 数组的定义</p>
+<p>当前位置为 <code>pos</code> 且剩余油量为 <code>fuel</code>
+时，到达终点的所有路径和为 <code>dp[pos][fuel]</code></p>
+<p>然后，对于当前位置 <code>pos</code> 而言，我们需要去遍历剩下的
+<code>n-1</code> 个位置</p>
+<p>并且有一点需要注意的是，在我还没有去遍历的时候，我的初始油量都是
+<code>fuel</code></p>
+<p>这里就类似于 <code>dfs</code> 函数里面的 <code>for</code>
+循环，每次进入递归的时候，<code>fuel</code> 都是不变的，改变的是
+<code>need</code></p>
+<p>因此，我们在遍历这个二维数组的时候，需要将<strong>第二维的遍历放在外层循环</strong></p>
+<p>然后便是 Base Case
+的处理，这里我们需要处理的只有一种情况，就是只要当前处于
+<code>finish</code> ，不管当前油量是多少，将数组全部初始化为 1 ，即
+<code>dp[finish][j] = 1</code></p>
+<p>完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1000000007</span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countRoutes</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; locations, <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> finish, <span class="hljs-type">int</span> fuel)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = locations.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(fuel + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; fuel + <span class="hljs-number">1</span>; j++)<br>			dp[finish][j] = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> cur = <span class="hljs-number">0</span>; cur &lt; fuel + <span class="hljs-number">1</span>; cur++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; n; k++)<br>				&#123;<br>					<span class="hljs-keyword">if</span> (k == i)<br>						<span class="hljs-keyword">continue</span>;<br>					<span class="hljs-type">int</span> need = <span class="hljs-built_in">abs</span>(locations[i] - locations[k]);<br>					<span class="hljs-keyword">if</span> (cur &gt;= need)<br>					&#123;<br>						dp[i][cur] += dp[k][cur - need];<br>						dp[i][cur] %= mod;<br>					&#125;<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[start][fuel];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时空复杂度并不会发生变化</p>
+<p>​</p>
+<h4 id="总结">总结</h4>
+<p>对于那种没有做过的路径问题，我们可以先尝试着去想想对应的记忆化搜索要怎么处理，然后便可以很容易的照搬得出出
+<code>dp</code> 的定义了</p>
 
                 
               </div>
@@ -474,7 +512,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月8日</div>
+          <div>2022年9月9日</div>
         </div>
       
       <div class="license-meta-item">
@@ -508,6 +546,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/09/10/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="Linux 基础操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux 基础操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
