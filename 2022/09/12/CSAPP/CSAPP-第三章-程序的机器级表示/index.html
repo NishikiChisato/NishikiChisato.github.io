@@ -18,25 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="416. 分割等和子集 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 123输入：nums &#x3D; [1,5,11,5]输出：true解释：数组可以分割成 [1, 5, 5] 和 [11] 。 0-1 背包 这道题其实是可以转换成背包问题的 我们需要将这个数组分割成两个元素和相等的子集。也就是说，假如这个数组的">
+    <meta name="description" content="数据格式 我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32 位也被称为 双字（double word），64 位被称为 四字（quad word）    C声明 Intel 数据类型 汇编代码后缀 大小（字节）     char 字节 b 1   short 字 w 2   int 双字 l 4">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 416.分割等和子集">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/08/31/Algorithm%20Solution/LC-416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/index.html">
+<meta property="og:title" content="CSAPP 第三章 程序的机器级表示">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/12/CSAPP/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="416. 分割等和子集 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 123输入：nums &#x3D; [1,5,11,5]输出：true解释：数组可以分割成 [1, 5, 5] 和 [11] 。 0-1 背包 这道题其实是可以转换成背包问题的 我们需要将这个数组分割成两个元素和相等的子集。也就是说，假如这个数组的">
+<meta property="og:description" content="数据格式 我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32 位也被称为 双字（double word），64 位被称为 四字（quad word）    C声明 Intel 数据类型 汇编代码后缀 大小（字节）     char 字节 b 1   short 字 w 2   int 双字 l 4">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-31T07:24:04.931Z">
-<meta property="article:modified_time" content="2022-09-12T07:03:46.058Z">
+<meta property="article:published_time" content="2022-09-12T05:58:58.066Z">
+<meta property="article:modified_time" content="2022-09-12T06:23:12.040Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="动态规划">
-<meta property="article:tag" content="背包">
+<meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 416.分割等和子集 - Chisato 的成长日记</title>
+  <title>CSAPP 第三章 程序的机器级表示 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 416.分割等和子集"></span>
+            <span id="subtitle" data-typed-text="CSAPP 第三章 程序的机器级表示"></span>
           
         </div>
 
@@ -221,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-31 15:24" pubdate>
-          2022年8月31日 下午
+        <time datetime="2022-09-12 13:58" pubdate>
+          2022年9月12日 下午
         </time>
       </span>
     
@@ -233,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          698 字
         
       </span>
     
@@ -244,7 +243,7 @@
         
         
         
-          16 分钟
+          6 分钟
         
       </span>
     
@@ -292,48 +291,87 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 416.分割等和子集</h1>
+            <h1 style="display: none">CSAPP 第三章 程序的机器级表示</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="分割等和子集"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-equal-subset-sum/">416.
-分割等和子集</a></h4>
-<p>给你一个 <strong>只包含正整数</strong> 的 <strong>非空</strong> 数组
-<code>nums</code>
-。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：nums = <span class="hljs-comment">[1,5,11,5]</span><br>输出：true<br>解释：数组可以分割成 <span class="hljs-comment">[1, 5, 5]</span> 和 <span class="hljs-comment">[11]</span> 。<br></code></pre></td></tr></table></figure>
-<h4 id="背包">0-1 背包</h4>
-<p>这道题其实是可以转换成背包问题的</p>
-<p>我们需要将这个数组分割成两个<strong>元素和相等的子集</strong>。也就是说，假如这个数组的所有元素和为
-<code>sum</code> ，我现在要做的就是<strong>确定能否用这个数组的元素凑出
-<code>sum / 2</code> 。</strong></p>
-<p>也就是说，我从这个集合当中随便选择元素，是否能够满足其元素和为
-<code>sum / 2</code> 。</p>
-<p>因此问题转换成了，给一个可以装 <code>n</code>
-个物品的背包，每个物品的重量为 <code>nums[i]</code> ，背包最大载重为
-<code>sum / 2</code> ，问能否将这个背包恰好装满。</p>
-<p>然后，我们确定 <code>dp</code> 数组的含义：<code>dp[i][j]</code>
-表示在前 <code>i</code> 个物品当中任意挑选，能否恰好将重量为
-<code>j</code> 的背包装满。</p>
-<p>我们再来看看 base case 。</p>
-<p>显然，对于 <code>dp[i][0]</code> 而言，背包最大载重为 0
-，那么这个背包可以认为一直是满的。</p>
-<p>对于 <code>dp[0][j]</code> 而言，由于可供挑选的物品是 0
-，因此认为不可能将该背包装满。</p>
-<p>最后我们分析一下放与不放这两种情况要如何处理。在 0- 1
-背包的模型当中我们是取二者的最大值。这是很显然的，毕竟我是要让背包的价值达到最大。在这里，不管是放还是不放，只要能将背包装满，我们就认为这种情况下是
-<code>true</code> 。</p>
-<p>全部代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-comment">//给一个可以装target和n个物品的背包，每个物品重量为nums[i]，是否存在一种装法可以恰好把背包装满</span><br>		<span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(target + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++)<br>			dp[i][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= target; j++)<br>				<span class="hljs-keyword">if</span> (j - nums[i - <span class="hljs-number">1</span>] &gt;= <span class="hljs-number">0</span>)<span class="hljs-comment">//背包容量足够</span><br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] || dp[i - <span class="hljs-number">1</span>][j - nums[i - <span class="hljs-number">1</span>]];<br>				<span class="hljs-keyword">else</span>                     <span class="hljs-comment">//背包容量不够</span><br>					dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];<br>		<span class="hljs-keyword">return</span> dp[n][target];<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n : nums)<br>			sum += n;<br>		<span class="hljs-keyword">if</span> (sum % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">check</span>(sum / <span class="hljs-number">2</span>, nums);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：$ O(n * target) $ ，<span class="math inline">\(n\)</span> 为数组的元素个数，<span class="math inline">\(target\)</span> 为所有元素和的一半</p>
-<p>空间复杂度：$ O(n * target) $ ，同上</p>
-<h4 id="空间压缩">空间压缩</h4>
-<p>由于这个就是完完全全的背包问题，我们前面有具体谈过如何去压缩</p>
-<p>这里直接给出代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-comment">//给一个可以装target和n个物品的背包，每个物品重量为nums[i]，是否存在一种装法可以恰好把背包装满</span><br>		<span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>		vector&lt;<span class="hljs-type">bool</span>&gt;<span class="hljs-built_in">dp</span>(target + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>);<br>		dp[<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = target; j &gt;= nums[i - <span class="hljs-number">1</span>]; j--)<br>			&#123;<br>				dp[j] = dp[j] || dp[j - nums[i - <span class="hljs-number">1</span>]];<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[target];<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n : nums)<br>			sum += n;<br>		<span class="hljs-keyword">if</span> (sum % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">check</span>(sum / <span class="hljs-number">2</span>, nums);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
+                <h2 id="数据格式">数据格式</h2>
+<p>我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32
+位也被称为 双字（double word），64 位被称为 四字（quad word）</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">C声明</th>
+<th style="text-align: center;">Intel 数据类型</th>
+<th style="text-align: center;">汇编代码后缀</th>
+<th style="text-align: center;">大小（字节）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">char</td>
+<td style="text-align: center;">字节</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">short</td>
+<td style="text-align: center;">字</td>
+<td style="text-align: center;">w</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">双字</td>
+<td style="text-align: center;">l</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">long</td>
+<td style="text-align: center;">四字</td>
+<td style="text-align: center;">q</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">char*</td>
+<td style="text-align: center;">四字</td>
+<td style="text-align: center;">q</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">float</td>
+<td style="text-align: center;">单精度</td>
+<td style="text-align: center;">s</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">double</td>
+<td style="text-align: center;">双精度</td>
+<td style="text-align: center;">l</td>
+<td style="text-align: center;">8</td>
+</tr>
+</tbody>
+</table>
+<p>汇编指令都会有一个字符后缀，用来表示数据的大小。例如：movb（传送字节）、movw（传送字）、movl（传送双字）、movq（传送四字）</p>
+<p>后缀 l 用来表示双字，这是因为 32 位数也被看成 长字（long word）</p>
+<p>我们观察上表可以得出，后缀 l
+同时表示了双字和双精度，但这并不会起冲突，因为浮点数的运算是一套完全不同的指令和寄存器</p>
+<p>这里我们可以看出，所有的操作数都以一个统一的格式给出，每一种类型都对应一个后缀，这一点也为后续的数据传送提供了便利</p>
+<h2 id="访问信息">访问信息</h2>
+<p>一个 x86-64 的中央处理单元（CPU）包含一组 16 个存储 64
+位值的通用目的寄存器，这些寄存器用来存储整数数据和指针。具体名称和功能去看原书
+120 页</p>
+<h3 id="操作数指示符">操作数指示符</h3>
+<p>大多数指令有一个或者多个操作数，操作数是指一个操作当中需要使用的<strong>源数据值</strong>和放置结果的<strong>目的地址</strong></p>
+<p>源数据值可以以常数的形式给出，也可以通过访问寄存器或内存来读取。目的地址可以是寄存器也可以是内存。因此，操作数可以被划分为三种类型：</p>
+<ul>
+<li>立即数（immediate），用来<strong>直接给出常数值</strong></li>
+<li>寄存器，通过访问某个寄存器得到其内容，当然是允许间接访问的</li>
+<li>内存引用，会根据计算出来的地址来访问某个特定的内存，也允许间接访问</li>
+</ul>
+<p>具体的访问操作看原书 121
+页，这个地方不难，把后面的练习做一下就能搞明白</p>
 
                 
               </div>
@@ -352,7 +390,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/CSAPP/" class="category-chain-item">CSAPP</a>
   
   
 
@@ -367,9 +405,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
-      
-        <a href="/tags/%E8%83%8C%E5%8C%85/">#背包</a>
+        <a href="/tags/CSAPP/">#CSAPP</a>
       
     </div>
   
@@ -381,8 +417,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 416.分割等和子集</div>
-      <div>https://nishikichisato.github.io/2022/08/31/Algorithm Solution/LC-416.分割等和子集/</div>
+      <div>CSAPP 第三章 程序的机器级表示</div>
+      <div>https://nishikichisato.github.io/2022/09/12/CSAPP/CSAPP-第三章-程序的机器级表示/</div>
     </div>
     <div class="license-meta">
       
@@ -394,7 +430,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月31日</div>
+          <div>2022年9月12日</div>
         </div>
       
       
@@ -435,18 +471,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/08/31/C++%20Primer%20Plus/%E5%BC%82%E5%B8%B8/" title="异常">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">异常</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/08/03/Algorithm%20Solution/LC-899.-%E6%9C%89%E5%BA%8F%E9%98%9F%E5%88%97/" title="LC 899. 有序队列">
-                        <span class="hidden-mobile">LC 899. 有序队列</span>
+                      <a href="/2022/09/12/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" title="Linux 基础操作">
+                        <span class="hidden-mobile">Linux 基础操作</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

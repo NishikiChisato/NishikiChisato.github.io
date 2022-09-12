@@ -21,12 +21,12 @@
     <meta name="description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 基础操作">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/10/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/12/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
 <meta property="og:description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-10T01:15:15.000Z">
-<meta property="article:modified_time" content="2022-09-09T19:18:43.547Z">
+<meta property="article:published_time" content="2022-09-12T02:03:04.000Z">
+<meta property="article:modified_time" content="2022-09-12T02:03:04.000Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-10 09:15" pubdate>
-          2022年9月10日 上午
+        <time datetime="2022-09-12 10:03" pubdate>
+          2022年9月12日 上午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.7k 字
+          8.1k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          65 分钟
+          68 分钟
         
       </span>
     
@@ -946,6 +946,36 @@
 <p>统计 <code>/home</code> 目录下的文件个数，包括子文件夹内的</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -Rl | grep <span class="hljs-string">&quot;^-&quot;</span> | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
 <p><code>ls</code> 那里的 <code>R</code> 表示递归列举</p>
+<h2 id="进程">进程</h2>
+<p>在 Linux 中，每个执行的程序都被称为一个进程，每个进程都会有一个
+PID</p>
+<p>进程的可能以两种方式进行存在：前台和后台</p>
+<p>前台程序就是目前用户在屏幕上自己操作的，后台进程是屏幕上无法看到但实际在运行的</p>
+<p>一般系统服务会以后台的形式常住在系统中，直到关机才结束</p>
+<h3 id="ps-指令">ps 指令</h3>
+<p>ps
+指令是用于查看目前系统中，有哪些正在执行，以及它们执行的状况。可以不加参数执行</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ps</span><span class="hljs-meta"> [选项]</span><br></code></pre></td></tr></table></figure>
+<p><code>-a</code> ：显示当前终端所有进程信息</p>
+<p><code>-u</code> ：以用户的格式显示进程信息</p>
+<p><code>-x</code> ：显示后台进程运行的参数</p>
+<p>指令说明：</p>
+<p>USER ：用户名称</p>
+<p>PID ：进程号</p>
+<p>%CPU ：进程占用 CPU 的百分比</p>
+<p>%MEM ：进程占用物理内存的百分比</p>
+<p>VSZ ：进程占用虚拟内存的大小</p>
+<p>RSS ：进程占用物理内存的大小</p>
+<p>TTY ：终端名称</p>
+<p>STAT ：进程状态</p>
+<ul>
+<li>S 睡眠，s 表示该进程三会话的先导进程</li>
+<li>N 表示进程拥有比普通优先级更低的优先级</li>
+<li>R 正在运行</li>
+<li>D 短期等待</li>
+<li>Z 僵死进程</li>
+<li>T 被跟踪或者被停止</li>
+</ul>
 
                 
               </div>
@@ -992,7 +1022,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux 基础操作</div>
-      <div>https://nishikichisato.github.io/2022/09/10/Linux/Linux-基础操作/</div>
+      <div>https://nishikichisato.github.io/2022/09/12/Linux/Linux-基础操作/</div>
     </div>
     <div class="license-meta">
       
@@ -1004,14 +1034,9 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月10日</div>
+          <div>2022年9月12日</div>
         </div>
       
-      
-        <div class="license-meta-item license-meta-date">
-          <div>更新于</div>
-          <div>2022年9月10日</div>
-        </div>
       
       <div class="license-meta-item">
         <div>许可协议</div>
@@ -1045,9 +1070,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/11/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%80%E5%91%A8-2022.9.5---2022.9.11/" title="大二上 第一周 2022.9.5 - 2022.9.11">
+                      <a href="/2022/09/12/CSAPP/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="CSAPP 第三章 程序的机器级表示">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">大二上 第一周 2022.9.5 - 2022.9.11</span>
+                        <span class="hidden-mobile">CSAPP 第三章 程序的机器级表示</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -1055,8 +1080,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/08/Algorithm%20Solution/LC-1575.%E7%BB%9F%E8%AE%A1%E6%89%80%E6%9C%89%E5%8F%AF%E8%A1%8C%E8%B7%AF%E5%BE%84/" title="LC 1575.统计所有可行路径">
-                        <span class="hidden-mobile">LC 1575.统计所有可行路径</span>
+                      <a href="/2022/09/11/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%80%E5%91%A8-2022.9.5---2022.9.11/" title="大二上 第一周 2022.9.5 - 2022.9.11">
+                        <span class="hidden-mobile">大二上 第一周 2022.9.5 - 2022.9.11</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
