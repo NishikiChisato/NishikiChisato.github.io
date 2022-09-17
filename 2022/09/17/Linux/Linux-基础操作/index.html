@@ -21,12 +21,12 @@
     <meta name="description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 基础操作">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/12/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/17/Linux/Linux-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
 <meta property="og:description" content="关机重启 123456shutdown -h now &#x2F;&#x2F;立刻关机shutdown -h 1   &#x2F;&#x2F;1 分钟后关机shutdown -r now &#x2F;&#x2F;现在重启halt            &#x2F;&#x2F;关机，与上面一样reboot          &#x2F;&#x2F;现在重启，与上面一样sync            &#x2F;&#x2F;将内存的数据同步到磁盘 用户登录和注销 登录 一般最好不要用 root 登录，因为这东">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-12T02:03:04.000Z">
-<meta property="article:modified_time" content="2022-09-12T02:03:04.000Z">
+<meta property="article:published_time" content="2022-09-17T03:24:38.000Z">
+<meta property="article:modified_time" content="2022-09-17T03:24:38.000Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -220,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-12 10:03" pubdate>
-          2022年9月12日 上午
+        <time datetime="2022-09-17 11:24" pubdate>
+          2022年9月17日 上午
         </time>
       </span>
     
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.1k 字
+          9.7k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          68 分钟
+          82 分钟
         
       </span>
     
@@ -408,7 +408,7 @@
 <p>3 ：多用户状态有网络服务（用的最多）</p>
 <p>4 ：系统未使用保留给用户（这个没用）</p>
 <p>5 ：图形界面（用的最多）</p>
-<p>6 ：系统重启</p>
+<p>6 ：系统重启，默认运行级别不能是 6 ，否则系统无法正常启动</p>
 <p>常用的运行级别是 3 和 5 ，当然也可以制定默认运行级别</p>
 <h4 id="查看默认运行级别">查看默认运行级别</h4>
 <figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">systemctl</span> <span class="hljs-built_in">get-default</span> 运行级别<br></code></pre></td></tr></table></figure>
@@ -959,6 +959,8 @@ PID</p>
 <p><code>-a</code> ：显示当前终端所有进程信息</p>
 <p><code>-u</code> ：以用户的格式显示进程信息</p>
 <p><code>-x</code> ：显示后台进程运行的参数</p>
+<p><code>-e</code> ：显示所有进程</p>
+<p><code>-f</code> ：全格式</p>
 <p>指令说明：</p>
 <p>USER ：用户名称</p>
 <p>PID ：进程号</p>
@@ -976,6 +978,103 @@ PID</p>
 <li>Z 僵死进程</li>
 <li>T 被跟踪或者被停止</li>
 </ul>
+<h3 id="kill-和-killall-指令">kill 和 killall 指令</h3>
+<p><code>kill</code> 和 <code>killall</code>
+均可以用来终止进程，基本语法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">kill</span> [选项] 进程号<br>killall 进程名称<br></code></pre></td></tr></table></figure>
+<p><code>killall</code>
+会终止掉一个进程及其所有子进程，<code>kill</code> 只会终止调当前进程</p>
+<p>有的时候，<code>kill</code> 作用在某些进程上会失效，原因在于 Linux
+系统认为这是重要的进程，会自动忽略调该指令。如果需要强制停止可以加上
+<code>-9</code> 这个选项</p>
+<h3 id="pstree-指令">pstree 指令</h3>
+<p>以树的形式显示进程信息，看的更加直观</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pstree</span><span class="hljs-meta"> [选项]</span><br></code></pre></td></tr></table></figure>
+<p>常用选项：</p>
+<p><code>-p</code> ：显示进程的 PID</p>
+<p><code>-u</code> ：显示进程的所属用户</p>
+<h2 id="服务">服务</h2>
+<p>服务的本质就是进程，通常是在后台运行，来监听某个端口等待其他程序的请求（比如：mysqld,
+sshd, 防火墙），因此我们也称服务为守护进程</p>
+<h3 id="service-指令">service 指令</h3>
+<p>我们可以用 <code>service</code> 指令来管理服务，指令如下：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq">service 服务名 [start | <span class="hljs-type">stop</span> | <span class="hljs-type">restart</span> | <span class="hljs-type">reload</span> | <span class="hljs-type">status</span>]<br></code></pre></td></tr></table></figure>
+<p>我们可以在 <code>/etc/init.d</code> 当中查看 <code>service</code>
+管理的服务名称，即：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ls -l <span class="hljs-regexp">/etc/i</span>nit.d/<br></code></pre></td></tr></table></figure>
+<p>开机流程说明：</p>
+<p><code>开机</code> &gt;&gt; <code>BIOS</code> &gt;&gt;
+<code>/boot</code> &gt;&gt; <code>systemd进程 1</code> &gt;&gt;
+<code>运行级别</code> &gt;&gt; <code>运行级别对应的服务</code></p>
+<h3 id="chkconfig-指令">chkconfig 指令</h3>
+<p>全部是 <code>check config</code>
+，用于设置服务在各个运行级别的自启动或者不自启动</p>
+<p>基本语法：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">chkconfig --list  <span class="hljs-regexp">//</span>查看服务<br></code></pre></td></tr></table></figure>
+<p>修改某个服务在 5 运行级别下的自启动</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chkconfig</span> --level <span class="hljs-number">5</span> 服务名 <span class="hljs-literal">on</span>/<span class="hljs-literal">off</span><br></code></pre></td></tr></table></figure>
+<p><code>chkconfig</code> 设置完毕后需要重启机器才能生效</p>
+<p>需要注意的是，这个指令在 Ubuntu 下使用不了</p>
+<h3 id="systemctl-指令">systemctl 指令</h3>
+<p>该指令管理的服务在 <code>/usr/lib/systemd/system</code> 查看</p>
+<p>管理服务指令：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq">systemctl [start | <span class="hljs-type">stop</span> | <span class="hljs-type">restart</span> | <span class="hljs-type">status</span>]<br></code></pre></td></tr></table></figure>
+<p>查看服务开机启动状态</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs delphi">systemctl list-<span class="hljs-keyword">unit</span>-files<br></code></pre></td></tr></table></figure>
+<p>设置服务开机自启动</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">systemctl <span class="hljs-built_in">enable</span> 服务名<br></code></pre></td></tr></table></figure>
+<p>关闭服务开机启动</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">systemctl <span class="hljs-built_in">disable</span> 服务名<br></code></pre></td></tr></table></figure>
+<p>查询某个服务是否自启动</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">systemctl <span class="hljs-keyword">is</span>-<span class="hljs-keyword">enable</span> 服务名<br></code></pre></td></tr></table></figure>
+<h2 id="shell-编程">Shell 编程</h2>
+<p>Shell 是一个命令行解释器，它介于外层应用程序和 Linux
+内核之间。它为用户提供了一个向 Linux
+内核发送请求以便运行程序的界面系统级程序</p>
+<ul>
+<li>脚本格式要求</li>
+</ul>
+<p>脚本需要以 <code>#!/bin/bash</code> 开头</p>
+<p>脚本需要有可执行权限</p>
+<p><code>shell</code> 脚本一般以 <code>.sh</code> 来结尾</p>
+<ul>
+<li>执行方式</li>
+</ul>
+<p>输入绝对路径或相对路径（需要有执行权限）</p>
+<p>sh + 脚本（不需要执行权限）</p>
+<h3 id="shell-变量">Shell 变量</h3>
+<p>Linux 当中的 Shell 变量分为系统变量和用户自定义变量</p>
+<p>系统变量为：$HOME, $PWD, $SHELL, $USER 等</p>
+<p>可以用 <code>set</code> 来显示当前 Shell 当中的所有变量</p>
+<p>​</p>
+<p>定义变量：变量名=值（不能加空格）</p>
+<p>撤销变量：unset 变量</p>
+<p>声明静态变量：readonly 变量，静态变量不能 <code>unset</code></p>
+<p>变量名一般习惯大写</p>
+<p>Shell
+里面的变量没有类型之分，因此可以将指令的结果赋值给变量，具体操作为：<code>A='date'</code>
+或者 <code>A=$(date)</code> 需要用反引号或在 $
+来指明，否则系统会认为这是一个字符串</p>
+<p>​</p>
+<p>设置环境变量</p>
+<p>在 <code>/etc/profile</code> 文件中添加
+<code>export 变量名=变量值</code></p>
+<p>之后用 <code>source /etc/profile</code>
+更新一下文件，这样便新建了一个环境变量</p>
+<p>这个环境变量可以在所有的 Shell 脚本当中使用</p>
+<p>​</p>
+<p>Shell 脚本当中的多行注释的写法</p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">:&lt;&lt;!<br>内容<br>!<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<p>位置参数变量</p>
+<p>在我们用命令行执行 Shell
+脚本时，可以向里面传入参数，这个参数也就是位置参数，基本语法如下：</p>
+<p><code>$n</code> ：<code>n</code> 为数字，<code>$1-9</code>
+表示第一到第九个参数，十以上的参数需要用 <code>$&#123;10&#125;</code> 这样表示</p>
+<p><code>$*</code>
+：拿到命令行当中的所有参数，会将所有传入的参数当成一个整体</p>
+<p><code>$@</code> ：同样也是拿到所有参数，不过会将每个参数区分对待</p>
+<p><code>$#</code> ：表示命令行当中参数的个数</p>
 
                 
               </div>
@@ -1022,7 +1121,7 @@ PID</p>
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux 基础操作</div>
-      <div>https://nishikichisato.github.io/2022/09/12/Linux/Linux-基础操作/</div>
+      <div>https://nishikichisato.github.io/2022/09/17/Linux/Linux-基础操作/</div>
     </div>
     <div class="license-meta">
       
@@ -1034,7 +1133,7 @@ PID</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月12日</div>
+          <div>2022年9月17日</div>
         </div>
       
       
@@ -1070,18 +1169,12 @@ PID</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/12/CSAPP/CSAPP-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="CSAPP 第三章 程序的机器级表示">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CSAPP 第三章 程序的机器级表示</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/11/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%80%E5%91%A8-2022.9.5---2022.9.11/" title="大二上 第一周 2022.9.5 - 2022.9.11">
-                        <span class="hidden-mobile">大二上 第一周 2022.9.5 - 2022.9.11</span>
+                      <a href="/2022/09/16/Algorithm%20Solution/%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85%E4%B9%8B%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%E4%BC%98%E5%8C%96/" title="多重背包之单调队列优化">
+                        <span class="hidden-mobile">多重背包之单调队列优化</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
