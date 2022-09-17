@@ -26,7 +26,7 @@
 <meta property="og:description" content="问题描述 有 \(N\) 种物品和一个容量是 \(V\) 的背包，每种物品数量有限 第 \(i\) 件物品的体积为 \(v[i]\) ，价值为 \(w[i]\) ，数量为 \(s[i]\) 求解将哪些物品装入背包使得总价值最大 ​ 前言 前天，我晚上坐在图书馆像往常一样打开了三叶姐姐背包合集当中的多重背包，毕竟学到这个了嘛 第一篇，就是最朴素的解法，因为有完全背包的处理经验，所以我觉">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-16T13:14:17.376Z">
-<meta property="article:modified_time" content="2022-09-17T07:25:09.220Z">
+<meta property="article:modified_time" content="2022-09-17T08:53:03.127Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="动态规划">
 <meta property="article:tag" content="背包">
@@ -426,41 +426,40 @@ f(i,r)=f(i,r)
 <p>​</p>
 <p>这里我们详细说明一下最内层当中四行代码的意义，其余部分在上面均有解释，在此不过多说明</p>
 <ul>
-<li><p><code>while (head &lt;= tail &amp;&amp; q[head] &lt; k - s[i] * v[i])</code></p>
-<ul>
-<li>由于我们是一个滑动窗口，并且该窗口大小恒定，那么必然会有尾端的状态离开窗口</li>
-<li>回顾上面的推导，窗口内的状态是从 <span class="math inline">\(f(i,j)\)</span> 到 <span class="math inline">\(f(i,j-s*v)\)</span> ，因此当队列头部的状态下标小于
+<li><code>while (head &lt;= tail &amp;&amp; q[head] &lt; k - s[i] * v[i])</code></li>
+</ul>
+<p>由于我们是一个滑动窗口，并且该窗口大小恒定，那么必然会有尾端的状态离开窗口</p>
+<p>回顾上面的推导，窗口内的状态是从 <span class="math inline">\(f(i,j)\)</span> 到 <span class="math inline">\(f(i,j-s*v)\)</span> ，因此当队列头部的状态下标小于
 <span class="math inline">\(k - s * v\)</span> 的话（<strong>这里的
 <span class="math inline">\(k\)</span> 是该组当中的所有状态，即 <span class="math inline">\(k=t*v+j\)</span> ，其中 <span class="math inline">\(0\le t\le
-s\)</span></strong>），需要将该元素出队</li>
-<li>由于这是个单调队列，需要维护队列内部元素的单调性，因此出队的元素只能是最大值并且从队头出队</li>
-</ul></li>
-<li><p><code>while (head &lt;= tail &amp;&amp; pre[q[tail]] - (q[tail] - j) / v[i] * w[i] &lt;= q[k] - (k - j) / v[i] * w[i])</code></p>
+s\)</span></strong>），需要将该元素出队</p>
+<p>由于这是个单调队列，需要维护队列内部元素的单调性，因此出队的元素只能是最大值并且从队头出队</p>
 <ul>
-<li><p>这一条是为了保证队列的单调性，当出现一个元素比队尾元素大时，需要将小于该元素的队中元素从队尾排出</p></li>
-<li><p><code>pre[q[tail]]</code> 表示在 <code>dp</code>
-数组当中处于「队尾」元素的状态的值，那么为什么要减去一个值呢？</p></li>
-<li><p>观察上面的式子，每一条式子当中的对应项总是差 <span class="math inline">\(t*w\)</span> 。反过来说，我们从 <span class="math inline">\(f(i,j)\)</span> 转移到 <span class="math inline">\(f(i,j+v)\)</span> 与 <span class="math inline">\(f(i,j+2v)\)</span> 所需要加上的 <span class="math inline">\(w\)</span>
-是不一样的，而这里我们又是从前往后推，因此需要减去对应的 <span class="math inline">\(w\)</span></p></li>
-<li><p>这里的 <span class="math inline">\(t*w\)</span> 很容易求出，由于
-<span class="math inline">\(q[tail],\ k\)</span> 均是类似于 <span class="math inline">\(t*v+j\)</span> 的形式，因此拿它们减去 <span class="math inline">\(j\)</span> 再除以 <span class="math inline">\(v\)</span> 乘上 <span class="math inline">\(w\)</span> 就是对应的 <span class="math inline">\(t*w\)</span> 的值</p></li>
-</ul></li>
-<li><p><code>dp[k] = max(dp[k], pre[q[head]] + (k - q[head]) / v[i] * w[i])</code></p></li>
-<li><p>这里我们是对 <code>dp[k]</code>
-这个状态进行赋值，其值主要来自于队列的队头</p></li>
-<li><p>由于我们是从队头来推 <code>dp[k]</code> ，因此我们需要加上一个
-<span class="math inline">\(t*w\)</span></p></li>
-<li><p>我们知道，<span class="math inline">\(k\)</span>
-所代表的状态一定在队头所表示的状态的后面，因此 <span class="math inline">\(k\)</span> 一定大于队头状态 <span class="math inline">\(q[head]\)</span> ，后续处理跟上面一致</p></li>
-<li><p><code>q[++tail] = k</code></p>
+<li><code>while (head &lt;= tail &amp;&amp; pre[q[tail]] - (q[tail] - j) / v[i] * w[i] &lt;= q[k] - (k - j) / v[i] * w[i])</code></li>
+</ul>
+<p>这一条是为了保证队列的单调性，当出现一个元素比队尾元素大时，需要将小于该元素的队中元素从队尾排出</p>
+<p><code>pre[q[tail]]</code> 表示在 <code>dp</code>
+数组当中处于「队尾」元素的状态的值，那么为什么要减去一个值呢？</p>
+<p>观察上面的式子，每一条式子当中的对应项总是差 <span class="math inline">\(t*w\)</span> 。反过来说，我们从 <span class="math inline">\(f(i,j)\)</span> 转移到 <span class="math inline">\(f(i,j+v)\)</span> 与 <span class="math inline">\(f(i,j+2v)\)</span> 所需要加上的 <span class="math inline">\(w\)</span>
+是不一样的，而这里我们又是从前往后推，因此需要减去对应的 <span class="math inline">\(w\)</span></p>
+<p>这里的 <span class="math inline">\(t*w\)</span> 很容易求出，由于
+<span class="math inline">\(q[tail],\ k\)</span> 均是类似于 <span class="math inline">\(t*v+j\)</span> 的形式，因此拿它们减去 <span class="math inline">\(j\)</span> 再除以 <span class="math inline">\(v\)</span> 乘上 <span class="math inline">\(w\)</span> 就是对应的 <span class="math inline">\(t*w\)</span> 的值</p>
 <ul>
-<li><p>这里我们是将各个不同的<strong>「状态」</strong>入队。这里的「状态」，指的是<strong>背包不同的体积</strong></p></li>
-<li><p>由于我们的队列初始状态是 <code>tail = -1, head = 0</code>
+<li><code>dp[k] = max(dp[k], pre[q[head]] + (k - q[head]) / v[i] * w[i])</code></li>
+</ul>
+<p>这里我们是对 <code>dp[k]</code>
+这个状态进行赋值，其值主要来自于队列的队头</p>
+<p>由于我们是从队头来推 <code>dp[k]</code> ，因此我们需要加上一个 <span class="math inline">\(t*w\)</span></p>
+<p>我们知道，<span class="math inline">\(k\)</span>
+所代表的状态一定在队头所表示的状态的后面，因此 <span class="math inline">\(k\)</span> 一定大于队头状态 <span class="math inline">\(q[head]\)</span> ，后续处理跟上面一致</p>
+<ul>
+<li><code>q[++tail] = k</code></li>
+</ul>
+<p>这里我们是将各个不同的<strong>「状态」</strong>入队。这里的「状态」，指的是<strong>背包不同的体积</strong></p>
+<p>由于我们的队列初始状态是 <code>tail = -1, head = 0</code>
 ，因此入队是将 <code>tail++</code> ，队头出队是 <code>head++</code>
 ，队尾出队是 <code>tail--</code> ，并且队列不为空的条件是
-<code>head &lt;= tail</code> ，初始时将二者设置相反也有利于判空</p></li>
-</ul></li>
-</ul>
+<code>head &lt;= tail</code> ，初始时将二者设置相反也有利于判空</p>
 
                 
               </div>
