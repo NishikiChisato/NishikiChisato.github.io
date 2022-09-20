@@ -18,15 +18,15 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="474. 一和零 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。 请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。 1234输入：strs &#x3D; [&quot;10&quot;, &quot;0001&quot;, &quot;111001&amp;quo">
+    <meta name="description" content="879. 盈利计划 集团里有 n 名员工，他们可以完成各种各样的工作创造利润。 第 i 种工作会产生 profit[i] 的利润，它要求 group[i] 名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。 工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。 有多少种计划可以选择？因为答案很大，所以 返回结果模">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 474.一和零">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/19/Algorithm%20Solution/LC-474.%E4%B8%80%E5%92%8C%E9%9B%B6/index.html">
+<meta property="og:title" content="LC 879.盈利计划">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/20/Algorithm%20Solution/LC-879.%E7%9B%88%E5%88%A9%E8%AE%A1%E5%88%92/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="474. 一和零 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。 请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。 1234输入：strs &#x3D; [&quot;10&quot;, &quot;0001&quot;, &quot;111001&amp;quo">
+<meta property="og:description" content="879. 盈利计划 集团里有 n 名员工，他们可以完成各种各样的工作创造利润。 第 i 种工作会产生 profit[i] 的利润，它要求 group[i] 名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。 工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。 有多少种计划可以选择？因为答案很大，所以 返回结果模">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-19T15:09:12.606Z">
-<meta property="article:modified_time" content="2022-09-19T15:41:03.255Z">
+<meta property="article:published_time" content="2022-09-20T07:56:34.012Z">
+<meta property="article:modified_time" content="2022-09-20T07:58:44.106Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="动态规划">
 <meta property="article:tag" content="背包">
@@ -36,7 +36,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 474.一和零 - Chisato 的成长日记</title>
+  <title>LC 879.盈利计划 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 474.一和零"></span>
+            <span id="subtitle" data-typed-text="LC 879.盈利计划"></span>
           
         </div>
 
@@ -221,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-19 23:09" pubdate>
-          2022年9月19日 晚上
+        <time datetime="2022-09-20 15:56" pubdate>
+          2022年9月20日 下午
         </time>
       </span>
     
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          2.3k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          22 分钟
+          20 分钟
         
       </span>
     
@@ -292,54 +292,67 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 474.一和零</h1>
+            <h1 style="display: none">LC 879.盈利计划</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="一和零"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ones-and-zeroes/">474.
-一和零</a></h4>
-<p>给你一个二进制字符串数组 <code>strs</code> 和两个整数 <code>m</code>
-和 <code>n</code> 。</p>
-<p>请你找出并返回 <code>strs</code> 的最大子集的长度，该子集中
-<strong>最多</strong> 有 <code>m</code> 个 <code>0</code> 和
-<code>n</code> 个 <code>1</code> 。</p>
-<p>如果 <code>x</code> 的所有元素也是 <code>y</code> 的元素，集合
-<code>x</code> 是集合 <code>y</code> 的 <strong>子集</strong> 。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs excel">输入：strs = [<span class="hljs-string">&quot;10&quot;</span>, <span class="hljs-string">&quot;0001&quot;</span>, <span class="hljs-string">&quot;111001&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;0&quot;</span>], m = <span class="hljs-number">5</span>, <span class="hljs-built_in">n</span> = <span class="hljs-number">3</span><br>输出：<span class="hljs-number">4</span><br>解释：最多有 <span class="hljs-number">5</span> 个 <span class="hljs-number">0</span> 和 <span class="hljs-number">3</span> 个 <span class="hljs-number">1</span> 的最大子集是 &#123;<span class="hljs-string">&quot;10&quot;</span>,<span class="hljs-string">&quot;0001&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>&#125; ，因此答案是 <span class="hljs-number">4</span> 。<br>其他满足题意但较小的子集包括 &#123;<span class="hljs-string">&quot;0001&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>&#125; 和 &#123;<span class="hljs-string">&quot;10&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>&#125; 。&#123;<span class="hljs-string">&quot;111001&quot;</span>&#125; 不满足题意，因为它含 <span class="hljs-number">4</span> 个 <span class="hljs-number">1</span> ，大于 <span class="hljs-built_in">n</span> 的值 <span class="hljs-number">3</span> 。<br></code></pre></td></tr></table></figure>
-<h4 id="朴素三维-dp">朴素三维 DP</h4>
-<p>这道题是一个多维背包的问题</p>
-<p>做多了会有这种感觉：题目叫我们求最大值，一般都会往动态规划那个方向去靠</p>
-<p>这道题里面，变量有三个：可选择的字符串，0 的个数，1 的个数</p>
-<p>我们定义 <code>dp[i][j][k]</code> 为：考虑前 <code>i</code>
-个字符串，在 0 的个数为 <code>j</code> ，1 的个数为 <code>k</code>
-的情况下的最大子集的长度</p>
-<p>我们用一个 <code>cnt</code> 数组来额外记录原数组当中每个字符串当中 0
-和 1 的数量</p>
-<p>那么显然： <span class="math display">\[
-dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
-\]</span> 代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findMaxForm</span><span class="hljs-params">(vector&lt;string&gt;&amp; strs, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cnt;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; strs.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = <span class="hljs-number">0</span>, one = <span class="hljs-number">0</span>;<br>			string str = strs[i];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; str.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;0&#x27;</span>)<br>					zero++;<br>				<span class="hljs-keyword">else</span> one++;<br>			&#125;<br>			cnt.<span class="hljs-built_in">push_back</span>(&#123; zero, one &#125;);<br>		&#125;<br>		<span class="hljs-type">int</span> len = strs.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&gt;<span class="hljs-built_in">dp</span>(len + <span class="hljs-number">1</span>, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;(m + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= len; i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], one = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= m; j++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= n; k++)<br>				&#123;<br>					<span class="hljs-type">int</span> x = dp[i - <span class="hljs-number">1</span>][j][k];<br>					<span class="hljs-type">int</span> y = (j &gt;= zero &amp;&amp; k &gt;= one) ? dp[i - <span class="hljs-number">1</span>][j - zero][k - one] + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>					dp[i][j][k] = <span class="hljs-built_in">max</span>(x, y);<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[len][m][n];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+                <h4 id="盈利计划"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/profitable-schemes/">879.
+盈利计划</a></h4>
+<p>集团里有 <code>n</code>
+名员工，他们可以完成各种各样的工作创造利润。</p>
+<p>第 <code>i</code> 种工作会产生 <code>profit[i]</code> 的利润，它要求
+<code>group[i]</code>
+名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。</p>
+<p>工作的任何至少产生 <code>minProfit</code> 利润的子集称为
+<strong>盈利计划</strong> 。并且工作的成员总数最多为 <code>n</code>
+。</p>
+<p>有多少种计划可以选择？因为答案很大，所以 <strong>返回结果模</strong>
+<code>10^9 + 7</code> <strong>的值</strong>。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：n = 5, minProfit = 3, group = [2,2], profit = [2,3]<br>输出：2<br>解释：至少产生<span class="hljs-number"> 3 </span>的利润，该集团可以完成工作<span class="hljs-number"> 0 </span>和工作<span class="hljs-number"> 1 </span>，或仅完成工作<span class="hljs-number"> 1 </span>。<br>总的来说，有两种计划。<br></code></pre></td></tr></table></figure>
+<h4 id="三维-dp">三维 DP</h4>
+<p>这里问的是有多少种<strong>可能的计划</strong>，基本上就是明说要用 DP
+了</p>
+<p>我们来看看这里的「变量」有哪些？</p>
+<p>所谓「变量」，指的是会影响<strong>「可能计划」</strong>的选择</p>
+<p>显然，考虑工作的个数一定是一个</p>
+<p>当然，还有参与成员个数以及产生的利润</p>
+<p>由于需要产生超过 <code>minProfit</code>
+的才能称为盈利计划，因此我们可以这么定义：</p>
+<p>考虑前 <code>i</code> 个工作，在使用员工数为 <code>j</code>
+，至少盈利 <code>k</code> 的情况下所有可能的选择个数为
+<code>dp[i][j][k]</code></p>
+<p>显然，当我们不选择第 <code>i</code> 个工作时，有 <span class="math display">\[
+dp[i][j][k]=dp[i-1][j][k]
+\]</span> 当我们选择第 <code>i</code> 个工作时，有： <span class="math display">\[
+dp[i][j][k]=dp[i-1][j-group[i-1]][k-profit[i-1]]
+\]</span> 我们回顾 <code>dp</code>
+数组的定义，对于员工数，是不允许出现负数的。但对于至少盈利数
+<code>k</code> 而言，并没有规定其不能为负</p>
+<p>也就是说，<code>k</code> 的值是允许为负数的</p>
+<p>这里就有一个问题是，我们的 <code>k</code> 一般会从 0
+开始遍历，<strong>我们不会遍历负数那一边</strong></p>
+<p>与此同时，就算我们真的想去遍历负数那一边，我们会发现一个问题是：<strong>每个工作产生的利润一定是非负数</strong>，也就是说，直接去遍历是没有意义的</p>
+<p>那么该怎么办？</p>
+<p>我们考虑为什么 <code>k - profit[i-1]</code> 会等于负数</p>
+<p>我们 <code>dp</code> 数组的定义是至少在盈利为 <code>k</code>
+时，怎么怎么样</p>
+<p>如果 <code>k - profit[i-1]</code>
+为负数的话，等同于至少盈利为负数的情况下，怎么怎么样</p>
+<p>但由于我们每个工作的利润一定是一个非负数，不可能出现负数</p>
+<p>这就说明，在到达该状态之前，我们一定没有做任何工作，不然不可能出现至少利润为负数的情况</p>
+<p>没有做任何工作，也就相当于是<strong>当前利润至少为 0</strong></p>
+<p>所以，我们可以将这个负数与 0 做一个等价映射，即： <span class="math display">\[
+dp[i][j][k]=dp[i-1][j-group[i-1]][max(k-profit[i-1],0)]
+\]</span> 完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">profitableSchemes</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> minProfit, vector&lt;<span class="hljs-type">int</span>&gt;&amp; group, vector&lt;<span class="hljs-type">int</span>&gt;&amp; profit)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> m = group.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&gt;<span class="hljs-built_in">dp</span>(m + <span class="hljs-number">1</span>, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(minProfit + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= n; j++)<br>			dp[<span class="hljs-number">0</span>][j][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= n; j++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= minProfit; k++)<br>				&#123;<br>					<span class="hljs-type">int</span> x = dp[i - <span class="hljs-number">1</span>][j][k];<br>					<span class="hljs-type">int</span> y = (j &gt;= group[i - <span class="hljs-number">1</span>]) ? dp[i - <span class="hljs-number">1</span>][j - group[i - <span class="hljs-number">1</span>]][<span class="hljs-built_in">max</span>(k - profit[i - <span class="hljs-number">1</span>], <span class="hljs-number">0</span>)] : <span class="hljs-number">0</span>;<br>					dp[i][j][k] = (x + y + dp[i][j][k]) % mod;<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m][n][minProfit];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
 <p>空间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
 <h4 id="二维空间压缩">二维空间压缩</h4>
-<p>我们从后往前遍历，虽然有两层循环，但不影响，统一从后往前</p>
-<p>这个不难，直接给代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findMaxForm</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;string&gt;&amp; strs, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cnt;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; strs.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = <span class="hljs-number">0</span>, one = <span class="hljs-number">0</span>;<br>			string str = strs[i];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; str.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;0&#x27;</span>)<br>					zero++;<br>				<span class="hljs-keyword">else</span> one++;<br>			&#125;<br>			cnt.<span class="hljs-built_in">push_back</span>(&#123; zero, one &#125;);<br>		&#125;<br>		<span class="hljs-type">int</span> len = strs.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= len; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = m; j &gt;= <span class="hljs-number">0</span>; j--)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = n; k &gt;= <span class="hljs-number">0</span>; k--)<br>				&#123;<br>					<span class="hljs-type">int</span> zero = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], one = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>					<span class="hljs-type">int</span> x = dp[j][k];<br>					<span class="hljs-type">int</span> y = (j &gt;= zero &amp;&amp; k &gt;= one) ? dp[j - zero][k - one] + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>					dp[j][k] = <span class="hljs-built_in">max</span>(x, y);<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m][n];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我们从后往前遍历，便可以实现空间的压缩</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">profitableSchemes</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> minProfit, vector&lt;<span class="hljs-type">int</span>&gt;&amp; group, vector&lt;<span class="hljs-type">int</span>&gt;&amp; profit)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> m = group.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(minProfit + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++)<br>			dp[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = n; j &gt;= group[i - <span class="hljs-number">1</span>]; j--)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = minProfit; k &gt;= <span class="hljs-number">0</span>; k--)<br>				&#123;<br>					<span class="hljs-type">int</span> x = dp[j][k];<br>					<span class="hljs-type">int</span> y = dp[j - group[i - <span class="hljs-number">1</span>]][<span class="hljs-built_in">max</span>(k - profit[i - <span class="hljs-number">1</span>], <span class="hljs-number">0</span>)];<br>					dp[j][k] = (x + y) % mod;<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[n][minProfit];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
 <p>空间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
-<h4 id="最后">最后</h4>
-<p>需要说明的是，我们在遍历 <code>dp</code>
-数组的时候，是「按需遍历」</p>
-<p>意思是指，只有这个值是有意义的，我才遍历</p>
-<p>用第一个三维的来举例就是</p>
-<p>显然选择前 0 个并没有什么意义，因此 <code>i</code> 从 1 开始遍历</p>
-<p>除此之外，这里也没有涉及到 Base Case
-的情况，所以不需要对数组进行初始化</p>
-<p>对于内层的 <code>j</code> 和 <code>k</code>
-，由于不会有空串的出现，因此二者均从 1 开始遍历</p>
-<p>当然，<code>j</code> 需要遍历 <code>m</code> 次，<code>k</code>
-需要遍历 <code>n</code> 次</p>
 
                 
               </div>
@@ -387,8 +400,8 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 474.一和零</div>
-      <div>https://nishikichisato.github.io/2022/09/19/Algorithm Solution/LC-474.一和零/</div>
+      <div>LC 879.盈利计划</div>
+      <div>https://nishikichisato.github.io/2022/09/20/Algorithm Solution/LC-879.盈利计划/</div>
     </div>
     <div class="license-meta">
       
@@ -400,13 +413,13 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月19日</div>
+          <div>2022年9月20日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月19日</div>
+          <div>2022年9月20日</div>
         </div>
       
       <div class="license-meta-item">
@@ -441,9 +454,9 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/20/Algorithm%20Solution/LC-879.%E7%9B%88%E5%88%A9%E8%AE%A1%E5%88%92/" title="LC 879.盈利计划">
+                      <a href="/2022/09/20/Algorithm%20Solution/LC-494.%E7%9B%AE%E6%A0%87%E5%92%8C/" title="LC 494.目标和">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 879.盈利计划</span>
+                        <span class="hidden-mobile">LC 494.目标和</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -451,8 +464,8 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/18/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%BA%8C%E5%91%A8-2022.9.12---2022.9.18/" title="大二上 第二周 2022.9.12 - 2022.9.18">
-                        <span class="hidden-mobile">大二上 第二周 2022.9.12 - 2022.9.18</span>
+                      <a href="/2022/09/19/Algorithm%20Solution/LC-474.%E4%B8%80%E5%92%8C%E9%9B%B6/" title="LC 474.一和零">
+                        <span class="hidden-mobile">LC 474.一和零</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

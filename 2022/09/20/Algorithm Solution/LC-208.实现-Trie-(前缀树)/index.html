@@ -18,25 +18,25 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="474. 一和零 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。 请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。 1234输入：strs &#x3D; [&quot;10&quot;, &quot;0001&quot;, &quot;111001&amp;quo">
+    <meta name="description" content="208. 实现 Trie (前缀树) Trie（发音类似 &quot;try&quot;）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。 请你实现 Trie 类：  Trie() 初始化前缀树对象。 void insert(String word) 向前缀树中插入字符串 word 。 boolean search">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 474.一和零">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/19/Algorithm%20Solution/LC-474.%E4%B8%80%E5%92%8C%E9%9B%B6/index.html">
+<meta property="og:title" content="LC 208.实现 Trie (前缀树)">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/20/Algorithm%20Solution/LC-208.%E5%AE%9E%E7%8E%B0-Trie-(%E5%89%8D%E7%BC%80%E6%A0%91)/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="474. 一和零 给你一个二进制字符串数组 strs 和两个整数 m 和 n 。 请你找出并返回 strs 的最大子集的长度，该子集中 最多 有 m 个 0 和 n 个 1 。 如果 x 的所有元素也是 y 的元素，集合 x 是集合 y 的 子集 。 1234输入：strs &#x3D; [&quot;10&quot;, &quot;0001&quot;, &quot;111001&amp;quo">
+<meta property="og:description" content="208. 实现 Trie (前缀树) Trie（发音类似 &quot;try&quot;）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。 请你实现 Trie 类：  Trie() 初始化前缀树对象。 void insert(String word) 向前缀树中插入字符串 word 。 boolean search">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-19T15:09:12.606Z">
-<meta property="article:modified_time" content="2022-09-19T15:41:03.255Z">
+<meta property="article:published_time" content="2022-09-20T12:13:52.460Z">
+<meta property="article:modified_time" content="2022-09-20T12:18:55.929Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="动态规划">
-<meta property="article:tag" content="背包">
+<meta property="article:tag" content="Trie">
+<meta property="article:tag" content="数据结构设计">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 474.一和零 - Chisato 的成长日记</title>
+  <title>LC 208.实现 Trie (前缀树) - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 474.一和零"></span>
+            <span id="subtitle" data-typed-text="LC 208.实现 Trie (前缀树)"></span>
           
         </div>
 
@@ -221,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-19 23:09" pubdate>
-          2022年9月19日 晚上
+        <time datetime="2022-09-20 20:13" pubdate>
+          2022年9月20日 晚上
         </time>
       </span>
     
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          2k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          22 分钟
+          17 分钟
         
       </span>
     
@@ -292,54 +292,46 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 474.一和零</h1>
+            <h1 style="display: none">LC 208.实现 Trie (前缀树)</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="一和零"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ones-and-zeroes/">474.
-一和零</a></h4>
-<p>给你一个二进制字符串数组 <code>strs</code> 和两个整数 <code>m</code>
-和 <code>n</code> 。</p>
-<p>请你找出并返回 <code>strs</code> 的最大子集的长度，该子集中
-<strong>最多</strong> 有 <code>m</code> 个 <code>0</code> 和
-<code>n</code> 个 <code>1</code> 。</p>
-<p>如果 <code>x</code> 的所有元素也是 <code>y</code> 的元素，集合
-<code>x</code> 是集合 <code>y</code> 的 <strong>子集</strong> 。</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs excel">输入：strs = [<span class="hljs-string">&quot;10&quot;</span>, <span class="hljs-string">&quot;0001&quot;</span>, <span class="hljs-string">&quot;111001&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;0&quot;</span>], m = <span class="hljs-number">5</span>, <span class="hljs-built_in">n</span> = <span class="hljs-number">3</span><br>输出：<span class="hljs-number">4</span><br>解释：最多有 <span class="hljs-number">5</span> 个 <span class="hljs-number">0</span> 和 <span class="hljs-number">3</span> 个 <span class="hljs-number">1</span> 的最大子集是 &#123;<span class="hljs-string">&quot;10&quot;</span>,<span class="hljs-string">&quot;0001&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>&#125; ，因此答案是 <span class="hljs-number">4</span> 。<br>其他满足题意但较小的子集包括 &#123;<span class="hljs-string">&quot;0001&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>&#125; 和 &#123;<span class="hljs-string">&quot;10&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;0&quot;</span>&#125; 。&#123;<span class="hljs-string">&quot;111001&quot;</span>&#125; 不满足题意，因为它含 <span class="hljs-number">4</span> 个 <span class="hljs-number">1</span> ，大于 <span class="hljs-built_in">n</span> 的值 <span class="hljs-number">3</span> 。<br></code></pre></td></tr></table></figure>
-<h4 id="朴素三维-dp">朴素三维 DP</h4>
-<p>这道题是一个多维背包的问题</p>
-<p>做多了会有这种感觉：题目叫我们求最大值，一般都会往动态规划那个方向去靠</p>
-<p>这道题里面，变量有三个：可选择的字符串，0 的个数，1 的个数</p>
-<p>我们定义 <code>dp[i][j][k]</code> 为：考虑前 <code>i</code>
-个字符串，在 0 的个数为 <code>j</code> ，1 的个数为 <code>k</code>
-的情况下的最大子集的长度</p>
-<p>我们用一个 <code>cnt</code> 数组来额外记录原数组当中每个字符串当中 0
-和 1 的数量</p>
-<p>那么显然： <span class="math display">\[
-dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
-\]</span> 代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findMaxForm</span><span class="hljs-params">(vector&lt;string&gt;&amp; strs, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cnt;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; strs.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = <span class="hljs-number">0</span>, one = <span class="hljs-number">0</span>;<br>			string str = strs[i];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; str.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;0&#x27;</span>)<br>					zero++;<br>				<span class="hljs-keyword">else</span> one++;<br>			&#125;<br>			cnt.<span class="hljs-built_in">push_back</span>(&#123; zero, one &#125;);<br>		&#125;<br>		<span class="hljs-type">int</span> len = strs.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&gt;<span class="hljs-built_in">dp</span>(len + <span class="hljs-number">1</span>, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;(m + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= len; i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], one = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= m; j++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= n; k++)<br>				&#123;<br>					<span class="hljs-type">int</span> x = dp[i - <span class="hljs-number">1</span>][j][k];<br>					<span class="hljs-type">int</span> y = (j &gt;= zero &amp;&amp; k &gt;= one) ? dp[i - <span class="hljs-number">1</span>][j - zero][k - one] + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>					dp[i][j][k] = <span class="hljs-built_in">max</span>(x, y);<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[len][m][n];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
-<h4 id="二维空间压缩">二维空间压缩</h4>
-<p>我们从后往前遍历，虽然有两层循环，但不影响，统一从后往前</p>
-<p>这个不难，直接给代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findMaxForm</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;string&gt;&amp; strs, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;cnt;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; strs.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-type">int</span> zero = <span class="hljs-number">0</span>, one = <span class="hljs-number">0</span>;<br>			string str = strs[i];<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; str.<span class="hljs-built_in">length</span>(); i++)<br>			&#123;<br>				<span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;0&#x27;</span>)<br>					zero++;<br>				<span class="hljs-keyword">else</span> one++;<br>			&#125;<br>			cnt.<span class="hljs-built_in">push_back</span>(&#123; zero, one &#125;);<br>		&#125;<br>		<span class="hljs-type">int</span> len = strs.<span class="hljs-built_in">size</span>();<br>		vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= len; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = m; j &gt;= <span class="hljs-number">0</span>; j--)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = n; k &gt;= <span class="hljs-number">0</span>; k--)<br>				&#123;<br>					<span class="hljs-type">int</span> zero = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], one = cnt[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>					<span class="hljs-type">int</span> x = dp[j][k];<br>					<span class="hljs-type">int</span> y = (j &gt;= zero &amp;&amp; k &gt;= one) ? dp[j - zero][k - one] + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>					dp[j][k] = <span class="hljs-built_in">max</span>(x, y);<br>				&#125;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> dp[m][n];<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n^3)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
-<h4 id="最后">最后</h4>
-<p>需要说明的是，我们在遍历 <code>dp</code>
-数组的时候，是「按需遍历」</p>
-<p>意思是指，只有这个值是有意义的，我才遍历</p>
-<p>用第一个三维的来举例就是</p>
-<p>显然选择前 0 个并没有什么意义，因此 <code>i</code> 从 1 开始遍历</p>
-<p>除此之外，这里也没有涉及到 Base Case
-的情况，所以不需要对数组进行初始化</p>
-<p>对于内层的 <code>j</code> 和 <code>k</code>
-，由于不会有空串的出现，因此二者均从 1 开始遍历</p>
-<p>当然，<code>j</code> 需要遍历 <code>m</code> 次，<code>k</code>
-需要遍历 <code>n</code> 次</p>
+                <h4 id="实现-trie-前缀树"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/">208.
+实现 Trie (前缀树)</a></h4>
+<p><strong><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/字典树/9825209?fr=aladdin">Trie</a></strong>（发音类似
+"try"）或者说 <strong>前缀树</strong>
+是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。</p>
+<p>请你实现 Trie 类：</p>
+<ul>
+<li><code>Trie()</code> 初始化前缀树对象。</li>
+<li><code>void insert(String word)</code> 向前缀树中插入字符串
+<code>word</code> 。</li>
+<li><code>boolean search(String word)</code> 如果字符串
+<code>word</code> 在前缀树中，返回
+<code>true</code>（即，在检索之前已经插入）；否则，返回
+<code>false</code> 。</li>
+<li><code>boolean startsWith(String prefix)</code>
+如果之前已经插入的字符串 <code>word</code> 的前缀之一为
+<code>prefix</code> ，返回 <code>true</code> ；否则，返回
+<code>false</code> 。</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">输入<br>[&quot;Trie&quot;, &quot;insert&quot;, &quot;search&quot;, &quot;search&quot;, &quot;startsWith&quot;, &quot;insert&quot;, &quot;search&quot;]<br>[[], [&quot;apple&quot;], [&quot;apple&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;]]<br>输出<br>[<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>]<br><br>解释<br>Trie trie = <span class="hljs-built_in">new</span> Trie();<br>trie.<span class="hljs-keyword">insert</span>(&quot;apple&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;apple&quot;);   // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">False</span><br>trie.startsWith(&quot;app&quot;); // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">insert</span>(&quot;app&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">True</span><br></code></pre></td></tr></table></figure>
+<h4 id="trie">Trie</h4>
+<p><span class="math inline">\(Trie\)</span>
+树，也称为字典树或前缀树，是一种用于快速查询「某个字符串、字符前缀」是否存在的数据结构</p>
+<p>既然是树，我们先来看看它的节点构成</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以看到，不同于典型树的结构——每个节点存储数值</p>
+<p>Trie 树的<strong>节点</strong>存储的是一个 <code>bool</code>
+值，表示该节点<strong>是否为某个单词的结尾</strong></p>
+<p>Trie
+树的边表示的是<strong>一个字符是否存在</strong>，这一部分是采取数组来存储的</p>
+<p>如果该字符存在，那么指针指向下一个节点，如果不存在，那么该指针为空</p>
+<p>这个东西的实现，其实不难，难的是具体应用，我们直接给出代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span> &#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Trie</span>()<br>		:<span class="hljs-built_in">isEnd</span>(<span class="hljs-literal">false</span>), <span class="hljs-built_in">next</span>(<span class="hljs-number">26</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Trie</span>();<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		node-&gt;isEnd = <span class="hljs-literal">true</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> node-&gt;isEnd;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : prefix)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(len)\)</span> ，<span class="math inline">\(len\)</span> 为字符串长度</p>
+<p>空间复杂度：<span class="math inline">\(O(n*len)\)</span> ，<span class="math inline">\(n\)</span> 为节点个数，<span class="math inline">\(len\)</span> 为字符集大小</p>
 
                 
               </div>
@@ -373,9 +365,9 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
+        <a href="/tags/Trie/">#Trie</a>
       
-        <a href="/tags/%E8%83%8C%E5%8C%85/">#背包</a>
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1/">#数据结构设计</a>
       
     </div>
   
@@ -387,8 +379,8 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 474.一和零</div>
-      <div>https://nishikichisato.github.io/2022/09/19/Algorithm Solution/LC-474.一和零/</div>
+      <div>LC 208.实现 Trie (前缀树)</div>
+      <div>https://nishikichisato.github.io/2022/09/20/Algorithm Solution/LC-208.实现-Trie-(前缀树)/</div>
     </div>
     <div class="license-meta">
       
@@ -400,13 +392,13 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月19日</div>
+          <div>2022年9月20日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月19日</div>
+          <div>2022年9月20日</div>
         </div>
       
       <div class="license-meta-item">
@@ -441,18 +433,12 @@ dp[i][j][k]=max(dp[i-1][j][k],dp[i-1][j-cnt[i-1][0]][k-cnt[i-1][1]])
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/20/Algorithm%20Solution/LC-879.%E7%9B%88%E5%88%A9%E8%AE%A1%E5%88%92/" title="LC 879.盈利计划">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 879.盈利计划</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/18/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%BA%8C%E5%91%A8-2022.9.12---2022.9.18/" title="大二上 第二周 2022.9.12 - 2022.9.18">
-                        <span class="hidden-mobile">大二上 第二周 2022.9.12 - 2022.9.18</span>
+                      <a href="/2022/09/20/Algorithm%20Solution/LC-494.%E7%9B%AE%E6%A0%87%E5%92%8C/" title="LC 494.目标和">
+                        <span class="hidden-mobile">LC 494.目标和</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
