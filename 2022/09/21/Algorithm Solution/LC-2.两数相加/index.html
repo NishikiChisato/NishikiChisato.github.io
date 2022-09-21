@@ -18,25 +18,24 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="208. 实现 Trie (前缀树) Trie（发音类似 &quot;try&quot;）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。 请你实现 Trie 类：  Trie() 初始化前缀树对象。 void insert(String word) 向前缀树中插入字符串 word 。 boolean search">
+    <meta name="description" content="2. 两数相加 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。 请你将两个数相加，并以相同形式返回一个表示和的链表。 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。 123输入：l1 &#x3D; [2,4,3], l2 &#x3D; [5,6,4]输出：[7,0,8]解释：342 + 465 &#x3D; 807. ​ 模">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 208.实现 Trie (前缀树)">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/20/Algorithm%20Solution/LC-208.%E5%AE%9E%E7%8E%B0-Trie-(%E5%89%8D%E7%BC%80%E6%A0%91)/index.html">
+<meta property="og:title" content="LC 2.两数相加">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/21/Algorithm%20Solution/LC-2.%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="208. 实现 Trie (前缀树) Trie（发音类似 &quot;try&quot;）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。 请你实现 Trie 类：  Trie() 初始化前缀树对象。 void insert(String word) 向前缀树中插入字符串 word 。 boolean search">
+<meta property="og:description" content="2. 两数相加 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。 请你将两个数相加，并以相同形式返回一个表示和的链表。 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。 123输入：l1 &#x3D; [2,4,3], l2 &#x3D; [5,6,4]输出：[7,0,8]解释：342 + 465 &#x3D; 807. ​ 模">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-20T12:13:52.460Z">
-<meta property="article:modified_time" content="2022-09-20T12:18:55.929Z">
+<meta property="article:published_time" content="2022-09-21T13:26:15.371Z">
+<meta property="article:modified_time" content="2022-09-21T12:10:34.567Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="Trie">
-<meta property="article:tag" content="数据结构设计">
+<meta property="article:tag" content="链表">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 208.实现 Trie (前缀树) - Chisato 的成长日记</title>
+  <title>LC 2.两数相加 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 208.实现 Trie (前缀树)"></span>
+            <span id="subtitle" data-typed-text="LC 2.两数相加"></span>
           
         </div>
 
@@ -221,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-20 20:13" pubdate>
-          2022年9月20日 晚上
+        <time datetime="2022-09-21 21:26" pubdate>
+          2022年9月21日 晚上
         </time>
       </span>
     
@@ -233,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          1.1k 字
         
       </span>
     
@@ -244,7 +243,7 @@
         
         
         
-          17 分钟
+          10 分钟
         
       </span>
     
@@ -292,46 +291,28 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 208.实现 Trie (前缀树)</h1>
+            <h1 style="display: none">LC 2.两数相加</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="实现-trie-前缀树"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/">208.
-实现 Trie (前缀树)</a></h4>
-<p><strong><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/字典树/9825209?fr=aladdin">Trie</a></strong>（发音类似
-"try"）或者说 <strong>前缀树</strong>
-是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。</p>
-<p>请你实现 Trie 类：</p>
-<ul>
-<li><code>Trie()</code> 初始化前缀树对象。</li>
-<li><code>void insert(String word)</code> 向前缀树中插入字符串
-<code>word</code> 。</li>
-<li><code>boolean search(String word)</code> 如果字符串
-<code>word</code> 在前缀树中，返回
-<code>true</code>（即，在检索之前已经插入）；否则，返回
-<code>false</code> 。</li>
-<li><code>boolean startsWith(String prefix)</code>
-如果之前已经插入的字符串 <code>word</code> 的前缀之一为
-<code>prefix</code> ，返回 <code>true</code> ；否则，返回
-<code>false</code> 。</li>
-</ul>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">输入<br>[&quot;Trie&quot;, &quot;insert&quot;, &quot;search&quot;, &quot;search&quot;, &quot;startsWith&quot;, &quot;insert&quot;, &quot;search&quot;]<br>[[], [&quot;apple&quot;], [&quot;apple&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;]]<br>输出<br>[<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>]<br><br>解释<br>Trie trie = <span class="hljs-built_in">new</span> Trie();<br>trie.<span class="hljs-keyword">insert</span>(&quot;apple&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;apple&quot;);   // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">False</span><br>trie.startsWith(&quot;app&quot;); // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">insert</span>(&quot;app&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">True</span><br></code></pre></td></tr></table></figure>
-<h4 id="trie">Trie</h4>
-<p><span class="math inline">\(Trie\)</span>
-树，也称为字典树或前缀树，是一种用于快速查询「某个字符串、字符前缀」是否存在的数据结构</p>
-<p>既然是树，我们先来看看它的节点构成</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>可以看到，不同于典型树的结构——每个节点存储数值</p>
-<p>Trie 树的<strong>节点</strong>存储的是一个 <code>bool</code>
-值，表示该节点<strong>是否为某个单词的结尾</strong></p>
-<p>Trie
-树的边表示的是<strong>一个字符是否存在</strong>，这一部分是采取数组来存储的</p>
-<p>如果该字符存在，那么指针指向下一个节点，如果不存在，那么该指针为空</p>
-<p>这个东西的实现，其实不难，难的是具体应用，我们直接给出代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span> &#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Trie</span>()<br>		:<span class="hljs-built_in">isEnd</span>(<span class="hljs-literal">false</span>), <span class="hljs-built_in">next</span>(<span class="hljs-number">26</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Trie</span>();<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		node-&gt;isEnd = <span class="hljs-literal">true</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> node-&gt;isEnd;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : prefix)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(len)\)</span> ，<span class="math inline">\(len\)</span> 为字符串长度</p>
-<p>空间复杂度：<span class="math inline">\(O(n*len)\)</span> ，<span class="math inline">\(n\)</span> 为节点个数，<span class="math inline">\(len\)</span> 为字符集大小</p>
+                <h4 id="两数相加"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/add-two-numbers/">2.
+两数相加</a></h4>
+<p>给你两个 <strong>非空</strong>
+的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong>
+的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：l1 = <span class="hljs-comment">[2,4,3]</span>, l2 = <span class="hljs-comment">[5,6,4]</span><br>输出：<span class="hljs-comment">[7,0,8]</span><br>解释：342 + 465 = 807.<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h4 id="模拟">模拟</h4>
+<p>一般来说，链表这种问题，我们会先在前面建立一个前置节点（其节点值为 0
+），这样处理起来更方便</p>
+<p>模拟没什么好说的，直接看代码就行</p>
+<p>记得最高位的进位如果为 1 的话，需要另开一个节点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">ListNode* <span class="hljs-title">addTwoNumbers</span><span class="hljs-params">(ListNode* l1, ListNode* l2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		ListNode* pre = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">0</span>), * cur = pre;<br>		<span class="hljs-type">int</span> carry = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">while</span> (l1 != <span class="hljs-literal">nullptr</span> || l2 != <span class="hljs-literal">nullptr</span>)<br>		&#123;<br>			<span class="hljs-type">int</span> x = l1 ? l1-&gt;val : <span class="hljs-number">0</span>;<br>			<span class="hljs-type">int</span> y = l2 ? l2-&gt;val : <span class="hljs-number">0</span>;<br>			<span class="hljs-type">int</span> sum = x + y + carry;<br>			carry = sum / <span class="hljs-number">10</span>;<br>			sum %= <span class="hljs-number">10</span>;<br>			cur-&gt;next = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(sum);<br>			cur = cur-&gt;next;<br>			<span class="hljs-keyword">if</span> (l1)<br>				l1 = l1-&gt;next;<br>			<span class="hljs-keyword">if</span> (l2)<br>				l2 = l2-&gt;next;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (carry == <span class="hljs-number">1</span>)<br>			cur-&gt;next = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(carry);<br>		<span class="hljs-keyword">return</span> pre-&gt;next;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h4 id="递归">递归</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">ListNode* <span class="hljs-title">add</span><span class="hljs-params">(ListNode* l1, ListNode* l2, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (l1 == <span class="hljs-literal">nullptr</span> &amp;&amp; l2 == <span class="hljs-literal">nullptr</span> &amp;&amp; n == <span class="hljs-number">0</span>)<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>		ListNode* cur = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(((l1 ? l1-&gt;val : <span class="hljs-number">0</span>) + (l2 ? l2-&gt;val : <span class="hljs-number">0</span>) + n) % <span class="hljs-number">10</span>);<br>		cur-&gt;next = <span class="hljs-built_in">add</span>(l1 ? l1-&gt;next : <span class="hljs-literal">nullptr</span>, l2 ? l2-&gt;next : <span class="hljs-literal">nullptr</span>, ((l1 ? l1-&gt;val : <span class="hljs-number">0</span>) + (l2 ? l2-&gt;val : <span class="hljs-number">0</span>) + n) / <span class="hljs-number">10</span>);<br>        <span class="hljs-keyword">return</span> cur;<br>	&#125;<br><br>	<span class="hljs-function">ListNode* <span class="hljs-title">addTwoNumbers</span><span class="hljs-params">(ListNode* l1, ListNode* l2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">add</span>(l1, l2, <span class="hljs-number">0</span>);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -365,9 +346,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Trie/">#Trie</a>
-      
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1/">#数据结构设计</a>
+        <a href="/tags/%E9%93%BE%E8%A1%A8/">#链表</a>
       
     </div>
   
@@ -379,8 +358,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 208.实现 Trie (前缀树)</div>
-      <div>https://nishikichisato.github.io/2022/09/20/Algorithm Solution/LC-208.实现-Trie-(前缀树)/</div>
+      <div>LC 2.两数相加</div>
+      <div>https://nishikichisato.github.io/2022/09/21/Algorithm Solution/LC-2.两数相加/</div>
     </div>
     <div class="license-meta">
       
@@ -392,13 +371,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月20日</div>
+          <div>2022年9月21日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月20日</div>
+          <div>2022年9月21日</div>
         </div>
       
       <div class="license-meta-item">
@@ -433,18 +412,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/21/Algorithm%20Solution/LC-2.%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/" title="LC 2.两数相加">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 2.两数相加</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/20/Algorithm%20Solution/LC-494.%E7%9B%AE%E6%A0%87%E5%92%8C/" title="LC 494.目标和">
-                        <span class="hidden-mobile">LC 494.目标和</span>
+                      <a href="/2022/09/20/Algorithm%20Solution/LC-208.%E5%AE%9E%E7%8E%B0-Trie-(%E5%89%8D%E7%BC%80%E6%A0%91)/" title="LC 208.实现 Trie (前缀树)">
+                        <span class="hidden-mobile">LC 208.实现 Trie (前缀树)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
