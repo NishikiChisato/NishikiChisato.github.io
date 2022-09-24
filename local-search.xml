@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>LC 503.下一个更大元素 II</title>
+    <link href="/2022/09/24/Algorithm%20Solution/LC-503.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-II/"/>
+    <url>/2022/09/24/Algorithm%20Solution/LC-503.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-II/</url>
+    
+    <content type="html"><![CDATA[<h4 id="下一个更大元素-ii"><a href="https://leetcode.cn/problems/next-greater-element-ii/">503.下一个更大元素 II</a></h4><p>给定一个循环数组 <code>nums</code> （<code>nums[nums.length - 1]</code> 的下一个元素是 <code>nums[0]</code>），返回 <em><code>nums</code> 中每个元素的<strong>下一个更大元素</strong></em> 。</p><p>数字 <code>x</code> 的 <strong>下一个更大的元素</strong>是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出<code>-1</code> 。</p><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">输入: nums = [1,2,1]</span><br><span class="hljs-section">输出: [2,-1,2]</span><br><span class="hljs-section">解释: 第一个 1 的下一个更大的数是 2；</span><br>数字 2 找不到下一个更大的数； <br>第二个 1 的下一个最大的数需要循环搜索，结果也是 2。<br></code></pre></td></tr></table></figure><p>​</p><h4 id="单调栈">单调栈</h4><p>关于单调栈使用的基本说明，我们在 <a href="https://nishikichisato.github.io/2022/09/24/Algorithm%20Solution/LC-496.下一个更大元素-I/">LC496.下一个更大元素 I</a> 有过说明，这里直接给代码</p><p>实际上就是遍历两倍的数组再取个模就行</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nextGreaterElements</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span></span><br><span class="hljs-function"></span>&#123;<br>vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ret</span>(nums.<span class="hljs-built_in">size</span>(), <span class="hljs-number">-1</span>);<br>stack&lt;<span class="hljs-type">int</span>&gt;st;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span> * nums.<span class="hljs-built_in">size</span>(); i++)<br>&#123;<br><span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[st.<span class="hljs-built_in">top</span>()] &lt; nums[i % nums.<span class="hljs-built_in">size</span>()])<br>&#123;<br>ret[st.<span class="hljs-built_in">top</span>()] = nums[i % nums.<span class="hljs-built_in">size</span>()];<br>st.<span class="hljs-built_in">pop</span>();<br>&#125;<br>st.<span class="hljs-built_in">push</span>(i % nums.<span class="hljs-built_in">size</span>());<br>&#125;<br><span class="hljs-keyword">return</span> ret;<br>&#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：<span class="math inline">\(O(n)\)</span></p><p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>单调栈</tag>
+      
+      <tag>数组</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LC 496.下一个更大元素 I</title>
     <link href="/2022/09/24/Algorithm%20Solution/LC-496.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-I/"/>
     <url>/2022/09/24/Algorithm%20Solution/LC-496.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-I/</url>
