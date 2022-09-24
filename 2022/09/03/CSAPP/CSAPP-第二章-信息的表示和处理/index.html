@@ -26,7 +26,7 @@
 <meta property="og:description" content="信息存储 大多数计算机使用 8 位的字节作为最小的可寻址的内存单位，而不是直接访问内存当中单独的位（或者说比特）。机器级程序会将内存视为一个非常的字节数组，这个内存称为虚拟内存。内存当中的每个字节都用唯一的数字来进行标识，这称为该字节的地址，所有可能的地址集合就是虚拟地址空间。 这里的虚拟地址空间只是给机器级程序的一个概念性的映射，具体的底层实现由硬件来处理。 寻址和字节顺序 我们知道，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-03T12:56:37.852Z">
-<meta property="article:modified_time" content="2022-09-09T11:36:11.250Z">
+<meta property="article:modified_time" content="2022-09-24T00:47:24.263Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CASPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.1k 字
+          9.6k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          68 分钟
+          81 分钟
         
       </span>
     
@@ -657,6 +657,85 @@ x/y\rceil\)</span></p>
 <p>例如，假设 <span class="math inline">\(k=4\)</span> ，那么 <span class="math inline">\(x/2^4=(x+(1&lt;&lt;4)-1)&gt;&gt;4=(x+15)&gt;&gt;4\)</span></p>
 <p>除以 2
 的幂，我们可以用移位来解决，但除以任意数的话，并不能通过这种方式来实现</p>
+<p>​</p>
+<h2 id="浮点数">浮点数</h2>
+<h3 id="ieee-浮点表示">IEEE 浮点表示</h3>
+<p>核心为用：<span class="math inline">\((-1)^s\times M\times
+2^E\)</span> 来表示一个浮点数</p>
+<ul>
+<li>符号（sign）， <span class="math inline">\(s\)</span>
+用于决定这个数是正数（<span class="math inline">\(s=0\)</span>）
+或者是负数（<span class="math inline">\(s = 1\)</span>），而对于数值 0
+的位解释作为特殊情况处理</li>
+<li>尾数（significand），<span class="math inline">\(M\)</span>
+是一个二进制小数，它的范围为 <span class="math inline">\(0\sim 1-
+\varepsilon\)</span> 或者 <span class="math inline">\(1\sim
+2-\varepsilon\)</span></li>
+<li>阶码（exponent），<span class="math inline">\(E\)</span>
+的作用是对浮点数加权，权重是 2 的 <span class="math inline">\(E\)</span>
+次幂</li>
+</ul>
+<p>下面我们给出 32 位与 64 位的编码示例：</p>
+<p>对于单精度而言，符号位占 1 位，阶码位占 8 位，尾数位占 23 位</p>
+<p>对于双精度而言，符号位占 1 位，阶码位占 11 位，位数位占 52 位</p>
+<p>当给定一个浮点数的位表示时，浮点数值的解读分为三种不同情况（我们以单精度为例，第三种情况有两个变种）</p>
+<ol type="1">
+<li>规格化的</li>
+</ol>
+<p>阶码字段<strong>既不为全 0 也不为全 1</strong>
+，对尾数字段不做要求</p>
+<ol start="2" type="1">
+<li>非规格化的</li>
+</ol>
+<p>阶码字段为<strong>全 0</strong>，对尾数字段不做要求</p>
+<ol start="3" type="1">
+<li>a 无穷大</li>
+</ol>
+<p>阶码字段为<strong>全 1</strong> ，尾数字段为<strong>全 0</strong></p>
+<ol start="3" type="1">
+<li>b NaN</li>
+</ol>
+<p>阶码字段为<strong>全 1</strong>，尾数字段不为<strong>全
+0</strong></p>
+<p>下面我们给出对于三种情况下的位数解析</p>
+<h4 id="规格化的情况">规格化的情况</h4>
+<h5 id="阶码字段">阶码字段</h5>
+<p>设阶码字段位表示为 <span class="math inline">\(exp=e_{k-1}e_{k-2}\cdots e_1e_0\)</span> （<span class="math inline">\(k\)</span> 位），<span class="math inline">\(exp\)</span> 不为全 0 （数值 0 ）也不为全 1
+（单精度为 255 ，双精度为 2047）时属于这种情况</p>
+<p>阶码的值 <span class="math inline">\(E=e-Bias\)</span> ，其中 <span class="math inline">\(e\)</span> 为 <span class="math inline">\(exp\)</span> 的无符号位表示，<span class="math inline">\(Bias\)</span> 是一个等于 <span class="math inline">\(2^{k-1}-1\)</span> 的数值（单精度为 127 ，双精度为
+1023 ）的偏置值</p>
+<p>也就是说，<strong>实际的阶码值等于以无符号方式解析位表示得到的值减去一个偏置值</strong></p>
+<p>由此，我们便可以得到一个指数的范围，对于单精度：<span class="math inline">\(-126\sim +127\)</span> ，对于双精度：<span class="math inline">\(-1022\sim +1023\)</span></p>
+<h5 id="尾数字段">尾数字段</h5>
+<p>设尾数字段的位表示为 <span class="math inline">\(frac=f_{n-1}f_{n-2}\cdots f_1f_0\)</span>
+，该字段用于描述小数值 <span class="math inline">\(f\)</span> ，其中
+<span class="math inline">\(0\le f &lt; 1\)</span></p>
+<p>小数值 <span class="math inline">\(f\)</span> 的位表示为 <span class="math inline">\(0.f_{n-1}f_{n-2}\cdots f_1f_0\)</span>
+，即二进制小数点在最高有效位的左边</p>
+<p>尾数字段的定义为 <span class="math inline">\(M=1+f\)</span>
+，我们将先导的 1 省略掉，这样可以节省一个位的空间</p>
+<h4 id="非规格化的值">非规格化的值</h4>
+<p>当阶码字段为全 0 时，属于这种情况</p>
+<p>阶码值为 <span class="math inline">\(E=1-Bias\)</span> ，其中 <span class="math inline">\(Bias=2^{k-1}-1\)</span></p>
+<p>尾数值为 <span class="math inline">\(M=f\)</span></p>
+<p>单独规定一个非规格化的数值有两个好处</p>
+<p>第一个是它提供了一种表示数值 0
+的方式。当我们按照规格化的方式来表示数值 0
+的时候，需要将所有位全部置零，但由于规格化的尾数字段会加一个先导的 1
+，因此它很难真正表示出 0 （只能是近似）。除此之外，当符号位为 1
+，其它位为全 0 的时候，它也会表示 0 ，因此这就导致了 0
+会有两种表示，这显然是不好的</p>
+<p>第二个是它可以去表示那些非常近似到 0 的数。在趋近 0
+的部分，数值分布是较为平均的，这种属性被称为<em>逐渐下溢</em></p>
+<h4 id="特殊值">特殊值</h4>
+<p>当阶码字段为全 1 时出现这种情况</p>
+<p>当尾数字段为全 0 时，会得到无穷。当 <span class="math inline">\(s=1\)</span> 时，得到 <span class="math inline">\(-\infty\)</span> ，当 <span class="math inline">\(s=0\)</span> 时，得到 <span class="math inline">\(+\infty\)</span></p>
+<p>当尾数字段为非 0 时，得到 NaN。</p>
+<p>​</p>
+<p>最后我们简单说一下在 C 语言当中的符号转换出现的精度损失问题</p>
+<p>当非浮点数向浮点数转换时，只要后者表示的范围大于前者，那么就没问题，如果后者的范围小于前者，那么会舍入</p>
+<p>当浮点数向非浮点数转换时，值会向零舍入（正数向下，负数向上）</p>
+<p>从 double 转 float 时，所得值可能会溢出到无穷，或者会被舍入</p>
 
                 
               </div>
@@ -721,7 +800,7 @@ x/y\rceil\)</span></p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月9日</div>
+          <div>2022年9月24日</div>
         </div>
       
       <div class="license-meta-item">

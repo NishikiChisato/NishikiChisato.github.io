@@ -26,7 +26,7 @@
 <meta property="og:description" content="数据格式 我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32 位也被称为 双字（double word），64 位被称为 四字（quad word）    C声明 Intel 数据类型 汇编代码后缀 大小（字节）     char 字节 b 1   short 字 w 2   int 双字 l 4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-12T05:58:58.066Z">
-<meta property="article:modified_time" content="2022-09-17T01:19:33.789Z">
+<meta property="article:modified_time" content="2022-09-24T02:27:21.868Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          698 字
+          3.7k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          6 分钟
+          31 分钟
         
       </span>
     
@@ -360,18 +360,419 @@
 <p>这里我们可以看出，所有的操作数都以一个统一的格式给出，每一种类型都对应一个后缀，这一点也为后续的数据传送提供了便利</p>
 <h2 id="访问信息">访问信息</h2>
 <p>一个 x86-64 的中央处理单元（CPU）包含一组 16 个存储 64
-位值的通用目的寄存器，这些寄存器用来存储整数数据和指针。具体名称和功能去看原书
-120 页</p>
+位值的通用目的寄存器，这些寄存器用来存储整数数据和指针</p>
+<p>下表给出了所有寄存器，名称从左到右依次为 64 位、32 位、 16 位、 8
+位</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">寄存器名称</th>
+<th style="text-align: center;">作用</th>
+<th style="text-align: center;">寄存器名称</th>
+<th style="text-align: center;">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">%rax %eax $ax %al</td>
+<td style="text-align: center;">保存返回值</td>
+<td style="text-align: center;">%rbx %ebx %bx %bl</td>
+<td style="text-align: center;">被调用者保存</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">%rcx %ecx %cx %cl</td>
+<td style="text-align: center;">第 4 个参数</td>
+<td style="text-align: center;">%rdx %edx %dx %dl</td>
+<td style="text-align: center;">第 3 个参数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">%rsi %esi %si %sil</td>
+<td style="text-align: center;">第 2 个参数</td>
+<td style="text-align: center;">%rdi %edi %di %dil</td>
+<td style="text-align: center;">第 1 个参数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">%rbp %ebp %bp %bpl</td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;">%rsp %esp %sp %spl</td>
+<td style="text-align: center;">栈指针</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">%r8 %r8d %r8w %r8b</td>
+<td style="text-align: center;">第 5 个参数</td>
+<td style="text-align: center;">%r9 %r9d %r9w %r9b</td>
+<td style="text-align: center;">第 6 个参数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">%r10 %r10d %r10w %r10b</td>
+<td style="text-align: center;">调用者保存</td>
+<td style="text-align: center;">%r11 %r11d %r11w %r11b</td>
+<td style="text-align: center;">调用者保存</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">%r12 %r12d %r12w %r12b</td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;">%r13 %r13d %r13w %r13b</td>
+<td style="text-align: center;">被调用者保存</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">%r14 %r14d %r14w %r14b</td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;">%r15 %r15d %r15w %r15b</td>
+<td style="text-align: center;">被调用者保存</td>
+</tr>
+</tbody>
+</table>
+<p>我们详细解释一下这些寄存器的作用</p>
+<p>保存返回值是指，用于保存函数调用时的返回值</p>
+<p>栈指针是指栈顶指针</p>
+<p>第 <span class="math inline">\(i\)</span>
+个参数是指，在函数调用时，需要传递函数参数，当函数参数小于 6
+时由寄存器保存，大于 6 个的部分由栈帧保存</p>
+<p>调用者保存以及被调用者保存的意思是，这个寄存器的值可以被调用者或者被调用者修改，但又必须保证该寄存器的值不变，因此需要调用者或者被调用者保存在自己的栈帧内</p>
+<p>出于向前兼容的特性，当我们向这些寄存器当中写入小于 8
+字节的值，剩下的字节变化按照下面两条规则来：</p>
+<p>生成 1 字节和 2 字节的指令，会保证剩下的字节不变</p>
+<p>生成 4 字节的指令会将高位 4 字节全部置零</p>
 <h3 id="操作数指示符">操作数指示符</h3>
 <p>大多数指令有一个或者多个操作数，操作数是指一个操作当中需要使用的<strong>源数据值</strong>和放置结果的<strong>目的地址</strong></p>
 <p>源数据值可以以常数的形式给出，也可以通过访问寄存器或内存来读取。目的地址可以是寄存器也可以是内存。因此，操作数可以被划分为三种类型：</p>
 <ul>
-<li>立即数（immediate），用来<strong>直接给出常数值</strong></li>
-<li>寄存器，通过访问某个寄存器得到其内容，当然是允许间接访问的</li>
-<li>内存引用，会根据计算出来的地址来访问某个特定的内存，也允许间接访问</li>
+<li>立即数（immediate），用来<strong>直接给出常数值</strong>。立即数的书写是在
+$ 后面跟一个 C 语言的整数</li>
+<li>寄存器，通过访问某个寄存器得到其内容，当然是允许间接访问的。我们将寄存器集合看成一个数组
+<span class="math inline">\(R\)</span>
+，用寄存器标识符作为数组索引。即用 <span class="math inline">\(r_a\)</span> 来表示任意寄存器 <span class="math inline">\(a\)</span> ，用 <span class="math inline">\(R[r_a]\)</span> 来表示该寄存器的值</li>
+<li>内存引用，会根据计算出来的地址来访问某个特定的内存，也允许间接访问。我们将内存看成一个很大的字节数组，我们用
+<span class="math inline">\(M_b[Addr]\)</span> 来表示存储在内存中从
+<span class="math inline">\(Addr\)</span> 地址处的 <span class="math inline">\(b\)</span>
+个字节的内存引用。为了描述方便，我们通常会省略下标 <span class="math inline">\(b\)</span></li>
 </ul>
-<p>具体的访问操作看原书 121
-页，这个地方不难，把后面的练习做一下就能搞明白</p>
+<p>关于内存寻址，这里我们给出最一般的情况，即：<span class="math inline">\(Imm(r_b,r_i,s)\)</span> 用来表示 <span class="math inline">\(M[Imm+R[r_b]+R[r_i]\cdot s]\)</span> ，其中 <span class="math inline">\(Imm\)</span> 为立即数偏移，<span class="math inline">\(r_b\)</span> 为基址寄存器，<span class="math inline">\(r_i\)</span> 为变址寄存器，<span class="math inline">\(s\)</span> 为比例因子，其值只能是1、2、4、8</p>
+<p>​</p>
+<h3 id="数据传送指令">数据传送指令</h3>
+<p>该指令会将数据从一个位置<strong>复制</strong>到另一个位置</p>
+<p>下面我们给出数据传送指令—— <span class="math inline">\(MOV\)</span>
+类，它们会将数据从源位置<strong>复制</strong>到目标位置而不做任何变化</p>
+<p><span class="math inline">\(MOV\)</span>
+类指令由四条基本指令构成，它们之间的区别在于操作的数据大小不同</p>
+<p>当然，源操作数的大小可以不按照传送指令标识出的大小，比如我可以用 movq
+来传送双字，只不过这样会将高位的 2
+个字节传送而已。不过这四条不建议这么使用，因为对于这种源小于目的的情况，会有专门的传送指令来实现</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOV\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets
+S\)</span></td>
+<td style="text-align: center;">传送</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movb</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送字节</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movw</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送字</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movl</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送双字</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送四字</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movabsq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送绝对的四字</td>
+</tr>
+</tbody>
+</table>
+<p>源操作数的值可以是一个立即数、存储在寄存器或内存当中的值。目的操作数指定一个位置，要么是寄存器，要么是内存地址。并且传送指令的两个操作数不能都指向内存地址</p>
+<p>对于常规的四条 <span class="math inline">\(MOV\)</span>
+指令，它们是以补码的形式看到源数据，如果传送的数据大小大于源数据，它们会将源数据传送到目的地，并<strong>将高位按照补码的规则补充</strong>。而
+movabsq 是以无符号来传输四字的，并且是以 64
+位立即数来作为源操作数，以寄存器作为目的</p>
+<p>对于源小于目的的情况，可以使用 <span class="math inline">\(MOVZ\)</span> 和 <span class="math inline">\(MOVS\)</span>
+来实现。对于前者，它会将剩余字节全部填充 0
+，对于后者，它会将剩余字节按符号进行填充，即对源操作数的最高位进行复制</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOVZ\ S,\
+R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R\ \gets
+(零拓展)S\)</span></td>
+<td style="text-align: center;">以零拓展进行传送</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movzbw</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">前一个为源，后一个为目的</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movzbl</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movzwl</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movzbq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movzwq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(MOVZ\)</span>
+指令只能以寄存器或内存地址作为源，以寄存器作为目的</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOVS\ S,\
+R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R\ \gets
+(符号拓展)S\)</span></td>
+<td style="text-align: center;">传送符号拓展的字节</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movsbw</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movsbl</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movswl</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movsbq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">movswq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">movslq</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">cltq</td>
+<td style="text-align: center;"><span class="math inline">\(\%rax\ \gets
+(符号拓展)\%eax\)</span></td>
+<td style="text-align: center;">把 %eax 符号拓展到 %rax</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(MOVS\)</span>
+类指令只能以寄存器或内存地址作为源，以寄存器作为目的。cltq
+指令只能作用于寄存器 %eax 和 %rax</p>
+<p>​</p>
+<h3 id="压入和弹出栈数据">压入和弹出栈数据</h3>
+<p>程序栈存放在内存当中的某个区域，<strong>栈向下增长</strong>，栈顶元素的地址是所有栈中元素地址中最低的，栈指针
+%rsp 保存着栈顶元素的地址</p>
+<p>下面两条指令可以将数据压入程序栈在以及从程序栈中弹出数据</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(pushq\
+S\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R[\%rsp]\gets R[\%rsp]-8\ ;\ M[R[\%rsp]]\gets
+S\)</span></td>
+<td style="text-align: center;">先将栈顶指针下移，再将四字 <span class="math inline">\(S\)</span> 压入栈中</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(pop\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+M[R[\%rsp]]\ ;\ R[\%rsp]\gets R[\%rsp]+8\)</span></td>
+<td style="text-align: center;">先将栈顶元素弹出到 <span class="math inline">\(D\)</span> 中，再将栈顶指针上移</td>
+</tr>
+</tbody>
+</table>
+<p>​</p>
+<h2 id="算术和逻辑操作">算术和逻辑操作</h2>
+<p>下面我们给出对于整数的算术和逻辑操作，当然这些指令大多有操作数大小的变种（除了
+leaq 没有）。就比如，ADD 指令可以分为 addb、addw、addl、addq 等</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(leaq\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+\&amp;S\)</span></td>
+<td style="text-align: center;">加载有效地址</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(INC\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D+1\)</span></td>
+<td style="text-align: center;">加 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(DEC\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D-1\)</span></td>
+<td style="text-align: center;">减 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(NEG\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+-D\)</span></td>
+<td style="text-align: center;">取负</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(NOR\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+\sim D\)</span></td>
+<td style="text-align: center;">取补</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ADD\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D+S\)</span></td>
+<td style="text-align: center;">加</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SUB\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D-S\)</span></td>
+<td style="text-align: center;">减</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(IMUL\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D\times S\)</span></td>
+<td style="text-align: center;">乘</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(XOR\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D
+\oplus S\)</span></td>
+<td style="text-align: center;">异或</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(OR\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D\
+|\ S\)</span></td>
+<td style="text-align: center;">或</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(AND\ S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D\
+\&amp;\ S\)</span></td>
+<td style="text-align: center;">与</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(SAL\ k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&lt;&lt;k\)</span></td>
+<td style="text-align: center;">左移</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SHL\ k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&lt;&lt;k\)</span></td>
+<td style="text-align: center;">左移，等同于 <span class="math inline">\(SAL\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(SAR\ k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&gt;&gt;_{A}k\)</span></td>
+<td style="text-align: center;">算术右移</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SHR\ k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&gt;&gt;_{L}k\)</span></td>
+<td style="text-align: center;">逻辑右移</td>
+</tr>
+</tbody>
+</table>
+<p>加载有效地址（load effective address）指令 leaq
+，可以从内存当中读取数据到寄存器当中。但实际上它并不会引用内存（也就是读取内存当中某个值的意思），它只会将该内存的<strong>地址</strong>赋值给寄存器，因此我们用
+C 语言的地址引用操作符来描述这个过程</p>
+<p>举个例子，如果寄存器 <span class="math inline">\(\%rdx\)</span>
+的值为 <span class="math inline">\(x\)</span> （这里的 <span class="math inline">\(x\)</span>
+是内存当中的某个地址，是间接寻址），那么 <span class="math inline">\(leaq 7(\%rdx, \%rdx, 4) \%rax\)</span>
+表示，将寄存器 <span class="math inline">\(\%rax\)</span> 的值设置成
+<span class="math inline">\(5x\)</span> ，这里的 <span class="math inline">\(5x\)</span> 是一个内存地址，也就是我需要通过 <span class="math inline">\(M[5x]\)</span> 才能找到我需要的值</p>
 
                 
               </div>
@@ -436,7 +837,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月17日</div>
+          <div>2022年9月24日</div>
         </div>
       
       <div class="license-meta-item">
