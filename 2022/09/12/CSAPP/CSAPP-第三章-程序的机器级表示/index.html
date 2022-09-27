@@ -26,7 +26,7 @@
 <meta property="og:description" content="数据格式 我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32 位也被称为 双字（double word），64 位被称为 四字（quad word）    C声明 Intel 数据类型 汇编代码后缀 大小（字节）     char 字节 b 1   short 字 w 2   int 双字 l 4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-12T05:58:58.066Z">
-<meta property="article:modified_time" content="2022-09-26T03:20:44.806Z">
+<meta property="article:modified_time" content="2022-09-27T08:10:19.860Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          8.3k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          40 分钟
+          70 分钟
         
       </span>
     
@@ -855,59 +855,463 @@ CPU
 <p>我们执行前面的指令时，会对这些条件码进行不断的更新（当然，也会不断更新前面的整数寄存器），然后我们便可以通过检查这些标志位来实现控制跳转</p>
 <p>我们还有两类指令是<strong>只会改变条件码而不会改变整数寄存器</strong>，它们如下：</p>
 <table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">基于</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(CMP\ S_1,\
+S_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S_2-S_1\)</span></td>
+<td style="text-align: center;">比较，用于比较二者大小</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmpb\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">比较字节</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmpw\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">比较字</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmpl\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">比较双字</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmpq\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">比较四字</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(TEST\ S_1,\
+S_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S_1\&amp;S_2\)</span></td>
+<td style="text-align: center;">同 <span class="math inline">\(AND\)</span> ，<span class="math inline">\(S_1\)</span> 与 <span class="math inline">\(S_2\)</span>
+一般一样，用于检查是正数、零还是负数</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(testb\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">测试字节</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"><span class="math inline">\(testw\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">测试字</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(testl\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">测试双字</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"><span class="math inline">\(testq\)</span></td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;">测试四字</td>
 </tr>
 </tbody>
 </table>
+<p>​</p>
+<h3 id="访问条件码">访问条件码</h3>
+<p>条件码一般不会直接读取（这么做没有意义），常用的方法有三种：</p>
+<ol type="1">
+<li>根据条件码的某种组合，将一个<strong>字节</strong>设置成 0 或者
+1</li>
+<li>根据条件跳转到程序的某个其他部分</li>
+<li>可以有条件的传送数据</li>
+</ol>
+<p>后面将会详细介绍这三种条件码使用的情况</p>
+<h4 id="设置字节">设置字节</h4>
+<p><span class="math inline">\(SET\)</span>
+指令可以根据条件码的组合，进而将某个<strong>字节</strong>设置成 0 或者 1
+，指令的不同后缀表示的是不同的条件而不是操作数的大小</p>
+<p>一条 <span class="math inline">\(SET\)</span>
+指令的目的操作数是<strong>低位单字节寄存器元素</strong>，<strong>或者是某个单字节的内存地址</strong>，指令会单独对该字节的值进行单独设置（这是设置一个字节的值，不是一个位的值）</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">同义名（名字相同而已）</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">设置条件</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(sete\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+ZF\)</span></td>
+<td style="text-align: center;">相等、零</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setne\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\
+\textasciitilde ZF\)</span></td>
+<td style="text-align: center;">不等、非零</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(sets\
+D\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+SF\)</span></td>
+<td style="text-align: center;">负数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setns\
+D\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\  \textasciitilde SF\)</span></td>
+<td style="text-align: center;">非负数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setg\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnle\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+\textasciitilde (SF \bigoplus OF)\&amp; \textasciitilde ZF\)</span></td>
+<td style="text-align: center;">大于（有符号 &gt; ）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setge\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnl\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+\textasciitilde (SF \bigoplus OF)\)</span></td>
+<td style="text-align: center;">大于等于（有符号 &gt;= ）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setl\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnge\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets SF
+\bigoplus OF\)</span></td>
+<td style="text-align: center;">小于（有符号 &lt; ）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setle\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setng\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets (SF
+\bigoplus OF)|ZF\)</span></td>
+<td style="text-align: center;">小于等于（有符号 &lt;= ）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(seta\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnbe\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+\textasciitilde CF\&amp; \textasciitilde ZF\)</span></td>
+<td style="text-align: center;">超过（无符号 &gt; ）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setae\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnb\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+\textasciitilde CF\)</span></td>
+<td style="text-align: center;">超过或相等（无符号 &gt;=）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setb\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnae\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+CF\)</span></td>
+<td style="text-align: center;">低于（无符号 &lt; ）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setbe\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setna\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+CF|ZF\)</span></td>
+<td style="text-align: center;">低于或相等（无符号 &lt;= ）</td>
+</tr>
+</tbody>
+</table>
+<p>​</p>
+<h4 id="跳转指令">跳转指令</h4>
+<p>下面给出了程序的跳转指令，正常情况下程序是一行一行执行的，出现跳转指令时，程序会跳到一个全新的位置</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">同义名</th>
+<th style="text-align: center;">跳转条件</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jmp\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">直接跳转（直接跳转到以寄存器的值为地址的地方）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jmp\
+*Operand\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">间接跳转（以寄存器的值作为地址再次跳转）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(je\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(ZF\)</span></td>
+<td style="text-align: center;">相等、零</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jne\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\textasciitilde ZF\)</span></td>
+<td style="text-align: center;">不相等、非零</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(js\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(SF\)</span></td>
+<td style="text-align: center;">负数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jns\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\textasciitilde SF\)</span></td>
+<td style="text-align: center;">非负数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jg\
+Lable\)</span></td>
+<td style="text-align: center;">书中有，不过多赘述</td>
+<td style="text-align: center;">这里往下的跳转条件与上面的一致</td>
+<td style="text-align: center;">有符号大于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jge\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号大于等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jl\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号小于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jle\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号小于等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ja\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号超过</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jae\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号超过或等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jb\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号低于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jbe\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号低于或等于</td>
+</tr>
+</tbody>
+</table>
+<p>​</p>
+<h4 id="条件传送">条件传送</h4>
+<p>条件传送指令有两个操作数，源寄存器或内存地址 <span class="math inline">\(S\)</span> ，和目的寄存器 <span class="math inline">\(D\)</span>
+。源值可以从寄存器或内存当中读取，当条件满足时，才会<strong>复制</strong>到目的寄存器中</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">同义名</th>
+<th style="text-align: center;">传送条件</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmove\ S,\
+R\)</span></td>
+<td style="text-align: center;">看书</td>
+<td style="text-align: center;">全部与上面一致</td>
+<td style="text-align: center;">相等、零</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovne\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">不相等、非零</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovs\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">负数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovns\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">非负数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovg\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号大于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovge\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号大于等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovl\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号小于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovle\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">有符号小于等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmova\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号超过</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovae\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号超过或等于</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovb\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号低于</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovbe\ S,\
+R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无符号低于或等于</td>
+</tr>
+</tbody>
+</table>
+<p>​</p>
+<h3 id="条件分支">条件分支</h3>
+<h4 id="基于条件控制实现的条件分支">基于条件控制实现的条件分支</h4>
+<p>我们用一个简单的例子来说明什么叫条件控制来实现条件分支</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">if</span> (x &gt; y)<br>		result = x - y;<br>	<span class="hljs-keyword">else</span><br>		result = y - x;<br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这是一个很简单的 <code>if</code>
+条件判断程序。在通过编译后，会生成其汇编代码，但直接给出汇编代码会造成理解上的困难，所以这里我们给出<strong>等价</strong>的
+C 代码，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test_goto</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">bool</span> t = x &gt; y;<br>	<span class="hljs-keyword">if</span> (!t)<br>		<span class="hljs-keyword">goto</span> x_g_y;<br>	result = y - x;<br>    <span class="hljs-keyword">return</span> result;<br>x_g_y:<br>	result = x - y;<br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>显然，我们有如下结论：</p>
+<p>对于 C 语言当中的 <code>if-else</code> 语句，其通用形式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(test-expr)<br>    then-statement<br><span class="hljs-keyword">else</span><br>    <span class="hljs-keyword">else</span>-statement<br></code></pre></td></tr></table></figure>
+<p>这里的 <em>test-expr</em>
+是一个整数表达式，其值只有零（解释为假）或非零（解释为真），下面的两条分支语句
+<em>then-statement</em> 和 <em>else-statement</em>
+<strong>只会执行一个</strong></p>
+<p>对于这种形式，汇编通常会产生如下代码，我们用 C
+语言来描述程序控制流</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++">t = test-expr<br><span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> <span class="hljs-literal">false</span>;<br>	then-statement<br>    <span class="hljs-keyword">goto</span> done;<br><span class="hljs-literal">false</span>:<br>	<span class="hljs-keyword">else</span>-statement<br>done:<br></code></pre></td></tr></table></figure>
+<p>也就是说，汇编器会为 <em>then-statement</em> 和
+<em>else-statement</em> 生成各自的代码块，但只会执行一个</p>
+<p>​</p>
+<h4 id="基于条件传送来实现条件分支">基于条件传送来实现条件分支</h4>
+<p>还是刚刚的例子，我们可以单独算出两条分支的结果，然后再已经条件进行选择，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test_goto</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> rval = x - y;<br>	<span class="hljs-type">int</span> eval = y - x;<br>	<span class="hljs-type">int</span> test = x &gt; y;<br>	<span class="hljs-keyword">if</span> (!test)<br>		rval = eval;<br>	<span class="hljs-keyword">return</span> rval;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>为了便于理解这种实现条件分支的方式，我们考虑下面条件和赋值表达式的通用形式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">v = test-expr ? then-statement : <span class="hljs-keyword">else</span>-statement<br></code></pre></td></tr></table></figure>
+<p>基于条件控制的汇编器会得到如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">t = test-expr;<br><span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> <span class="hljs-literal">false</span>;<br>    v = then-statement;<br>	<span class="hljs-keyword">goto</span> done;<br><span class="hljs-literal">false</span>:<br>	v = <span class="hljs-keyword">else</span>-statement;<br>done:<br></code></pre></td></tr></table></figure>
+<p>而基于条件传送的汇编器会得到如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">v = then-statement;<br>ve = <span class="hljs-keyword">else</span>-statement;<br>t = test-expr;<br><span class="hljs-keyword">if</span>(!t)<br>    v = ve;<br></code></pre></td></tr></table></figure>
+<p>说明：并不是说使用条件传送就一定快过条件控制，并且有时候不能使用条件传送（原书
+148 页），只不过是条件传送提供了一种替代条件控制的策略而已</p>
+<p>​</p>
+<h3 id="循环">循环</h3>
+<p>下面我们给出三种循环等价于汇编代码的 C
+语言代码形式。但就哪一种循环更快而言，书中并没有进行过多的说明</p>
+<ul>
+<li><code>do-while</code> 循环</li>
+</ul>
+<p><code>do-while</code> 的通用语句为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">do</span><br>    body-<span class="hljs-function">statement</span><br><span class="hljs-function">    <span class="hljs-title">while</span><span class="hljs-params">(test-expr)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>其等价于汇编的 C 语言形式为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">loop:<br>	body-statement;<br>	t = test-expr;<br>	<span class="hljs-keyword">if</span>(t)<br>        <span class="hljs-keyword">goto</span> loop;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<ul>
+<li><code>while</code> 循环</li>
+</ul>
+<p><code>while</code> 语句的通用形式为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(test-expr)<br>    body-statement<br></code></pre></td></tr></table></figure>
+<p>其等价于汇编的一种 C 语言形式为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp">	<span class="hljs-keyword">goto</span> test;<br>loop:<br>	body-statement<br>test:<br>	t = test-expr;<br>	<span class="hljs-keyword">if</span>(t)<br>        <span class="hljs-keyword">goto</span> loop;<br></code></pre></td></tr></table></figure>
+<p>另一种形式被称为 <em>guarded-do</em> 策略，是通过条件控制和
+<code>do-while</code> 循环一同实现的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">	t = test-expr;<br>	<span class="hljs-keyword">if</span>(!t)<br>    	<span class="hljs-keyword">goto</span> done;<br>loop:<br>	body-statement<br>	t = test-expr;<br>	<span class="hljs-keyword">if</span>(t)<br>        <span class="hljs-keyword">goto</span> loop;<br>done:<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -972,7 +1376,7 @@ CPU
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月26日</div>
+          <div>2022年9月27日</div>
         </div>
       
       <div class="license-meta-item">
