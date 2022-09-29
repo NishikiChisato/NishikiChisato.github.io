@@ -26,7 +26,7 @@
 <meta property="og:description" content="数据格式 我们采取 Intel 的标准，字（word）用来表示 16 位数据类型，因此 32 位也被称为 双字（double word），64 位被称为 四字（quad word）    C声明 Intel 数据类型 汇编代码后缀 大小（字节）     char 字节 b 1   short 字 w 2   int 双字 l 4">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-12T05:58:58.066Z">
-<meta property="article:modified_time" content="2022-09-27T08:10:19.860Z">
+<meta property="article:modified_time" content="2022-09-28T11:10:09.464Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="CSAPP">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.3k 字
+          9.4k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          70 分钟
+          79 分钟
         
       </span>
     
@@ -1294,17 +1294,13 @@ C 代码，即：</p>
 <h3 id="循环">循环</h3>
 <p>下面我们给出三种循环等价于汇编代码的 C
 语言代码形式。但就哪一种循环更快而言，书中并没有进行过多的说明</p>
-<ul>
-<li><code>do-while</code> 循环</li>
-</ul>
+<h4 id="do-while-循环">do-while 循环</h4>
 <p><code>do-while</code> 的通用语句为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">do</span><br>    body-<span class="hljs-function">statement</span><br><span class="hljs-function">    <span class="hljs-title">while</span><span class="hljs-params">(test-expr)</span></span>;<br></code></pre></td></tr></table></figure>
 <p>其等价于汇编的 C 语言形式为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">loop:<br>	body-statement;<br>	t = test-expr;<br>	<span class="hljs-keyword">if</span>(t)<br>        <span class="hljs-keyword">goto</span> loop;<br></code></pre></td></tr></table></figure>
 <p>​</p>
-<ul>
-<li><code>while</code> 循环</li>
-</ul>
+<h4 id="while-循环">while 循环</h4>
 <p><code>while</code> 语句的通用形式为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(test-expr)<br>    body-statement<br></code></pre></td></tr></table></figure>
 <p>其等价于汇编的一种 C 语言形式为：</p>
@@ -1312,6 +1308,49 @@ C 代码，即：</p>
 <p>另一种形式被称为 <em>guarded-do</em> 策略，是通过条件控制和
 <code>do-while</code> 循环一同实现的</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">	t = test-expr;<br>	<span class="hljs-keyword">if</span>(!t)<br>    	<span class="hljs-keyword">goto</span> done;<br>loop:<br>	body-statement<br>	t = test-expr;<br>	<span class="hljs-keyword">if</span>(t)<br>        <span class="hljs-keyword">goto</span> loop;<br>done:<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h4 id="for-循环">for 循环</h4>
+<p><code>for</code> 循环的通用形式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(init-expr; test-expr; update-expr)<br>	body-statement<br></code></pre></td></tr></table></figure>
+<p>实际上，<code>for</code> 循环的行为与下面的 <code>while</code>
+循环的行为是一致的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">init-<span class="hljs-function">expr</span><br><span class="hljs-function"><span class="hljs-title">while</span><span class="hljs-params">(test-expr)</span></span><br><span class="hljs-function"></span>&#123;<br>    body-statement<br>    update-expr<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们通过对 <code>while</code>
+循环执行上面两种不同的解析策略，就能得到 <code>for</code>
+循环的两种汇编表示，这里不过多赘述</p>
+<p>​</p>
+<h2 id="过程">过程</h2>
+<p>过程，在不同的编程语言当中的存在形式也不同：函数、方法、子进程、处理函数（handler）</p>
+<p>为了对过程提供机器级的支持，我们需要提供下面三种机制。为了讨论方便，我们假设过程
+P 调用过程 Q ，Q 执行完毕后返回到 P ，那么我们必须支持：</p>
+<ul>
+<li>传递控制。在控制流从 P 到 Q 时，程序计数器必须被设置为过程 Q
+的起始地址。在 Q 执行结束后，程序计数器必须被设置为调用过程 Q
+语句后面那条指令的地址</li>
+<li>传递参数。过程 P 可以向过程 Q
+传递一个或多个参数（也可以不传），当过程 Q 返回时需要向过程 P
+传递最多一个返回值</li>
+<li>分配和释放内存。在过程 Q 开始时，需要为其局部变量分配内存。在过程 Q
+结束时，我们需要将分配的内存释放</li>
+</ul>
+<p>为了构建这些机制，我们按照控制、传递数据、内存管理的顺序来进行描述</p>
+<p>​</p>
+<h3 id="运行时栈">运行时栈</h3>
+<p>我们通过栈这种数据结构来实现对过程的调用。对于一个过程而言，它在运行阶段一定会有各种信息（需要保存某个寄存器的值，分配局部变量空间，为将要调用的下一个过程设置参数等），那么我们可以在栈上单独给这个过程划分一块区域，该区域称为<strong>过程的栈帧</strong></p>
+<p>我们看上面的那个例子，当控制流执行到 Q 时，P 以及所有向上追溯到调用 P
+的过程都会处于<strong>挂起</strong>状态。当过程 Q
+运行时，它只需要在自己的栈帧当中处理数据即可。另一方面，当需要返回时，在它自己所处的栈帧将会被释放，这也同时达到了释放局部变量的目的，之后栈顶指针收缩，控制流会返回调用函数</p>
+<p>具体地，当过程 P 调用过程 Q 时，会将会将返回地址压入栈中，指明当 Q
+返回时程序需要从哪里开始执行。我们将这个返回地址当作过程 P
+栈帧的一部分，因为这记录的是过程 P
+的属性（从另一个角度项，如果这个地址存放在 Q
+的栈帧内，那么在返回的时候该栈帧会释放，因而就无法找到返回值）。此后，栈顶指针减小为过程
+Q分配空间。</p>
+<p>在传递参数的部分，通过寄存器，P 可以向 Q
+传递最多六个参数（这就是上面的第几个参数的由来），如果超过这个数，P
+需要在调用 Q 之前在自己的栈帧内存储好，防止参数丢失（这里并不需要担心 Q
+拿不到 P 的多余的参数，直接通过 MOV
+指令复制过去就行并且这里的栈并不是严格遵循先进后出的）</p>
 
                 
               </div>
@@ -1376,7 +1415,7 @@ C 代码，即：</p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月27日</div>
+          <div>2022年9月28日</div>
         </div>
       
       <div class="license-meta-item">

@@ -18,26 +18,26 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="496. 下一个更大元素 I nums1 中数字 x 的 下一个更大元素 是指 x 在 nums2 中对应位置 右侧 的 第一个 比 x 大的元素。 给你两个 没有重复元素 的数组 nums1 和 nums2 ，下标从 0 开始计数，其中nums1 是 nums2 的子集。 对于每个 0 &lt;&#x3D; i &lt; nums1.length ，找出满足 nums1[i] &#x3D;&#x3D; n">
+    <meta name="description" content="907. 子数组的最小值之和 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。 由于答案可能很大，因此 返回答案模 10^9 + 7 。 12345输入：arr &#x3D; [3,1,2,4]输出：17解释：子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[2,4]，[3,1,2]，[1,2,4]，[3,1,2,4]。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 496.下一个更大元素 I">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/24/Algorithm%20Solution/LC-496.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-I/index.html">
+<meta property="og:title" content="LC 907.子数组的最小值之和">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/27/Algorithm%20Solution/LC-907.%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%E4%B9%8B%E5%92%8C/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="496. 下一个更大元素 I nums1 中数字 x 的 下一个更大元素 是指 x 在 nums2 中对应位置 右侧 的 第一个 比 x 大的元素。 给你两个 没有重复元素 的数组 nums1 和 nums2 ，下标从 0 开始计数，其中nums1 是 nums2 的子集。 对于每个 0 &lt;&#x3D; i &lt; nums1.length ，找出满足 nums1[i] &#x3D;&#x3D; n">
+<meta property="og:description" content="907. 子数组的最小值之和 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。 由于答案可能很大，因此 返回答案模 10^9 + 7 。 12345输入：arr &#x3D; [3,1,2,4]输出：17解释：子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[2,4]，[3,1,2]，[1,2,4]，[3,1,2,4]。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-24T06:21:57.928Z">
-<meta property="article:modified_time" content="2022-09-24T08:20:19.722Z">
+<meta property="article:published_time" content="2022-09-27T12:56:05.654Z">
+<meta property="article:modified_time" content="2022-09-27T12:56:14.847Z">
 <meta property="article:author" content="Chisato">
+<meta property="article:tag" content="动态规划">
 <meta property="article:tag" content="单调栈">
-<meta property="article:tag" content="哈希表">
-<meta property="article:tag" content="数组">
+<meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 496.下一个更大元素 I - Chisato 的成长日记</title>
+  <title>LC 907.子数组的最小值之和 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 496.下一个更大元素 I"></span>
+            <span id="subtitle" data-typed-text="LC 907.子数组的最小值之和"></span>
           
         </div>
 
@@ -222,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-24 14:21" pubdate>
-          2022年9月24日 下午
+        <time datetime="2022-09-27 20:56" pubdate>
+          2022年9月27日 晚上
         </time>
       </span>
     
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.3k 字
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          23 分钟
+          20 分钟
         
       </span>
     
@@ -293,89 +293,63 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 496.下一个更大元素 I</h1>
+            <h1 style="display: none">LC 907.子数组的最小值之和</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="下一个更大元素-i"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/next-greater-element-i/">496.
-下一个更大元素 I</a></h4>
-<p><code>nums1</code> 中数字 <code>x</code> 的
-<strong>下一个更大元素</strong> 是指 <code>x</code> 在
-<code>nums2</code> 中对应位置 <strong>右侧</strong> 的
-<strong>第一个</strong> 比 <code>x</code> 大的元素。</p>
-<p>给你两个 <strong>没有重复元素</strong> 的数组 <code>nums1</code> 和
-<code>nums2</code> ，下标从 <strong>0</strong>
-开始计数，其中<code>nums1</code> 是 <code>nums2</code> 的子集。</p>
-<p>对于每个 <code>0 &lt;= i &lt; nums1.length</code> ，找出满足
-<code>nums1[i] == nums2[j]</code> 的下标 <code>j</code> ，并且在
-<code>nums2</code> 确定 <code>nums2[j]</code> 的
-<strong>下一个更大元素</strong>
-。如果不存在下一个更大元素，那么本次查询的答案是 <code>-1</code> 。</p>
-<p>返回一个长度为 <code>nums1.length</code> 的数组 <code>ans</code>
-作为答案，满足 <code>ans[i]</code> 是如上所述的
-<strong>下一个更大元素</strong> 。</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：nums1 = [<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>].<br>输出：[<span class="hljs-number">-1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">-1</span>]<br>解释：nums1 中每个值的下一个更大元素如下所述：<br>- <span class="hljs-number">4</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。不存在下一个更大元素，所以答案是 <span class="hljs-number">-1</span> 。<br>- <span class="hljs-number">1</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。下一个更大元素是 <span class="hljs-number">3</span> 。<br>- <span class="hljs-number">2</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。不存在下一个更大元素，所以答案是 <span class="hljs-number">-1</span> 。<br></code></pre></td></tr></table></figure>
+                <h4 id="子数组的最小值之和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-subarray-minimums/">907.
+子数组的最小值之和</a></h4>
+<p>给定一个整数数组 <code>arr</code>，找到 <code>min(b)</code>
+的总和，其中 <code>b</code> 的范围为 <code>arr</code>
+的每个（连续）子数组。</p>
+<p>由于答案可能很大，因此 <strong>返回答案模
+<code>10^9 + 7</code></strong> 。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：arr = <span class="hljs-comment">[3,1,2,4]</span><br>输出：17<br>解释：<br>子数组为 <span class="hljs-comment">[3]</span>，<span class="hljs-comment">[1]</span>，<span class="hljs-comment">[2]</span>，<span class="hljs-comment">[4]</span>，<span class="hljs-comment">[3,1]</span>，<span class="hljs-comment">[1,2]</span>，<span class="hljs-comment">[2,4]</span>，<span class="hljs-comment">[3,1,2]</span>，<span class="hljs-comment">[1,2,4]</span>，<span class="hljs-comment">[3,1,2,4]</span>。 <br>最小值为 3，1，2，4，1，1，2，1，1，1，和为 17。<br></code></pre></td></tr></table></figure>
 <p>​</p>
-<h4 id="单调栈-哈希表从后往前遍历">单调栈 + 哈希表（从后往前遍历）</h4>
-<p>对于这种求某个数的「最近一个比其大的元素」或者「最近一个比其小的元素」，都要想到「单调栈」</p>
-<p>单调栈，可以理解为通过一种巧妙的方式使得栈中元素具有「单调性」</p>
-<p>具体地，如果我需要维护一个单调栈，需要做到下面两点：</p>
+<h4 id="单调栈-数学原理">单调栈 + 数学原理</h4>
+<p>题目要我们求所有子数组的最小值之和。我们肯定不可能把所有子数组列出来，那样肯定超时</p>
+<p>我们应当考虑单个元素对于最终答案的贡献如何，即对于任意元素
+<code>a[i]</code> ，有多少个子数组是以它为最小值的，那么
+<code>a[i]</code> 对于最终答案的贡献就是子数组的个数乘以
+<code>a[i]</code></p>
+<p>具体地，我们只需要找出 <code>i</code>
+左边第一个比它小的元素和右边第一个比它小的元素就行</p>
+<p>具体地，我们维护两个数组 <code>l</code> 和 <code>r</code> ，其中
+<code>l[i] = a</code> 表示 <code>i</code>
+左边第一个比它小的数的下标（如果没有则为 0 ），<code>r[i] = a</code>
+表示 <code>i</code> 右边第一个比它小的数的下标（如果没有则为 n ）</p>
+<p>关于 <code>l</code> 和 <code>r</code>
+的处理，完全就是单调栈的问题，前者从前往后遍历，后者从后往前遍历即可</p>
+<p>那么 <code>i</code> 左边的数有 <span class="math inline">\((i-l[i])\)</span> 个，右边的数有 <span class="math inline">\((r[i]-i)\)</span> 个，根据乘法原理可得，位于区间
+<code>[l[i], r[i]]</code> 的所有子数组的个数为 <span class="math inline">\((i-l[i])\cdot (r[i]-i)\)</span></p>
+<p>这里唯一需要注意的问题是，对于区间左右边界的确定，到底是<strong>严格小于</strong>还是<strong>小于等于</strong></p>
 <ul>
-<li>若当前元素<strong>大于</strong>栈顶元素
-<code>x &gt; stack.top()</code> ，那么该元素入栈
-<code>stack.push(x)</code></li>
-<li>若当前元素<strong>小于等于</strong>栈顶元素
-<code>x &lt;= stack.top()</code>
-，那么需要<strong>不断地</strong>让栈顶元素出栈，直到<strong>栈空</strong>或者<strong>出现第一种情况</strong></li>
+<li>如果两边都是严格小于的话，那么原本可以加入区间的元素就会被排除在外，不可取</li>
+<li>如果两倍都是小于等于的话，区间内会有多个重复元素，会造成多次计算，不可取</li>
+<li>因此应当一边严格小于，另一半小于等于</li>
 </ul>
-<p>明白基本实现后，我们便可以使用单调栈来解决这道题</p>
-<p>我们<strong>逆序</strong>遍历 <code>nums2</code>
-，动态维护一个<strong>单调栈</strong>，考虑当前元素
-<code>nums2[i]</code></p>
-<ul>
-<li><p>如果栈为空，那么说明它<strong>右边没有比它大的元素</strong>，我们将该元素入栈</p></li>
-<li><p>如果栈不为空，那么说明栈顶元素就是<strong>最近一个比其大的元素</strong>，之后再将该元素入栈即可</p></li>
-</ul>
-<p>一定要记得，是<strong>先检查后入栈</strong></p>
-<p>上面整个过程，我们可以将值存入哈希表中，这样我们可以直接通过查表得出
-<code>nums1</code> 各个数对应的下一个最大元素</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nextGreaterElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		stack&lt;<span class="hljs-type">int</span>&gt;st;<br>		unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;mp;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = nums2.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; st.<span class="hljs-built_in">top</span>() &lt;= nums2[i])<br>				st.<span class="hljs-built_in">pop</span>();<br>			mp.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">pair</span>&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;(nums2[i], st.<span class="hljs-built_in">empty</span>() ? <span class="hljs-number">-1</span> : st.<span class="hljs-built_in">top</span>()));<br>            st.<span class="hljs-built_in">push</span>(nums2[i]);<br>		&#125;<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ret</span>(nums1.<span class="hljs-built_in">size</span>(), <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums1.<span class="hljs-built_in">size</span>(); i++)<br>			ret[i] = mp[nums1[i]];<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n+m)\)</span> ，会遍历一次
-<code>nums1</code> 与 <code>nums2</code>
-数组，哈希表的插入查找操作的时间复杂度均为 <span class="math inline">\(O(1)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span> ， <span class="math inline">\(n\)</span> 为较长数组的大小</p>
+<p>完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = arr.<span class="hljs-built_in">size</span>();<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">l</span>(n, <span class="hljs-number">-1</span>), <span class="hljs-built_in">r</span>(n, n);<br>		deque&lt;<span class="hljs-type">int</span>&gt;st;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; arr[i] &lt; arr[st.<span class="hljs-built_in">back</span>()])<br>				st.<span class="hljs-built_in">pop_back</span>();<br>			l[i] = st.<span class="hljs-built_in">empty</span>() ? <span class="hljs-number">-1</span> : st.<span class="hljs-built_in">back</span>();<br>			st.<span class="hljs-built_in">push_back</span>(i);<br>		&#125;<br>		st.<span class="hljs-built_in">clear</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; arr[i] &lt;= arr[st.<span class="hljs-built_in">back</span>()])<br>				st.<span class="hljs-built_in">pop_back</span>();<br>			r[i] = st.<span class="hljs-built_in">empty</span>() ? n : st.<span class="hljs-built_in">back</span>();<br>			st.<span class="hljs-built_in">push_back</span>(i);<br>		&#125;<br>		<span class="hljs-type">long</span> <span class="hljs-type">long</span> sum = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			sum += (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)(i - l[i]) % mod * (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)(r[i] - i) % mod * arr[i] % mod;<br>			sum %= mod;<br>		&#125;<br>		<span class="hljs-keyword">return</span> sum;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
 <p>​</p>
-<p>我们说一下为什么需要从后往前遍历的问题</p>
-<p>我们是需要找出某一个数<strong>后面</strong>第一个比它大的数</p>
-<p>而我们维护的栈，从底往上看是<strong>单调递增</strong>的</p>
-<p>并且我们是从后往前遍历，那么对于 <code>nums[i]</code>
-而言，栈顶元素一定是距离它最近的并且该元素一定比 <code>nums[i]</code>
-大</p>
-<p>这样就达成了题目所要求的「下一个最大元素」</p>
-<p>找到之后，我们<strong>不会</strong>将原栈顶元素弹出，而是将
-<code>nums[i]</code>
-压入栈中，在下一次循环开始的时候再确保栈是单调的</p>
-<p>不将原栈顶元素弹出是因为我们需要保存<strong>当前已知的最大元素</strong></p>
-<p>事实上，单调栈可以以另一种方式来理解：</p>
-<p>我们不断以单调递增的顺序来保存<strong>当前</strong>已知的最大元素，而栈顶元素就是<strong>「最近」并且「当前最大」</strong>的元素</p>
-<p>​</p>
-<h4 id="单调栈-哈希表从前往后遍历">单调栈 + 哈希表（从前往后遍历）</h4>
-<p>从后往前遍历是不断在记录<strong>当前</strong>已知的最大元素，栈是单调递增的过程</p>
-<p>这个「当前」，实际上是一个动态的过程</p>
-<p>每当我们遇到一个元素，只要栈不为空，那么我们可以肯定的是栈顶元素一定是当前元素的「下一个更大元素」</p>
-<p>当然，这个过程我们也可以反过来，即从前往后遍历，只不过这样会稍微麻烦一点</p>
-<p>一般地，当前遍历到元素 <code>nums[i]</code> ，只要
-<code>nums[i]</code> 后面的元素都比它小，那么 <code>nums[i]</code>
-的「下一个更大元素」就是<strong>无法确定的</strong></p>
-<p>这个过程直到我们遍历到一个比 <code>nums[i]</code> 还要大的元素
-<code>x</code> 才会终止，其结果为 <code>nums[i]</code>
-以及后面比它小的所有元素的「下一个更大元素」都为 <code>x</code></p>
-<p>这个过程，像不像单调栈？</p>
-<p>我们维护一个单调递减的栈来实现这个过程</p>
-<p>需要注意的是，由于最后一个元素没有下一个元素，因此需要额外处理</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nextGreaterElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;hashmap;<br>		stack&lt;<span class="hljs-type">int</span>&gt;st;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums2.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; st.<span class="hljs-built_in">top</span>() &lt; nums2[i])<br>			&#123;<br>				hashmap[st.<span class="hljs-built_in">top</span>()] = nums2[i];<br>				st.<span class="hljs-built_in">pop</span>();<br>			&#125;<br>            <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">empty</span>())<br>                hashmap[st.<span class="hljs-built_in">top</span>()] = <span class="hljs-number">-1</span>;<br>			st.<span class="hljs-built_in">push</span>(nums2[i]);<br>		&#125;<br>        <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">empty</span>())<br>            hashmap[st.<span class="hljs-built_in">top</span>()] = <span class="hljs-number">-1</span>;<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ret</span>(nums1.<span class="hljs-built_in">size</span>());<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums1.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			ret[i] = hashmap[nums1[i]];<br>		&#125;<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时空复杂的同上</p>
+<h4 id="单调栈-dp">单调栈 + DP</h4>
+<p>我们定义 <code>dp[i]</code> 为所有以下标 <code>i</code>
+为结尾的子数组的最小值之和</p>
+<p>根据我们前面的分析，我们需要找出 <code>arr[i]</code>
+前面的一个<strong>严格小于</strong>的它元素，设其下标为
+<code>index</code> ，则：</p>
+<p>若 <code>index</code> 存在，那么 <span class="math inline">\(dp[i]=dp[index]+(i-index)*arr[i]\)</span></p>
+<p>若 <code>index</code> 不存在，那么 <span class="math inline">\(dp[i]=arr[i]*(i+1)\)</span></p>
+<p>关于找出第一个严格小于的元素，我们可以采取单调栈</p>
+<p>在进入循环的时候，只需要<strong>让栈中的元素全部满足「严格小于」</strong>即可。因此，我们需要让栈中<strong>大于等于</strong>
+<code>arr[i]</code>
+的元素全部弹出栈（实际上所有的单调栈弹出部分都可以这么思考）</p>
+<p>完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-type">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> n = arr.<span class="hljs-built_in">size</span>();<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">dp</span>(n, <span class="hljs-number">0</span>);<br>		deque&lt;<span class="hljs-type">int</span>&gt;st;<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">index</span>(n, <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; arr[i] &lt;= arr[st.<span class="hljs-built_in">back</span>()])<span class="hljs-comment">//由于需要找出比arr[i]严格小的元素，因此栈中所有大于等于的元素全部需要弹出</span><br>				st.<span class="hljs-built_in">pop_back</span>();<br>			index[i] = st.<span class="hljs-built_in">empty</span>() ? <span class="hljs-number">-1</span> : st.<span class="hljs-built_in">back</span>();<br>			st.<span class="hljs-built_in">push_back</span>(i);<br>		&#125;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>		&#123;<br>			dp[i] = index[i] == <span class="hljs-number">-1</span> ? arr[i] * (i + <span class="hljs-number">1</span>) : dp[index[i]] + (i - index[i]) * arr[i];<br>			dp[i] %= mod;<br>            ans = (ans + dp[i]) % mod;<br>		&#125;<br>		<span class="hljs-keyword">return</span> ans;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
 
                 
               </div>
@@ -409,11 +383,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
+      
         <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">#单调栈</a>
       
-        <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">#哈希表</a>
-      
-        <a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a>
+        <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
       
     </div>
   
@@ -425,8 +399,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 496.下一个更大元素 I</div>
-      <div>https://nishikichisato.github.io/2022/09/24/Algorithm Solution/LC-496.下一个更大元素-I/</div>
+      <div>LC 907.子数组的最小值之和</div>
+      <div>https://nishikichisato.github.io/2022/09/27/Algorithm Solution/LC-907.子数组的最小值之和/</div>
     </div>
     <div class="license-meta">
       
@@ -438,13 +412,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月24日</div>
+          <div>2022年9月27日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月24日</div>
+          <div>2022年9月27日</div>
         </div>
       
       <div class="license-meta-item">
@@ -479,9 +453,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/24/Algorithm%20Solution/LC-503.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-II/" title="LC 503.下一个更大元素 II">
+                      <a href="/2022/09/28/Algorithm%20Solution/LC-2420.%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E5%A5%BD%E4%B8%8B%E6%A0%87/" title="LC 2420.找到所有好下标">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 503.下一个更大元素 II</span>
+                        <span class="hidden-mobile">LC 2420.找到所有好下标</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -489,8 +463,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/23/Algorithm%20Solution/LC-819.%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%95%E8%AF%8D/" title="LC 819.最常见的单词">
-                        <span class="hidden-mobile">LC 819.最常见的单词</span>
+                      <a href="/2022/09/27/%E7%AE%97%E6%B3%954/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/" title="归并排序及其分析">
+                        <span class="hidden-mobile">归并排序及其分析</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -18,26 +18,25 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="496. 下一个更大元素 I nums1 中数字 x 的 下一个更大元素 是指 x 在 nums2 中对应位置 右侧 的 第一个 比 x 大的元素。 给你两个 没有重复元素 的数组 nums1 和 nums2 ，下标从 0 开始计数，其中nums1 是 nums2 的子集。 对于每个 0 &lt;&#x3D; i &lt; nums1.length ，找出满足 nums1[i] &#x3D;&#x3D; n">
+    <meta name="description" content="基本算法 快排也是一种分治算法，所谓分治，也就是将大问题不断切分成小问题进而着眼于小问题的解决 我们在讨论归并排序的时候，我们是从小数组着手。我们不断地将小数组排序，再对有序的两个小数组组合成一个大的有序的数组。这种思想可以说是从分治的角度去考虑问题时一个最容易想到的（快排这个还真不一定那么容易想到，至少我是这么认为的） 快排的思想是，不断地对数组进行切分，切分得到的两个部分当中的数，有：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 496.下一个更大元素 I">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/09/24/Algorithm%20Solution/LC-496.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-I/index.html">
+<meta property="og:title" content="快速排序算法分析及其改进">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/29/%E7%AE%97%E6%B3%954/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E5%8F%8A%E5%85%B6%E6%94%B9%E8%BF%9B/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="496. 下一个更大元素 I nums1 中数字 x 的 下一个更大元素 是指 x 在 nums2 中对应位置 右侧 的 第一个 比 x 大的元素。 给你两个 没有重复元素 的数组 nums1 和 nums2 ，下标从 0 开始计数，其中nums1 是 nums2 的子集。 对于每个 0 &lt;&#x3D; i &lt; nums1.length ，找出满足 nums1[i] &#x3D;&#x3D; n">
+<meta property="og:description" content="基本算法 快排也是一种分治算法，所谓分治，也就是将大问题不断切分成小问题进而着眼于小问题的解决 我们在讨论归并排序的时候，我们是从小数组着手。我们不断地将小数组排序，再对有序的两个小数组组合成一个大的有序的数组。这种思想可以说是从分治的角度去考虑问题时一个最容易想到的（快排这个还真不一定那么容易想到，至少我是这么认为的） 快排的思想是，不断地对数组进行切分，切分得到的两个部分当中的数，有：">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-24T06:21:57.928Z">
-<meta property="article:modified_time" content="2022-09-24T08:20:19.722Z">
+<meta property="article:published_time" content="2022-09-29T03:30:32.304Z">
+<meta property="article:modified_time" content="2022-09-29T03:30:59.678Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="单调栈">
-<meta property="article:tag" content="哈希表">
-<meta property="article:tag" content="数组">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="排序">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 496.下一个更大元素 I - Chisato 的成长日记</title>
+  <title>快速排序算法分析及其改进 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 496.下一个更大元素 I"></span>
+            <span id="subtitle" data-typed-text="快速排序算法分析及其改进"></span>
           
         </div>
 
@@ -222,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-24 14:21" pubdate>
-          2022年9月24日 下午
+        <time datetime="2022-09-29 11:30" pubdate>
+          2022年9月29日 中午
         </time>
       </span>
     
@@ -234,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.6k 字
         
       </span>
     
@@ -245,7 +244,7 @@
         
         
         
-          23 分钟
+          22 分钟
         
       </span>
     
@@ -293,89 +292,82 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 496.下一个更大元素 I</h1>
+            <h1 style="display: none">快速排序算法分析及其改进</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="下一个更大元素-i"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/next-greater-element-i/">496.
-下一个更大元素 I</a></h4>
-<p><code>nums1</code> 中数字 <code>x</code> 的
-<strong>下一个更大元素</strong> 是指 <code>x</code> 在
-<code>nums2</code> 中对应位置 <strong>右侧</strong> 的
-<strong>第一个</strong> 比 <code>x</code> 大的元素。</p>
-<p>给你两个 <strong>没有重复元素</strong> 的数组 <code>nums1</code> 和
-<code>nums2</code> ，下标从 <strong>0</strong>
-开始计数，其中<code>nums1</code> 是 <code>nums2</code> 的子集。</p>
-<p>对于每个 <code>0 &lt;= i &lt; nums1.length</code> ，找出满足
-<code>nums1[i] == nums2[j]</code> 的下标 <code>j</code> ，并且在
-<code>nums2</code> 确定 <code>nums2[j]</code> 的
-<strong>下一个更大元素</strong>
-。如果不存在下一个更大元素，那么本次查询的答案是 <code>-1</code> 。</p>
-<p>返回一个长度为 <code>nums1.length</code> 的数组 <code>ans</code>
-作为答案，满足 <code>ans[i]</code> 是如上所述的
-<strong>下一个更大元素</strong> 。</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：nums1 = [<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>].<br>输出：[<span class="hljs-number">-1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">-1</span>]<br>解释：nums1 中每个值的下一个更大元素如下所述：<br>- <span class="hljs-number">4</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。不存在下一个更大元素，所以答案是 <span class="hljs-number">-1</span> 。<br>- <span class="hljs-number">1</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。下一个更大元素是 <span class="hljs-number">3</span> 。<br>- <span class="hljs-number">2</span> ，用加粗斜体标识，nums2 = [<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">2</span>]。不存在下一个更大元素，所以答案是 <span class="hljs-number">-1</span> 。<br></code></pre></td></tr></table></figure>
-<p>​</p>
-<h4 id="单调栈-哈希表从后往前遍历">单调栈 + 哈希表（从后往前遍历）</h4>
-<p>对于这种求某个数的「最近一个比其大的元素」或者「最近一个比其小的元素」，都要想到「单调栈」</p>
-<p>单调栈，可以理解为通过一种巧妙的方式使得栈中元素具有「单调性」</p>
-<p>具体地，如果我需要维护一个单调栈，需要做到下面两点：</p>
+                <h3 id="基本算法">基本算法</h3>
+<p>快排也是一种分治算法，所谓分治，也就是将大问题不断切分成小问题进而着眼于小问题的解决</p>
+<p>我们在讨论归并排序的时候，我们是从小数组着手。我们不断地将小数组排序，再对有序的两个小数组组合成一个大的有序的数组。这种思想可以说是从分治的角度去考虑问题时一个最容易想到的（快排这个还真不一定那么容易想到，至少我是这么认为的）</p>
+<p>快排的思想是，不断地对数组进行切分，切分得到的两个部分当中的数，有：</p>
 <ul>
-<li>若当前元素<strong>大于</strong>栈顶元素
-<code>x &gt; stack.top()</code> ，那么该元素入栈
-<code>stack.push(x)</code></li>
-<li>若当前元素<strong>小于等于</strong>栈顶元素
-<code>x &lt;= stack.top()</code>
-，那么需要<strong>不断地</strong>让栈顶元素出栈，直到<strong>栈空</strong>或者<strong>出现第一种情况</strong></li>
+<li>左边的数全部小于切分点</li>
+<li>右边的数全部大于切分点</li>
 </ul>
-<p>明白基本实现后，我们便可以使用单调栈来解决这道题</p>
-<p>我们<strong>逆序</strong>遍历 <code>nums2</code>
-，动态维护一个<strong>单调栈</strong>，考虑当前元素
-<code>nums2[i]</code></p>
+<p>我们得到两部分后，再重复执行上述操作，就可以最终实现快排</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qsort</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">sort</span>(a, <span class="hljs-number">0</span>, a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (lo &gt;= hi)<span class="hljs-comment">//区间最少需要两个数</span><br>			<span class="hljs-keyword">return</span>;<br>		<span class="hljs-type">int</span> mid = <span class="hljs-built_in">partition</span>(a, lo, hi);<br>		<span class="hljs-built_in">sort</span>(a, lo, mid - <span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">sort</span>(a, mid + <span class="hljs-number">1</span>, hi);<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><code>partition</code>
+方法会选择数组当中某个数作为切分点，然后将所有小于这个数的全部放到左边，大于这个数的全部放到右边，最后返回切分点的下标</p>
+<p>现在，我们需要去实现 <code>partition</code></p>
+<p>我们通常会选择数组第一个元素 <code>a[lo]</code> 作为切分元素
+<code>v</code>，然后从左往右扫描，找到第一个大于 <code>a[lo]</code>
+的数，再从右往左扫描，找到第一个小于 <code>a[lo]</code>
+的数。显然，这两个数是没有进行排序的，我们将交换这两个元素，之后再不断重复这个过程</p>
+<p>在结束循环的时候，会有两种情况，我们重点讨论一下：</p>
 <ul>
-<li><p>如果栈为空，那么说明它<strong>右边没有比它大的元素</strong>，我们将该元素入栈</p></li>
-<li><p>如果栈不为空，那么说明栈顶元素就是<strong>最近一个比其大的元素</strong>，之后再将该元素入栈即可</p></li>
+<li>当 <code>i == j</code> 时， <strong><code>i</code>
+左边的元素全部小于 <code>v</code></strong> ，<strong><code>j</code>
+右边的元素全部大于 <code>v</code></strong> 因此当二者相遇时，只有可能是
+<code>a[i] == a[j] == v</code> 。由于 <code>v</code> 的初始位置是在
+<code>i</code> 的左边，也就是说这个位置的值需要<strong>小于</strong>
+<code>v</code> （等于也没关系），因此我们将一个等于 <code>v</code>
+的值放在第一个位置，这是没问题的</li>
+<li>当 <code>j &lt;= i</code> 时，同样的道理，<code>i</code>
+左边的元素小于 <code>v</code> ，<code>j</code> 右边的元素大于
+<code>v</code> 。而当 <code>j</code> 在 <code>i</code> 左边，
+<code>i</code> 在 <code>j</code> 右边时，<strong><code>j</code>
+的值一定小于 <code>v</code> ，<code>i</code> 的值一定大于
+<code>v</code></strong> ，而第一个位置的值只能是小于 <code>v</code>
+，因此只能将 <code>j</code> 的值与 <code>v</code> 进行交换</li>
 </ul>
-<p>一定要记得，是<strong>先检查后入栈</strong></p>
-<p>上面整个过程，我们可以将值存入哈希表中，这样我们可以直接通过查表得出
-<code>nums1</code> 各个数对应的下一个最大元素</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nextGreaterElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		stack&lt;<span class="hljs-type">int</span>&gt;st;<br>		unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;mp;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = nums2.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; st.<span class="hljs-built_in">top</span>() &lt;= nums2[i])<br>				st.<span class="hljs-built_in">pop</span>();<br>			mp.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">pair</span>&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;(nums2[i], st.<span class="hljs-built_in">empty</span>() ? <span class="hljs-number">-1</span> : st.<span class="hljs-built_in">top</span>()));<br>            st.<span class="hljs-built_in">push</span>(nums2[i]);<br>		&#125;<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ret</span>(nums1.<span class="hljs-built_in">size</span>(), <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums1.<span class="hljs-built_in">size</span>(); i++)<br>			ret[i] = mp[nums1[i]];<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n+m)\)</span> ，会遍历一次
-<code>nums1</code> 与 <code>nums2</code>
-数组，哈希表的插入查找操作的时间复杂度均为 <span class="math inline">\(O(1)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span> ， <span class="math inline">\(n\)</span> 为较长数组的大小</p>
+<p>完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Qsort</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">sort</span>(a, <span class="hljs-number">0</span>, a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (lo &gt;= hi)<span class="hljs-comment">//区间最少需要两个数</span><br>			<span class="hljs-keyword">return</span>;<br>		<span class="hljs-type">int</span> mid = <span class="hljs-built_in">partition</span>(a, lo, hi);<br>		<span class="hljs-built_in">sort</span>(a, lo, mid - <span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">sort</span>(a, mid + <span class="hljs-number">1</span>, hi);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span><span class="hljs-comment">//对[lo,hi]切分</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> i = lo, j = hi + <span class="hljs-number">1</span>;<br>		<span class="hljs-type">int</span> v = a[lo];<br>		<span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (<span class="hljs-built_in">less</span>(a[++i], v));<br>			<span class="hljs-keyword">while</span> (<span class="hljs-built_in">less</span>(v, a[--j]));<br>			<span class="hljs-keyword">if</span> (i &gt;= j)<br>				<span class="hljs-keyword">break</span>;<br>			<span class="hljs-built_in">exch</span>(a, i, j);<br>		&#125;<br>		<span class="hljs-built_in">exch</span>(a, lo, j);<br>		<span class="hljs-keyword">return</span> j;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>​</p>
-<p>我们说一下为什么需要从后往前遍历的问题</p>
-<p>我们是需要找出某一个数<strong>后面</strong>第一个比它大的数</p>
-<p>而我们维护的栈，从底往上看是<strong>单调递增</strong>的</p>
-<p>并且我们是从后往前遍历，那么对于 <code>nums[i]</code>
-而言，栈顶元素一定是距离它最近的并且该元素一定比 <code>nums[i]</code>
-大</p>
-<p>这样就达成了题目所要求的「下一个最大元素」</p>
-<p>找到之后，我们<strong>不会</strong>将原栈顶元素弹出，而是将
-<code>nums[i]</code>
-压入栈中，在下一次循环开始的时候再确保栈是单调的</p>
-<p>不将原栈顶元素弹出是因为我们需要保存<strong>当前已知的最大元素</strong></p>
-<p>事实上，单调栈可以以另一种方式来理解：</p>
-<p>我们不断以单调递增的顺序来保存<strong>当前</strong>已知的最大元素，而栈顶元素就是<strong>「最近」并且「当前最大」</strong>的元素</p>
-<p>​</p>
-<h4 id="单调栈-哈希表从前往后遍历">单调栈 + 哈希表（从前往后遍历）</h4>
-<p>从后往前遍历是不断在记录<strong>当前</strong>已知的最大元素，栈是单调递增的过程</p>
-<p>这个「当前」，实际上是一个动态的过程</p>
-<p>每当我们遇到一个元素，只要栈不为空，那么我们可以肯定的是栈顶元素一定是当前元素的「下一个更大元素」</p>
-<p>当然，这个过程我们也可以反过来，即从前往后遍历，只不过这样会稍微麻烦一点</p>
-<p>一般地，当前遍历到元素 <code>nums[i]</code> ，只要
-<code>nums[i]</code> 后面的元素都比它小，那么 <code>nums[i]</code>
-的「下一个更大元素」就是<strong>无法确定的</strong></p>
-<p>这个过程直到我们遍历到一个比 <code>nums[i]</code> 还要大的元素
-<code>x</code> 才会终止，其结果为 <code>nums[i]</code>
-以及后面比它小的所有元素的「下一个更大元素」都为 <code>x</code></p>
-<p>这个过程，像不像单调栈？</p>
-<p>我们维护一个单调递减的栈来实现这个过程</p>
-<p>需要注意的是，由于最后一个元素没有下一个元素，因此需要额外处理</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nextGreaterElement</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span></span><br><span class="hljs-function">	</span>&#123;<br>		unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;hashmap;<br>		stack&lt;<span class="hljs-type">int</span>&gt;st;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums2.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			<span class="hljs-keyword">while</span> (!st.<span class="hljs-built_in">empty</span>() &amp;&amp; st.<span class="hljs-built_in">top</span>() &lt; nums2[i])<br>			&#123;<br>				hashmap[st.<span class="hljs-built_in">top</span>()] = nums2[i];<br>				st.<span class="hljs-built_in">pop</span>();<br>			&#125;<br>            <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">empty</span>())<br>                hashmap[st.<span class="hljs-built_in">top</span>()] = <span class="hljs-number">-1</span>;<br>			st.<span class="hljs-built_in">push</span>(nums2[i]);<br>		&#125;<br>        <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">empty</span>())<br>            hashmap[st.<span class="hljs-built_in">top</span>()] = <span class="hljs-number">-1</span>;<br>		vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ret</span>(nums1.<span class="hljs-built_in">size</span>());<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums1.<span class="hljs-built_in">size</span>(); i++)<br>		&#123;<br>			ret[i] = hashmap[nums1[i]];<br>		&#125;<br>		<span class="hljs-keyword">return</span> ret;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时空复杂的同上</p>
+<h3 id="算法分析">算法分析</h3>
+<p><span class="math display">\[
+命题K: 将长度为N的无重复数组排序，快速排序平均需要\sim 2NlogN次比较
+\]</span></p>
+<p>令 <span class="math inline">\(C_N\)</span> 为将 <span class="math inline">\(N\)</span>
+个不同元素排序<strong>平均所需</strong>的比较次数。显然 <span class="math inline">\(C_0=C_1=0\)</span> ，当 <span class="math inline">\(N&gt;1\)</span> 时，有： <span class="math display">\[
+C_N=(N+1)+\frac{(C_0+C_1+C_2+\cdots+C_{N-1})}{N}+\frac{(C_{N-1}+C_{N-2}+\cdots+C_1+C_0)}{N}
+\]</span> 第一项表示切分成本（<span class="math inline">\(N\)</span>
+个数，切分点的选择有 <span class="math inline">\(N-1\)</span>
+种可能），第二项为将左子数组排序所需的<strong>平均</strong>成本（左子数组的长度为
+<span class="math inline">\(0\)</span> 到 <span class="math inline">\(N-1\)</span>
+），第三项为将右子数组排序所需的<strong>平均</strong>成本（右子数组的长度也为
+<span class="math inline">\(0\)</span> 到 <span class="math inline">\(N-1\)</span>）</p>
+<p>将等式左右两边乘以 <span class="math inline">\(N\)</span> ，有：
+<span class="math display">\[
+NC_N=N(N+1)+2(C_0+C_1+C_2+\cdots+C_{N-1})
+\]</span> 减去当 <span class="math inline">\(N=N-1\)</span>
+时的等式时，有： <span class="math display">\[
+NC_N-(N-1)C_{N-1}=2N+2C_{N-1}
+\]</span> 同时除以 <span class="math inline">\(N(N+1)\)</span> ，有：
+<span class="math display">\[
+\frac{C_N}{(N+1)}=\frac{C_{N-1}}{N}\cdot2(N+1)
+\]</span> 迭代后，有： <span class="math display">\[
+C_N\sim 2(N+1)(\frac{1}{3}+\frac{1}{4}+\cdots+\frac{1}{N+1})
+\]</span> 括号内的量是曲线 <span class="math inline">\(2/x\)</span> 下从
+<span class="math inline">\(3\)</span> 到 <span class="math inline">\(N\)</span> 的离散近似面积加一，积分得到 <span class="math inline">\(C_N \sim 2N\ln N\)</span> 。注意到 <span class="math inline">\(2N\ln N \sim 1.39N\lg N\)</span>
+，也就是说，平均比较次数只比最好的情况多 <span class="math inline">\(39\%\)</span> <span class="math display">\[
+命题L: 快速排序最多需要约N^2/2次比较
+\]</span> 假设我们切分的时候，总有一个子数组为空，那么上式为： <span class="math display">\[
+C_N=C_{N-1}+1
+\]</span> 即： <span class="math display">\[
+N+(N-1)+(N-2)+\cdots + 1 \sim N(N+1)/2
+\]</span> ​</p>
+<h3 id="算法改进">算法改进</h3>
 
                 
               </div>
@@ -394,7 +386,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  <a href="/categories/%E7%AE%97%E6%B3%954/" class="category-chain-item">算法4</a>
   
   
 
@@ -409,11 +401,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">#单调栈</a>
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
       
-        <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">#哈希表</a>
-      
-        <a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a>
+        <a href="/tags/%E6%8E%92%E5%BA%8F/">#排序</a>
       
     </div>
   
@@ -425,8 +415,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 496.下一个更大元素 I</div>
-      <div>https://nishikichisato.github.io/2022/09/24/Algorithm Solution/LC-496.下一个更大元素-I/</div>
+      <div>快速排序算法分析及其改进</div>
+      <div>https://nishikichisato.github.io/2022/09/29/算法4/快速排序算法分析及其改进/</div>
     </div>
     <div class="license-meta">
       
@@ -438,13 +428,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月24日</div>
+          <div>2022年9月29日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年9月24日</div>
+          <div>2022年9月29日</div>
         </div>
       
       <div class="license-meta-item">
@@ -479,18 +469,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/24/Algorithm%20Solution/LC-503.%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%9B%B4%E5%A4%A7%E5%85%83%E7%B4%A0-II/" title="LC 503.下一个更大元素 II">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 503.下一个更大元素 II</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/23/Algorithm%20Solution/LC-819.%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%95%E8%AF%8D/" title="LC 819.最常见的单词">
-                        <span class="hidden-mobile">LC 819.最常见的单词</span>
+                      <a href="/2022/09/28/Algorithm%20Solution/LC-2419.%E6%8C%89%E4%BD%8D%E4%B8%8E%E6%9C%80%E5%A4%A7%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E6%95%B0%E7%BB%84/" title="LC 2419.按位与最大的最长子数组">
+                        <span class="hidden-mobile">LC 2419.按位与最大的最长子数组</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
