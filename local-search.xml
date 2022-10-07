@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>LC 581.最短无序连续子数组</title>
+    <link href="/2022/10/06/Algorithm%20Solution/LC-581.%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/"/>
+    <url>/2022/10/06/Algorithm%20Solution/LC-581.%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/</url>
+    
+    <content type="html"><![CDATA[<h4 id="最短无序连续子数组"><a href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/">581.最短无序连续子数组</a></h4><p>给你一个整数数组 <code>nums</code> ，你需要找出一个<strong>连续子数组</strong>，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。</p><p>请你找出符合题意的 <strong>最短</strong> 子数组，并输出它的长度。</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[2,6,4,8,10,9,15]</span><br>输出：<span class="hljs-number">5</span><br>解释：你只需要对 <span class="hljs-string">[6, 4, 8, 10, 9]</span> 进行升序排序，那么整个表都会变为升序排序。<br></code></pre></td></tr></table></figure><p>​</p><h4 id="双指针-单调栈">双指针 + 单调栈</h4><p>在我们的理解中，单调栈内部的元素是<strong>「当前已知的较小元素」</strong>，但这对单调栈而言只满足单调的特性，不满足栈的特性</p><p>如果我们试图将一个部分有序的数组压入到单调栈内部，那么它会<strong>自动弹出这个数组内非递增的元素</strong>，这一性质正好契合我们需要找出数组的无序区间这个需求</p><p>具体地，从左向右以单调递增栈扫描数组，不断记录弹出元素的下标并取最小值，这里就是最终无序区间的左端点，右端点的处理同理</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findUnsortedSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        stack&lt;<span class="hljs-type">int</span>&gt;stk;<br>        <span class="hljs-type">int</span> l = INT32_MAX, r = INT32_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[stk.<span class="hljs-built_in">top</span>()] &gt; nums[i])<br>            &#123;<br>                l = <span class="hljs-built_in">min</span>(l, stk.<span class="hljs-built_in">top</span>());<br>                stk.<span class="hljs-built_in">pop</span>();<br>            &#125;<br>            stk.<span class="hljs-built_in">push</span>(i);<br>        &#125;<br>        <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>())<br>            stk.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[stk.<span class="hljs-built_in">top</span>()] &lt; nums[i])<br>            &#123;<br>                r = <span class="hljs-built_in">max</span>(r, stk.<span class="hljs-built_in">top</span>());<br>                stk.<span class="hljs-built_in">pop</span>();<br>            &#125;<br>            stk.<span class="hljs-built_in">push</span>(i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> r &gt; l ? r - l + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：<span class="math inline">\(O(n)\)</span></p><p>空间复杂度：<span class="math inline">\(O(n)\)</span></p><p>​</p><h4 id="优化">优化</h4><p>我们单就左端点 <code>l</code> 来进行考虑</p><p>从上面的代码当中可以看到，我们实际上并不需要一直维护一个单调栈的，因为对于区间端点的赋值<strong>仅在当前元素小于目前最大元素</strong>（也就是栈顶元素）</p><p>那么我们完全可以从左到右维护一个较大值，只要出现 <code>nums[i]</code>小于这个较大值，我们便记录下标</p><p>最后我们发现，这个记录的下标，会不断的向右移动，最终会变为区间的右端点</p><p>也就是说，对于右端点的赋值，需要从左往右</p><p>完整代码如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findUnsortedSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> l = INT32_MAX, r = INT32_MIN, n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> cmax = nums[<span class="hljs-number">0</span>], cmin = nums[nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &gt;= cmax)<br>                cmax = nums[i];<br>            <span class="hljs-keyword">else</span> r = <span class="hljs-built_in">max</span>(r, i);<br>            <span class="hljs-keyword">if</span>(nums[n - <span class="hljs-number">1</span> - i] &lt;= cmin)<br>                cmin = nums[n - <span class="hljs-number">1</span> - i];<br>            <span class="hljs-keyword">else</span> l = <span class="hljs-built_in">min</span>(l, n - <span class="hljs-number">1</span> - i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> l &lt; r ? r - l + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：<span class="math inline">\(O(n)\)</span></p><p>空间复杂度：<span class="math inline">\(O(1)\)</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>单调栈</tag>
+      
+      <tag>数组</tag>
+      
+      <tag>双指针</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LC 84.柱状图中最大的矩形</title>
     <link href="/2022/10/03/Algorithm%20Solution/LC-84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2/"/>
     <url>/2022/10/03/Algorithm%20Solution/LC-84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2/</url>
@@ -132,9 +161,9 @@
     
     <tags>
       
-      <tag>字符串</tag>
-      
       <tag>双指针</tag>
+      
+      <tag>字符串</tag>
       
     </tags>
     
@@ -1152,9 +1181,9 @@
     
     <tags>
       
-      <tag>LCS</tag>
-      
       <tag>动态规划</tag>
+      
+      <tag>LCS</tag>
       
       <tag>模板题目</tag>
       
