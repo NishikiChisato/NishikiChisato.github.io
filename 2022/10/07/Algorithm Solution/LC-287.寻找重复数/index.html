@@ -18,26 +18,26 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="581. 最短无序连续子数组 给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。 请你找出符合题意的 最短 子数组，并输出它的长度。 123输入：nums &#x3D; [2,6,4,8,10,9,15]输出：5解释：你只需要对 [6, 4, 8, 10, 9] 进行升序排序，那么整个表都会变为升序排序。 ​ 双指针 +">
+    <meta name="description" content="287. 寻找重复数 给定一个包含 n + 1 个整数的数组 nums ，其数字都在 [1, n] 范围内（包括 1 和 n），可知至少存在一个重复的整数。 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。 示例 1： 12输入：nums &#x3D; [1,3,4,2,2]输出：2 示例">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 581.最短无序连续子数组">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/10/06/Algorithm%20Solution/LC-581.%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:title" content="LC 287.寻找重复数">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/10/07/Algorithm%20Solution/LC-287.%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="581. 最短无序连续子数组 给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。 请你找出符合题意的 最短 子数组，并输出它的长度。 123输入：nums &#x3D; [2,6,4,8,10,9,15]输出：5解释：你只需要对 [6, 4, 8, 10, 9] 进行升序排序，那么整个表都会变为升序排序。 ​ 双指针 +">
+<meta property="og:description" content="287. 寻找重复数 给定一个包含 n + 1 个整数的数组 nums ，其数字都在 [1, n] 范围内（包括 1 和 n），可知至少存在一个重复的整数。 假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。 你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。 示例 1： 12输入：nums &#x3D; [1,3,4,2,2]输出：2 示例">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-06T01:25:43.045Z">
-<meta property="article:modified_time" content="2022-10-06T01:25:45.707Z">
+<meta property="article:published_time" content="2022-10-07T03:34:48.809Z">
+<meta property="article:modified_time" content="2022-10-07T03:34:54.957Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="单调栈">
-<meta property="article:tag" content="数组">
+<meta property="article:tag" content="二分查找">
 <meta property="article:tag" content="双指针">
+<meta property="article:tag" content="哈希表">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 581.最短无序连续子数组 - Chisato 的成长日记</title>
+  <title>LC 287.寻找重复数 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 581.最短无序连续子数组"></span>
+            <span id="subtitle" data-typed-text="LC 287.寻找重复数"></span>
           
         </div>
 
@@ -222,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 09:25" pubdate>
-          2022年10月6日 上午
+        <time datetime="2022-10-07 11:34" pubdate>
+          2022年10月7日 中午
         </time>
       </span>
     
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          2.1k 字
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          13 分钟
+          18 分钟
         
       </span>
     
@@ -293,36 +293,84 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 581.最短无序连续子数组</h1>
+            <h1 style="display: none">LC 287.寻找重复数</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="最短无序连续子数组"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/">581.
-最短无序连续子数组</a></h4>
-<p>给你一个整数数组 <code>nums</code> ，你需要找出一个
-<strong>连续子数组</strong>
-，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。</p>
-<p>请你找出符合题意的 <strong>最短</strong> 子数组，并输出它的长度。</p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[2,6,4,8,10,9,15]</span><br>输出：<span class="hljs-number">5</span><br>解释：你只需要对 <span class="hljs-string">[6, 4, 8, 10, 9]</span> 进行升序排序，那么整个表都会变为升序排序。<br></code></pre></td></tr></table></figure>
+                <h4 id="寻找重复数"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-duplicate-number/">287.
+寻找重复数</a></h4>
+<p>给定一个包含 <code>n + 1</code> 个整数的数组 <code>nums</code>
+，其数字都在 <code>[1, n]</code> 范围内（包括 <code>1</code> 和
+<code>n</code>），可知至少存在一个重复的整数。</p>
+<p>假设 <code>nums</code> 只有 <strong>一个重复的整数</strong> ，返回
+<strong>这个重复的数</strong> 。</p>
+<p>你设计的解决方案必须 <strong>不修改</strong> 数组 <code>nums</code>
+且只用常量级 <code>O(1)</code> 的额外空间。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[1,3,4,2,2]</span><br>输出：<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[3,1,3,4,2]</span><br>输出：<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>提示：</p>
+<ul>
+<li>1 &lt;= n &lt;= 105</li>
+<li>nums.length == n + 1</li>
+<li>1 &lt;= nums[i] &lt;= n</li>
+<li>nums 中 只有一个整数 出现 两次或多次 ，其余整数均只出现 一次</li>
+</ul>
+<p>进阶：</p>
+<ul>
+<li>如何证明 nums 中至少存在一个重复的数字?</li>
+<li>你可以设计一个线性级时间复杂度 O(n) 的解决方案吗？</li>
+</ul>
 <p>​</p>
-<h4 id="双指针-单调栈">双指针 + 单调栈</h4>
-<p>在我们的理解中，单调栈内部的元素是<strong>「当前已知的较小元素」</strong>，但这对单调栈而言只满足单调的特性，不满足栈的特性</p>
-<p>如果我们试图将一个部分有序的数组压入到单调栈内部，那么它会<strong>自动弹出这个数组内非递增的元素</strong>，这一性质正好契合我们需要找出数组的无序区间这个需求</p>
-<p>具体地，从左向右以单调递增栈扫描数组，不断记录弹出元素的下标并取最小值，这里就是最终无序区间的左端点，右端点的处理同理</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findUnsortedSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        stack&lt;<span class="hljs-type">int</span>&gt;stk;<br>        <span class="hljs-type">int</span> l = INT32_MAX, r = INT32_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[stk.<span class="hljs-built_in">top</span>()] &gt; nums[i])<br>            &#123;<br>                l = <span class="hljs-built_in">min</span>(l, stk.<span class="hljs-built_in">top</span>());<br>                stk.<span class="hljs-built_in">pop</span>();<br>            &#125;<br>            stk.<span class="hljs-built_in">push</span>(i);<br>        &#125;<br>        <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>())<br>            stk.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(!stk.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[stk.<span class="hljs-built_in">top</span>()] &lt; nums[i])<br>            &#123;<br>                r = <span class="hljs-built_in">max</span>(r, stk.<span class="hljs-built_in">top</span>());<br>                stk.<span class="hljs-built_in">pop</span>();<br>            &#125;<br>            stk.<span class="hljs-built_in">push</span>(i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> r &gt; l ? r - l + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
-<p>​</p>
-<h4 id="优化">优化</h4>
-<p>我们单就左端点 <code>l</code> 来进行考虑</p>
-<p>从上面的代码当中可以看到，我们实际上并不需要一直维护一个单调栈的，因为对于区间端点的赋值<strong>仅在当前元素小于目前最大元素</strong>（也就是栈顶元素）</p>
-<p>那么我们完全可以从左到右维护一个较大值，只要出现 <code>nums[i]</code>
-小于这个较大值，我们便记录下标</p>
-<p>最后我们发现，这个记录的下标，会不断的向右移动，最终会变为区间的右端点</p>
-<p>也就是说，对于右端点的赋值，需要从左往右</p>
+<h4 id="原地哈希">原地哈希</h4>
+<p>由于存在 <code>n+1</code> 个数，每个数字都是 <code>1 ~ n</code>
+，那么就必然有<strong>一个</strong>重复数</p>
+<p>我们将元素 <code>x</code> 移动到索引 <code>x - 1</code>
+处，那么对于任意一个不重复的元素，它必然有唯一确定的位置</p>
+<p>如果存在重复元素，那么必然会出现位置想碰撞，进而可以找到该元素</p>
+<p>具体地，我们设 <code>idx = x - 1</code>
+，那么原本的移动就相当于将数组排序，对于每个元素 <code>x</code>
+，有：<span class="math inline">\(index(x)=x-1\)</span> ，即元素
+<code>x</code> 的下标就是 <code>idx</code>
+，如果不满足这一点就说明存在重复元素</p>
 <p>完整代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findUnsortedSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> l = INT32_MAX, r = INT32_MIN, n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> cmax = nums[<span class="hljs-number">0</span>], cmin = nums[nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &gt;= cmax)<br>                cmax = nums[i];<br>            <span class="hljs-keyword">else</span> r = <span class="hljs-built_in">max</span>(r, i);<br>            <span class="hljs-keyword">if</span>(nums[n - <span class="hljs-number">1</span> - i] &lt;= cmin)<br>                cmin = nums[n - <span class="hljs-number">1</span> - i];<br>            <span class="hljs-keyword">else</span> l = <span class="hljs-built_in">min</span>(l, n - <span class="hljs-number">1</span> - i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> l &lt; r ? r - l + <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findDuplicate</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>();)<br>        &#123;<br>            <span class="hljs-type">int</span> x = nums[i], idx = x - <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span>(nums[idx] != x)<br>                <span class="hljs-built_in">swap</span>(nums[idx], nums[i]);<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                <span class="hljs-keyword">if</span>(i != x - <span class="hljs-number">1</span>)<br>                    <span class="hljs-keyword">return</span> x;<br>                i++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(1)\)</span></p>
+<p>​</p>
+<h4 id="二分查找">二分查找</h4>
+<p>这道题本质上就是在区间 <code>[1, n]</code> 当中寻找一个数</p>
+<p>在一个有序的区间内寻找一个数，我们可以用二分查找的思想</p>
+<p>我们假定数组 <code>nums</code> 是有序的，并设其区间中点为
+<code>mid</code> （下标从 1 开始计数）</p>
+<p>如果左半边的元素个数<strong>刚好</strong> 为 <code>mid</code>
+，那么说明重复元素必然不在左边</p>
+<p>进而，我们只需要查找右半边的区间即可</p>
+<p>在实际操作上，我们统计 <code>nums</code> 中<strong>小于等于</strong>
+<code>mid</code> 的元素个数，并以此来判断需要查找哪个区间</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findDuplicate</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> left = <span class="hljs-number">1</span>, right = n;<br>        <span class="hljs-keyword">while</span>(left &lt; right)<br>        &#123;<br>            <span class="hljs-type">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>            <span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i : nums)<br>                <span class="hljs-keyword">if</span>(i &lt;= mid)<br>                    count++;<br>            <span class="hljs-keyword">if</span>(count &gt; mid)<br>                right = mid;<br>            <span class="hljs-keyword">else</span> left = mid + <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> left;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>时间复杂度：<span class="math inline">\(O(nlogn)\)</span></p>
+<p>空间复杂度：<span class="math inline">\(O(1)\)</span></p>
+<p>​</p>
+<h4 id="双指针">双指针</h4>
+<p>在这里，我们可以仿照并查集的定义，将数组索引表示为元素编号，数组元素表示为下一个元素的链接</p>
+<p>那么如果一个数组当中出现重复元素，这就说明有两个元素的链接相同，也就是说，必然会形成环</p>
+<p>环的入口元素就是我们要找到重复数</p>
+<p>具体地，我们定义两个指针 <code>slow</code> 和 <code>fast</code>
+，有：<span class="math inline">\(v(fast)=2v(slow)\)</span></p>
+<p>设开头点为 <span class="math inline">\(S\)</span> ，环的入口点为
+<span class="math inline">\(I\)</span> ，相遇点为 <span class="math inline">\(M\)</span> ，有：</p>
+<p>设 <span class="math inline">\(x=\vec{SI},\ y=\vec{IM},\
+z=\vec{MI}\)</span> ，显然：</p>
+<p><span class="math inline">\(S_{slow}=x+y,\
+S_{fast}=x+k(y+z)+y\)</span></p>
+<p>因为 <span class="math inline">\(S_{fast}=2S_{slow}\)</span>
+，有：<span class="math inline">\(z=y\)</span></p>
+<p>也就是说，在二者相遇后，相遇点的距离到环入口点的距离跟开始点到环入口点的距离相同</p>
+<p>这里我们再定义两个指针，让它们同时移动，只要二者最后相等，这就是我们想要的答案</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findDuplicate</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> slow = <span class="hljs-number">0</span>, fast = <span class="hljs-number">0</span>;<br>        slow = nums[slow];<br>        fast = nums[nums[fast]];<br>        <span class="hljs-keyword">while</span>(slow != fast)<br>        &#123;<br>            slow = nums[slow];<br>            fast = nums[nums[fast]];<br>        &#125;<br>        <span class="hljs-type">int</span> pre = <span class="hljs-number">0</span>, cur = slow;<br>        <span class="hljs-keyword">while</span>(pre != cur)<br>        &#123;<br>            pre = nums[pre];<br>            cur = nums[cur];<br>        &#125;<br>        <span class="hljs-keyword">return</span> pre;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
 <p>空间复杂度：<span class="math inline">\(O(1)\)</span></p>
 
@@ -358,11 +406,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">#单调栈</a>
-      
-        <a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a>
+        <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">#二分查找</a>
       
         <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">#双指针</a>
+      
+        <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">#哈希表</a>
       
     </div>
   
@@ -374,8 +422,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 581.最短无序连续子数组</div>
-      <div>https://nishikichisato.github.io/2022/10/06/Algorithm Solution/LC-581.最短无序连续子数组/</div>
+      <div>LC 287.寻找重复数</div>
+      <div>https://nishikichisato.github.io/2022/10/07/Algorithm Solution/LC-287.寻找重复数/</div>
     </div>
     <div class="license-meta">
       
@@ -387,13 +435,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月6日</div>
+          <div>2022年10月7日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年10月6日</div>
+          <div>2022年10月7日</div>
         </div>
       
       <div class="license-meta-item">
@@ -428,18 +476,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/07/Algorithm%20Solution/LC-287.%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/" title="LC 287.寻找重复数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 287.寻找重复数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/03/Algorithm%20Solution/LC-84.%E6%9F%B1%E7%8A%B6%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E7%9F%A9%E5%BD%A2/" title="LC 84.柱状图中最大的矩形">
-                        <span class="hidden-mobile">LC 84.柱状图中最大的矩形</span>
+                      <a href="/2022/10/06/Algorithm%20Solution/LC-581.%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/" title="LC 581.最短无序连续子数组">
+                        <span class="hidden-mobile">LC 581.最短无序连续子数组</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
