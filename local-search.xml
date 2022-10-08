@@ -4,6 +4,60 @@
   
   
   <entry>
+    <title>大二上 第四、五周 2022.9.26 - 2022.10.9</title>
+    <link href="/2022/10/08/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%9B%9B%E3%80%81%E4%BA%94%E5%91%A8-2022.9.26---2022.10.9/"/>
+    <url>/2022/10/08/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%9B%9B%E3%80%81%E4%BA%94%E5%91%A8-2022.9.26---2022.10.9/</url>
+    
+    <content type="html"><![CDATA[<p>我把这两周放到一起来将</p><p>第四周呢，其实没怎么学，就学了三天</p><p>后面两天想着有国庆呢，就玩去了</p><p>国庆那七天。。。。学了三天半，玩了三天半</p><p>我不好说什么</p><p>反正总体来讲，我其实并不满意的就是了</p><p>嘛，都过去了，得往前看才是</p><p>我打算参加一下蓝桥杯，我期望是国赛能搞个奖的</p><p>这个得花不少时间</p><p>具体能搞成什么样子，我也不清楚就是啦</p><p>但是我总想着，我大学得为点什么拼一把</p><p>其实原先的学习，怎么说呢，说不上充满激情，也说不上没有兴趣</p><p>也就是，日常地学习而已</p><p>我其实一直觉得那些搞竞赛的人都好帅，我也想搞</p><p>而且，我也很想知道，我认认真真地学一学，能搞到什么程度</p><p>我现在很菜，力扣也就 182 道，其他的都没有做了</p><p>省赛是明年的 4 月，我稍微认真准备一下吧，争取搞个省一能参加国赛</p><p>然后我的重心会放在算法方面了，其他的学习得先放一放了</p><p>不过 CSAPP 还是照常看，我们看链接之后的章节</p><p>我大概算了一下，一天十页的话最多一个半月解决</p><p>实际上是一个月，我留了一点时间来记笔记就是了</p><p>之后就可以全身心地投入学算法了</p><p>我也想感受一下，半夜刷题的感觉</p><p>这部分以 acwing 为主，毕竟我买了提高课呢</p><p>说实话，蛮激动的</p><p>哈哈哈</p><p>姑且就这样吧</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>日常总结</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>周总结</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LC 870.优势洗牌</title>
+    <link href="/2022/10/08/Algorithm%20Solution/LC-870.%E4%BC%98%E5%8A%BF%E6%B4%97%E7%89%8C/"/>
+    <url>/2022/10/08/Algorithm%20Solution/LC-870.%E4%BC%98%E5%8A%BF%E6%B4%97%E7%89%8C/</url>
+    
+    <content type="html"><![CDATA[<h4 id="优势洗牌"><a href="https://leetcode.cn/problems/advantage-shuffle/">870.优势洗牌</a></h4><p>给定两个大小相等的数组 <code>nums1</code> 和<code>nums2</code>，<code>nums1</code> 相对于 <code>nums2</code>的<em>优势</em>可以用满足 <code>nums1[i] &gt; nums2[i]</code> 的索引<code>i</code> 的数目来描述。</p><p>返回 nums1 的<strong>任意</strong>排列，使其相对于 <code>nums2</code>的优势最大化。</p><p>示例 1： <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums1 = <span class="hljs-string">[2,7,11,15]</span>, nums2 = <span class="hljs-string">[1,10,4,11]</span><br>输出：<span class="hljs-string">[2,11,7,15]</span><br></code></pre></td></tr></table></figure> 示例 2： <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums1 = <span class="hljs-string">[12,24,8,32]</span>, nums2 = <span class="hljs-string">[13,25,32,11]</span><br>输出：<span class="hljs-string">[24,32,8,12]</span><br></code></pre></td></tr></table></figure></p><p>提示：</p><ul><li>1 &lt;= nums1.length &lt;= 105</li><li>nums2.length == nums1.length</li><li>0 &lt;= nums1[i], nums2[i] &lt;= 109</li></ul><p>​</p><h4 id="贪心-双指针">贪心 + 双指针</h4><p>这实际就是田忌赛马的问题</p><p>A 和 B 两个人赛马，A 想要赢的话只能做如下决策</p><ul><li>A 的下等马与 B 的上等马比</li><li>A 的中等马与 B 的下等马比</li><li>A 的上等马与 B 的中等马比</li></ul><p>一句话概括就是，赢不了就摆烂，换掉对面最强的一个；赢得了就无所谓，但一定不能摆烂</p><p>在具体的代码实现上，我们新建一个数组 <code>idx</code> 用来对<code>nums2</code>进行排序后的数的下标进行记录。之后，我们维护两个指针指向<code>idx</code> ，一个表示当前较小值，另一个为当前最大值</p><p>我们每次选取 <code>nums1</code> 当中的较小值进行比较，如果能比<code>nums2</code> 当中的当前较小值大，那么我们就将 <code>nums1</code>当中的这个数放在 <code>nums2</code> 当中对应的位置；如果比不过，则放在<code>nums2</code> 当前最大值对应的位置</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">advantageCount</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums1.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ans</span>(n, <span class="hljs-number">0</span>), <span class="hljs-built_in">idx</span>(n, <span class="hljs-number">0</span>);<br>        <span class="hljs-built_in">sort</span>(nums1.<span class="hljs-built_in">begin</span>(), nums1.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            idx[i] = i;<br>        <span class="hljs-built_in">sort</span>(idx.<span class="hljs-built_in">begin</span>(), idx.<span class="hljs-built_in">end</span>(), [&amp;](<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)&#123; <span class="hljs-keyword">return</span> nums2[i] &lt; nums2[j]; &#125;);<br>        <span class="hljs-type">int</span> belo = <span class="hljs-number">0</span>, high = n - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x : nums1)<br>        &#123;<br>            ans[ x &gt; nums2[idx[belo]] ? idx[belo++] : idx[high--]] = x;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure><p>时间复杂度：<span class="math inline">\(O(nlogn)\)</span></p><p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm Solution</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>贪心</tag>
+      
+      <tag>数组</tag>
+      
+      <tag>双指针</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LC 287.寻找重复数</title>
     <link href="/2022/10/07/Algorithm%20Solution/LC-287.%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/"/>
     <url>/2022/10/07/Algorithm%20Solution/LC-287.%E5%AF%BB%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0/</url>
@@ -1210,9 +1264,9 @@
     
     <tags>
       
-      <tag>LCS</tag>
-      
       <tag>动态规划</tag>
+      
+      <tag>LCS</tag>
       
       <tag>模板题目</tag>
       
