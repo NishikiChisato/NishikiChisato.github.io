@@ -18,26 +18,27 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="560. 和为 K 的子数组 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的连续子数组的个数 。 示例 1： 12输入：nums &#x3D; [1,1,1], k &#x3D; 2输出：2 示例 2： 12输入：nums &#x3D; [1,2,3], k &#x3D; 3输出：2 提示：  1 &lt;&#x3D; nums.length &lt;&#x3D; 2 * 104 -1000 &amp;l">
+    <meta name="description" content="801. 使序列递增的最小交换次数 我们有两个长度相等且不为空的整型数组 nums1 和 nums2 。在一次操作中，我们可以交换 nums1[i] 和 nums2[i]的元素。  例如，如果 nums1 &#x3D; [1,2,3,8] ， nums2 &#x3D;[5,6,7,4] ，你可以交换 i &#x3D; 3 处的元素，得到 nums1 &#x3D;[1,2,3,4] 和 nums2 &#x3D;[5,6,7,8]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LC 560.和为 K 的子数组">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/10/10/Algorithm%20Solution/LC-560.%E5%92%8C%E4%B8%BA-K-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:title" content="LC 801.使序列递增的最小交换次数">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/10/10/Algorithm%20Solution/LC-801.%E4%BD%BF%E5%BA%8F%E5%88%97%E9%80%92%E5%A2%9E%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%A4%E6%8D%A2%E6%AC%A1%E6%95%B0/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="560. 和为 K 的子数组 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的连续子数组的个数 。 示例 1： 12输入：nums &#x3D; [1,1,1], k &#x3D; 2输出：2 示例 2： 12输入：nums &#x3D; [1,2,3], k &#x3D; 3输出：2 提示：  1 &lt;&#x3D; nums.length &lt;&#x3D; 2 * 104 -1000 &amp;l">
+<meta property="og:description" content="801. 使序列递增的最小交换次数 我们有两个长度相等且不为空的整型数组 nums1 和 nums2 。在一次操作中，我们可以交换 nums1[i] 和 nums2[i]的元素。  例如，如果 nums1 &#x3D; [1,2,3,8] ， nums2 &#x3D;[5,6,7,4] ，你可以交换 i &#x3D; 3 处的元素，得到 nums1 &#x3D;[1,2,3,4] 和 nums2 &#x3D;[5,6,7,8]">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-10T03:09:58.339Z">
-<meta property="article:modified_time" content="2022-10-10T03:27:40.258Z">
+<meta property="article:published_time" content="2022-10-10T09:22:55.310Z">
+<meta property="article:modified_time" content="2022-10-10T09:22:56.843Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="前缀和">
+<meta property="article:tag" content="动态规划">
 <meta property="article:tag" content="数组">
-<meta property="article:tag" content="哈希表">
+<meta property="article:tag" content="残留">
+<meta property="article:tag" content="状态机">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>LC 560.和为 K 的子数组 - Chisato 的成长日记</title>
+  <title>LC 801.使序列递增的最小交换次数 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +207,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LC 560.和为 K 的子数组"></span>
+            <span id="subtitle" data-typed-text="LC 801.使序列递增的最小交换次数"></span>
           
         </div>
 
@@ -222,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-10 11:09" pubdate>
-          2022年10月10日 上午
+        <time datetime="2022-10-10 17:22" pubdate>
+          2022年10月10日 下午
         </time>
       </span>
     
@@ -234,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.9k 字
         
       </span>
     
@@ -245,7 +246,7 @@
         
         
         
-          13 分钟
+          16 分钟
         
       </span>
     
@@ -293,62 +294,85 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LC 560.和为 K 的子数组</h1>
+            <h1 style="display: none">LC 801.使序列递增的最小交换次数</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="和为-k-的子数组"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/">560. 和为 K
-的子数组</a></h4>
-<p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code>
-，请你统计并返回 <em>该数组中和为 <code>k</code> 的连续子数组的个数</em>
-。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">输入：nums </span>=<span class="hljs-string"> [1,1,1], k = 2</span><br><span class="hljs-string">输出：2</span><br></code></pre></td></tr></table></figure>
-<p><strong>示例 2：</strong></p>
-<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">输入：nums </span>=<span class="hljs-string"> [1,2,3], k = 3</span><br><span class="hljs-string">输出：2</span><br></code></pre></td></tr></table></figure>
-<p><strong>提示：</strong></p>
+                <h4 id="使序列递增的最小交换次数"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/">801.
+使序列递增的最小交换次数</a></h4>
+<p>我们有两个长度相等且不为空的整型数组 <code>nums1</code> 和
+<code>nums2</code> 。在一次操作中，我们可以交换 <code>nums1[i]</code> 和
+<code>nums2[i]</code>的元素。</p>
 <ul>
-<li><code>1 &lt;= nums.length &lt;= 2 * 104</code></li>
-<li><code>-1000 &lt;= nums[i] &lt;= 1000</code></li>
-<li><code>-107 &lt;= k &lt;= 107</code></li>
+<li>例如，如果 <code>nums1 = [1,2,3,8]</code> ，
+<code>nums2 =[5,6,7,4]</code> ，你可以交换 <code>i = 3</code>
+处的元素，得到 <code>nums1 =[1,2,3,4]</code> 和
+<code>nums2 =[5,6,7,8]</code> 。</li>
+</ul>
+<p>返回 <em>使 <code>nums1</code> 和 <code>nums2</code>
+<strong>严格递增</strong> 所需操作的最小次数</em> 。</p>
+<p>数组 <code>arr</code> <strong>严格递增</strong> 且
+<code>arr[0] &lt; arr[1] &lt; arr[2] &lt; ... &lt; arr[arr.length - 1]</code>
+。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>用例保证可以实现操作。</li>
+</ul>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入: nums1 = <span class="hljs-comment">[1,3,5,4]</span>, nums2 = <span class="hljs-comment">[1,2,3,7]</span><br>输出: 1<br>解释: <br>交换 A<span class="hljs-comment">[3]</span> 和 B<span class="hljs-comment">[3]</span> 后，两个数组如下:<br>A = <span class="hljs-comment">[1, 3, 5, 7]</span> ， B = <span class="hljs-comment">[1, 2, 3, 4]</span><br>两个数组均为严格递增的。<br></code></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入: nums1 = <span class="hljs-string">[0,3,5,8,9]</span>, nums2 = <span class="hljs-string">[2,1,4,6,9]</span><br>输出: <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>2 &lt;= nums1.length &lt;= 105</code></li>
+<li><code>nums2.length == nums1.length</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 2 * 105</code></li>
 </ul>
 <p>​</p>
-<h4 id="前缀和暴力检索">前缀和暴力检索</h4>
-<p>我们看到，求数组当中和为 <code>k</code>
-的子数组，我们应当马上想到前缀和</p>
-<p>我们定义 <code>preSum</code> 数组表示<strong>前 <code>i</code>
-个数的和</strong>，有： <span class="math display">\[
-preSum[i]=preSum[i-1]+nums[i]
-\]</span> 初始时，我们需要让 <code>preSum</code> 中下标为 0 的数置零</p>
-<p>之后我们在前缀和数组当中不断的检索两个数组边界来确定数组范围，进而不断计数</p>
-<p>不过该代码会超时</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">subarraySum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">preSum</span>(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            preSum[i + <span class="hljs-number">1</span>] = preSum[i] + nums[i];<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>; left &lt; n; left++)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> right = left; right &lt; n; right++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(preSum[right + <span class="hljs-number">1</span>] - preSum[left] == k)<br>                    ans++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
-<p>​</p>
-<h4 id="前缀和-哈希表">前缀和 + 哈希表</h4>
-<p>我们看到，实际上我们并不需要去把所有的数组给检索处理，我们关心的是有多少个数组的前缀和为
-<code>k</code></p>
-<p>那么这里有一个问题是，如何通过不枚举所有数组进而得到前缀和为
-<code>k</code> 的个数</p>
-<p>我们想到，求数组当中某一部分的和是通过前缀和数组两个部分来相减</p>
-<p>具体地，求数组当中序列号为 <span class="math inline">\([i,j]\)</span>
-部分的和，有： <span class="math display">\[
-sum=preSum[j]-preSum[i-1]
-\]</span>
-也就是说，我们通过不断记录之前得到的前缀和的值，只要当前遍历得到的前缀和与之前记录的相差为
-<span class="math inline">\(k\)</span>
-，那么我们就可以让出现次数加一</p>
-<p>具体地，我们建立一个哈希表，以前缀和为键，以该前缀和出现的次数为值，通过检索
-<code>curSum - k</code> 是否在哈希表中进而便可以解决问题</p>
-<p>在哈希表的初始化部分，由于前缀和为 0
-也是一种情况，因此我们需要对哈希表写入 <code>mp[0] = 1</code></p>
-<p>我们只需要每次将当前记录得到的前缀和加入到哈希表即可，连前缀和数组都不需要构建</p>
+<h4 id="状态机-dp">状态机 DP</h4>
+<p>在我们原先的一维 <code>dp[i]</code> 数组当中，<code>dp[i]</code>
+表示的是<strong>状态</strong>，<code>dp[i]</code>
+的值表示的是<strong>该状态对应的数值</strong></p>
+<p>我们看到这里有一个问题是，<code>dp[i]</code>
+只能表示一个状态，如果我希望增加其表示状态的能力，那么我们可以选择：<strong>扩大维度</strong></p>
+<p>我们通常会用第二个维度来表示<strong>选择</strong>，不同的选择会对应多种不同的状态，这便是<strong>状态机</strong></p>
+<p>基于此原理，我们可以不断扩大原始数组的维度，但核心不好发生改变</p>
+<p>我们定义一个二维数组 <code>dp[i][2]</code>
+表示考虑<strong>下标</strong>范围为 <span class="math inline">\([0,i]\)</span> 的数，<code>dp[i][0]</code>
+表示不交换下标为 <code>i</code> 的两个数， <code>dp[i][1]</code>
+表示交换下标为 <code>i</code> 的两个数，那么最终的结果就是 <span class="math inline">\(min(dp[i-1][0],dp[i-1][1])\)</span></p>
+<p>在 <code>dp</code> 数组的初始化部分，显然有
+<code>dp[0][0]=0, dp[0][1]=1</code>
+，对于其他值，我们直接<strong>初始化成一个最大值</strong> <span class="math inline">\(INF\)</span> 即可</p>
+<p>不失一般性地考虑转移方程：</p>
+<ul>
+<li>如果 <span class="math inline">\(nums1[i]&gt;nums1[i-1],\
+nums2[i]&gt;nums2[i-1]\)</span> ，我们可以交换下标为 <code>i</code>
+的元素（前者），也可以不交换（后者），即：</li>
+</ul>
+<p><span class="math display">\[
+dp[i][1]=dp[i-1][1]+1\\
+dp[i][0]=dp[i-1][0]
+\]</span></p>
+<p>需要说明的是，由于我们只能确定单个数组当中的对应关系，因此在交换下标为
+<code>i</code> 的元素时，下标为 <code>i - 1</code>
+的元素也需要跟着交换</p>
+<ul>
+<li>如果 <span class="math inline">\(nums1[i]&gt;nums2[i-1],\
+nums2[i]&gt;nums1[i-1]\)</span> ，我们可以选择交换下标为 <code>i</code>
+的元素（前者），也可以选择交换下标为 <code>i - 1</code>
+的元素（后者）</li>
+</ul>
+<p><span class="math display">\[
+dp[i][1]=dp[i-1][0]+1\\
+dp[i][0]=dp[i-1][1]
+\]</span></p>
 <p>完整代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">subarraySum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;mp;<br>        mp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>, sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x : nums)<br>        &#123;<br>            sum += x;<br>            <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">find</span>(sum - k) != mp.<span class="hljs-built_in">end</span>())<br>                ans += mp[sum - k];<br>            mp[sum]++;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">const</span> <span class="hljs-type">int</span> INF = <span class="hljs-number">1e6</span>;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minSwap</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums1, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums2)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums1.<span class="hljs-built_in">size</span>();<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">2</span>, INF));<br>        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>, dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(nums1[i] &gt; nums1[i - <span class="hljs-number">1</span>] &amp;&amp; nums2[i] &gt; nums2[i - <span class="hljs-number">1</span>])<br>            &#123;<br>                dp[i][<span class="hljs-number">0</span>] = dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];<br>                dp[i][<span class="hljs-number">1</span>] = dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(nums1[i] &gt; nums2[i - <span class="hljs-number">1</span>] &amp;&amp; nums2[i] &gt; nums1[i - <span class="hljs-number">1</span>])<br>            &#123;<br>                dp[i][<span class="hljs-number">0</span>] = <span class="hljs-built_in">min</span>(dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>], dp[i][<span class="hljs-number">0</span>]);<br>                dp[i][<span class="hljs-number">1</span>] = <span class="hljs-built_in">min</span>(dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>, dp[i][<span class="hljs-number">1</span>]);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(dp[n - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], dp[n - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>]);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
 <p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
+<p>关于这道题的滚动数组优化，我试了一下，发现貌似解决不了，有时间回来再看吧</p>
 
                 
               </div>
@@ -382,11 +406,13 @@ sum=preSum[j]-preSum[i-1]
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/">#前缀和</a>
+        <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
       
         <a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a>
       
-        <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">#哈希表</a>
+        <a href="/tags/%E6%AE%8B%E7%95%99/">#残留</a>
+      
+        <a href="/tags/%E7%8A%B6%E6%80%81%E6%9C%BA/">#状态机</a>
       
     </div>
   
@@ -398,8 +424,8 @@ sum=preSum[j]-preSum[i-1]
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LC 560.和为 K 的子数组</div>
-      <div>https://nishikichisato.github.io/2022/10/10/Algorithm Solution/LC-560.和为-K-的子数组/</div>
+      <div>LC 801.使序列递增的最小交换次数</div>
+      <div>https://nishikichisato.github.io/2022/10/10/Algorithm Solution/LC-801.使序列递增的最小交换次数/</div>
     </div>
     <div class="license-meta">
       
@@ -452,9 +478,9 @@ sum=preSum[j]-preSum[i-1]
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/10/Algorithm%20Solution/LC-856.%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/" title="LC 856.括号的分数">
+                      <a href="/2022/10/10/Algorithm%20Solution/LC-238.%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" title="LC 238.除自身以外数组的乘积">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LC 856.括号的分数</span>
+                        <span class="hidden-mobile">LC 238.除自身以外数组的乘积</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -462,8 +488,8 @@ sum=preSum[j]-preSum[i-1]
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/09/Algorithm%20Solution/LC-300.%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97/" title="LC 300.最长递增子序列">
-                        <span class="hidden-mobile">LC 300.最长递增子序列</span>
+                      <a href="/2022/10/10/Algorithm%20Solution/LC-856.%E6%8B%AC%E5%8F%B7%E7%9A%84%E5%88%86%E6%95%B0/" title="LC 856.括号的分数">
+                        <span class="hidden-mobile">LC 856.括号的分数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
