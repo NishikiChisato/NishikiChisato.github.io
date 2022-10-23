@@ -1,0 +1,787 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="二分 我们通常所理解的二分是「二分查找」，也就是在一个单调的数组当中寻找一个数 那我们思考一个问题：二分的本质是单调性吗？换句话说，一定要满足「单调」才可以二分吗？ 答案是否定的，实际上二分的本质是「性质」 我们将一个数组划分为两部分，这两部分没有交集。其中，前半部分满足「性质 \(p\) 」，后半部分不满足「性质 \(p\) 」 那么，这两部分的分界点有两个，我们的二分就是用来求这两">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分、前缀和、差分总结">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/10/17/OI/%E4%BA%8C%E5%88%86%E3%80%81%E5%89%8D%E7%BC%80%E5%92%8C%E3%80%81%E5%B7%AE%E5%88%86%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Chisato 的成长日记">
+<meta property="og:description" content="二分 我们通常所理解的二分是「二分查找」，也就是在一个单调的数组当中寻找一个数 那我们思考一个问题：二分的本质是单调性吗？换句话说，一定要满足「单调」才可以二分吗？ 答案是否定的，实际上二分的本质是「性质」 我们将一个数组划分为两部分，这两部分没有交集。其中，前半部分满足「性质 \(p\) 」，后半部分不满足「性质 \(p\) 」 那么，这两部分的分界点有两个，我们的二分就是用来求这两">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-17T03:56:23.372Z">
+<meta property="article:modified_time" content="2022-10-17T03:56:48.765Z">
+<meta property="article:author" content="Chisato">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="前缀和">
+<meta property="article:tag" content="二分">
+<meta property="article:tag" content="差分">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>二分、前缀和、差分总结 - Chisato 的成长日记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chisato</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="二分、前缀和、差分总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-17 11:56" pubdate>
+          2022年10月17日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">二分、前缀和、差分总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="二分">二分</h2>
+<p>我们通常所理解的二分是「二分查找」，也就是在一个单调的数组当中寻找一个数</p>
+<p>那我们思考一个问题：<strong>二分的本质是单调性吗？</strong>换句话说，一定要满足「单调」才可以二分吗？</p>
+<p>答案是否定的，实际上二分的本质是<strong>「性质」</strong></p>
+<p>我们将一个数组划分为两部分，这两部分<strong>没有交集</strong>。其中，前半部分满足「性质
+<span class="math inline">\(p\)</span> 」，后半部分不满足「性质 <span class="math inline">\(p\)</span> 」</p>
+<p>那么，这两部分的分界点有两个，我们的<strong>二分就是用来求这两个分界点的</strong></p>
+<p>记住，二分是通过<strong>不断改变左右区间</strong>来<strong>求分界点的</strong></p>
+<p>举个例子，我们将区间 <span class="math inline">\([0,9]\)</span>
+划分为 <span class="math inline">\([0,4],\ [5,9]\)</span>
+，二者没有交集，那么我们可以用二分来求出分界点 <span class="math inline">\(4\)</span> 和 <span class="math inline">\(5\)</span> （我们求左端点 <span class="math inline">\(4\)</span> ）</p>
+<p>具体地，我们定义左区间满足「性质 <span class="math inline">\(p\)</span> 」，右区间不满足「性质 <span class="math inline">\(p\)</span> 」，那么有：</p>
+<p>如果当前 <code>mid</code> 满足「性质 <span class="math inline">\(p\)</span> 」，那么说明 <code>mid</code>
+在左区间，我们要调整<strong>左端点</strong>才可以求出我们需要的左端点，也就是
+<code>l = mid</code></p>
+<p>相应地，如果 <code>mid</code> 不满足「性质 <span class="math inline">\(p\)</span> 」，说明 <code>mid</code>
+在右半边，那么我们需要调整<strong>右端点</strong>，即
+`<code>r = mid - 1</code></p>
+<p>具体地，二分有两个模板，都可以求出两个边界</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//将区间[l, r]划分为[l, mid], [mid + 1, r]</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> mid)</span></span>;<span class="hljs-comment">//检查mid是否具有性质p</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bserch_l</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span><span class="hljs-comment">//找左边界，设左区间满足性质p</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(l &lt; r)<br>    &#123;<br>        <span class="hljs-type">int</span> mid = l + r + <span class="hljs-number">1</span>&gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid)) l = mid;<br>        <span class="hljs-keyword">else</span> r = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(l)) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<span class="hljs-comment">//不满足题意</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> l;<span class="hljs-comment">//返回l或者r都行，因为二分最后一定会收敛到一个值</span><br>&#125;<br><br><span class="hljs-comment">//将区间[l, r]划分为[l, mid - 1], [mid, r]</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bserch_r</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(l &lt; r)<br>    &#123;<br>        <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid)) r = mid;<br>        <span class="hljs-keyword">else</span> l = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(l)) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h2 id="前缀和">前缀和</h2>
+<p>前缀和可以<strong>快速</strong>求出一个区间当中的<strong>数字和</strong>，时间复杂度为
+<span class="math inline">\(O(1)\)</span></p>
+<p>需要注意的是，前缀和数组必须从 1 开始，并且索引为 0 的值必须为 0</p>
+<p>具体地，我们令 <span class="math inline">\(a[i]\)</span>
+为原数组，<span class="math inline">\(b[i]\)</span> 为前缀和数组，有：
+<span class="math display">\[
+b[i]=b[i-1]+a[i]
+\]</span> 其中 <span class="math inline">\(a\)</span> 与 <span class="math inline">\(b\)</span> 数组当中的数<strong>均是从索引为 1
+的地方开始存储</strong>（这个条件很关键啊）</p>
+<p>显然，<span class="math inline">\(b[i]\)</span> 表示的意思是 <span class="math inline">\(a[i]\)</span> 及之前所有数的加和（这里是包括 <span class="math inline">\(a[i]\)</span> 的）</p>
+<p>因此当我们要求一个区间 <span class="math inline">\([l,\ r]\)</span>
+的和时，有： <span class="math display">\[
+S_{l,r}=b[r]-b[l-1]
+\]</span> 相应地，我们可以将前缀和拓展到二维，同样是<strong>从 1
+开始存储数据</strong>，有： <span class="math display">\[
+b[i][j] = b[i - 1][j] + b[i][j - 1] - b[i - 1][j - 1] + a[i][j]
+\]</span> 当我们需要求点 <span class="math inline">\((x_1, y_1)\)</span>
+到点 <span class="math inline">\((x_2,y_2)\)</span>
+所围成的矩形的数字和时，有： <span class="math display">\[
+S_{(x_1,y_1),\ (x_2,y_2)} = b[x_2][y_2] - b[x_1-1][y_2] - b[x_2][y_1-1]
++ b[x_1-1][y_1-1]
+\]</span> ​</p>
+<h2 id="差分">差分</h2>
+<p>差分是前缀和的逆运算</p>
+<p>我们现在有一个数组 <span class="math inline">\(a[i]\)</span>
+，我们通过该数组来构造一个数组 <span class="math inline">\(b[i]\)</span>
+，使得： <span class="math display">\[
+b[1]+b[2]+\cdots +b[i]=a[i]
+\]</span> 即 <span class="math inline">\(b[i]\)</span> 数组的前缀和为
+<span class="math inline">\(a[i]\)</span> 数组，那么我们称数组 <span class="math inline">\(b[i]\)</span> 为数组 <span class="math inline">\(a[i]\)</span> 的<strong>差分数组</strong></p>
+<p>差分数组可以<strong>快速让数组内的某个区间加上同一个数</strong> <span class="math inline">\(v\)</span> ，时间复杂度为 <span class="math inline">\(O(1)\)</span></p>
+<p>关于差分数组，我们并不需要像前缀和那样给出一个递推公式，我们一开始将
+<span class="math inline">\(a[i]\)</span> 数组看成全 0 ，然后对 <span class="math inline">\(a[i]\)</span>
+数组赋值的过程就可以看成是对差分数组构造的过程，只不过是区间长度为 1
+的构造而已</p>
+<p>我们定义一个 <code>insert</code> 函数，每次对区间长度为 1
+的区间进行增加，增加值为 <code>a[i]</code>
+，这样便可以构造出差分数组</p>
+<p>由于差分数组 <span class="math inline">\(b[i]\)</span> 是数组 <span class="math inline">\(a[i]\)</span> 的前缀和，因此对 <span class="math inline">\(b[i]\)</span> 增加一个数会导致 <span class="math inline">\(a[i]\)</span>
+以及后面的所有数都增加同一个值，有：</p>
+<p>如果我们需要让数组 <span class="math inline">\(a[i]\)</span> 中区间
+<span class="math inline">\([l,r]\)</span> 增加同一个数 <span class="math inline">\(v\)</span> ，那么有： <span class="math display">\[
+b[l] += v;\\
+b[r + 1] -= v;
+\]</span> 因此我们的 <code>insert</code> 函数可以写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> v)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += v;<br>    b[r + <span class="hljs-number">1</span>] -= v;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>相应地，我们也可以将差分推广到二维，作用是将一个矩形区域内的所有数加上同一个数</p>
+<p>插入函数我们写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> x1, <span class="hljs-type">int</span> y1, <span class="hljs-type">int</span> x2, <span class="hljs-type">int</span> y2, <span class="hljs-type">int</span> v)</span></span><br><span class="hljs-function"></span>&#123;<br>	b[x1][y1] += v;<br>    b[x2 + <span class="hljs-number">1</span>][y1] -= v;<br>    b[x1][y2 + <span class="hljs-number">1</span>] -= v;<br>    b[x2 + <span class="hljs-number">1</span>][y2 + <span class="hljs-number">1</span>] += v;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们对差分数组求<strong>前缀和就可以得到所有操作后的原数组</strong>，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    b[i] += b[i - <span class="hljs-number">1</span>];<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
+      
+        <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/">#前缀和</a>
+      
+        <a href="/tags/%E4%BA%8C%E5%88%86/">#二分</a>
+      
+        <a href="/tags/%E5%B7%AE%E5%88%86/">#差分</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>二分、前缀和、差分总结</div>
+      <div>https://nishikichisato.github.io/2022/10/17/OI/二分、前缀和、差分总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月17日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年10月17日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/18/Algorithm%20Solution/LC-940.%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97-II/" title="LC 940.不同的子序列 II">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LC 940.不同的子序列 II</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/16/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%85%AD%E5%91%A8-2022.10.9---2022.10.16/" title="大二上 第六周 2022.10.9 - 2022.10.16">
+                        <span class="hidden-mobile">大二上 第六周 2022.10.9 - 2022.10.16</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -26,7 +26,7 @@
 <meta property="og:description" content="线段树的引入 假如我们有两个需求：  对数组当中任意区间的元素进行求和 对数组当中任意区间的元素进行增加  最朴素的想法，我们采取维护一个 n 个元素的数组这种思路 我们所需的空间复杂度为：\(O(n)\) 对于需求一，时间复杂度为：\(O(n)\) 对于需求二，时间复杂度为：\(O(n)\) 为了便于讨论，下面我们统一用区间查询来代替这两个需求 如果我们从区间的角度来看待">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-08T17:07:55.903Z">
-<meta property="article:modified_time" content="2022-10-09T15:33:42.632Z">
+<meta property="article:modified_time" content="2022-10-22T09:20:19.870Z">
 <meta property="article:author" content="Chisato">
 <meta property="article:tag" content="线段树">
 <meta name="twitter:card" content="summary_large_image">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          5.2k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          42 分钟
+          44 分钟
         
       </span>
     
@@ -378,6 +378,12 @@
 <p>如果当前区间完全被待更新区间所包含，那么直接修改当前区间的值并<strong>返回</strong></p>
 <p>如果当前区间的左区间在待修改区间内，那么递归左区间</p>
 <p>右区间同理，最后我们更新当前节点的值即可</p>
+<p>这里需要说明的是，在分割区间的时候，我们是将区间分为
+<code>[l, mid]</code> 和 <code>[mid + 1, r]</code></p>
+<p>由于<strong>两个区间并没有交集</strong>，因此如果左区间在查询区间内的话，必然有
+<code>L &lt;= mid</code> ，即 <code>L</code> 在左半区间内部</p>
+<p>同理，如果要查询右区间的话，必然有 <code>R &gt;= mid + 1</code> ，即
+<code>mid &lt; R</code> ，也就是 <code>R</code> 在右半区间内部</p>
 <p>对于查询操作也是同理，理解上面那个这个也就不难了</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)<br>        <span class="hljs-keyword">return</span> root-&gt;val;<br>    <span class="hljs-type">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>, ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">pushDown</span>(root, mid - l + <span class="hljs-number">1</span>, r - mid);<br>    <span class="hljs-keyword">if</span> (L &lt;= mid) ans += <span class="hljs-built_in">query</span>(root-&gt;left, l, mid, L, R);<br>    <span class="hljs-keyword">if</span> (mid &lt; R) ans += <span class="hljs-built_in">query</span>(root-&gt;right, mid + <span class="hljs-number">1</span>, r, L, R);<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>最后我们给出整个二叉树的代码实现，现在这棵二叉树正式更名为线段树</p>
@@ -457,7 +463,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年10月9日</div>
+          <div>2022年10月22日</div>
         </div>
       
       <div class="license-meta-item">
