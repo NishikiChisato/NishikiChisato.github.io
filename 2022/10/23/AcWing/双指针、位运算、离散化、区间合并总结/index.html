@@ -18,24 +18,26 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="单链表 单链表的数组实现需要一个数组 e[N] 用来存储每个节点的值，ne[N] 用来存储当前节点的下一个节点的位置，idx 用来表示当前所用的节点数，head 表示头指针，指向的是头节点 由于是数组实现，因此每个节点都会对应一个数组下标，我们并不能通过数组下标来确定该节点处于链表中的位置，这是因为后面的节点完全可以「插入」到前面的节点当中，因此数组下标所表示的仅仅是「该节点是第几次插">
+    <meta name="description" content="双指针 这里我们直接给出双指针的代码模板，具体问题具体分析 12345678for(int i &#x3D; 0, j &#x3D; 0; i &lt; n; i++)&amp;#123;    &#x2F;&#x2F;前置运算    while(j &lt; i &amp;&amp; check(j, i))&#x2F;&#x2F;当[j,i]直接满足某种条件时，改变左指针        j++;    &#x2F;&#x2F;通常，while循环的判断条件为不满足题意的条件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单链表即双链表的数组实现">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/10/24/OI/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8D%B3%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="双指针、位运算、离散化总结">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/10/23/AcWing/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="单链表 单链表的数组实现需要一个数组 e[N] 用来存储每个节点的值，ne[N] 用来存储当前节点的下一个节点的位置，idx 用来表示当前所用的节点数，head 表示头指针，指向的是头节点 由于是数组实现，因此每个节点都会对应一个数组下标，我们并不能通过数组下标来确定该节点处于链表中的位置，这是因为后面的节点完全可以「插入」到前面的节点当中，因此数组下标所表示的仅仅是「该节点是第几次插">
+<meta property="og:description" content="双指针 这里我们直接给出双指针的代码模板，具体问题具体分析 12345678for(int i &#x3D; 0, j &#x3D; 0; i &lt; n; i++)&amp;#123;    &#x2F;&#x2F;前置运算    while(j &lt; i &amp;&amp; check(j, i))&#x2F;&#x2F;当[j,i]直接满足某种条件时，改变左指针        j++;    &#x2F;&#x2F;通常，while循环的判断条件为不满足题意的条件">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-24T03:49:37.973Z">
-<meta property="article:modified_time" content="2022-10-24T03:49:39.691Z">
+<meta property="article:published_time" content="2022-10-23T12:10:54.347Z">
+<meta property="article:modified_time" content="2022-10-30T05:04:25.137Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="链表">
+<meta property="article:tag" content="双指针">
+<meta property="article:tag" content="位运算">
+<meta property="article:tag" content="离散化">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>单链表即双链表的数组实现 - Chisato 的成长日记</title>
+  <title>双指针、位运算、离散化总结 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="单链表即双链表的数组实现"></span>
+            <span id="subtitle" data-typed-text="双指针、位运算、离散化总结"></span>
           
         </div>
 
@@ -220,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-24 11:49" pubdate>
-          2022年10月24日 中午
+        <time datetime="2022-10-23 20:10" pubdate>
+          2022年10月23日 晚上
         </time>
       </span>
     
@@ -232,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.5k 字
         
       </span>
     
@@ -243,7 +245,7 @@
         
         
         
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -291,36 +293,45 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">单链表即双链表的数组实现</h1>
+            <h1 style="display: none">双指针、位运算、离散化总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="单链表">单链表</h2>
-<p>单链表的数组实现需要一个数组 <code>e[N]</code>
-用来存储每个节点的值，<code>ne[N]</code>
-用来存储当前节点的下一个节点的位置，<code>idx</code>
-用来表示当前所用的节点数，<code>head</code>
-表示头指针，指向的是<strong>头节点</strong></p>
-<p>由于是数组实现，因此每个节点都会对应一个数组下标，<strong>我们并不能通过数组下标来确定该节点处于链表中的位置</strong>，这是因为后面的节点完全可以「插入」到前面的节点当中，因此数组下标所表示的仅仅是「该节点是第几次插入的节点，当然这里需要加一」</p>
-<p>详细定义如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> head, e[N], ne[N], idx;<br><span class="hljs-comment">//初始化函数</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    head = <span class="hljs-number">-1</span>;<span class="hljs-comment">//-1表示指空</span><br>    idx = <span class="hljs-number">0</span>;<span class="hljs-comment">//初始时已用节点数为0，数组下标从0开始存储</span><br>&#125;<br><br><span class="hljs-comment">// 头插，在头节点前面插入</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add_head</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = x;<br>    ne[idx] = head;<br>    head = idx;<br>    idx++;<br>&#125;<br><br><span class="hljs-comment">//在第下标为k的数后面插入一个数</span><br><span class="hljs-comment">//下标为k对应的是第k+1次操作</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = x;<br>    ne[idx] = ne[k];<br>    ne[k] = idx;<br>    idx++;<br>&#125;<br><br><span class="hljs-comment">//删除下标为k的数后面那个数</span><br><span class="hljs-comment">//由于题目保证所有操作均有效，因此不会删除一个不存在的节点</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>    ne[k] = ne[ne[k]];<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h2 id="双指针">双指针</h2>
+<p>这里我们直接给出双指针的代码模板，具体问题具体分析</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++)<br>&#123;<br>    <span class="hljs-comment">//前置运算</span><br>    <span class="hljs-keyword">while</span>(j &lt; i &amp;&amp; <span class="hljs-built_in">check</span>(j, i))<span class="hljs-comment">//当[j,i]直接满足某种条件时，改变左指针</span><br>        j++;<br>    <span class="hljs-comment">//通常，while循环的判断条件为不满足题意的条件</span><br>    <span class="hljs-comment">//后面对结果进行记录</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>​</p>
-<h2 id="双链表">双链表</h2>
-<p>在双链表的定义部分，我们可以偷一下懒，不像单链表定义
-<code>head</code> 那样去定义头指针和尾指针，我们直接让<strong>下标为 0
-的节点作为头节点</strong>，<strong>下标为 1
-的节点作为尾节点</strong></p>
-<p>在数据结构的设计部分，我们需要一个数组 <code>e[N]</code>
-来存储每个节点的数值，数组 <code>l[N]</code> 和 <code>r[N]</code>
-来表示当前节点的前一个节点<strong>下标</strong>和后一个节点<strong>下标</strong>，<code>idx</code>
-表示当前已经用到的节点数量</p>
-<p>下面我们直接给出其定义</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> e[N], l[N], r[N], idx;<br><br><span class="hljs-comment">//下标为0和1的点分别作为头节点和尾节点</span><br><span class="hljs-comment">//由于占用了两个节点，因此idx直接从2开始，表示已经使用了2个节点</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    r[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    l[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    idx = <span class="hljs-number">2</span>;<br>&#125;<br><br><span class="hljs-comment">//删除下标为k的节点</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>    r[l[k]] = r[k];<br>    l[r[k]] = l[k];<br>&#125;<br><br><span class="hljs-comment">//在下标为k的节点后面插入一个节点</span><br><span class="hljs-comment">//默认是在右边插入，如果需要在左边插入的话可以写insert(l[k], x)</span><br><span class="hljs-comment">//由于有两个默认节点的存在，因此第1次插入节点的对应下标为2，即第k次插入的节点在数组当中存储在k+1的下标处</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> k, <span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = x;<br>    r[idx] = r[k];<br>    l[idx] = k;<br>    l[r[k]] = idx;<br>    r[k] = idx;<br>    idx++;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>双链表在做题的时候要注意一点：第 <span class="math inline">\(k\)</span> 次插入的节点所对应的下标为 <span class="math inline">\(k+1\)</span> （第1次插入对应的是2）</p>
-<p>而在单链表中，第 <span class="math inline">\(k\)</span>
-次插入的节点对应的下标为 <span class="math inline">\(k-1\)</span>
-（第1次插入对应的是0）</p>
+<h2 id="位运算">位运算</h2>
+<p>求 <span class="math inline">\(n\)</span> 的第 <span class="math inline">\(k\)</span> 位数字（ <span class="math inline">\(k\)</span> 从 1 开始）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">n &gt;&gt; k &amp; <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>返回 <span class="math inline">\(n\)</span> 的最后一位 1</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">lowbit</span>(n) = n &amp; -n<br></code></pre></td></tr></table></figure>
+<p>一般后者可以求出一个二进制数当中 1 的个数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>, t = <span class="hljs-number">0</span>;<br>cin &gt;&gt; t;<br><span class="hljs-keyword">while</span>(t)<br>&#123;<br>    t -= <span class="hljs-built_in">lowbit</span>(t);<br>    ans++;<br>&#125;<br>cout &lt;&lt; ans &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<h2 id="离散化">离散化</h2>
+<p>离散化的操作是将一些<strong>大的</strong>、<strong>离散的</strong>的数据映射为一些<strong>小的</strong>、<strong>不离散</strong>的数据</p>
+<p>具体的，假如说我有 <span class="math inline">\(10^5\)</span>
+个数据，但每个数据的大小最大可以到 <span class="math inline">\(10^9\)</span> （我们暂且不考虑负数的情况）</p>
+<p>如果我需要将这些数据作为数组下标，开 <span class="math inline">\(10^9\)</span>
+大小的数组空间是不显示的，这里我们就需要将数值做一些映射</p>
+<p>离散化的前提是<strong>数值有序</strong>且<strong>无重复</strong>，对于这两点的实现可以用以下两行代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//vector&lt;int&gt;alls</span><br>alls.<span class="hljs-built_in">erase</span>(<span class="hljs-built_in">unique</span>(alls.<span class="hljs-built_in">begin</span>(), alls.<span class="hljs-built_in">end</span>()), alls.<span class="hljs-built_in">end</span>());<br><span class="hljs-built_in">sort</span>(alls.<span class="hljs-built_in">begin</span>(), alls.<span class="hljs-built_in">end</span>());<br></code></pre></td></tr></table></figure>
+<p>这里我们给出 <code>unique</code> 函数的实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt;::<span class="hljs-function">iterator <span class="hljs-title">unique</span><span class="hljs-params">(vector&lt;Int&gt;&amp; alls)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; alls.<span class="hljs-built_in">size</span>(); i++)<br>        <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span> || alls[i] != alls[i - <span class="hljs-number">1</span>])<span class="hljs-comment">//第一个数进行单独判断，除此之外其余的数，如果重复，必然是重复前一个数</span><br>            alls[j++] = alls[i];<br>    <span class="hljs-keyword">return</span> alls.<span class="hljs-built_in">begin</span>() + j;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>关于离散化映射关系的寻找，其实非常的简单，我们将那<strong>没有重复的
+<span class="math inline">\(10^5\)</span>
+个数</strong>放在一个对应大小的数组内（我们是将原数组的索引放入一个新的数组），然后我们通过<strong>新数组的索引</strong>来替换掉<strong>原本数组的索引</strong>，这样便实现了映射</p>
+<p>在具体实现上，我们令 <code>alls</code>
+数组来存放所有待离散化的数据，我们考虑用每个数据的索引来替换掉原本的数</p>
+<p>由于 <code>alls</code>
+数组是有序的，因此我们可以使用二分查找来找到某个数据的索引（即找到第一个大于等于
+<span class="math inline">\(x\)</span> 的数的索引）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> l = <span class="hljs-number">0</span>, r = alls.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">while</span>(l &lt; r)<br>    &#123;<br>        <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(alls[mid] &gt;= x) r = mid;<br>        <span class="hljs-keyword">else</span> l + mid + <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> l;<span class="hljs-comment">//返回值可以根据情况加上一个不同的常数</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>实际上，离散化的本质是构建一个映射关系将一些离散的数据对应到一些不离散的数据，在这个过程的实现当中，我们需要让映射后的数据与原数据具有一样的性质，这里的性质便是单调性</p>
+<p>也就是说，如果原数据不具有单调性的话，我们是无法进行离散化的</p>
+<p>由于原数据具有单调性，因此我们在映射的时候便可以使用二分，找到第一个大于等于原始数据的索引</p>
+<p>以上，便是离散化的整个过程以及理解</p>
 
                 
               </div>
@@ -339,7 +350,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -354,7 +365,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E9%93%BE%E8%A1%A8/">#链表</a>
+        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">#双指针</a>
+      
+        <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
+      
+        <a href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/">#离散化</a>
       
     </div>
   
@@ -366,8 +381,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>单链表即双链表的数组实现</div>
-      <div>https://nishikichisato.github.io/2022/10/24/OI/单链表即双链表的数组实现/</div>
+      <div>双指针、位运算、离散化总结</div>
+      <div>https://nishikichisato.github.io/2022/10/23/AcWing/双指针、位运算、离散化、区间合并总结/</div>
     </div>
     <div class="license-meta">
       
@@ -379,13 +394,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月24日</div>
+          <div>2022年10月23日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年10月24日</div>
+          <div>2022年10月30日</div>
         </div>
       
       <div class="license-meta-item">
@@ -420,9 +435,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/26/OI/KMP/" title="KMP">
+                      <a href="/2022/10/23/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%83%E5%91%A8-2022.10.17---2022.10.23/" title="大二上 第七周 2022.10.17 - 2022.10.23">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">KMP</span>
+                        <span class="hidden-mobile">大二上 第七周 2022.10.17 - 2022.10.23</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -430,8 +445,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/23/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%83%E5%91%A8-2022.10.17---2022.10.23/" title="大二上 第七周 2022.10.17 - 2022.10.23">
-                        <span class="hidden-mobile">大二上 第七周 2022.10.17 - 2022.10.23</span>
+                      <a href="/2022/10/22/Algorithm%20Solution/LC-448.%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E6%95%B0%E7%BB%84%E4%B8%AD%E6%B6%88%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/" title="LC 448.找到所有数组中消失的数字">
+                        <span class="hidden-mobile">LC 448.找到所有数组中消失的数字</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

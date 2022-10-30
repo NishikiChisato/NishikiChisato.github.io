@@ -231,13 +231,272 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/10/26/OI/Trie%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E8%BF%90%E7%94%A8/" target="_self">
+        <a href="/2022/10/30/AcWing/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" target="_self">
+          字符串哈希
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/30/AcWing/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" target="_self">
+        <div>
+          普通哈希 对于普通哈希函数的设计，我只需要让 \(x\) 模一个质数并保证它是一个正数即可 123456const int N &#x3D; 1e5 + 3;&#x2F;&#x2F;大于1e5的第一个质数int hash(int x)&amp;#123;    int k &#x3D; (x % N + N) % N;&#x2F;&#x2F;括号里面加一个N是为了保证结果为正数    return k;&amp;#125; ​ 字符串哈希 对于字符串的哈希，我们
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-30 13:02" pubdate>
+              2022-10-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
+            
+              <a href="/tags/%E5%93%88%E5%B8%8C/">#哈希</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/29/AcWing/%E5%A0%86/" target="_self">
+          堆
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/29/AcWing/%E5%A0%86/" target="_self">
+        <div>
+          堆 我们用一个数组 h[N] 来存储堆，变量 size 表示当前堆当中的元素个数 我们定义两种操作：  void up(int u) 表示将下标为 u 的元素向上升， void down(int u) 表示将下标为 u 的元素向下沉  以小根堆为例，我们需要保证在三个元素当中，顶部元素是最小的，因此我们只需要找出三者当中的最小值并将其放在顶部即可 12345678910111
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-29 11:02" pubdate>
+              2022-10-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A0%86/">#堆</a>
+            
+              <a href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">#优先队列</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/28/AcWing/%E5%B9%B6%E6%9F%A5%E9%9B%86%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_self">
+          并查集及其应用
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/28/AcWing/%E5%B9%B6%E6%9F%A5%E9%9B%86%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_self">
+        <div>
+          定义 并查集是一个用于快速判断两个点是否处于同一个集合的数据结构，当然它还有一个应用是将两个集合合并成一个新的集合 并查集可以看成一个树型结构，我们通过数组 p[N] 来模拟这棵树 我们用数组索引（从 1 开始）表示节点编号，数组元素值表示当前节点的父节点，对于一棵树的根节点，我们有 \(p[x]&#x3D;x\) 初始时，我们让每个节点都是根节点，因此初始化为： 12for(int i &#x3D;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-28 00:11" pubdate>
+              2022-10-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">#并查集</a>
+            
+              <a href="/tags/%E5%9B%BE/">#图</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/27/AcWing/AcWing-240.-%E9%A3%9F%E7%89%A9%E9%93%BE/" target="_self">
+          AcWing 240. 食物链
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/27/AcWing/AcWing-240.-%E9%A3%9F%E7%89%A9%E9%93%BE/" target="_self">
+        <div>
+          240. 食物链 - AcWing题库 我们从 \(A\) 吃 \(B\) ，\(B\) 吃 \(C\) ，\(C\) 吃 \(A\) 这个关系入手，不难发现，三者之间的关系具有传递性，即这个集合内的元素构成偏序关系 我们可以用一组向量来描述这个关系，我们定义向量 \(\overrightarrow{AB}\) 表示 \(A\) 吃 \(B\) ，同理，\(B\) 吃 \(C\) 有：\(
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-27 23:45" pubdate>
+              2022-10-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Algorithm-Solution/AcWing/" class="category-chain-item">AcWing</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/">#并查集</a>
+            
+              <a href="/tags/%E5%9B%BE/">#图</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/26/AcWing/Trie%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E8%BF%90%E7%94%A8/" target="_self">
           Trie树的实现及运用
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/26/OI/Trie%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E8%BF%90%E7%94%A8/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/26/AcWing/Trie%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E8%BF%90%E7%94%A8/" target="_self">
         <div>
           Trie 树 Trie 树是用于快速存储与查询字符串的数据结构 我们用一个二维数组 son[N][26] 来模拟一颗 Trie 树，第一维表示节点，第二维表示当前节点的所有孩子 当然，如同单链表一样，我们需要加上一个变量 idx 来表示当前用到了哪个节点（理解为当前已经使用的节点也可以） 除此之外，我们需要一个数组 cnt[N] 来记录以当前字符为结尾的字符串的个数 需要说明的是，
         </div>
@@ -263,7 +522,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -292,13 +551,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/10/26/OI/KMP/" target="_self">
+        <a href="/2022/10/26/AcWing/KMP/" target="_self">
           KMP
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/26/OI/KMP/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/26/AcWing/KMP/" target="_self">
         <div>
           KMP KMP 算法是用于快速在一个较长的字符串 \(S\) 中匹配模式串 \(P\) 的算法 需要说明的是，\(S\) 与 \(P\) 的下标均是从 1 开始存储的 我们定义指针 \(i\) 指向 \(S\) ，指针 \(j\) 指向 \(P\) ，当前匹配的字符是 \(s[i]\) 与 \(p[j+1]\) ，\(i\) 的前一个为 \(i-1\) ，\(j+1\) 的前一个为 \(j\
         </div>
@@ -324,7 +583,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -339,9 +598,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
-            
               <a href="/tags/KMP/">#KMP</a>
+            
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
             
           </div>
         
@@ -355,13 +614,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/10/24/OI/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8D%B3%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          单链表即双链表的数组实现
+        <a href="/2022/10/24/AcWing/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/" target="_self">
+          单链表及双链表的数组实现
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/24/OI/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8D%B3%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/24/AcWing/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/" target="_self">
         <div>
           单链表 单链表的数组实现需要一个数组 e[N] 用来存储每个节点的值，ne[N] 用来存储当前节点的下一个节点的位置，idx 用来表示当前所用的节点数，head 表示头指针，指向的是头节点 由于是数组实现，因此每个节点都会对应一个数组下标，我们并不能通过数组下标来确定该节点处于链表中的位置，这是因为后面的节点完全可以「插入」到前面的节点当中，因此数组下标所表示的仅仅是「该节点是第几次插
         </div>
@@ -387,7 +646,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -477,13 +736,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/10/23/OI/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/" target="_self">
+        <a href="/2022/10/23/AcWing/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/" target="_self">
           双指针、位运算、离散化总结
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/23/OI/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/23/AcWing/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/" target="_self">
         <div>
           双指针 这里我们直接给出双指针的代码模板，具体问题具体分析 12345678for(int i &#x3D; 0, j &#x3D; 0; i &lt; n; i++)&amp;#123;    &#x2F;&#x2F;前置运算    while(j &lt; i &amp;&amp; check(j, i))&#x2F;&#x2F;当[j,i]直接满足某种条件时，改变左指针        j++;    &#x2F;&#x2F;通常，while循环的判断条件为不满足题意的条件
         </div>
@@ -509,7 +768,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -524,9 +783,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
-            
               <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">#双指针</a>
+            
+              <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
             
               <a href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/">#离散化</a>
             
@@ -590,260 +849,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">#哈希表</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/22/Algorithm%20Solution/LC-779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/" target="_self">
-          LC 779.第K个语法符号
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/22/Algorithm%20Solution/LC-779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/" target="_self">
-        <div>
-          779. 第K个语法符号 我们构建了一个包含 n 行( 索引从 1 开始 )的表。首先在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。  例如，对于 n &#x3D; 3 ，第 1 行是 0 ，第 2 行是 01 ，第3行是 0110 。  给定行数 n 和序数 k，返回第 n 行中第 k 个字符。（ k 从索引 1 开始） 示例 1: 123输
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-22 09:37" pubdate>
-              2022-10-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
-            
-              <a href="/tags/%E6%95%B0%E5%AD%A6/">#数学</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/18/Algorithm%20Solution/LC-940.%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97-II/" target="_self">
-          LC 940.不同的子序列 II
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/18/Algorithm%20Solution/LC-940.%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97-II/" target="_self">
-        <div>
-          940. 不同的子序列 II 给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。 字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。  例如，&quot;ace&quot; 是 &quot;***a***b***c***d***e***&quot; 的一个子序列，但 &quot;aec&quot; 不是。  示例
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-18 11:08" pubdate>
-              2022-10-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Algorithm-Solution/" class="category-chain-item">Algorithm Solution</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">#动态规划</a>
-            
-              <a href="/tags/%E5%BA%8F%E5%88%97-DP/">#序列 DP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/17/OI/%E4%BA%8C%E5%88%86%E3%80%81%E5%89%8D%E7%BC%80%E5%92%8C%E3%80%81%E5%B7%AE%E5%88%86%E6%80%BB%E7%BB%93/" target="_self">
-          二分、前缀和、差分总结
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/17/OI/%E4%BA%8C%E5%88%86%E3%80%81%E5%89%8D%E7%BC%80%E5%92%8C%E3%80%81%E5%B7%AE%E5%88%86%E6%80%BB%E7%BB%93/" target="_self">
-        <div>
-          二分 我们通常所理解的二分是「二分查找」，也就是在一个单调的数组当中寻找一个数 那我们思考一个问题：二分的本质是单调性吗？换句话说，一定要满足「单调」才可以二分吗？ 答案是否定的，实际上二分的本质是「性质」 我们将一个数组划分为两部分，这两部分没有交集。其中，前半部分满足「性质 \(p\) 」，后半部分不满足「性质 \(p\) 」 那么，这两部分的分界点有两个，我们的二分就是用来求这两
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-17 11:56" pubdate>
-              2022-10-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%80%BB%E7%BB%93/">#总结</a>
-            
-              <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/">#前缀和</a>
-            
-              <a href="/tags/%E4%BA%8C%E5%88%86/">#二分</a>
-            
-              <a href="/tags/%E5%B7%AE%E5%88%86/">#差分</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/16/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%85%AD%E5%91%A8-2022.10.9---2022.10.16/" target="_self">
-          大二上 第六周 2022.10.9 - 2022.10.16
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/16/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%85%AD%E5%91%A8-2022.10.9---2022.10.16/" target="_self">
-        <div>
-          这一周，周一到周五学的都还可以，但周末两天就没有学 基础篇的视频看了两个，对应的习题全部做完了 这在那五天里面已经是极限的效率了，这里我是很满意的 后面两天没有学是因为我稍微停下来去思考一些问题了 但万幸的是，我找到了一个在理论上自洽的答案，我真正想明白了我参加竞赛的原因 情感上的无奈我可以通过 Galgame 来进行补足，只需要注意一下不要过度就行 我不希望我的大学的生活过得如此的
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-16 20:40" pubdate>
-              2022-10-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-chain-item">日常总结</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%91%A8%E6%80%BB%E7%BB%93/">#周总结</a>
             
           </div>
         

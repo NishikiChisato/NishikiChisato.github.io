@@ -18,26 +18,25 @@
   <meta name="author" content="Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="双指针 这里我们直接给出双指针的代码模板，具体问题具体分析 12345678for(int i &#x3D; 0, j &#x3D; 0; i &lt; n; i++)&amp;#123;    &#x2F;&#x2F;前置运算    while(j &lt; i &amp;&amp; check(j, i))&#x2F;&#x2F;当[j,i]直接满足某种条件时，改变左指针        j++;    &#x2F;&#x2F;通常，while循环的判断条件为不满足题意的条件">
+    <meta name="description" content="堆 我们用一个数组 h[N] 来存储堆，变量 size 表示当前堆当中的元素个数 我们定义两种操作：  void up(int u) 表示将下标为 u 的元素向上升， void down(int u) 表示将下标为 u 的元素向下沉  以小根堆为例，我们需要保证在三个元素当中，顶部元素是最小的，因此我们只需要找出三者当中的最小值并将其放在顶部即可 12345678910111">
 <meta property="og:type" content="article">
-<meta property="og:title" content="双指针、位运算、离散化总结">
-<meta property="og:url" content="https://nishikichisato.github.io/2022/10/23/OI/%E5%8F%8C%E6%8C%87%E9%92%88%E3%80%81%E4%BD%8D%E8%BF%90%E7%AE%97%E3%80%81%E7%A6%BB%E6%95%A3%E5%8C%96%E3%80%81%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="堆">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/10/29/AcWing/%E5%A0%86/index.html">
 <meta property="og:site_name" content="Chisato 的成长日记">
-<meta property="og:description" content="双指针 这里我们直接给出双指针的代码模板，具体问题具体分析 12345678for(int i &#x3D; 0, j &#x3D; 0; i &lt; n; i++)&amp;#123;    &#x2F;&#x2F;前置运算    while(j &lt; i &amp;&amp; check(j, i))&#x2F;&#x2F;当[j,i]直接满足某种条件时，改变左指针        j++;    &#x2F;&#x2F;通常，while循环的判断条件为不满足题意的条件">
+<meta property="og:description" content="堆 我们用一个数组 h[N] 来存储堆，变量 size 表示当前堆当中的元素个数 我们定义两种操作：  void up(int u) 表示将下标为 u 的元素向上升， void down(int u) 表示将下标为 u 的元素向下沉  以小根堆为例，我们需要保证在三个元素当中，顶部元素是最小的，因此我们只需要找出三者当中的最小值并将其放在顶部即可 12345678910111">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-23T12:10:54.347Z">
-<meta property="article:modified_time" content="2022-10-23T13:17:46.380Z">
+<meta property="article:published_time" content="2022-10-29T03:02:47.043Z">
+<meta property="article:modified_time" content="2022-10-30T05:04:08.632Z">
 <meta property="article:author" content="Chisato">
-<meta property="article:tag" content="位运算">
-<meta property="article:tag" content="双指针">
-<meta property="article:tag" content="离散化">
+<meta property="article:tag" content="堆">
+<meta property="article:tag" content="优先队列">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>双指针、位运算、离散化总结 - Chisato 的成长日记</title>
+  <title>堆 - Chisato 的成长日记</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="双指针、位运算、离散化总结"></span>
+            <span id="subtitle" data-typed-text="堆"></span>
           
         </div>
 
@@ -222,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-23 20:10" pubdate>
-          2022年10月23日 晚上
+        <time datetime="2022-10-29 11:02" pubdate>
+          2022年10月29日 上午
         </time>
       </span>
     
@@ -234,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.1k 字
         
       </span>
     
@@ -245,7 +244,7 @@
         
         
         
-          13 分钟
+          9 分钟
         
       </span>
     
@@ -293,45 +292,27 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">双指针、位运算、离散化总结</h1>
+            <h1 style="display: none">堆</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="双指针">双指针</h2>
-<p>这里我们直接给出双指针的代码模板，具体问题具体分析</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++)<br>&#123;<br>    <span class="hljs-comment">//前置运算</span><br>    <span class="hljs-keyword">while</span>(j &lt; i &amp;&amp; <span class="hljs-built_in">check</span>(j, i))<span class="hljs-comment">//当[j,i]直接满足某种条件时，改变左指针</span><br>        j++;<br>    <span class="hljs-comment">//通常，while循环的判断条件为不满足题意的条件</span><br>    <span class="hljs-comment">//后面对结果进行记录</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>​</p>
-<h2 id="位运算">位运算</h2>
-<p>求 <span class="math inline">\(n\)</span> 的第 <span class="math inline">\(k\)</span> 位数字（ <span class="math inline">\(k\)</span> 从 1 开始）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">n &gt;&gt; k &amp; <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<p>返回 <span class="math inline">\(n\)</span> 的最后一位 1</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">lowbit</span>(n) = n &amp; -n<br></code></pre></td></tr></table></figure>
-<p>一般后者可以求出一个二进制数当中 1 的个数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>, t = <span class="hljs-number">0</span>;<br>cin &gt;&gt; t;<br><span class="hljs-keyword">while</span>(t)<br>&#123;<br>    t -= <span class="hljs-built_in">lowbit</span>(t);<br>    ans++;<br>&#125;<br>cout &lt;&lt; ans &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
-<h2 id="离散化">离散化</h2>
-<p>离散化的操作是将一些<strong>大的</strong>、<strong>离散的</strong>的数据映射为一些<strong>小的</strong>、<strong>不离散</strong>的数据</p>
-<p>具体的，假如说我有 <span class="math inline">\(10^5\)</span>
-个数据，但每个数据的大小最大可以到 <span class="math inline">\(10^9\)</span> （我们暂且不考虑负数的情况）</p>
-<p>如果我需要将这些数据作为数组下标，开 <span class="math inline">\(10^9\)</span>
-大小的数组空间是不显示的，这里我们就需要将数值做一些映射</p>
-<p>离散化的前提是<strong>数值有序</strong>且<strong>无重复</strong>，对于这两点的实现可以用以下两行代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//vector&lt;int&gt;alls</span><br>alls.<span class="hljs-built_in">erase</span>(<span class="hljs-built_in">unique</span>(alls.<span class="hljs-built_in">begin</span>(), alls.<span class="hljs-built_in">end</span>()), alls.<span class="hljs-built_in">end</span>());<br><span class="hljs-built_in">sort</span>(alls.<span class="hljs-built_in">begin</span>(), alls.<span class="hljs-built_in">end</span>());<br></code></pre></td></tr></table></figure>
-<p>这里我们给出 <code>unique</code> 函数的实现</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt;::<span class="hljs-function">iterator <span class="hljs-title">unique</span><span class="hljs-params">(vector&lt;Int&gt;&amp; alls)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; alls.<span class="hljs-built_in">size</span>(); i++)<br>        <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span> || alls[i] != alls[i - <span class="hljs-number">1</span>])<span class="hljs-comment">//第一个数进行单独判断，除此之外其余的数，如果重复，必然是重复前一个数</span><br>            alls[j++] = alls[i];<br>    <span class="hljs-keyword">return</span> alls.<span class="hljs-built_in">begin</span>() + j;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>关于离散化映射关系的寻找，其实非常的简单，我们将那<strong>没有重复的
-<span class="math inline">\(10^5\)</span>
-个数</strong>放在一个对应大小的数组内（我们是将原数组的索引放入一个新的数组），然后我们通过<strong>新数组的索引</strong>来替换掉<strong>原本数组的索引</strong>，这样便实现了映射</p>
-<p>在具体实现上，我们令 <code>alls</code>
-数组来存放所有待离散化的数据，我们考虑用每个数据的索引来替换掉原本的数</p>
-<p>由于 <code>alls</code>
-数组是有序的，因此我们可以使用二分查找来找到某个数据的索引（即找到第一个大于等于
-<span class="math inline">\(x\)</span> 的数的索引）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> l = <span class="hljs-number">0</span>, r = alls.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">while</span>(l &lt; r)<br>    &#123;<br>        <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(alls[mid] &gt;= x) r = mid;<br>        <span class="hljs-keyword">else</span> l + mid + <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> l;<span class="hljs-comment">//返回值可以根据情况加上一个不同的常数</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>实际上，离散化的本质是构建一个映射关系将一些离散的数据对应到一些不离散的数据，在这个过程的实现当中，我们需要让映射后的数据与原数据具有一样的性质，这里的性质便是单调性</p>
-<p>也就是说，如果原数据不具有单调性的话，我们是无法进行离散化的</p>
-<p>由于原数据具有单调性，因此我们在映射的时候便可以使用二分，找到第一个大于等于原始数据的索引</p>
-<p>以上，便是离散化的整个过程以及理解</p>
+                <h2 id="堆">堆</h2>
+<p>我们用一个数组 <code>h[N]</code> 来存储堆，变量 <code>size</code>
+表示当前堆当中的元素个数</p>
+<p>我们定义两种操作：</p>
+<ul>
+<li><p><code>void up(int u)</code> 表示将下标为 <code>u</code>
+的元素向上升，</p></li>
+<li><p><code>void down(int u)</code> 表示将下标为 <code>u</code>
+的元素向下沉</p></li>
+</ul>
+<p>以小根堆为例，我们需要保证在三个元素当中，顶部元素是最小的，因此我们只需要找出三者当中的最小值并将其放在顶部即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> h[N], sz;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> t = u;<span class="hljs-comment">//t用来记录最小值的下标</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-number">2</span> * u &lt;= sz &amp;&amp; h[<span class="hljs-number">2</span> * u] &lt; h[t]) t = <span class="hljs-number">2</span> * u;<span class="hljs-comment">//左孩子较小，对 t 赋值</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-number">2</span> * u + <span class="hljs-number">1</span> &lt;= sz &amp;&amp; h[<span class="hljs-number">2</span> * u + <span class="hljs-number">1</span>] &lt; h[t]) t = <span class="hljs-number">2</span> * u + <span class="hljs-number">1</span>;<span class="hljs-comment">//同理</span><br>    <span class="hljs-keyword">if</span>(t != u)<br>    &#123;<br>        <span class="hljs-built_in">swap</span>(t, u);<br>        <span class="hljs-built_in">down</span>(t);<span class="hljs-comment">//这里是对t进行调整</span><br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(u / <span class="hljs-number">2</span> &gt; <span class="hljs-number">0</span> &amp;&amp; h[u / <span class="hljs-number">2</span>] &lt; h[u])<br>    &#123;<br>        <span class="hljs-built_in">swap</span>(u / <span class="hljs-number">2</span>, u);<br>        u /= <span class="hljs-number">2</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在无法确定使用 <code>up</code> 还是 <code>down</code>
+时，我们二者都写，反正也只会调用一个</p>
+<p>下面我们给出一个更一般的堆模型</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> h[N], ph[N], hp[N], sz;<span class="hljs-comment">//ph表示第k个插入的点的下标是什么，hp表示下标为k的点是第几次插入的，二者下标的意义并不相同</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">head_swap</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span><span class="hljs-comment">//交换下标为a和b的两个数</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">swap</span>(ph[hp[a]], ph[hp[b]]);<span class="hljs-comment">//我们需要先找到下标为a的点是第几次插入的，这一点对于b也是同理</span><br>    <span class="hljs-built_in">swap</span>(hp[a], hp[b]);<br>    <span class="hljs-built_in">swap</span>(h[a], h[b]);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">down</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> t = u;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-number">2</span> * u &lt;= sz &amp;&amp; h[<span class="hljs-number">2</span> * u] &lt; h[t]) t = <span class="hljs-number">2</span> * u;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-number">2</span> * u + <span class="hljs-number">1</span> &lt;= sz &amp;&amp; h[<span class="hljs-number">2</span> * u + <span class="hljs-number">1</span>] &lt; h[t]) t = <span class="hljs-number">2</span> * u + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span>(t != u)<br>    &#123;<br>        <span class="hljs-built_in">head_swap</span>(t, u);<br>        <span class="hljs-built_in">down</span>(t);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">up</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(u / <span class="hljs-number">2</span> &amp;&amp; h[u] &lt; h[u / <span class="hljs-number">2</span>])<br>    &#123;<br>        <span class="hljs-built_in">head_swap</span>(u, u / <span class="hljs-number">2</span>);<br>        u = u / <span class="hljs-number">2</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -350,7 +331,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/OI/" class="category-chain-item">OI</a>
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
   
   
 
@@ -365,11 +346,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">#位运算</a>
+        <a href="/tags/%E5%A0%86/">#堆</a>
       
-        <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">#双指针</a>
-      
-        <a href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/">#离散化</a>
+        <a href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">#优先队列</a>
       
     </div>
   
@@ -381,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>双指针、位运算、离散化总结</div>
-      <div>https://nishikichisato.github.io/2022/10/23/OI/双指针、位运算、离散化、区间合并总结/</div>
+      <div>堆</div>
+      <div>https://nishikichisato.github.io/2022/10/29/AcWing/堆/</div>
     </div>
     <div class="license-meta">
       
@@ -394,13 +373,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月23日</div>
+          <div>2022年10月29日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2022年10月23日</div>
+          <div>2022年10月30日</div>
         </div>
       
       <div class="license-meta-item">
@@ -435,9 +414,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/23/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E4%B8%83%E5%91%A8-2022.10.17---2022.10.23/" title="大二上 第七周 2022.10.17 - 2022.10.23">
+                      <a href="/2022/10/30/AcWing/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" title="字符串哈希">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">大二上 第七周 2022.10.17 - 2022.10.23</span>
+                        <span class="hidden-mobile">字符串哈希</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -445,8 +424,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/22/Algorithm%20Solution/LC-448.%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E6%95%B0%E7%BB%84%E4%B8%AD%E6%B6%88%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/" title="LC 448.找到所有数组中消失的数字">
-                        <span class="hidden-mobile">LC 448.找到所有数组中消失的数字</span>
+                      <a href="/2022/10/28/AcWing/%E5%B9%B6%E6%9F%A5%E9%9B%86%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" title="并查集及其应用">
+                        <span class="hidden-mobile">并查集及其应用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
