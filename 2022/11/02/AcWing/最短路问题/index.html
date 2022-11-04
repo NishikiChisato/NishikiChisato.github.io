@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最短路算法概述 这里我们只说算法的实现以及相关的细节问题，不讨论算法的证明 最短路问题分为两种：单源最短路问题和多源汇最短路问题 源点就是起点的意思，汇点就是终点的意思，因此前者是指从一个确定的起点到达其他各个点的最短路径长度，后者是指从某个点到其他各个点的最短路径长度 对于单源最短路问题，分为两类：边权均为正和存在负权边，前者用朴素 Dijkstra 算法或者堆优化 Dijkstra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路问题">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/11/02/AcWing/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Chisato 的成长日记">
+<meta property="og:description" content="最短路算法概述 这里我们只说算法的实现以及相关的细节问题，不讨论算法的证明 最短路问题分为两种：单源最短路问题和多源汇最短路问题 源点就是起点的意思，汇点就是终点的意思，因此前者是指从一个确定的起点到达其他各个点的最短路径长度，后者是指从某个点到其他各个点的最短路径长度 对于单源最短路问题，分为两类：边权均为正和存在负权边，前者用朴素 Dijkstra 算法或者堆优化 Dijkstra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-02T13:20:14.622Z">
+<meta property="article:modified_time" content="2022-11-04T04:44:07.621Z">
+<meta property="article:author" content="Chisato">
+<meta property="article:tag" content="图">
+<meta property="article:tag" content="最短路">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>最短路问题 - Chisato 的成长日记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chisato</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="最短路问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-02 21:20" pubdate>
+          2022年11月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">最短路问题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="最短路算法概述">最短路算法概述</h2>
+<p>这里我们只说算法的实现以及相关的细节问题，不讨论算法的证明</p>
+<p>最短路问题分为两种：单源最短路问题和多源汇最短路问题</p>
+<p>源点就是起点的意思，汇点就是终点的意思，因此前者是指从一个<strong>确定的起点</strong>到达<strong>其他各个点</strong>的最短路径长度，后者是指从<strong>某个点</strong>到<strong>其他各个点</strong>的最短路径长度</p>
+<p>对于单源最短路问题，分为两类：边权均为正和存在负权边，前者用朴素
+Dijkstra 算法或者堆优化 Dijkstra 算法，后者用 Bellmen-Ford 算法或者 SPFA
+算法</p>
+<p>对于多源汇最短路问题，用 Floyd 算法</p>
+<p>为了便于讨论，我们约定 <span class="math inline">\(n\)</span>
+表示点的个数，<span class="math inline">\(m\)</span>
+表示边的个数，并且：</p>
+<p>如果满足 <span class="math inline">\(n^2 \sim m\)</span>
+，我们定义该图为稠密图，用邻接矩阵来存储（<span class="math inline">\(n=500,\ m=1e5\)</span>）</p>
+<p>如果满足 <span class="math inline">\(n \sim m\)</span>
+，我们定义该图为稀疏图，用邻接表来存储（<span class="math inline">\(n=500,\ m=500\)</span>）</p>
+<p>​</p>
+<h3 id="朴素-dijkstra-算法">朴素 Dijkstra 算法</h3>
+<p>时间复杂度：<span class="math inline">\(O(n^2)\)</span>
+，一般适用于用<strong>邻接矩阵</strong>来存储的<strong>稠密图</strong>，即满足
+<span class="math inline">\(n^2\sim m\)</span></p>
+<p>该算法用于<strong>求各个点到 1
+号点的最短距离</strong>，下面我们给出该算法的基本思路</p>
+<p>假定 <span class="math inline">\(S\)</span>
+为当前已经确定最短距离的点，<span class="math inline">\(dist[i]\)</span>
+表示<strong>编号</strong>为 <span class="math inline">\(i\)</span>
+的点到 1 号点的距离，初始时有：<span class="math inline">\(dist[1]=0,\
+dist[i]=INF\ \textit{(这里我们用INF表示正无穷)}\)</span></p>
+<ol type="1">
+<li><p>往后，我们<strong>遍历所有点</strong>（执行 <span class="math inline">\(n\)</span> 次），找到不在 <span class="math inline">\(S\)</span> 中的，距离最小的点 <span class="math inline">\(t\)</span> （这个点的 <span class="math inline">\(dist\)</span> 最小）</p></li>
+<li><p>我们将 <span class="math inline">\(t\)</span> 加入到 <span class="math inline">\(S\)</span> 中</p></li>
+<li><p>用 <span class="math inline">\(t\)</span> 更新 1
+号点到其他所有点的距离</p></li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">510</span>;<br><span class="hljs-type">int</span> n, m;<span class="hljs-comment">//表示该图中的点数和边数</span><br><span class="hljs-type">int</span> g[N][N];<span class="hljs-comment">//表示点 i 到点 j 的距离为g[i][j]</span><br><span class="hljs-type">int</span> d[N];<span class="hljs-comment">//表示各个点到 1 号点的距离</span><br><span class="hljs-type">bool</span> ud[N];<span class="hljs-comment">//表示各个点是否被使用</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(d, ox3f, <span class="hljs-keyword">sizeof</span> d);<br>    d[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<span class="hljs-comment">//一定要记得初始化</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-type">int</span> t = <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(!ud[j] &amp;&amp; (j == <span class="hljs-number">-1</span> || d[t] &lt; d[j]))<span class="hljs-comment">//找到距离1号点最近的点</span><br>                t = j;<br>        &#125;<br>        <br>        ud[t] = <span class="hljs-literal">true</span>;<span class="hljs-comment">//将这个点加入到S集合中</span><br>        <br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<span class="hljs-comment">//用这个点更新其他点到1号点的距离</span><br>        &#123;<br>            d[j] = <span class="hljs-built_in">min</span>(d[j], d[t] + g[t][j]);<span class="hljs-comment">//</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(d[n] == <span class="hljs-number">0x3f3f3f3f</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> d[n];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>不难发现，朴素 Dijkstra 算法全部都是用点数 <span class="math inline">\(n\)</span> 来做循环，并不涉及到边数 <span class="math inline">\(m\)</span></p>
+<p>由于时间复杂度是 <span class="math inline">\(O(n^2)\)</span>
+，因此如果 <span class="math inline">\(n\)</span>
+特别大，那么就只能用堆优化 Dijkstra 算法</p>
+<p>​</p>
+<h3 id="堆优化-dijkstra-算法">堆优化 Dijkstra 算法</h3>
+<p>需要说明的是，堆优化版本并不一定比朴素版本效率更高，二者有相应的应用场景，对应使用即可</p>
+<p>在第二个 <code>for</code> 循环中，我们是用 <code>t</code>
+来更新其他所有点到 1 号点的距离，由于 <code>t</code>
+是不断变化的，并且更新的点都是<strong><code>t</code>
+的出边</strong>，因此由于 <code>t</code>
+会遍历图中的每一个点，因此整体下来这个循环会遍历整个图的所有边，即 <span class="math inline">\(O(m)\)</span></p>
+<p>我们再看第一个循环，寻找的是所有距离 1
+号点距离最近的点，这里的时间复杂度是 <span class="math inline">\(O(n)\)</span>
+，我们可以用堆来优化掉这个过程，使得时间复杂度降为 <span class="math inline">\(O(1)\)</span>
+，当然，这会使得第二个循环的时间复杂度变为 <span class="math inline">\(O(mlogn)\)</span> ，因为有 <span class="math inline">\(O(logn)\)</span> 是对这个堆进行修改</p>
+<p>在实现上，我们选用小根堆，用 STL 的优先队列来实现</p>
+<p>关于这个玩意，有一个问题是，它不能删除元素，我们只能往里面添加元素，因此元素最多有
+<span class="math inline">\(m\)</span>
+个，并在使用之前先进行判断该元素是否已经用过</p>
+<p>我们用小根堆，除了维护距离外，还需要维护各个点的编号，并且我们要让<strong>距离为
+<code>first</code></strong>
+，不然无法进行排序（这一点很重要！！！！）</p>
+<p>该算法用于稀疏图，用邻接表来进行存储</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> h[N], e[N], ne[N], w[N], idx;<span class="hljs-comment">//w[N]表示这条边的权值</span><br><br><span class="hljs-type">int</span> d[N];<span class="hljs-comment">//存储各个点到1号点的距离</span><br><span class="hljs-type">int</span> ud[N];<span class="hljs-comment">//标记这个点是否使用过</span><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; PII;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b;<br>    w[idx] = c;<br>    ne[idx] = h[a];<br>    h[a] = idx++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br>    <span class="hljs-built_in">memset</span>(d, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> d);<span class="hljs-comment">//一定要记得初始化</span><br>    <br>    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt;heap;<span class="hljs-comment">//用小根堆，前面是距离，后面是点的编号</span><br>    d[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    heap.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;);<br>    <br>    <span class="hljs-keyword">while</span>(!heap.<span class="hljs-built_in">empty</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = heap.<span class="hljs-built_in">top</span>();<br>        heap.<span class="hljs-built_in">pop</span>();<br>        <br>       <span class="hljs-type">int</span> ver = t.second, dis = t.first; <br>        <br>        <span class="hljs-keyword">if</span>(ud[ver]) <span class="hljs-keyword">continue</span>;<br>        <br>        ud[ver] = <span class="hljs-literal">true</span>;<span class="hljs-comment">//记得修改</span><br>        <br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = h[ver]; i != <span class="hljs-number">-1</span>; i = ne[i])<span class="hljs-comment">//ver这个点的出边</span><br>        &#123;<br>            <span class="hljs-type">int</span> j = e[i];<span class="hljs-comment">//e[i]才是节点编号</span><br>            <span class="hljs-keyword">if</span>(d[j] &gt; d[ver] + w[i])<br>            &#123;<br>                d[j] = d[ver] + w[i];<span class="hljs-comment">//让j这个点的距离变得更小</span><br>                heap.<span class="hljs-built_in">push</span>(&#123;j, d[j]&#125;);<br>            &#125;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">if</span>(d[n] == ox3f3f3f3f) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> d[n];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h3 id="bellmen-ford-算法">Bellmen-Ford 算法</h3>
+<p>该算法适用于图中<strong>边权为负</strong>的情况，时间复杂度为 <span class="math inline">\(O(nm)\)</span> 。该算法有一个上位替代算法是 SPFA
+，因为后者是前者的一个优化版本，不仅效率快过前者，适用范围也更广，但
+Bellmen-Ford 算法也有可以解决一个 SPFA
+解决不了的问题，就是我们下面所给的例子</p>
+<p>我们先简单描述一下该算法的实现过程</p>
+<ol type="1">
+<li><p>首先第一重循环，循环 <span class="math inline">\(k\)</span>
+次，表示<strong>求从编号为 1 的点经过不超过 <span class="math inline">\(k\)</span>
+条边所到的点的最短距离</strong></p></li>
+<li><p>第二重循环，<strong>遍历所有边</strong>，不断更新每个点到编号为 1
+的点的距离，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">d[b] = <span class="hljs-built_in">min</span>(d[b], d[a] + w);<span class="hljs-comment">//w表示a到b的权重</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>这里我们解释一下为什么 <span class="math inline">\(k\)</span>
+可以任意取值的情况下时间复杂度仍为 <span class="math inline">\(O(nm)\)</span> 。实际上，由于我们求的是 1 号点到
+<span class="math inline">\(n\)</span> 号点的距离，由于整个图当中只有
+<span class="math inline">\(n\)</span>
+个点，在不考虑负环回路的情况下最多经过 <span class="math inline">\(n+1\)</span> 条边就一定能到达 <span class="math inline">\(n\)</span>
+号点（不考虑负环回路是因为如果存在的话是没有最短路径的）。</p>
+<p>我们遍历所有边的时候，我们可以用结构体来存储各个边的情况，我们每次<strong>只对边的到达点求最短距离</strong></p>
+<p>由于内层循环每次都会遍历所有边，而外层循环必须保证从 1
+号点走出的路径长度，为了保证内层循环不多走，我们需要额外一个数组
+<code>backup</code> 来保存上一次的结果，用它来更新每个点的距离</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> n, m, k;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">510</span>, M = <span class="hljs-number">1e4</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span><br>&#123;<br>    <span class="hljs-type">int</span> a, b, w;<br>&#125;edge[M];<br><br><span class="hljs-type">int</span> d[N], backup[N];<br><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">Bellmen_Ford</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(d, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> d);<br>    d[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; k; i++)<br>    &#123;<br>        <span class="hljs-built_in">memcpy</span>(backup, d, <span class="hljs-keyword">sizeof</span> d);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        &#123;<br>            <span class="hljs-type">int</span> a = edge[i].a, b = edge[i].b, w = edge[i].w;<br>            d[b] = <span class="hljs-built_in">min</span>(d[b], backup[a] + w);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(d[n] &gt; <span class="hljs-number">0x3f3f3f3f</span> / <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<span class="hljs-comment">//d[n]可能会减小，但依旧是无穷大，所以这种情况需要返回false</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h3 id="spfa-算法">SPFA 算法</h3>
+<p>只要<strong>图中没有负环就可以用 SPFA</strong>
+，当然一般的最短路问题都不会有负环</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/AcWing/" class="category-chain-item">AcWing</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%9B%BE/">#图</a>
+      
+        <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/">#最短路</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>最短路问题</div>
+      <div>https://nishikichisato.github.io/2022/11/02/AcWing/最短路问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月2日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2022年11月4日</div>
+        </div>
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+              <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                <i class="iconfont icon-sa"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/04/Algorithm%20Solution/LC-754.%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9%E6%95%B0%E5%AD%97/" title="LC 754.到达终点数字">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LC 754.到达终点数字</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/30/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/%E5%A4%A7%E4%BA%8C%E4%B8%8A-%E7%AC%AC%E5%85%AB%E5%91%A8-2022.10.24---2022.10.30/" title="大二上 第八周 2022.10.24 - 2022.10.30">
+                        <span class="hidden-mobile">大二上 第八周 2022.10.24 - 2022.10.30</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
