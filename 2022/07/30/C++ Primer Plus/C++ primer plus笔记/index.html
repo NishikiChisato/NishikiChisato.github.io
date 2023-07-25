@@ -1,0 +1,1659 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="函数 基础 函数是如何返回返回值的 通常，函数将返回值复制到指定的CPU寄存器或内存单元中。随后，调用该函数的程序查看该内存单元。函数原型（声明）告诉调用程序返回值的类型，函数定义命令被调用函数用什么类型的数据返回。即返回函数和调用函数必须就该内存单元的数据类型必须要达成一致 关于函数原型（声明）  为什么要用原型  函数原型将该函数的参数类型、数量和返回值类型告诉编译器，使得编译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Primer Plus 笔记">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/07/30/C++%20Primer%20Plus/C++%20primer%20plus%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="函数 基础 函数是如何返回返回值的 通常，函数将返回值复制到指定的CPU寄存器或内存单元中。随后，调用该函数的程序查看该内存单元。函数原型（声明）告诉调用程序返回值的类型，函数定义命令被调用函数用什么类型的数据返回。即返回函数和调用函数必须就该内存单元的数据类型必须要达成一致 关于函数原型（声明）  为什么要用原型  函数原型将该函数的参数类型、数量和返回值类型告诉编译器，使得编译">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/C++%20Primer%20Plus/C++%20Primer%20Plus%20(3).jpg">
+<meta property="article:published_time" content="2022-07-30T01:06:04.094Z">
+<meta property="article:modified_time" content="2023-04-21T03:31:47.387Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="C++ Primer Plus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/C++%20Primer%20Plus/C++%20Primer%20Plus%20(3).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>C++ Primer Plus 笔记 - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++ Primer Plus 笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-30 09:06" pubdate>
+          July 30, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          23k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          191 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++ Primer Plus 笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 3 months ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="函数">函数</h1>
+<h2 id="基础">基础</h2>
+<h3 id="函数是如何返回返回值的">函数是如何返回返回值的</h3>
+<p>通常，函数将返回值复制到指定的CPU寄存器或内存单元中。随后，调用该函数的程序查看该内存单元。函数原型（声明）告诉调用程序返回值的类型，函数定义命令被调用函数用什么类型的数据返回。即返回函数和调用函数必须就该内存单元的数据类型必须要达成一致</p>
+<h3 id="关于函数原型声明">关于函数原型（声明）</h3>
+<ul>
+<li>为什么要用原型</li>
+</ul>
+<p>函数原型将该函数的参数类型、数量和返回值类型告诉编译器，使得编译器可以正确解释它们</p>
+<ul>
+<li>原型的语法</li>
+</ul>
+<p>函数原型只需要提供函数返回值类型、函数名、参数列表（参数类型、数量）（不需要参数名称，实际上参数名称相当于<strong>占位符</strong>的存在）</p>
+<p>当然，<strong>函数的原型部分也可以不指定参数列表</strong>，函数原型的参数部分为空表示参数默认为<code>void</code>，并不是不指定参数列表的意思。在C++中，<strong>不指定参数列表应当用省略号：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">say_hi</span><span class="hljs-params">(...)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>通常，仅当与接受可变参数的C函数（如printf)交互时才需要这么做</p>
+<h3 id="指针和const">指针和const</h3>
+<p>如果数据类型本身不是指针，则可以将const数据或非const数据的<strong>地址</strong>赋值给被const修饰的指针，只能将非const数据的地址赋值给非const指针（不能将const数据的地址赋值给非const修饰的指针，这会使得const的状态很荒谬）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span>* pa = &amp;a;<span class="hljs-comment">//INVAILD</span><br></code></pre></td></tr></table></figure>
+<p>如果数据类型本身是指针，则可以将非const数据的地址赋值给const或非const修饰的指针，只能将const数据的地址赋值给const指针（不允许将const数据的地址赋值给非const修饰的指针，这一点与上面一致）</p>
+<h2 id="内联函数">内联函数</h2>
+<p>编译过程的最终产物是可执行程序——一组机器指令的集合。当执行该程序时，操作系统会将这些指令都载入到内存当中，因此每一条指令都会对应一个内存编号。随后，计算机将逐步执行这些指令，（当遇到循环时）有时会向前、向后跳跃到特定地址执行对应的指令。函数的调用过程也是如此，当调用该函数时，操作系统会跳到该函数的起始地址开始执行，在函数结束时返回。</p>
+<p>程序在跳跃执行函数的过程中，会产生一定的开销。当跳跃所需的开销大于实际执行的开销，并且在重复调用该函数的时候这会十分浪费资源。为了解决这一问题，C++内联函数提供了另一种选择。</p>
+<p>编译内联函数时，<strong>编译器会使用相应的函数代码来替换掉函数调用</strong>，这样程序就不需要跳跃到其他内存地址来执行对应的代码了。因此内联函数的执行速度快于其他函数，但代价是会<strong>带来更大的内存</strong>。如果我在一段程序中调用了该函数十次，在编译后这里就会出现该函数代码的十个拷贝。</p>
+<p>需要注意的是：</p>
+<ul>
+<li>内联函数不应该过大，占用了多行就没有必要了</li>
+<li>内联函数不能递归</li>
+</ul>
+<p>我们在函数的前面加上 <code>inline</code>
+，这只是建议编译器将该函数改为 <code>inline</code>
+的，实际上是不是还得取决于编译器。</p>
+<p>对于在类内<strong>定义的函数</strong>，都是默认在前面加上
+<code>inline</code> 的，对于类外定义的函数，默认是不加
+<code>inline</code> 的。</p>
+<h2 id="引用变量">引用变量</h2>
+<p>当我们声明一个变量时，编译器会为该变量分配一个内存地址，也就是说我可以通过该变量名来操作该内存地址当中的内容。引用变量的作用是<strong>再给这块内存地址另外一个名字</strong>，即我可以通过这两个不同的名字来操纵同一个内存地址，它们是完全等价的。</p>
+<p>注：引用必须在其声明时就赋值，不能先初始化后赋值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> rats;<br><span class="hljs-type">int</span> &amp; rodent = rats;<br><span class="hljs-type">int</span>* <span class="hljs-type">const</span> ptr = &amp;rats;<span class="hljs-comment">//引用等价于这个</span><br></code></pre></td></tr></table></figure>
+<p>因此，引用在对其初始化之后的值就不能被改变（这里指的是该引用的指向）</p>
+<p>当函数的形参是一个引用类型的时候，对比不加引用的情况，其实参的要求更加严格。由于引用是实际上是一个变量的别名，因此函数的实参必须是变量，一个普通的数字是不允许的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; e1)</span></span>;<br><span class="hljs-built_in">fun</span>(<span class="hljs-number">10</span>);<span class="hljs-comment">//Illeague</span><br><span class="hljs-built_in">fun</span>(a);<span class="hljs-comment">//League</span><br><span class="hljs-built_in">fun</span>(a + <span class="hljs-number">10</span>);<span class="hljs-comment">//Illeague</span><br></code></pre></td></tr></table></figure>
+<p>至于如何判断函数的实参是否会出问题，我们可以用一个很简单的方法——将其作为左值。如果是变量，那么它作为左值是被允许的，而非变量的数（如表达式）则不被允许</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">a = <span class="hljs-number">5</span>;<span class="hljs-comment">//League</span><br>a + <span class="hljs-number">10</span> = <span class="hljs-number">5</span>;<span class="hljs-comment">//Illeague</span><br></code></pre></td></tr></table></figure>
+<p>那么这里就引出了一个问题：什么是左值？常规变量和 const
+变量都可以视为左值，因为它们都可以通过地址来访问。常规变量属于可修改的左值，
+const 变量属于不可修改的左值。</p>
+<ul>
+<li>左值是允许通过地址来访问的，而右值不允许、</li>
+</ul>
+<p>也就是说右值实际上是在一块临时的内存空间当中，上面的 fun(10) 与 fun(a
++ 10) ，这两个实参都是右值，它们存在于一个临时的内存空间当中</p>
+<h3 id="临时变量">临时变量</h3>
+<p>如果实参与引用类型不匹配时，C++将生成临时变量，当然这么做只在引用被
+const 修饰的时候才允许。如果引用参数为 const
+，在以下两种情况下编译器会生成临时变量</p>
+<ul>
+<li>实参类型正确，但不是左值</li>
+<li>实参类型不正确，但可以转换成正确的类型</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1)</span></span>;<br><span class="hljs-built_in">fun</span>(<span class="hljs-number">10</span>);<span class="hljs-comment">//类型正确，但不是左值</span><br><span class="hljs-built_in">fun</span>(x + <span class="hljs-number">10</span>);<span class="hljs-comment">//与上一种情况一样，会生成临时变量</span><br><span class="hljs-built_in">fun</span>((<span class="hljs-type">double</span>)<span class="hljs-number">10.5</span>);<span class="hljs-comment">//类型不正确，但可以转换成正确的类型</span><br></code></pre></td></tr></table></figure>
+<p>总结一下就是，对于形参为 const
+引用的函数，如果实参类型不匹配，编译器会生成临时变量使得形参的引用指向该临时变量，这里与按值传递就没有区别了</p>
+<h3 id="引用与继承">引用与继承</h3>
+<p>继承实际上就是派生类具有一些基类的性质。在引用这里，当一个函数是以基类引用作为形参时，<strong>在传入的实参部分可以是基类，也可以是派生类</strong></p>
+<p>举一个简单的例子是：ofstream 是 ostream
+的派生类，当函数的形参部分写的是 ostream&amp; 时，我既可以传入 ostream
+类型的左值，也可以传入 ofstream 类型的左值</p>
+<h2 id="函数重载">函数重载</h2>
+<p>函数发生重载的关键是函数的参数列表——也称为函数的特征标（function
+signature），只要两个函数的参<strong>类型</strong>与<strong>数目</strong>不同，那么它们就可以发生重载。</p>
+<ul>
+<li>C++不会依据变量名来发生函数重载</li>
+<li>C++不会依据返回值类型来发生函数重载</li>
+</ul>
+<p>我们来看下面的几个函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">long</span> a, <span class="hljs-type">int</span> b)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">double</span> a, <span class="hljs-type">int</span> b)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>当我调用 fun( (unsigned int)10, 5 )
+时，它不与任何一个函数原型相匹配。当出现没有原型与之匹配时，C++会尝试使用<strong>标准类型转换</strong>强制进行匹配。</p>
+<p>放在这个例子当中，10可以被转换成三种不同的类型，这将分别对应三种不同的接口。因此在这种情况下，C++会拒绝这种函数调用，将其视为错误</p>
+<p>有一点需要注意的是，编译器在检查特征标时，会将<em><strong>类型引用</strong>和<strong>类型</strong>视为同一个特征标</em>，即不能通过引用来发生重载。考虑下面的例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">int</span> a)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; a)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>当我调用 fun(10) 时，确实会走入不同的接口，但是当我调用 fun(a)
+时，两个接口都可以使用，这样就会导致错误，因此我们应当禁止这种行为的发生。</p>
+<p>函数的形参部分是否含有 const 是可以发生重载的，原因在于<strong>将
+const 对象的值赋给 non-const 对象是合法的，但将 non-const 对象的值赋给
+const 对象则是非法的</strong></p>
+<p>实际上，我们可以通过默认参数的形式来替换掉函数重载，这样只需要写一份代码，编译时也只需要分配一份内存。但如果参数的类型不一致，那就乖乖地用函数重载吧</p>
+<h2 id="函数模板">函数模板</h2>
+<p>函数模板是允许重载的，并且<strong>模板参数不一定非得是模板参数类型</strong>，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp;a, T&amp;b, <span class="hljs-type">int</span> c)</span></span>;<span class="hljs-comment">//最后一个参数类型可以不是模板参数类型</span><br></code></pre></td></tr></table></figure>
+<p>当然，模板是有其局限性的。由于模板参数类型可以代表所有的类型，但有些类型可能并不支持一些运算（例如
+class
+就不支持+）。当然，C++允许运算符重载，这是一种解决办法，但这里要介绍另一种——为特定类型提供具体化模板</p>
+<h3 id="显示具体化">显示具体化</h3>
+<p>首先有以下三点原则：</p>
+<ul>
+<li>对于给定的函数名，可以有其非模板函数，模板函数，显示具体化模板函数及其重载版本</li>
+<li>显示具体化要以 template&lt;&gt; 开头，并在参数部分指出其类型</li>
+<li>非模板函数优先于常规模板函数和具体化模板函数，具体化模板函数优先于常规模板函数</li>
+</ul>
+<p>假设我们有一个 class ：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">KA</span> &#123;...&#125;;<br></code></pre></td></tr></table></figure>
+<p>对于上面的 swap 函数，其显示具体化模板为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span>;<span class="hljs-comment">//常规模板</span><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-type">void</span> <span class="hljs-built_in">swap</span>&lt;KA&gt;(KA&amp; a, KA&amp; b);<span class="hljs-comment">//具体化模板</span><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(KA&amp; a, KA&amp; b)</span></span>;<span class="hljs-comment">//也可以写出这样</span><br></code></pre></td></tr></table></figure>
+<h3 id="实例化与具体化">实例化与具体化</h3>
+<p>在代码中包含函数模板本身<strong>并不会生成函数定义</strong>，他只是一个用于<strong>生成函数定义的方案</strong>。当编译器用模板为特定的类型生成函数定义时，得到的是模板实例（这里编译器为自定义类型
+KA 生成的函数定义称为<strong>模板实例</strong>，该实例使用 KA
+类型）。<strong>模板并非函数定义，但使用 int
+的模板实例是函数定义</strong>。</p>
+<p><strong>编译器之所以知道需要为该类型生成对应的函数定义，是因为程序在调用模板函数时提供了具体的类型，因此也称这种实例化方式为隐式实例化</strong></p>
+<p>简单来说，隐式实例化是<strong>用该函数模板来生成特定类型的函数定义，该类型来自于函数调用</strong>。既然有隐式实例化，那么自然也有显示实例化。这意味着可以直接命令编译器创建特定的类型，其语法是——在原函数模板的基础上指定其类型，并在最前面加上
+template</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span>;<span class="hljs-comment">//函数模板的声明</span><br><br><span class="hljs-keyword">template</span> <span class="hljs-type">void</span> <span class="hljs-built_in">Swap</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-type">int</span>&amp; a, <span class="hljs-type">int</span>&amp; b);<span class="hljs-comment">//显示实例化的声明</span><br></code></pre></td></tr></table></figure>
+<p>看到上述声明后，编译器将会<strong>用函数模板来生成一个使用 int
+类型的实例</strong>，再说一次，是用函数模板来生成一个使用 int
+类型的实例。</p>
+<p>我们一般会<strong>将显示实例化的声明放在头文件内</strong></p>
+<p>于显示实例化不同的是，显示具体化使用的是下面两个<strong>等价</strong>声明</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-type">void</span> <span class="hljs-built_in">Swap</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-type">int</span>&amp; a, <span class="hljs-type">int</span>&amp; b);<br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Swap</span><span class="hljs-params">(<span class="hljs-type">int</span>&amp; a, <span class="hljs-type">int</span>&amp; b)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>区别在于，这两个声明的意思是：<strong>不要使用模板来生成对应的函数定义，而是使用专门为
+int
+类型显示定义的函数定义</strong>。看到区别了吗？显示具体化直接绕过了通过模板生成函数定义这一步骤。显示具体化的
+template 后面会带有 &lt;&gt; ，而显示实例化则没有。</p>
+<ul>
+<li>注：不允许在一个文件内同时出现同一类型的显示具体化和显示实例化</li>
+</ul>
+<p>隐式实例化、显示具体化、显示实例化总称为具体化</p>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">template</th>
+<th style="text-align: center;">隐式实例化</th>
+<th style="text-align: center;">显示实例化</th>
+<th style="text-align: center;">显示具体化</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">template<typename t> void Swap(T&amp; a,
+T&amp;b)</typename></td>
+<td style="text-align: center;">Swap(a, b) ( a, b is int )</td>
+<td style="text-align: center;">template void Swap<char>(char&amp; a,
+char&amp; b)</char></td>
+<td style="text-align: center;">template&lt;&gt; Swap<short>(short&amp;
+a, short&amp; b) or template&lt;&gt; Swap(double&amp; a, double&amp;
+b)</short></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Swap</span><span class="hljs-params">(T&amp; a, T&amp; b)</span></span>;<span class="hljs-comment">//其他类型走这条，隐式实例化</span><br><span class="hljs-keyword">template</span> <span class="hljs-type">void</span> <span class="hljs-built_in">Swap</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-type">int</span>&amp; a, <span class="hljs-type">int</span>&amp; b);<span class="hljs-comment">//这玩意只是声明，强制编译器用模板来生成 int 实例</span><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-type">void</span> <span class="hljs-built_in">Swap</span>&lt;<span class="hljs-type">short</span>&gt;(<span class="hljs-type">short</span>&amp; a, <span class="hljs-type">short</span>&amp; b);<span class="hljs-comment">//short 类型走这条，显示具体化</span><br></code></pre></td></tr></table></figure>
+<p>我们来进一步区分这三者</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function">T <span class="hljs-title">Lesser</span><span class="hljs-params">(<span class="hljs-type">const</span> T&amp; a, <span class="hljs-type">const</span> T&amp; b)</span><span class="hljs-comment">//函数模板</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;Template&quot;</span> &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> a &lt; b ? a : b;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Lesser</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; a, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; b)</span><span class="hljs-comment">//函数重载</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;Overload&quot;</span> &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> a &lt; b ? a : b;<br>&#125;<br><br><span class="hljs-keyword">template</span> <span class="hljs-type">short</span> <span class="hljs-built_in">Lesser</span>&lt;<span class="hljs-type">short</span>&gt;(<span class="hljs-type">const</span> <span class="hljs-type">short</span>&amp; a, <span class="hljs-type">const</span> <span class="hljs-type">short</span>&amp; b);<span class="hljs-comment">//显示实例化声明，放在头文件</span><br><br><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">Lesser</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">double</span>&amp; a, <span class="hljs-type">const</span> <span class="hljs-type">double</span>&amp; b)</span><span class="hljs-comment">//显示具体化</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;Specialization&quot;</span> &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> a &lt; b ? a : b;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">10</span>;<br>	<span class="hljs-type">short</span> n = <span class="hljs-number">1</span>, m = <span class="hljs-number">2</span>;<br>	<span class="hljs-type">double</span> x = <span class="hljs-number">3</span>, y = <span class="hljs-number">6</span>;<br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>(a, b) &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>(n, m) &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>(x, y) &lt;&lt; endl;<br><br>	cout &lt;&lt; Lesser&lt;&gt;(a, b) &lt;&lt; endl;<span class="hljs-comment">//前两个函数模板</span><br>	cout &lt;&lt; Lesser&lt;&gt;(n, m) &lt;&lt; endl;<br>	cout &lt;&lt; Lesser&lt;&gt;(x, y) &lt;&lt; endl;<span class="hljs-comment">//显示具体化</span><br><br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>&lt;<span class="hljs-type">int</span>&gt;(a, b) &lt;&lt; endl;<span class="hljs-comment">//全部都是函数模板</span><br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>&lt;<span class="hljs-type">int</span>&gt;(n, m) &lt;&lt; endl;<br>	cout &lt;&lt; <span class="hljs-built_in">Lesser</span>&lt;<span class="hljs-type">int</span>&gt;(x, y) &lt;&lt; endl;<span class="hljs-comment">//三者都是显示具体化，这是因为指定了模板参数类型</span><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果我在调用的时候<strong>指定了参数类型，那么就是显示实例化，如果没有，则为隐式实例化</strong>。</p>
+<h3 id="decltype-和-后置返回类型均为c11">decltype 和
+后置返回类型（均为C++11）</h3>
+<p>考虑下面这个问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T1, <span class="hljs-keyword">typename</span> T2&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(T1 a, T2 b)</span></span><br><span class="hljs-function"></span>&#123;<br>    x = a + b;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>那么 x 应该为什么类型？</p>
+<p>显然，在模板参数不确定的时候，我们根本没办法来判断。</p>
+<p>这个时候， decltype 则解决了这个问题，我们可以这么使用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> x;<br><span class="hljs-keyword">decltype</span>(x) y<br></code></pre></td></tr></table></figure>
+<p>这里表示，<strong>使 y 的类型跟 x
+的相同</strong>。对于上面那个问题，我们可以这么写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">decltype</span>(a + b) x = a + b;<span class="hljs-comment">//这表示 x 的类型与 a + b 相同</span><br></code></pre></td></tr></table></figure>
+<p>现有声明：<em>decltype ( expression ) var</em> ，则 var
+的类型按如下原则确定</p>
+<ul>
+<li>如果 expression 是一个没有括号括起的标识符，则 var
+的类型与标识符的类型相同，包括 const 等限定符</li>
+<li>如果 expression 是一个函数调用，则 var 的类型与函数的返回值相同
+<ul>
+<li><strong>这里只是检查函数的返回类型，不会实际调用函数</strong></li>
+</ul></li>
+<li>如果 espression 是一个左值，则 var 为指向其类型的引用</li>
+<li>如果前面的条件都不满足，则 var 的类型与 expression 相同</li>
+</ul>
+<p>对于上面那个函数，我们目前解决的是 x
+的类型的问题，但该函数的返回值仍然不确定，但可以明确的是，返回值的类型一定与
+x 相同，而 x 的类型又依靠 a + b 。</p>
+<p>C++11提供一种叫后置返回类型的操作，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> -&gt; <span class="hljs-type">double</span></span><br></code></pre></td></tr></table></figure>
+<p>这样我们可以将返回值的类型写在后面，而 <strong>auto
+是占位符</strong>。同理，对于上面那个问题，我们可以：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">fun</span><span class="hljs-params">(T1 a, T2 b)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(a + b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> a + b;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="内存模型与名称空间">内存模型与名称空间</h1>
+<h2 id="单独编译">单独编译</h2>
+<p>在头文件中，我们可以包含：</p>
+<ul>
+<li>函数原型</li>
+<li>使用 #define 或 const 定义的符号常量</li>
+<li>结构声明</li>
+<li>类声明</li>
+<li>模板声明</li>
+<li>内联函数</li>
+</ul>
+<p>在包含我们自己写的头文件是，要用 "" ，而不是 &lt;&gt;
+。如果是用尖括号，则编译器会去存储标准头文件的目录下查找，如果是用双引号，则编译器会先在源代码目前去查找头文件，如果找不到才会去标准头文件目录下去查找</p>
+<p>在C++中，我们需要尽可能避免多次包含头文件，具体方法如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> HHDD__ <span class="hljs-comment">//如果没有定义 HHDD__ 则会执行下面的代码（到 endif 为止）</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HHDD__</span><br><span class="hljs-comment">//...</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+<h2 id="存储持续性作用域和链接性">存储持续性、作用域和链接性</h2>
+<p>C++使用三种（C++11是4四种）不同的方案来存储数据，它们的区别在于<strong>数据保留在内存当中的时间</strong></p>
+<ul>
+<li>自动存储持续性：在函数定义中声明的变量（包括函数参数）的存储连续性为自动的。当执行完函数或代码块时，它们的内存会自动释放</li>
+<li>静态存储持续性：在函数定义外定义的变量或者用 static
+定义的变量。它们在程序运行的整个期间都存在</li>
+<li>动态存储持续性：用 new 所分配的内存将会一直存在，直到将这块内存
+delete 掉</li>
+<li>线程存储持续性（C++11）：如果变量是使用 thread_local
+声明的，则其声明周期与所属线程一样长</li>
+</ul>
+<h3 id="作用域与链接">作用域与链接</h3>
+<p><strong>作用域描述了名称在文件的多大范围内可见</strong>。如，我在一个源文件的中间定义了一个变量，那么从中间到结尾该变量均可用，这里也是该变量的作用域，而从文件开头到中间则不是它的作用域</p>
+<p><strong>链接性描述了名称如何在不同文件间共享</strong>。<strong>链接性为外部的名称可以在文件间共享，链接性为内部的名称只能由该文件当中的函数共享</strong>。对于上面那个例子，该变量在当前源文件中使用的范围，这关乎它的作用域，而其他文件是否可以使用该变量则关乎它的链接性</p>
+<ul>
+<li>全局变量的作用域为其定义位置到文件结尾</li>
+<li>在类中声明的成员的作用域为整个类</li>
+<li>在名称空间中声明的变量的作用域为整个名称空间（全局作用域可以看出名称空间作用域的特例）</li>
+<li>函数的作用域可以是整个类或者整个名称空间，但不能是局部的</li>
+</ul>
+<h3 id="自动存储持续性">自动存储持续性</h3>
+<p>在函数中声明的变量和函数参数的<strong>存储持续性为自动</strong>，<strong>作用域为局部</strong>、<strong>不具备链接性</strong>。我们直接看下面这个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> x = <span class="hljs-number">5</span>;<br>	cout &lt;&lt; x &lt;&lt; endl;<br>	cout &lt;&lt; (<span class="hljs-type">int</span>*)&amp;x &lt;&lt; endl;<br>	&#123;<br>		<span class="hljs-type">int</span> x = <span class="hljs-number">10</span>;<br>		cout &lt;&lt; x &lt;&lt; endl;<br>		cout &lt;&lt; (<span class="hljs-type">int</span>*)&amp;x &lt;&lt; endl;<br>	&#125;<br>	cout &lt;&lt; x &lt;&lt; endl;<br>	cout &lt;&lt; (<span class="hljs-type">int</span>*)&amp;x &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>注：花括号可以单独使用，其括起来的部分为一个代码块</li>
+</ul>
+<p>在进入 main 函数的时候，定义了一个 x
+。在进入代码块的时候，又定义了一个 x 。后定义的 x
+由于处在代码块中，它会遮掩（替换）掉原来的 x
+（控制流目前在代码块中，由于遮掩的存在导致程序看不到原来的那个 x
+，只能看到在代码块内定义的 x
+，这便是<strong>遮掩</strong>）。也就是说，这个 x 并不是对原本 x
+的赋值而是重新开辟了一块内存。</p>
+<p><strong>两个 x
+的作用域不同，因此它们存储的位置也不一样（尽管名称相同，但同一时间只会使用一个，因为存在遮掩），而如果它们的作用域相同，则后面的
+x 为赋值</strong></p>
+<p>在C++11中， auto
+用于自动类型推断，在以前版本的C++与C中，它用于显示指出变量为自动存储</p>
+<p>在C++11中，register
+用于显示指出变量是自动的。使用它的原因是：程序员想使用一个自动变量，这个变量的名称可能与外部变量相同。register
+原先的用法为：建议编译器用寄存器来存储自动变量</p>
+<h3 id="静态持续变量">静态持续变量</h3>
+<p>原先我们对于变量类型的分类主要是：全局变量、局部变量、静态变量（这里我们不讨论动态内存分配的变量）</p>
+<p>实际上，这么讲是不对的，真正的分类应该只有两种：<strong>自动变量</strong>和<strong>静态变量</strong></p>
+<p>关于自动变量，前面已经有过讨论了。<strong>作用域为局部</strong>，<strong>无链接性</strong>。</p>
+<p>我们来讨论静态变量。</p>
+<p>C++
+为静态变量提供了三种链接性，而静态变量的作用域则取决于其链接性。具体如下，括号内为作用域</p>
+<ul>
+<li>外部链接性（可在文件中访问）</li>
+<li>内部链接性（仅允许在当前文件内访问）</li>
+<li>无链接性（只能在当前函数或代码块中访问）</li>
+</ul>
+<p>由于静态类型的变量数目在整个程序执行期间都是不变的，因此编译器会分配固定的内存来存储它们，<strong>它们在整个程序执行期间一直存在</strong>。另外，<strong>如果没有显示初始化静态变量，它们会被编译器设置为
+0 </strong>（也就是零初始化）。</p>
+<p>我们举例说明如何创建这三种类型的静态变量</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<span class="hljs-comment">//静态变量，外部链接性。等同于全局变量，其他文件也可以访问</span><br><span class="hljs-type">static</span> <span class="hljs-type">int</span> b = <span class="hljs-number">10</span>;<span class="hljs-comment">//静态变量，内部链接性。只能在当前文件访问</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> c = <span class="hljs-number">10</span>;<span class="hljs-comment">//静态变量，无链接性。只能在代码块内部或函数内部进行访问</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>不难看出：想要创建链接性为外部的静态变量，<strong>需要在代码块外面声明它</strong>；想要创建链接性为内部的静态变量，<strong>需要在代码块外部声明它并加上
+<code>static</code>
+进行修饰</strong>；想要创建无链接性的静态变量，<strong>需要在代码块内部声明它并加上
+<code>static</code> </strong>。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">四种变量的存储方式</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">存储描述</th>
+<th style="text-align: center;">持续性</th>
+<th style="text-align: center;">作用域</th>
+<th style="text-align: center;">链接性</th>
+<th style="text-align: center;">如何声明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">自动</td>
+<td style="text-align: center;">自动</td>
+<td style="text-align: center;">局部</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">代码块内部或函数内部</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">静态、无链接性</td>
+<td style="text-align: center;">静态</td>
+<td style="text-align: center;">代码块或函数内</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">在代码块内部或函数内部加上
+<code>static</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">静态、内部链接性</td>
+<td style="text-align: center;">静态</td>
+<td style="text-align: center;">当前文件内</td>
+<td style="text-align: center;">内部</td>
+<td style="text-align: center;">外代码块外声明并加上
+<code>static</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">静态、外部链接性</td>
+<td style="text-align: center;">静态</td>
+<td style="text-align: center;">所有文件</td>
+<td style="text-align: center;">外部</td>
+<td style="text-align: center;">在代码块外部声明即可</td>
+</tr>
+</tbody>
+</table>
+<p>关于静态变量初始化的部分，我们在这里小提一嘴。</p>
+<p>静态变量的零初始化<strong>会将零强制类型转换成合适的类型</strong>。并且，零初始化和常量表达式初始化统称为<strong>静态初始化</strong>，这意味着在它们是在编译阶段就已经被初始化了的，而<strong>动态初始化</strong>则意味着需要在运行阶段进行初始化。</p>
+<p>除此之外，所有的静态变量会先零初始化，<strong>而不管该变量是否被显式地初始化过</strong>。简单来说就是会先进行零初始化，在进行静态或动态初始化。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> a;<span class="hljs-comment">//直接就是零初始化</span><br><span class="hljs-type">int</span> b = <span class="hljs-number">10</span>;<span class="hljs-comment">//先零初始化，然后再静态初始化</span><br></code></pre></td></tr></table></figure>
+<h3 id="静态持续性外部链接性外部变量也称为全局变量">静态持续性、外部链接性（外部变量，也称为全局变量）</h3>
+<p>链接性为外部的变量称为外部变量，存储持续性为静态，作用域为整个文件。外部变量是在函数外面定义的，因此它可以在该定义往后或者其他文件当中使用。也因此外部变量也称为全局变量</p>
+<p>首先，C++
+有「单定义规则」，即变量只能有一次定义；另一方面，每个使用外部变量的文件都需要对该变量进行声明</p>
+<p>为了满足这种需求，C++ 提供了两种变量声明</p>
+<ul>
+<li>定义声明，简称定义，它<strong>会给变量分配存储空间</strong></li>
+<li>引用声明，简称声明，它<strong>不会给变量分配存储空间</strong>，因为它只会引用已有的变量</li>
+</ul>
+<p>引用声明使用关键字 extern
+，并且<strong>不能进行初始化</strong>；否则此声明为定义，会给变量分配存储空间</p>
+<p>如果需要在多个文件当中使用外部变量，只需要在一个文件当中进行定义，在其他文件当中使用
+extern 进行声明即可</p>
+<p>如果需要定义一个全局变量，最好是在源文件当中定义，在头文件当中声明（加
+extern），这是因为源文件和头文件实际上是一个编译单元</p>
+<p>值得注意的是，如果我对一个全局变量加上了 const
+，<strong>那么它的链接性将会变为内部</strong>，即</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<span class="hljs-comment">//等价于 const static int a = 10;</span><br></code></pre></td></tr></table></figure>
+<p>这么做是有原因的，我们通常不会将全局变量的定义放到头文件，但我们会将常量放到头文件。如果这个常量是外部链接性，那么就相当于是把一个全局变量放到了头文件，这是会出错的</p>
+<p>如果处于某种原因，需要将一个常量的链接性改为外部，则我们可以通过
+extern 来覆盖掉原先的内部链接性，即</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">extern</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<p>那么，该变量就会跟全局变量一样，只不过不允许更改。在需要使用的文件中要加上
+extern 。当然，我们也可以在源文件当中定义，在头文件当中声明（加 extern
+）</p>
+<h3 id="静态持续性内部链接性static-修饰的全局变量">静态持续性，内部链接性（static
+修饰的全局变量）</h3>
+<p>将 static
+关键字用于作用域为整个文件的外部变量时，该变量的链接性会变为内部。<strong>链接性为内部的变量只能在其所属文件内使用</strong></p>
+<p>链接性为外部的静态变量可以使得<strong>在不同文件当中共享数据</strong>，链接性为内部的静态变量可以使得<strong>在同一文件的不同函数之间共享数据</strong></p>
+<p>如果链接性为外部的变量被 static
+修饰，这样就不用担心其名称与其他文件中作用域为整个文件的变量名冲突</p>
+<h3 id="静态持续性无链接性static-修饰的局部变量">静态持续性，无链接性（static
+修饰的局部变量）</h3>
+<p>在函数中用 static
+修饰局部变量会使得该变量只在代码块中可以，当控制流离开代码块时<strong>该变量依旧存在</strong></p>
+<p>另外，如果初始化了静态局部变量，那么程序只会在启动时进行一次初始化，以后再调用这个函数将不会初始化它</p>
+<h3 id="函数和链接性">函数和链接性</h3>
+<p>C++
+不允许在一个函数中定义另一个函数，因此所有的函数存储持续性自动为静态，在整个程序运行期间都存在。</p>
+<p>默认情况下，函数的链接性为外部，即函数可以在文件当中共享（这一点与全局变量一致，加
+extern 就行）</p>
+<p>当然，在函数前面加上 static
+后其链接性变为内部（在函数的声明和定义部分都要加），该函数只能在当前文件当中使用</p>
+<p>与变量一样，<strong>链接性为内部的函数会遮掩链接性为外部的同名函数</strong>。</p>
+<p>变量的单定义规则适用于<strong>非内联函数</strong>，即该函数只能有一个定义，可以有很多个声明（定义在源文件，声明在头文件，做法跟全局变量很像啊）</p>
+<p>对于内联函数，<strong>单定义规则并不适用</strong>。因此我们可以<strong>将内联函数的定义放到头文件当中</strong>。这样，包含了所有头文件的源文件当中都会有一份内联函数的定义。需要注意的是，<strong>同一个内联函数的所有定义必须相同</strong>（一个内联函数可以写在不同的头文件当中，但这些定义<strong>必须</strong>相同）</p>
+<h2 id="名称空间">名称空间</h2>
+<p>在讨论名称空间之前，我们需要知道两个概念</p>
+<ul>
+<li>声明区域
+<ul>
+<li>声明区域是可以声明该对象（可以是变量，也可以是函数）的区域</li>
+<li>例如，全局变量的声明区域为其所在文件，局部变量的声明区域为其所在的代码块</li>
+</ul></li>
+<li>潜在作用域
+<ul>
+<li>潜在作用域从其声明点开始，一直到声明区域的结尾。显然，潜在作用域的范围小于声明区域的范围</li>
+</ul></li>
+</ul>
+<p>我们在上面提到过作用域的概念。实际上，<strong>变量对于程序而言是可见的范围称为作用域</strong>。因此，作用域的范围<strong>小于等于</strong>潜在作用域的范围。</p>
+<p>C++
+新增加了这样一种功能，即通过定义一个新的声明区域来创建命名的名称空间，这样做的目的之一是提供了一个声明名称的区域。</p>
+<p>一个名称空间的名称不会与另一个名称空间中的相同名称起冲突，同时允许程序的其他部分使用名称空间中声明的东西。</p>
+<p><strong>名称空间可以是全局的，也可以声明在另一个名称空间内</strong>，但不能声明于代码块中。<strong>因此默认情况下，名称空间的链接性为外部</strong>（除非引用了常量）。</p>
+<p>除了用户定义的名称空间外，还存在一个名称空间——全局名称空间。它对应文件级声明区域，全局变量会默认放在此名称空间内。</p>
+<p>名称空间是开放的，<strong>既可以将名称加入到已有的名称空间内，也可以在文件后面或者另一个文件中再次使用该名称空间来提供相关的定义</strong>。</p>
+<p>名称空间当中的名称，其<strong>存储持续性为静态</strong>，<strong>链接性为内部</strong>（只在名称空间内部可用）。也就是说，名称空间内部的<strong>变量</strong>一定会有<strong>零初始化</strong>。</p>
+<h3 id="名称空间的使用">名称空间的使用</h3>
+<p>未被装饰的名称（如 cout）称为未限定名称，被装饰的名称（如
+std::cout）称为限定名称。</p>
+<p>我们不希望每次使用名称都对其进行限定，因此 C++
+提供了两种机制来简化名称空间的使用：</p>
+<ul>
+<li>using 声明</li>
+</ul>
+<p>using
+声明使特定的标识符可用，它可<strong>将特定的名称添加到它所属的声明区域中</strong>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> Test<br>&#123;<br>	<span class="hljs-type">int</span> n;<br>&#125;<br><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">using</span> Test::n;<span class="hljs-comment">//可用将 Test 添加到使用这条语句对应的声明区域中</span><br>	n = <span class="hljs-number">10</span>;  <span class="hljs-comment">//定义 Test::n，这里的 n 会直接遮掩掉全局变量 n </span><br>	::n = <span class="hljs-number">5</span>; <span class="hljs-comment">//定义全局变量 n</span><br>    		 <span class="hljs-comment">//直接以 :: 开头说明是在全局名称空间查找</span><br>	cout &lt;&lt; n &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; ::n &lt;&lt; endl;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>相应地，在函数外面使用 <code>using Test::n</code>
+，可用将名称添加到全局名称空间中。</p>
+<ul>
+<li>using 编译指令</li>
+</ul>
+<p>using 编译指令使名称空间中所有地名称都可用。</p>
+<p>在函数中使用 using 编译指令，使得该名称在函数当中可用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> Test<br>&#123;<br>	<span class="hljs-type">int</span> n;<br>&#125;<br><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Test;<br><br>	n = <span class="hljs-number">10</span>;<span class="hljs-comment">//这样子会起冲突</span><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>但如果用 using 声明的话就没问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">using</span> Test::n;<br><br>	n = <span class="hljs-number">10</span>;<span class="hljs-comment">//using Test::n insted of global n</span><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当然，这两种添加指令有可能会造成名称其冲突，这样的话还是老老实实地用限定名称吧</p>
+<h3 id="两种导入方式的比较问题暂留">两种导入方式的比较（问题暂留）</h3>
+<p>这个地方说实话我还不太懂，先留着</p>
+<p>假设名称空间和声明区域定义了相同的名称。如果试图用 using
+声明来导入名称的话，会<strong>导致两个名称起冲突</strong>，从而出错。如果试图用
+using
+编译指令来导入名称的话，<strong>局部的名称会覆盖掉名称空间的名称</strong>。</p>
+<hr>
+<p>需要补充的是，未命名的名称空间中声明的名称就跟持续性为静态，链接性为内部的名称一样，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">static</span> <span class="hljs-type">int</span> count;<br><br><span class="hljs-comment">//等价于</span><br><span class="hljs-keyword">namespace</span><br>&#123;<br>    <span class="hljs-type">int</span> count;<span class="hljs-comment">//完全等价啊，这东西也是静态持续性，一定会有零初始化</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="类继承">类继承</h1>
+<p>派生类具有以下特征</p>
+<ul>
+<li>派生类对象存储了基类数据成员（<strong>派生类继承了基类的实现</strong>）</li>
+<li>派生类对象可以使用基类的方法（<strong>派生类继承了基类的接口</strong>）</li>
+</ul>
+<p>派生类不能访问基类的 private
+成员，<strong>只能通过基类方法进行访问</strong>，这也是为什么派生类也会存在基类当中的
+private 成员</p>
+<ul>
+<li>基类当中的变量通常是 private
+权限，它们的赋值主要依靠对外提供的方法（构造函数等）。派生类继承过了之后也同样只能靠这些方法来进行访问这些
+private 权限的变量。</li>
+<li><strong>派生类的构造函数必须使用基类的构造函数</strong>，通常是在派生类构造函数的初始化列表调用基类的构造函数。
+<ul>
+<li>如果在派生类的构造函数（默认构造、有参构造、拷贝构造都一样）处没有调用基类的构造函数，那么编译器会<strong>自动调用基类的默认构造函数</strong></li>
+</ul></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Base</span>(<span class="hljs-type">int</span> rhs)<br>		: <span class="hljs-built_in">x</span>(rhs)<br>	&#123;<br><br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> x;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Derived</span>(<span class="hljs-type">int</span> rh, <span class="hljs-type">int</span> ch)<br>		: <span class="hljs-built_in">Base</span>(ch), <span class="hljs-built_in">a</span>(rh)<br>	&#123;<br><br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> a;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>对于一个基类及其派生类，我们通常会将<strong>它们的声明全部放在同一个头文件</strong>，<strong>它们的实现全部放在同一个源文件</strong></p>
+<p>基类的指针或引用可以指向派生类对象，但是<strong>该指针或引用只能调用基类的方法</strong>，<strong>不能调用子类的方法</strong>（不涉及虚函数并且基类方法为
+public 权限）</p>
+<ul>
+<li>基于这一点，我们可以用派生类对象来对基类进行赋值</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">Derived <span class="hljs-title">d</span><span class="hljs-params">(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>)</span></span>;<br><span class="hljs-function">Base <span class="hljs-title">b</span><span class="hljs-params">(d)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>这是因为基类的拷贝构造函数的声明为：<code>Base(const Base&amp;)</code>
+，<strong>形参部分为基类的引用，它可以指向一个派生类的对象</strong>。在这里指向的派生类对象是
+d
+。<strong>因此可以通过派生类对象来对基类进行赋值</strong>（<em>copy</em>
+构造和 <em>copy assignment</em> 操作符都一样）</p>
+<h2 id="静态联编和动态联编静态绑定和动态绑定">静态联编和动态联编（静态绑定和动态绑定）</h2>
+<p>将源代码中的函数调用解释为执行特定的函数代码块被称为函数名联编</p>
+<p>编译器对于非虚方法均是使用静态联编。使用静态联编时，通过该指针调用的函数<strong>就是它所定义的类型</strong>对应的函数（该指针是基类类型，那么它只能调用基类<strong>拥有</strong>的函数；该指针是子类类型，就只能调用子类<strong>拥有</strong>的函数），这在编译阶段就已经确定了</p>
+<p>编译器对于虚方法则使用动态联编。使用动态联编时，通过该指针调用的函数<strong>跟指针所指的对象的类型有关</strong>，需要在程序运行时来确定该对象的类型</p>
+<h2 id="虚函数工作原理">虚函数工作原理</h2>
+<p>通常，编译器对于虚函数的处理方法是：会先给每个对象添加一个隐藏成员。隐藏成员是一个指向函数地址数组的指针，这个数组称为虚函数表（
+vbtl ）。vbtl 中存储了类当中声明的虚函数的地址。</p>
+<p>例如，<strong>每个</strong>基类对象中包含一个指针，这个指针指向的数组包含了基类中所有虚函数的地址。<strong>每个</strong>派生类对象也会包含一个指向虚函数表的指针，不过这两个指针的值并不相同。</p>
+<p>如果派生类从新定义了这个虚函数，那么会将新定义的虚函数的地址<strong>替换掉</strong>原来虚函数的地址；如果没有从新定义，则用原来的地址。</p>
+<p>需要注意的是，无论有多少个虚函数，对象当中仅仅是添加了一个指针的大小，<strong>改变大小的是虚函数表</strong>。除此之外，这个虚函数表当中地址的排列是按照虚函数声明的顺序进行排列的。</p>
+<p>对于虚函数，我们需要补充几点：</p>
+<ul>
+<li>构造函数不能是虚函数
+<ul>
+<li>派生类是不会继承基类的构造函数的，所以在构造函数前面加 virtual
+没有意义</li>
+</ul></li>
+<li>析构函数在做基类的时候一定要加上 virtual</li>
+<li>友元函数不能是虚函数，因为友元不是成员函数，只有成员函数才能是虚函数</li>
+<li><strong>如果基类的虚函数的返回值是基类类型，那么对应的派生类的此函数的返回类型可以是派生类</strong>，这一例外只适用于返回值，不适用于参数</li>
+<li>如果基类声明被重载了，那么派生类需要重新定义所有的基类函数</li>
+</ul>
+<h1 id="使用类">使用类</h1>
+<h2 id="关于运算符重载的一点说明">关于运算符重载的一点说明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Test a, b;<br>Test c = a + b;<br><span class="hljs-comment">//等价于</span><br>Test c = a.<span class="hljs-built_in">operator</span>(b);<span class="hljs-comment">//其中 a 是调用对象， b 是作为参数传递的对象</span><br><span class="hljs-comment">//重载定义</span><br>Test <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1) <span class="hljs-type">const</span><br>&#123;<br>    Test tmp;<br>    <span class="hljs-comment">//相关定义</span><br>    <span class="hljs-keyword">return</span> tmp;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>对于有两个操作数的运算符重载，运算符左边的是<strong>调用对象</strong>，右边的是作为<strong>参数传递的对象</strong>。</p>
+<p>大多数运算符可以通过成员函数和全局函数进行重载，如：</p>
+<p>成员函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Test</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1);<br><br>	Test <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1);<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> num;<br>&#125;;<br><br>Test::<span class="hljs-built_in">Test</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1)<br>	:<span class="hljs-built_in">num</span>(e1)<br>&#123;<br><br>&#125;<br><br>Test Test::<span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1)<br>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">Test</span>(<span class="hljs-keyword">this</span>-&gt;num + e1.num);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Test::print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-keyword">this</span>-&gt;num &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>全局函数重载有一个问题是：一般来说我们类当中的成员属性是私有的，而用全局函数重载就属于类外访问。只能是类提供公共的接口供外部调用这些资源，或者为全局函数声明友元，<strong>不可以通过
+<code>operator</code>
+来隐式转换获取这些资源</strong>。下面就是个错误的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Test</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1);<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br><br>	<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> num;<br>&#125;;<br><br>Test::<span class="hljs-built_in">Test</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1)<br>	:<span class="hljs-built_in">num</span>(e1)<br>&#123;<br><br>&#125;<br><br><span class="hljs-function">Test::<span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;num;<br>&#125;<br><br>Test <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1, <span class="hljs-type">const</span> Test&amp; e2)<br>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">Test</span>(e1 + e2);<span class="hljs-comment">//通过隐式转换获取底层资源</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里原本的想法是 <code>e1</code> 和 <code>e2</code> 可以被隐式转换成
+<code>int</code> 类型，然后两个 <code>int</code> 类型进行相加最后再执行
+<code>Test</code> 的构造函数。</p>
+<p>额。。。然后现实是 <code>e1</code> 与 <code>e2</code>
+并不会被隐式类型转换，而是会在这里一直调用 <code>operator+</code>
+进而导致死循环。</p>
+<p>也就是说，通过全局函数重载运算符的话，<strong>一定要在类的类部提供外界可以访问其底层资源的方法</strong>，<strong>或者为该全局函数声明友元</strong>。</p>
+<h3 id="运算符重载的限制">运算符重载的限制</h3>
+<ol type="1">
+<li><p>重载后的运算符必须<strong>至少有一个操作数是用户定义的类型</strong>。</p>
+<ul>
+<li>比如对于一个特殊的自定义类型 <code>Test</code>
+，<code>operator+</code> 的实际意义是让两个 <code>Test</code>
+类型的对象相减。如果违背这一条，就相当于承认可以让两个 <code>int</code>
+类型的数据在相加时实际执行的操作是相减！！那不是乱套了吗</li>
+</ul></li>
+<li><p>使用重载运算符时<strong>不能违反该运算符原来的语法规则</strong>，相应地，<strong>运算符的优先级也不会改变</strong></p>
+<ul>
+<li>比如取模运算符 <code>%</code>
+的操作数必须是两个，你不能将该操作符重载成使用一个操作数
+<code>% 5</code> 。这是什么东西？？？</li>
+</ul></li>
+<li><p>不能创建新的运算符</p>
+<ul>
+<li>比如不能定义 <code>**</code> 为求幂的操作</li>
+</ul></li>
+<li><p>不能重载下面的运算符</p>
+<ul>
+<li><code>sizeof</code> 运算符</li>
+<li><code>.</code> 类成员运算符</li>
+<li><code>.*</code> 类成员指针运算符（我也不知道这是啥）</li>
+<li><code>::</code> 作用域解析运算符</li>
+<li><code>?:</code> 条件运算符</li>
+<li><code>typeid</code> 一个 RTTI 运算符（求变量的类型，至于那个 RTTI
+，我也不知道是啥）</li>
+<li><code>const_cast</code> 、 <code>dynamic_cast</code> 、
+<code>reinterpret_cast</code> 、 <code>static_cast</code>
+等强制类型转换运算符</li>
+</ul></li>
+<li><p>以下运算符只能在成员函数中重载</p>
+<ul>
+<li><p><code>=</code> 赋值运算符</p></li>
+<li><p><code>()</code> 函数调用运算符</p></li>
+<li><p><code>[]</code> 下标运算符</p></li>
+<li><p><code>-&gt;</code> 指针访问类成员运算符</p></li>
+</ul></li>
+</ol>
+<h2 id="友元">友元</h2>
+<p>一般来说，对于 C++ 的类当中的 <code>private</code> 部分的访问只能通过
+<code>public</code> 方法这一种访问途径，这实在是有点太严格。因此 C++
+允许通过友元技术来对类当中 <code>private</code> 成员进行访问。</p>
+<p>友元有三种，即：</p>
+<ul>
+<li>友元函数</li>
+<li>友元类</li>
+<li>友元成员函数</li>
+</ul>
+<h3 id="友元函数">友元函数</h3>
+<p>通过让函数成为类的友元，<strong>可以赋予该函数拥有与类的成员函数一样的访问权限</strong>。</p>
+<p>我们来看一个问题：如果我重载了 <code>operator*</code>
+使得一个自定义类型 <code>Test</code> 可以与一个 <code>int</code>
+类型相计算，并且返回一个 <code>Test</code> 类型，那么：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Test a;<br>Test b = a * <span class="hljs-number">10</span>;<span class="hljs-comment">//这没问题，等价于 </span><br><span class="hljs-comment">//Test b = a.operator(10);</span><br>Test c = <span class="hljs-number">10</span> * a;<span class="hljs-comment">//这样不行，因为运算符左边必须是调用对象，右边是作为参数传递的对象</span><br></code></pre></td></tr></table></figure>
+<p>但直觉上第三种是没问题的，要解决这个问题，我们可以通过<strong>重载全局函数来解决</strong>。当然在这之前，就需要涉及到友元函数了。</p>
+<p>创建友元函数的第一步是将<strong>该函数的原型（也就是声明）放在类的声明中，并在前面加上
+<code>friend</code> </strong>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br>	<span class="hljs-keyword">friend</span> Test <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1, <span class="hljs-type">const</span> Test&amp; e2);<span class="hljs-comment">//这玩意应该不需要访问权限</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Test</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1);<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> num;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>这意味着以下两点：</p>
+<ul>
+<li>该函数<strong>不是这个类的成员函数</strong>，因此<strong>不可以将它当中成员函数进行调用</strong></li>
+<li>该函数<strong>虽然不是这个类的成员函数</strong>，但<strong>它拥有与这个类当中成员函数一样的访问权限</strong>。</li>
+</ul>
+<p>之后是编写定义。由于它<strong>不是成员函数</strong>，因此<strong>不能加类名限定符</strong>。另外，也不要使用
+<code>friend</code> 关键字。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Test <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> Test&amp; e1, <span class="hljs-type">const</span> Test&amp; e2)<br>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">Test</span>(e1.num + e2.num);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样之后，刚刚那个问题也一并解决了。</p>
+<p>除了用全局函数以外，我们依旧可以用友元函数来解决</p>
+<p>我们刚刚在类内重载了 <code>operator*(int)</code>
+函数，这个函数可以应对<code>自定义类型 * int</code> 的情况
+。现在，我只需要在类外重载一个
+<code>operator*(int, const Test&amp;)</code> ，这样，便可以应当
+<code>int * 自定义类型</code> 这种情况了。</p>
+<hr>
+<p>这里我们来详细说一下两种方法的优缺点：</p>
+<ul>
+<li>全局函数重载
+<ul>
+<li>这种依赖于隐式转换（如果函数的两个参数都是自定义类型的话），也就是说构造函数前面不能加
+<code>explicit</code></li>
+<li>优点是工作较少，出错机会小</li>
+<li>缺点是会增加内存开销</li>
+</ul></li>
+<li>类内函数加类外函数重载
+<ul>
+<li>优点是运行速度更快</li>
+<li>缺点是工作更多</li>
+</ul></li>
+</ul>
+<p>如果程序使用这种运算符十分频繁，则应采取第二种。如果只是偶尔使用，则采用第一种。但为了保险，也最好使用第一种（毕竟不能关掉隐式类型转换）。</p>
+<h3 id="重载-运算符">重载 &lt;&lt; 运算符</h3>
+<p>对于一个自定义类型，我们可以通过重载 &lt;&lt;
+运算符来实现对该类型的输出，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e2)<br>		: <span class="hljs-built_in">rh</span>(e1), <span class="hljs-built_in">ch</span>(e2), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">re_rh</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> rh; &#125;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">re_ch</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> ch; &#125;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> rh, ch;<br>	<span class="hljs-keyword">mutable</span> <span class="hljs-type">bool</span> Close;<br><br>	<span class="hljs-keyword">friend</span> ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="hljs-type">const</span> TP&amp; rhs);<br>&#125;;<br><br>ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="hljs-type">const</span> TP&amp; rhs)<br>&#123;<br>	os &lt;&lt; rhs.rh &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; rhs.ch &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> os;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个重载函数只能是全局的。如果该函数是局部的，那么它只能通过对象（假设
+trip 是一个 TP
+对象）来调用左移操作符，这就会出现<code>trip &lt;&lt; cout</code>
+这样显然是有问题的，因此我们必须用全局函数来重载。这样的话就势必会涉及友元。</p>
+<p>你可能会有一个问题是：为什么友元的声明是<strong>在自定义的类当中的</strong>，
+<code>ostream</code> 类当中不需要吗？</p>
+<p>emmm， 如果每一个类都需要去 <code>ostream</code>
+当中声明一个友元函数的话，这将会是一件风险极大的事情（因为你改变了标准库）</p>
+<p>实际上，我们<strong>声明友元的目的是为了访问这个类当中
+<code>private</code> 作用域下的成员</strong>，而对于
+<code>ostream</code>
+类而言，我们是将它<strong>作为一个整体来使用的，因此不需要声明友元</strong>。</p>
+<p>还有一个问题是：当我调用 <code>cout &lt;&lt; trip</code>
+时，我调用的是 <code>cout</code>
+对象本身的引用，<strong>而不是它的拷贝</strong>，因此<strong>在形参部分要加上引用</strong>。</p>
+<p>由于 <code>ofstream</code> 类是 <code>ostream</code>
+类的派生类，因此也可以将 trip 输出得到文件上，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">ofstream ofs;<br>ofs.<span class="hljs-built_in">open</span>(...);<br>ofs &lt;&lt; trip;<br></code></pre></td></tr></table></figure>
+<p>这么写不会有任何的问题，因为<strong>基类引用的形参也愿意接受一个派生类的对象</strong>。</p>
+<h3 id="类的自动转换和强制类型转换">类的自动转换和强制类型转换</h3>
+<p>我们先来复习一下 C++ 是如何处理内置类型转换的。</p>
+<p>当一个标准类型的变量赋值给另一个标准类型的变量时，如果二者的<strong>类型兼容</strong>，则
+C++ 将<strong>自动</strong>将这个值的类型转换成接收变量的类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">long</span> a = <span class="hljs-number">8</span>;<span class="hljs-comment">//int to long</span><br><span class="hljs-type">double</span> b = <span class="hljs-number">10</span>;<span class="hljs-comment">//int to double</span><br><span class="hljs-type">int</span> c = <span class="hljs-number">3.14</span>;<span class="hljs-comment">//double to int</span><br></code></pre></td></tr></table></figure>
+<p>我们不管是否会降低精度，<strong>这些都属于自动类型转换</strong>。</p>
+<p>C++ 不会自动转换类型不兼容的变量，例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span>* a = <span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<p>这个语句是非法的，因为左边是指针类型，右边是整型，二者类型并不兼容。然而，<strong>在无法自动转换时</strong>，我们可以<strong>使用强制类型转换</strong>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span>* a = (<span class="hljs-type">int</span>*)<span class="hljs-number">10</span>;<br></code></pre></td></tr></table></figure>
+<p>这个语句是否有意义暂且不谈，但它是合法的。这便是 C++
+关于内置数据类型的转换（当然还有一些关键字，不过那个我们暂且不谈）。</p>
+<p>下面，我们来看自定义数据类型的转换。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br><br>	<span class="hljs-built_in">TP</span>()<br>		:<span class="hljs-built_in">rh</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">ch</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e2 = <span class="hljs-number">0</span>)<br>		: <span class="hljs-built_in">rh</span>(e1), <span class="hljs-built_in">ch</span>(e2), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">re_rh</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> rh; &#125;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">re_ch</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> ch; &#125;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> rh, ch;<br>	<span class="hljs-keyword">mutable</span> <span class="hljs-type">bool</span> Close;<br><br>	<span class="hljs-keyword">friend</span> ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="hljs-type">const</span> TP&amp; rhs);<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	TP t1;<br>	t1 = <span class="hljs-number">2</span>;<span class="hljs-comment">//看这里</span><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>构造函数当中，有一个参数有默认值，因此可以认为该构造函数只有一个参数。而我们可以通过该构造函数将
+<code>int</code> 类型的数据转换为自定义类型的数据</p>
+<p>在 C++
+中，接收一个参数的构造函数可以将「<strong>类型与构造函数参数相同</strong>的值」转化为类的类型。</p>
+<p>也就是说，当我写出：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t1;<br>t1 = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+<p>程序将采用<strong>构造函数
+<code>TP(const int&amp; e1, const int&amp; e2 = 0)</code>
+来创建一个临时的对象</strong>（其内部属性为
+<code>rh = 2, ch = 0</code>）。然后再<strong>通过 <em>copy</em>
+构造函数来将该对象赋值给 <code>t1</code></strong>
+。这一过程被称为<strong>隐式类型转换</strong>。</p>
+<p><strong>只有接收一个参数的构造函数</strong>才可以用于隐式类型转换，接收两个参数的不行。</p>
+<ul>
+<li>补充：
+<ul>
+<li>如果函数声明为
+<code>TP(const int&amp; e1, const int&amp; e2)</code>，那么我们可以通过
+<code>t1 = &#123; 2, 0 &#125;</code>
+来达到与上面一样的效果，其过程也是一样（先创建临时变量，再通过
+<em>copy</em>
+构造函数进行赋值）。但这<strong>不能称为隐式类型转换</strong>。</li>
+<li>在这里我们是为第二个参数添加了默认值，因此可以认为该构造函数<strong>只有一个参数</strong>。</li>
+</ul></li>
+</ul>
+<p>我们依旧用 <code>TP(const int&amp; e1, const int&amp; e2 = 0)</code>
+来进行讨论。这种隐式类型转换有时会带来不好的结果，因此 C++
+提供了一个关键字 <code>explicit</code>
+来关闭掉这种隐式类型转换。即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">TP</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e2 = <span class="hljs-number">0</span>)</span></span><br><span class="hljs-function">	: rh(e1), ch(e2), Close(false)</span><br><span class="hljs-function">&#123;</span>  &#125;<br></code></pre></td></tr></table></figure>
+<p>这样过后，就不能通过隐式类型转换来转换类型，但依旧<strong>允许显示类型转换</strong>，即<strong>允许显示强制类型转换</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t1;<br>t1 = <span class="hljs-number">2</span>;<span class="hljs-comment">//Not Allow</span><br>t1 = <span class="hljs-built_in">TP</span>(<span class="hljs-number">2</span>);<span class="hljs-comment">//OK</span><br>t1 = (TP)<span class="hljs-number">2</span>;<span class="hljs-comment">//OK</span><br></code></pre></td></tr></table></figure>
+<p><strong>后面两个都属于强制类型转换！！！</strong></p>
+<h4 id="关于隐式类型转换的分析重点">关于隐式类型转换的分析（重点）</h4>
+<p>这里我重申一点：<strong>当构造函数只接受一个参数时，它是可以通过隐式类型转换来对自定义类型进行赋值的</strong>。</p>
+<p><strong>在 <code>TP(const int&amp; e1, const int&amp; e2 = 0)</code>
+下，有：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TP <span class="hljs-title">t1</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span></span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>上面这是隐式类型转换，通过将 2 这个整型<strong>隐式</strong>转换成
+TP 类型。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t1 = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这个跟上面一样，都是将整型<strong>隐式</strong>类型转换成<strong>自定义类型</strong>。</li>
+</ul>
+<p>这两个的过程是：先创建一个临时对象，然后再通过 <em>copy</em>
+构造函数来对 <code>t1</code> 进行赋值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t1 = <span class="hljs-built_in">TP</span>(<span class="hljs-number">2</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这是<strong>显示强制类型转换</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t1 = (TP)<span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这个也是显示强制类型转换</li>
+</ul>
+<p>这两个的过程跟上面一样。</p>
+<p>我通常写的 <code>TP t1(2)</code>
+，这个玩意叫<strong>直接初始化</strong>，这会调用它的构造函数，<strong>属于显示类型转换</strong>，<strong>不是隐式类型转换</strong>。</p>
+<p>如果是在 <code>TP(const int&amp; e1, const int&amp; e2)</code>
+下，那么将<strong>不存在隐式类型转换</strong>，而<strong>显示强制类型转换跟原来的相同</strong>。</p>
+<hr>
+<p>题外话说完了，我们接着刚才的。也就是说，如果在构造函数
+<code>TP(const int&amp; e1, const int&amp; e2 = 0)</code> 前面声明了
+<code>explicit</code>
+，那么该构造函数将<strong>只能用于显示强制类型转换</strong>，否则依旧可以使用下面的隐式类型转换：</p>
+<ul>
+<li>将 TP 对象初始化为 <code>int</code> 值</li>
+<li>将 <code>int</code> 值赋给 TP 对象
+<ul>
+<li><code>TP t1 = 10;</code></li>
+</ul></li>
+<li>将 <code>int</code> 值传递给接受 TP 类型参数的函数
+<ul>
+<li>假定我们有一个函数，其声明为
+<code>void fun(const TP&amp; e1)</code></li>
+<li>那么我在调用 <code>fun(10)</code>
+时，这个时候就会发生隐式类型转换</li>
+</ul></li>
+<li>返回值被声明为 TP 的函数试图返回 <code>int</code> 类型
+<ul>
+<li>依旧假定我们有一个函数，其声明为 <code>TP fun()</code></li>
+<li>在函数体内，我们写出
+<code>return rhs; //rhs 是 int 类型的变量</code>
+时，会发生隐式类型转换</li>
+<li>这是因为需要调用构造函数将 <code>int</code> 转化为 TP
+类型的对象</li>
+</ul></li>
+<li>在上述任何一种情况下，<strong>使用可以通过自动类型转换变为
+<code>int</code> 的类型</strong>
+<ul>
+<li><code>double</code> 可以通过自动类型转换成 <code>int</code>
+，那么上述的所有情况对 <code>double</code> 也同样适用</li>
+</ul></li>
+</ul>
+<p>关于最后一点，我们需要进行一点说明。</p>
+<p>上面的函数原型是
+<code>TP(const int&amp; e1, const int&amp; e2 = 0)</code>
+，如果我还写了一个另一个构造函数，只是把 <code>int</code> 改为了
+<code>long</code> ，其余不变，即
+<code>TP(const long&amp; e1, const long&amp; e2 = 0)</code> 。</p>
+<p>那么当我写 <code>TP t1 = 2.5</code> 时，编译器会报错。这是因为
+<code>double</code> 类型既可以转换成 <code>int</code> 也可以转化成
+<code>long</code> ，这就出现了二义性。因此下面的代码会报错</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br><br>	<span class="hljs-built_in">TP</span>()<br>		:<span class="hljs-built_in">rh</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">ch</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e1, <span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; e2 = <span class="hljs-number">0</span>)<br>		: <span class="hljs-built_in">rh</span>(e1), <span class="hljs-built_in">ch</span>(e2), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">long</span>&amp; e1, <span class="hljs-type">const</span> <span class="hljs-type">long</span>&amp; e2 = <span class="hljs-number">0</span>)<br>		:<span class="hljs-built_in">rh</span>(e1), <span class="hljs-built_in">ch</span>(e2), <span class="hljs-built_in">Close</span>(<span class="hljs-literal">false</span>)<br>	&#123;  &#125;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> rh, ch;<br>	<span class="hljs-keyword">mutable</span> <span class="hljs-type">bool</span> Close;<br><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	TP t1 = <span class="hljs-number">2.5</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="转换函数">转换函数</h3>
+<p>在 C++
+当中，一个参数的构造函数<strong>定义了从某种类型到「类类型」的转换</strong>，如果需要进行相反类型的转换则需要通过<strong>转换函数</strong>。</p>
+<p>转换函数的语法为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">typeName</span><span class="hljs-params">()</span></span>;<br></code></pre></td></tr></table></figure>
+<p>有几点需要注意的是：</p>
+<ul>
+<li>转换函数必须是类方法</li>
+<li>转换函数不能有返回值</li>
+<li>转换函数不能有参数</li>
+</ul>
+<p><code>typeName</code> 指定了要转换成的类型，可以是<code>int</code>
+、<code>double</code> 等内置数据类型，当然也可以是自定义数据类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">double</span>&amp; rh)<br>		:<span class="hljs-built_in">n</span>(rh)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">double</span> n;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-built_in">int</span>(<span class="hljs-number">12.6</span>) &lt;&lt; endl;<br>	<span class="hljs-function">TP <span class="hljs-title">t</span><span class="hljs-params">(<span class="hljs-number">12.6</span>)</span></span>;<br>	cout &lt;&lt; <span class="hljs-built_in">int</span>(t) &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>转换函数实际上就是用户定义的强制类型转换</strong>，即：<strong>它是强制类型转换！！！</strong></p>
+<p>因此<strong>强制类型转换的语法可以用在它的身上</strong>，它可以将类类型转换为用户定义的类型。</p>
+<p>如果在类当中加一个转换函数，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">double</span>&amp; rh)<br>		:<span class="hljs-built_in">n</span>(rh)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">double</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">double</span> n;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>当我写出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cout &lt;&lt; t &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<p>由于没有重载右移操作符，并且定义了两个转换函数，使得可以将
+<code>TP</code> 类型转换为 <code>int</code> 或 <code>double</code>
+，那么编译器将会报错，因为这里出现了二义性的转换。</p>
+<p>在这种情况下，当我写出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">long</span> a = t;<br></code></pre></td></tr></table></figure>
+<p>由于 <code>TP</code> 可以被转成 <code>int</code> 或
+<code>double</code> ，而这两个内置数据类型都可以转成 <code>long</code>
+，因此在这里编译器也会报错。</p>
+<p>当然，我前面说过。这种转换函数的语法等同于强制类型转换的语法，因此你可以通过这种方式来<strong>指定</strong>使用哪个转换函数，即</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">long</span> a = <span class="hljs-built_in">int</span>(t);<br><span class="hljs-type">long</span> b = <span class="hljs-built_in">double</span>(t);<br></code></pre></td></tr></table></figure>
+<p>这两个都可以通过编译。</p>
+<p>这种自动类型转换有时会发生不好的事情，</p>
+<p>例如，你可能会将上面的 <code>TP</code>
+类型的对象作为数组下标使用（我知道你脑子清醒的时候不会，但说不定你那天头昏呢），因为你声明了这种隐式类型转换，它将自动转换为
+<code>int</code>
+，但这很明显是错误的。要关掉它也很简单，在该函数前面加上
+<code>explicit</code> （这一点在 C++98 是不允许的，但 C++11
+则没有这种限制），即</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">double</span>&amp; rh)<br>		:<span class="hljs-built_in">n</span>(rh)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">double</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">double</span> n;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>用了之后，<strong>便不会再出现隐式调用，需要通过显示强制调用才行</strong>。</p>
+<p>总之，C++ 为类提供了两种类型转换：</p>
+<ul>
+<li>构造函数用于将「类型与该参数相同的值」转换为类类型</li>
+<li>转换函数用于将类类型转换为其他类型</li>
+</ul>
+<h3 id="转换函数和友元函数">转换函数和友元函数</h3>
+<p>我们来看一个《简单》的例子（嗯，带简单两个字的往往学起来不简单）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; rh)<br>		:<span class="hljs-built_in">n</span>(rh)<br>	&#123;  &#125;<br><br>	<br>	TP <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> TP&amp; t)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">TP</span>(<span class="hljs-keyword">this</span>-&gt;n + t.n);<br>	&#125;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> n;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>注意：这里面没有写 <code>operator int</code> 转换函数</p>
+<p>好，然后当你写下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TP <span class="hljs-title">t1</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br><span class="hljs-type">int</span> a = <span class="hljs-number">20</span>;<br>TP t3 = t1 + a;<br></code></pre></td></tr></table></figure>
+<p>然后，如果你提供了友元全局函数重载的话，就允许这么做：（成员函数重载和友元函数重载只能存在一个）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TP t3 = a + t1;<br></code></pre></td></tr></table></figure>
+<p>当然，这里的故事我们前面已经说过了（操作符左边的为调用函数的对象，右边为作为参数传递的对象），并且解决办法在前面也有讨论（在
+友元函数 那里）。</p>
+<p>下面是重头戏！！！</p>
+<p>我们要再此基础上加上转换函数，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(<span class="hljs-type">const</span> <span class="hljs-type">int</span>&amp; rh)<br>		:<span class="hljs-built_in">n</span>(rh)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">int</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> n;<br>	&#125;<br><br>	TP <span class="hljs-keyword">operator</span>+(<span class="hljs-type">const</span> TP&amp; t)<br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">TP</span>(<span class="hljs-keyword">this</span>-&gt;n + t.n);<br>	&#125;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> n;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>当我写出：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">TP <span class="hljs-title">t1</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;<br><span class="hljs-type">int</span> a = <span class="hljs-number">20</span>;<br>TP t3 = t1 + a;<br></code></pre></td></tr></table></figure>
+<p>由于可以<strong>将 <code>TP</code> 对象转换为 <code>int</code>
+，也可以将 <code>int</code> 类型转换为 <code>TP</code>
+</strong>。因此这里再次出现了二义性</p>
+<p>解决办法也很简单，<strong>只</strong>需要为<strong>转换函数</strong>声明一个
+<code>explicit</code> 就行。这样就只能是 <code>int</code> 转换为
+<code>TP</code> 。</p>
+<p>注意，这里不能在构造函数前面加上 <code>explicit</code>
+，因为这样只是不允许将 <code>int</code> 类型转换为 <code>TP</code>
+。因此 <code>a</code> 将没办法转换为 <code>TP</code>
+类型，自然也不能参加加法运算，所以会导致报错。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-Primer-Plus/" class="category-chain-item">C++ Primer Plus</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-Primer-Plus/">#C++ Primer Plus</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++ Primer Plus 笔记</div>
+      <div>https://nishikichisato.github.io/2022/07/30/C++ Primer Plus/C++ primer plus笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 30, 2022</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 21, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/30/Effective%20C++/Effective%20C++/" title="Effective C++">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Effective C++</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="C++ Primer Plus"
+        id="heading-a27861b400ba0644f7bc2617a4a577d9" role="tab" data-toggle="collapse" href="#collapse-a27861b400ba0644f7bc2617a4a577d9"
+        aria-expanded="true"
+      >
+        C++ Primer Plus
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-a27861b400ba0644f7bc2617a4a577d9"
+           role="tabpanel" aria-labelledby="heading-a27861b400ba0644f7bc2617a4a577d9">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/07/30/C++%20Primer%20Plus/C++%20primer%20plus%E7%AC%94%E8%AE%B0/" title="C++ Primer Plus 笔记"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">C++ Primer Plus 笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/07/30/C++%20Primer%20Plus/%E7%B1%BB%E6%A8%A1%E6%9D%BF/" title="C++ 类模板小结"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++ 类模板小结</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/03/C++%20Primer%20Plus/RTTI/" title="RTTI"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RTTI</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/08/31/C++%20Primer%20Plus/%E5%BC%82%E5%B8%B8/" title="异常"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">异常</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

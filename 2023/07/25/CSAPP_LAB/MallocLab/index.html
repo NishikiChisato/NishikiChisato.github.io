@@ -1,0 +1,1001 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="malloclab  malloclab  准备 实验开始  free_list 基本思路  测试  segregate free list 基本思路  测试  结语    准备 所有文件均可以从官网上直接下载：Lab Assignments 注：本实验无测试文件，我的 trace 测试文件是从 这里 下载的 实验开始  注：本实验我最初的代码最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP_lab MallocLab">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/07/25/CSAPP_LAB/MallocLab/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="malloclab  malloclab  准备 实验开始  free_list 基本思路  测试  segregate free list 基本思路  测试  结语    准备 所有文件均可以从官网上直接下载：Lab Assignments 注：本实验无测试文件，我的 trace 测试文件是从 这里 下载的 实验开始  注：本实验我最初的代码最">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP_lab/CSAPP_lab%20(7).jpg">
+<meta property="article:published_time" content="2023-07-25T00:48:28.791Z">
+<meta property="article:modified_time" content="2023-07-25T09:23:27.054Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CSAPP_lab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CSAPP_lab/CSAPP_lab%20(7).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CSAPP_lab MallocLab - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CSAPP_lab MallocLab"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-25 08:48" pubdate>
+          July 25, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          22k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          188 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CSAPP_lab MallocLab</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 10 minutes ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="malloclab">malloclab</h1>
+<ul>
+<li><a href="#malloclab">malloclab</a>
+<ul>
+<li><a href="#准备">准备</a></li>
+<li><a href="#实验开始">实验开始</a>
+<ul>
+<li><a href="#free_list-基本思路">free_list 基本思路</a>
+<ul>
+<li><a href="#测试">测试</a></li>
+</ul></li>
+<li><a href="#segregate-free-list-基本思路">segregate free list
+基本思路</a>
+<ul>
+<li><a href="#测试-1">测试</a></li>
+</ul></li>
+<li><a href="#结语">结语</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="准备">准备</h2>
+<p>所有文件均可以从官网上直接下载：<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">Lab Assignments</a></p>
+<p>注：本实验无测试文件，我的 <code>trace</code> 测试文件是从 <a target="_blank" rel="noopener" href="https://github.com/pgoodman/csc369/tree/master/malloclab/traces">这里</a>
+下载的</p>
+<h2 id="实验开始">实验开始</h2>
+<blockquote>
+<p>注：本实验我最初的代码最终仅仅得分
+<code>73/100</code>，后来我重新写了一个
+<code>segregate free list</code>，最终得分为 <code>84/100</code></p>
+<p>文件中 <code>test.c</code> 为测试文件，编译时用
+<code>gcc -g -m32 -o debug test.c mm.c memlib.c</code> 进行编译</p>
+<p>另外，我们可以直接修改 <code>Makefile</code> 文件，将
+<code>-O2</code> 改为 <code>-g</code>，这样便可以对 <code>mdriver</code>
+进行调试</p>
+</blockquote>
+<p>我最初的代码用 <code>free list</code>
+表示，<code>segregate free list</code> 的代码用 <code>heap list</code>
+表示</p>
+<h3 id="free_list-基本思路">free_list 基本思路</h3>
+<p>设每次调用 <code>mm_malloc</code> 请求 <span class="math inline">\(n\)</span> 个字节，我们以 <span class="math inline">\(2\)</span>
+的幂次向上取整进行返回，换句话说，我们每次返回大于等于 <span class="math inline">\(n\)</span> 的最小的 <span class="math inline">\(2\)</span> 的幂</p>
+<p>我们可以用以下函数快速求出 <span class="math inline">\(2\)</span>
+的幂次</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">size_t</span> <span class="hljs-title function_">roundUp2Pow</span><span class="hljs-params">(<span class="hljs-type">size_t</span> num)</span><br>&#123;<br>    num--;<br>    num |= num &gt;&gt; <span class="hljs-number">1</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">2</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">4</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">8</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">16</span>;<br>    num++;<br>    <span class="hljs-keyword">return</span> num;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>因此，我们可以维护一个 <code>CLASS_SIZE</code>
+大小的数组，数组的每个元素都指向一个特定大小的链表，也就是说每个链表都是一个等价类
+<code>size class</code>，大小为 <span class="math inline">\(2\)</span>
+的幂次</p>
+<p>因此，<strong>我们可以 <span class="math inline">\(O(1)\)</span>
+的时间返回和申请内存，但相应地我们平均会浪费 <span class="math inline">\(2^{n}\)</span> 个字节的内存</strong></p>
+<p>这个实现非常的简单，看代码就行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm-naive.c - The fastest, least memory-efficient malloc package.</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * In this naive approach, a block is allocated by simply incrementing</span><br><span class="hljs-comment"> * the brk pointer.  A block is pure payload. There are no headers or</span><br><span class="hljs-comment"> * footers.  Blocks are never coalesced or reused. Realloc is</span><br><span class="hljs-comment"> * implemented directly using mm_malloc and mm_free.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * NOTE TO STUDENTS: Replace this header comment with your own header</span><br><span class="hljs-comment"> * comment that gives a high level description of your solution.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;mm.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;memlib.h&quot;</span></span><br><br><span class="hljs-comment">/*********************************************************</span><br><span class="hljs-comment"> * NOTE TO STUDENTS: Before you do anything else, please</span><br><span class="hljs-comment"> * provide your team information in the following struct.</span><br><span class="hljs-comment"> ********************************************************/</span><br><span class="hljs-type">team_t</span> team = &#123;<br>    <span class="hljs-comment">/* Team name */</span><br>    <span class="hljs-string">&quot;Atom&quot;</span>,<br>    <span class="hljs-comment">/* First member&#x27;s full name */</span><br>    <span class="hljs-string">&quot;Nishiki Chisato&quot;</span>,<br>    <span class="hljs-comment">/* First member&#x27;s email address */</span><br>    <span class="hljs-string">&quot;NishikiChisato@outlook.com&quot;</span>,<br>    <span class="hljs-comment">/* Second member&#x27;s full name (leave blank if none) */</span><br>    <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-comment">/* Second member&#x27;s email address (leave blank if none) */</span><br>    <span class="hljs-string">&quot;&quot;</span><br>&#125;;<br><br><span class="hljs-comment">/* single word (4) or double word (8) alignment */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALIGNMENT 8</span><br><br><span class="hljs-comment">/* rounds up to the nearest multiple of ALIGNMENT */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALIGN(size) (((size) + (ALIGNMENT-1)) &amp; ~0x7)</span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SIZE_T_SIZE (ALIGN(sizeof(size_t)))</span><br><br><span class="hljs-comment">//single word size</span><br><span class="hljs-comment">//header and footer both is WSIZE</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WSIZE           4</span><br><span class="hljs-comment">//double word size</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DSIZE           8</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CHUNKSIZE       (1 &lt;&lt; 12)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX(x, y)       ((x) &gt; (y) ? (x) : (y))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PACK(size, alloc)   ((size) |(alloc))</span><br><br><span class="hljs-comment">//every word has 4 bytes</span><br><span class="hljs-comment">//read a word from p</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET(p)          (*(unsigned int*)(p))</span><br><span class="hljs-comment">//write a word to p</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PUT(p, val)     (*(unsigned int*)(p) = (val))</span><br><br><span class="hljs-comment">//get block size(include header and footer) from p</span><br><span class="hljs-comment">//in other word, block size = payload size + header size + foot size = payload size + 8</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_SIZE(p)     (GET(p) &amp; ~0x7)</span><br><span class="hljs-comment">//determine whether p has been allocated</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_ALLOC(p)    (GET(p) &amp; 0x1)</span><br><br><span class="hljs-comment">//get header and footer</span><br><span class="hljs-comment">//bp is block ptr, block is payload area</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HDRP(bp)        ((char*)(bp) - WSIZE)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FTRP(bp)        ((char*)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)</span><br><br><span class="hljs-comment">//get next block ptr and prev block ptr</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NEXT_BLKP(bp)   ((char*)(bp) + GET_SIZE(((char*)(bp) - WSIZE)))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PREV_BLKP(bp)   ((char*)(bp) - GET_SIZE(((char*)(bp) - DSIZE)))</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_PRED(bp)    ((unsigned int*)(bp))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_SUCC(bp)    ((unsigned int*)(bp + WSIZE))</span><br><br><span class="hljs-comment">//free list index</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_FREE_LIST(num)  (free_list + WSIZE + ((num) * WSIZE))</span><br><br><span class="hljs-comment">//the size of size class</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CLASS_SIZE  30</span><br><span class="hljs-comment">//free list entries&#x27; size</span><br><span class="hljs-comment">//min val is 3</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ENTRY_SIZE  3</span><br><br><span class="hljs-type">static</span> <span class="hljs-type">char</span>* free_list;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span>;<br><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">FreeBlock</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; GET_SIZE(HDRP(cur)) &gt; <span class="hljs-number">0</span>; cur = NEXT_BLKP(cur))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p\n&quot;</span>,i++ , cur, FTRP(cur));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">BlockPtr</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; GET_SIZE(HDRP(cur)) &gt; <span class="hljs-number">0</span>; cur = NEXT_BLKP(cur))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p, pred: %p, succ: %p, size: %d\n&quot;</span>,i++ , cur, FTRP(cur), <br>        GET(GET_PRED(cur)), GET(GET_SUCC(cur)), GET_SIZE(HDRP(cur)));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Linklist</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; GET_SIZE(HDRP(cur)) &gt; <span class="hljs-number">0</span>; cur = GET_SUCC(cur))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p, pred: %p, succ: %p, size: %d\n&quot;</span>,i++ , cur, FTRP(cur),<br>         GET(GET_PRED(cur)), GET(GET_SUCC(cur)), GET_SIZE(HDRP(cur)));<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/* </span><br><span class="hljs-comment"> * mm_init - initialize the malloc package.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">mm_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-comment">//advanced free list</span><br>    <span class="hljs-keyword">if</span>((free_list = mem_sbrk(WSIZE * (<span class="hljs-number">4</span> + CLASS_SIZE))) == (<span class="hljs-type">void</span>*)<span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <br>    PUT(free_list, <span class="hljs-number">0</span>);<br>    PUT(free_list + <span class="hljs-number">1</span> * WSIZE, PACK(DSIZE, <span class="hljs-number">1</span>));<br>    PUT(free_list + <span class="hljs-number">2</span> * WSIZE, PACK(DSIZE, <span class="hljs-number">1</span>));<br><br>    free_list += (<span class="hljs-number">2</span> * WSIZE);<br>    <span class="hljs-comment">//free block divided by powers of 2, min size of free block is 16 bytes</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; CLASS_SIZE; i ++)<br>        PUT(GET_FREE_LIST(i), <span class="hljs-literal">NULL</span>);<br><br>    PUT(GET_FREE_LIST(CLASS_SIZE), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span><br>&#123;<br>    <span class="hljs-type">char</span>* bp;<br>    <span class="hljs-type">size_t</span> size;<br>    size = (words % <span class="hljs-number">2</span>) ? (words + <span class="hljs-number">1</span>) * WSIZE : words * WSIZE;<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">long</span>)(bp = mem_sbrk(size)) == <span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-comment">//free block header and footer</span><br>    PUT(HDRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    PUT(FTRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    <span class="hljs-comment">//epilogue header</span><br>    PUT(HDRP(NEXT_BLKP(bp)), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br>    <span class="hljs-keyword">return</span> bp;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">find_idx</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">4</span>; i &lt;= <span class="hljs-number">31</span>; i ++)<br>        <span class="hljs-keyword">if</span>(size &lt;= (<span class="hljs-number">1</span> &lt;&lt; i))<br>            <span class="hljs-keyword">return</span> i - <span class="hljs-number">4</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br><br><span class="hljs-type">size_t</span> <span class="hljs-title function_">roundUp2Pow</span><span class="hljs-params">(<span class="hljs-type">size_t</span> num)</span><br>&#123;<br>    num--;<br>    num |= num &gt;&gt; <span class="hljs-number">1</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">2</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">4</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">8</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">16</span>;<br>    num++;<br>    <span class="hljs-keyword">return</span> num;<br>&#125;<br><br><span class="hljs-comment">/* </span><br><span class="hljs-comment"> * mm_malloc - Allocate a block by incrementing the brk pointer.</span><br><span class="hljs-comment"> *     Always allocate a block whose size is a multiple of the alignment.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">mm_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> asize;<br>    <span class="hljs-type">char</span>* bp;<br>    <span class="hljs-keyword">if</span>(size == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(size &lt;= DSIZE)<br>        asize = <span class="hljs-number">2</span> * DSIZE;<br>    <span class="hljs-keyword">else</span> <br>    &#123;<br>        size += DSIZE;<br>        asize = roundUp2Pow(size);<br>    &#125;<br><br>    <span class="hljs-type">int</span> idx = find_idx(asize);<br>    <span class="hljs-type">void</span>* basePtr = GET_FREE_LIST(idx);<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">void</span>*)GET(basePtr) == <span class="hljs-literal">NULL</span> || GET_SIZE(HDRP(GET(basePtr))) == <span class="hljs-number">0</span>)<br>    &#123;<br>        bp = extend_heap((asize + <span class="hljs-number">8</span>) * ENTRY_SIZE / WSIZE);<br>        <span class="hljs-keyword">if</span>(bp == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br><br>        <span class="hljs-type">char</span>* cur = bp;<br>        <span class="hljs-type">size_t</span> csize = asize * ENTRY_SIZE;<br>        <span class="hljs-comment">//construct list in allocated area</span><br>        <span class="hljs-keyword">while</span>(csize &gt;= asize)<br>        &#123;<br>            PUT(HDRP(cur), PACK(asize, <span class="hljs-number">0</span>));<br>            PUT(FTRP(cur), PACK(asize, <span class="hljs-number">0</span>));<br>            cur = NEXT_BLKP(cur);<br>            PUT(HDRP(cur), PACK(csize - asize, <span class="hljs-number">0</span>));<br>            PUT(FTRP(cur), PACK(csize - asize, <span class="hljs-number">0</span>));<br>            csize -= asize;<br>        &#125;<br><br>        PUT(basePtr, NEXT_BLKP(bp));<br>        PUT(GET_PRED(NEXT_BLKP(bp)), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(NEXT_BLKP(bp)), NEXT_BLKP(NEXT_BLKP(bp)));<br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>* ptr = NEXT_BLKP(NEXT_BLKP(bp)); GET_SIZE(HDRP(ptr)) &gt; <span class="hljs-number">0</span>; ptr = NEXT_BLKP(ptr))<br>        &#123;<br>            PUT(GET_PRED(ptr), PREV_BLKP(ptr));<br>            PUT(GET_SUCC(ptr), NEXT_BLKP(ptr));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        bp = (<span class="hljs-type">char</span>*)GET(GET_FREE_LIST(idx));<br>        PUT(basePtr, GET(GET_SUCC(bp)));<br>        PUT(GET_PRED(NEXT_BLKP(bp)), <span class="hljs-literal">NULL</span>);<br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm_free - Freeing a block does nothing.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">mm_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(ptr));<br>    size = roundUp2Pow(size);<br>    <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;<br>    idx = find_idx(size);<br>    <span class="hljs-type">void</span>* bp = GET_FREE_LIST(idx);<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">void</span>*)GET(bp) == <span class="hljs-literal">NULL</span> || GET_SIZE(HDRP(GET(bp))) == <span class="hljs-number">0</span>)<br>    &#123;<br>        PUT(GET_PRED(ptr), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(ptr), GET(bp));<br>        PUT(bp, (<span class="hljs-type">char</span>*)ptr);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-type">char</span>* nxt = (<span class="hljs-type">char</span>*)GET(bp);<br>        PUT(GET_PRED(ptr), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(ptr), nxt);<br>        PUT(GET_PRED(nxt), ptr);<br>        PUT(bp, (<span class="hljs-type">char</span>*)ptr);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm_realloc - Implemented simply in terms of mm_malloc and mm_free</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">mm_realloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> new_size)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> copy_size = GET_SIZE(HDRP(ptr));<br>    <span class="hljs-type">void</span>* new_ptr;<br>    <span class="hljs-keyword">if</span>((new_ptr = mm_malloc(new_size)) == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(new_size &lt; copy_size) copy_size = new_size;<br>    <span class="hljs-built_in">memcpy</span>(new_ptr, ptr, copy_size);<br>    mm_free(ptr);<br>    <span class="hljs-keyword">return</span> new_ptr;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在 <code>mm_malloc</code>
+申请内存时，如果对应的等价类中没有空闲块，<strong>我们会向系统申请，并用链表将这块空间串起来</strong></p>
+<h4 id="测试">测试</h4>
+<p>测试结果如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c">Results <span class="hljs-keyword">for</span> mm <span class="hljs-built_in">malloc</span>:<br>trace  valid  util     ops      secs  Kops<br> <span class="hljs-number">0</span>       yes   <span class="hljs-number">93</span>%    <span class="hljs-number">5694</span>  <span class="hljs-number">0.000057100423</span><br> <span class="hljs-number">1</span>       yes   <span class="hljs-number">84</span>%    <span class="hljs-number">5848</span>  <span class="hljs-number">0.000057103139</span><br> <span class="hljs-number">2</span>       yes   <span class="hljs-number">92</span>%    <span class="hljs-number">6648</span>  <span class="hljs-number">0.000072</span> <span class="hljs-number">92205</span><br> <span class="hljs-number">3</span>       yes   <span class="hljs-number">90</span>%    <span class="hljs-number">5380</span>  <span class="hljs-number">0.000057</span> <span class="hljs-number">94885</span><br> <span class="hljs-number">4</span>       yes   <span class="hljs-number">11</span>%   <span class="hljs-number">14400</span>  <span class="hljs-number">0.000150</span> <span class="hljs-number">95681</span><br> <span class="hljs-number">5</span>       yes   <span class="hljs-number">74</span>%    <span class="hljs-number">4800</span>  <span class="hljs-number">0.000083</span> <span class="hljs-number">57692</span><br> <span class="hljs-number">6</span>       yes   <span class="hljs-number">75</span>%    <span class="hljs-number">4800</span>  <span class="hljs-number">0.000083</span> <span class="hljs-number">57485</span><br> <span class="hljs-number">7</span>       yes   <span class="hljs-number">34</span>%   <span class="hljs-number">12000</span>  <span class="hljs-number">0.000111107817</span><br> <span class="hljs-number">8</span>       yes   <span class="hljs-number">33</span>%   <span class="hljs-number">24000</span>  <span class="hljs-number">0.000184130152</span><br> <span class="hljs-number">9</span>       yes   <span class="hljs-number">10</span>%   <span class="hljs-number">14401</span>  <span class="hljs-number">0.030594</span>   <span class="hljs-number">471</span><br><span class="hljs-number">10</span>       yes   <span class="hljs-number">16</span>%   <span class="hljs-number">14401</span>  <span class="hljs-number">0.001596</span>  <span class="hljs-number">9021</span><br>Total          <span class="hljs-number">56</span>%  <span class="hljs-number">112372</span>  <span class="hljs-number">0.033045</span>  <span class="hljs-number">3401</span><br><br>Perf index = <span class="hljs-number">33</span> (util) + <span class="hljs-number">40</span> (thru) = <span class="hljs-number">73</span>/<span class="hljs-number">100</span><br></code></pre></td></tr></table></figure>
+<h3 id="segregate-free-list-基本思路">segregate free list 基本思路</h3>
+<p>对于 <code>segregate free list</code> 而言，我们首先维护一个
+<code>HEAP_SIZE</code>
+大小的数组，数组当中的元素代表对应请求空间大小的等价类，我们的等价类以
+<code>2</code>
+的幂的形式进行划分，也就是所有空闲块的大小分类为（我们最小的块大小为
+<code>16 Bytes</code>）：</p>
+<p><span class="math display">\[
+[16],\ [17-32],\ [33-64],\ [65-128],\ \cdots,[1025-2048],\ \cdots
+\]</span></p>
+<blockquote>
+<p>数组中每个元素是一个指针，指向一个<strong>双向</strong>空闲块链表。我们将数组中每个下标对于的位置称为槽
+<code>slots</code></p>
+</blockquote>
+<p>对于每次请求的大小 <span class="math inline">\(n\)</span>，我们找到
+<span class="math inline">\(n\)</span>
+对应的区间，优先考虑该区间是否存在大小合适的空闲块，如果存在则直接分割，否则搜索下一个区间</p>
+<p>每次归还一个块时，我们将该块加入空闲块链表中，如果该空闲块块存在前后相邻的两个<strong>空闲块</strong>，那么我们需要对空闲块进行合并</p>
+<p>在对空闲块进行合并时，我们首先需要删除该空闲块的指针，也就是先将该空闲块从链表中删除，然后将合并后的空闲块加入链表。对于一个空闲块，不外乎四种情况：</p>
+<ul>
+<li>该空闲块既<strong>没有前驱</strong>，也<strong>没有后继</strong>，说明该空闲块是数组对应槽位的第一个元素，那么将数组中对应的指针置空即可</li>
+<li>该空闲块<strong>有前驱</strong>，<strong>没有后继</strong>，说明该空闲块是链表中的最后一个元素，我们<strong>将链表中前一个元素的后继置空</strong>（因为是双向链表）</li>
+<li>该空闲块<strong>没有前驱</strong>，<strong>有后继</strong>，说明该空闲块是数组中对应槽位的第一个元素，我们将数组中对应的指针置位该空闲块的后继，并将此<strong>后继的前驱置空</strong>（同样是双向链表）</li>
+<li>该空闲块<strong>既有前驱</strong>，<strong>也有后继</strong>，那么我们将该空闲块的前驱的后继指向该空闲块的后继，将该空闲块的后继的前驱指向该空闲块的前驱</li>
+</ul>
+<p>每当我们需要插入一个空闲块时，首先找出该空闲块对应的槽位，此时分两类讨论：</p>
+<ul>
+<li>对应槽位为空，也就是数组指针为空，我们直接将数组指针赋值为该空闲块的地址，并将空闲块的两个指针清空</li>
+<li>对应槽位非空，我们对该空闲块的前驱清空，后继置为原先数组指针指向的空闲块，并将数组的指针重新赋值为当前空闲块的地址</li>
+</ul>
+<p>需要说明的是，我们维护的是一个双向链表，因为我们除了对当前空闲块的指针进行清空外，还需要依据情况<strong>对前驱和后继空闲块的两个指针进行清空</strong></p>
+<p>完整代码如下（包含前面 <code>free list</code>）：</p>
+<blockquote>
+<p>所有 <code>free list</code> 的函数均以 <code>free_list</code>
+开头，所有 <code>segregate free list</code> 的函数均以
+<code>heap_list</code> 开头</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm-naive.c - The fastest, least memory-efficient malloc package.</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * In this naive approach, a block is allocated by simply incrementing</span><br><span class="hljs-comment"> * the brk pointer.  A block is pure payload. There are no headers or</span><br><span class="hljs-comment"> * footers.  Blocks are never coalesced or reused. Realloc is</span><br><span class="hljs-comment"> * implemented directly using mm_malloc and mm_free.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * NOTE TO STUDENTS: Replace this header comment with your own header</span><br><span class="hljs-comment"> * comment that gives a high level description of your solution.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;assert.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;mm.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;memlib.h&quot;</span></span><br><br><span class="hljs-comment">/*********************************************************</span><br><span class="hljs-comment"> * NOTE TO STUDENTS: Before you do anything else, please</span><br><span class="hljs-comment"> * provide your team information in the following struct.</span><br><span class="hljs-comment"> ********************************************************/</span><br><span class="hljs-type">team_t</span> team = &#123;<br>    <span class="hljs-comment">/* Team name */</span><br>    <span class="hljs-string">&quot;Atom&quot;</span>,<br>    <span class="hljs-comment">/* First member&#x27;s full name */</span><br>    <span class="hljs-string">&quot;Nishiki Chisato&quot;</span>,<br>    <span class="hljs-comment">/* First member&#x27;s email address */</span><br>    <span class="hljs-string">&quot;NishikiChisato@outlook.com&quot;</span>,<br>    <span class="hljs-comment">/* Second member&#x27;s full name (leave blank if none) */</span><br>    <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-comment">/* Second member&#x27;s email address (leave blank if none) */</span><br>    <span class="hljs-string">&quot;&quot;</span><br>&#125;;<br><br><span class="hljs-comment">/* single word (4) or double word (8) alignment */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALIGNMENT 8</span><br><br><span class="hljs-comment">/* rounds up to the nearest multiple of ALIGNMENT */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALIGN(size) (((size) + (ALIGNMENT-1)) &amp; ~0x7)</span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SIZE_T_SIZE (ALIGN(sizeof(size_t)))</span><br><br><span class="hljs-comment">//single word size</span><br><span class="hljs-comment">//header and footer both is WSIZE</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WSIZE           4</span><br><span class="hljs-comment">//double word size</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DSIZE           8</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CHUNKSIZE       (1 &lt;&lt; 12)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX(x, y)       ((x) &gt; (y) ? (x) : (y))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PACK(size, alloc)   ((size) |(alloc))</span><br><br><span class="hljs-comment">//every word has 4 bytes</span><br><span class="hljs-comment">//read a word from p</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET(p)          (*(unsigned int*)(p))</span><br><span class="hljs-comment">//write a word to p</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PUT(p, val)     (*(unsigned int*)(p) = (val))</span><br><br><span class="hljs-comment">//get block size(include header and footer) from p</span><br><span class="hljs-comment">//in other word, block size = payload size + header size + foot size = payload size + 8</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_SIZE(p)     (GET(p) &amp; ~0x7)</span><br><span class="hljs-comment">//determine whether p has been allocated</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_ALLOC(p)    (GET(p) &amp; 0x1)</span><br><br><span class="hljs-comment">//get header and footer</span><br><span class="hljs-comment">//bp is block ptr, block is payload area</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HDRP(bp)        ((char*)(bp) - WSIZE)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FTRP(bp)        ((char*)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)</span><br><br><span class="hljs-comment">//get next block ptr and prev block ptr</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> NEXT_BLKP(bp)   ((char*)(bp) + GET_SIZE(((char*)(bp) - WSIZE)))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PREV_BLKP(bp)   ((char*)(bp) - GET_SIZE(((char*)(bp) - DSIZE)))</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_PRED(bp)    ((unsigned int*)(bp))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_SUCC(bp)    ((unsigned int*)((char*)bp + WSIZE))</span><br><br><span class="hljs-comment">//free list index</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_FREE_LIST(num)  (free_list + WSIZE + ((num) * WSIZE))</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> GET_HEAP_LIST(num)  (heap_list + ((num) * WSIZE))</span><br><br><span class="hljs-comment">//the size of size class</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CLASS_SIZE  30</span><br><span class="hljs-comment">//free list entries&#x27; size</span><br><span class="hljs-comment">//min val is 3</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ENTRY_SIZE  3</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HEAP_SIZE   20</span><br><br><span class="hljs-comment">//free list</span><br><span class="hljs-type">static</span> <span class="hljs-type">char</span>* free_list;<br><span class="hljs-comment">//heap list</span><br><span class="hljs-type">static</span> <span class="hljs-type">char</span>* heap_list;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">free_list_extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span>;<br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">heap_list_extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span>;<br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">coalesce</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span>;<br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">find_idx</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">size_t</span> <span class="hljs-title function_">roundUp2Pow</span><span class="hljs-params">(<span class="hljs-type">size_t</span> num)</span>;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">mm_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">free_list_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span>* <span class="hljs-title function_">heap_list_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">mm_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">free_list_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">heap_list_free</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">place</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span>* <span class="hljs-title function_">find_fit</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">FreeBlock</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; GET_SIZE(HDRP(cur)) &gt; <span class="hljs-number">0</span>; cur = NEXT_BLKP(cur))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p\n&quot;</span>,i++ , cur, FTRP(cur));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">BlockPtr</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; GET_SIZE(HDRP(cur)) &gt; <span class="hljs-number">0</span>; cur = NEXT_BLKP(cur))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p, pred: %p, succ: %p, size: %d, alloc: %d\n&quot;</span>,i++ , cur, FTRP(cur), <br>        GET(GET_PRED(cur)), GET(GET_SUCC(cur)), GET_SIZE(HDRP(cur)), GET_ALLOC(HDRP(cur)));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Linklist</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span>* cur = bp; cur; cur = GET(GET_SUCC(cur)))<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %d, begin: %p, end: %p, pred: %p, succ: %p, size: %d, alloc: %d\n&quot;</span>,i++ , cur, FTRP(cur),<br>         GET(GET_PRED(cur)), GET(GET_SUCC(cur)), GET_SIZE(HDRP(cur)), GET_ALLOC(HDRP(cur)));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">HeapPrint</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; HEAP_SIZE; i ++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(GET(GET_HEAP_LIST(i)) != <span class="hljs-literal">NULL</span>)<br>            Linklist(GET(GET_HEAP_LIST(i)));<br>    &#125;<br>&#125; <br><br><span class="hljs-comment">/* </span><br><span class="hljs-comment"> * mm_init - initialize the malloc package.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">mm_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-comment">//free list</span><br>    <span class="hljs-keyword">if</span>((free_list = mem_sbrk(WSIZE * (<span class="hljs-number">4</span> + CLASS_SIZE))) == (<span class="hljs-type">void</span>*)<span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <br>    PUT(free_list, <span class="hljs-number">0</span>);<br>    PUT(free_list + <span class="hljs-number">1</span> * WSIZE, PACK(DSIZE, <span class="hljs-number">1</span>));<br>    PUT(free_list + <span class="hljs-number">2</span> * WSIZE, PACK(DSIZE, <span class="hljs-number">1</span>));<br><br>    free_list += (<span class="hljs-number">2</span> * WSIZE);<br>    <span class="hljs-comment">//free block divided by powers of 2, min size of free block is 16 bytes</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; CLASS_SIZE; i ++)<br>        PUT(GET_FREE_LIST(i), <span class="hljs-literal">NULL</span>);<br><br>    PUT(GET_FREE_LIST(CLASS_SIZE), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br><br>    <span class="hljs-comment">//heap list</span><br><br>    <span class="hljs-keyword">if</span>((heap_list = mem_sbrk(WSIZE * (<span class="hljs-number">4</span> + HEAP_SIZE))) == (<span class="hljs-type">void</span>*)<span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; HEAP_SIZE; i ++)<br>        PUT(GET_HEAP_LIST(i), <span class="hljs-literal">NULL</span>);<br>    PUT(GET_HEAP_LIST(HEAP_SIZE), <span class="hljs-number">0</span>);<br>    PUT(GET_HEAP_LIST(HEAP_SIZE + <span class="hljs-number">1</span>), PACK(DSIZE, <span class="hljs-number">1</span>));<br>    PUT(GET_HEAP_LIST(HEAP_SIZE + <span class="hljs-number">2</span>), PACK(DSIZE, <span class="hljs-number">1</span>));<br>    PUT(GET_HEAP_LIST(HEAP_SIZE + <span class="hljs-number">3</span>), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br><br>    <span class="hljs-keyword">if</span>(heap_list_extend_heap(CHUNKSIZE / WSIZE) == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">heap_list_extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span><br>&#123;<br>    <span class="hljs-type">char</span>* bp;<br>    <span class="hljs-type">size_t</span> size;<br>    size = (words % <span class="hljs-number">2</span>) ? (words + <span class="hljs-number">1</span>) * WSIZE : words * WSIZE;<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">long</span>)(bp = mem_sbrk(size)) == <span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-comment">//free block header and footer</span><br>    PUT(HDRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    PUT(FTRP(bp), PACK(size, <span class="hljs-number">0</span>));<br><br>    PUT(GET_PRED(bp), <span class="hljs-literal">NULL</span>);<br>    PUT(GET_SUCC(bp), <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-comment">//epilogue header</span><br>    PUT(HDRP(NEXT_BLKP(bp)), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br>    <span class="hljs-keyword">return</span> coalesce(bp);<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">free_list_extend_heap</span><span class="hljs-params">(<span class="hljs-type">size_t</span> words)</span><br>&#123;<br>    <span class="hljs-type">char</span>* bp;<br>    <span class="hljs-type">size_t</span> size;<br>    size = (words % <span class="hljs-number">2</span>) ? (words + <span class="hljs-number">1</span>) * WSIZE : words * WSIZE;<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">long</span>)(bp = mem_sbrk(size)) == <span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-comment">//free block header and footer</span><br>    PUT(HDRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    PUT(FTRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    <span class="hljs-comment">//epilogue header</span><br>    PUT(HDRP(NEXT_BLKP(bp)), PACK(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>));<br>    <span class="hljs-keyword">return</span> bp;<br>&#125;<br><br><span class="hljs-comment">//delete a free block from heap list</span><br><span class="hljs-comment">//we need delete all pointer points to this free block</span><br><span class="hljs-comment">//pay attention that this is a free block</span><br><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">delete_pointer</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(bp));<br>    <span class="hljs-type">size_t</span> idx = find_idx(size);<br>    <span class="hljs-comment">//this block don&#x27;t have pred and succ, in other words, this is the first block in heap list</span><br>    <span class="hljs-keyword">if</span>(GET(GET_PRED(bp)) == <span class="hljs-literal">NULL</span> &amp;&amp; GET(GET_SUCC(bp)) == <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        PUT(GET_HEAP_LIST(idx), <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-comment">//this block has succ, so its the first element in list</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(GET(GET_PRED(bp)) == <span class="hljs-literal">NULL</span> &amp;&amp; GET(GET_SUCC(bp)) != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        PUT(GET_HEAP_LIST(idx), GET(GET_SUCC(bp)));<br>        PUT(GET_PRED(GET(GET_SUCC(bp))), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(bp), <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-comment">//the last element in list</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(GET(GET_PRED(bp)) != <span class="hljs-literal">NULL</span> &amp;&amp; GET(GET_SUCC(bp)) == <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        PUT(GET_SUCC(GET(GET_PRED(bp))), <span class="hljs-literal">NULL</span>);<br>        <span class="hljs-comment">//PUT(GET_SUCC(GET(GET_PRED(bp))), NULL);</span><br>        PUT(GET_PRED(bp), <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(GET(GET_PRED(bp)) != <span class="hljs-literal">NULL</span> &amp;&amp; GET(GET_SUCC(bp)) != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        PUT(GET_SUCC(GET(GET_PRED(bp))), GET(GET_SUCC(bp)));<br>        PUT(GET_PRED(GET(GET_SUCC(bp))), GET(GET_PRED(bp)));<br>        PUT(GET_PRED(bp), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(bp), <span class="hljs-literal">NULL</span>);<br>    &#125;<br><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">insert_free_block</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(bp));<br>    <span class="hljs-type">size_t</span> idx = find_idx(size);<br>    <span class="hljs-comment">//corresponding slots is null</span><br>    <span class="hljs-keyword">if</span>(GET(GET_HEAP_LIST(idx)) == <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        PUT(GET_HEAP_LIST(idx), bp);<br>        PUT(GET_PRED(bp), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(bp), <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        PUT(GET_SUCC(bp), GET(GET_HEAP_LIST(idx)));        <br>        PUT(GET_PRED(bp), <span class="hljs-literal">NULL</span>);        <br>        PUT(GET_PRED(GET(GET_HEAP_LIST(idx))), bp);<br>        PUT(GET_HEAP_LIST(idx), bp);<br>    &#125;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">coalesce</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));<br>    <span class="hljs-type">size_t</span> next_alloc = GET_ALLOC(HDRP(NEXT_BLKP(bp)));<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(bp));<br>    <span class="hljs-keyword">if</span>(prev_alloc &amp;&amp; next_alloc)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(GET_ALLOC(HDRP(bp)) == <span class="hljs-number">0</span>)<br>            insert_free_block(bp);<br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(prev_alloc &amp;&amp; !next_alloc)<br>    &#123;<br>        <span class="hljs-comment">//remove free block from list</span><br>        delete_pointer(NEXT_BLKP(bp));<br>        size += GET_SIZE(HDRP(NEXT_BLKP(bp)));<br>        PUT(HDRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>        PUT(FTRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!prev_alloc &amp;&amp; next_alloc)<br>    &#123;<br>        delete_pointer(PREV_BLKP(bp));<br>        size += GET_SIZE(HDRP(PREV_BLKP(bp)));<br>        PUT(FTRP(bp), PACK(size, <span class="hljs-number">0</span>));<br>        PUT(HDRP(PREV_BLKP(bp)), PACK(size, <span class="hljs-number">0</span>));        <br>        bp = PREV_BLKP(bp);        <br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        delete_pointer(PREV_BLKP(bp));<br>        delete_pointer(NEXT_BLKP(bp));<br>        size += (GET_SIZE(HDRP(PREV_BLKP(bp))) + GET_SIZE(FTRP(NEXT_BLKP(bp))));<br>        PUT(HDRP(PREV_BLKP(bp)), PACK(size, <span class="hljs-number">0</span>));<br>        PUT(FTRP(NEXT_BLKP(bp)), PACK(size, <span class="hljs-number">0</span>));<br>        bp = PREV_BLKP(bp);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(GET_ALLOC(HDRP(bp)) == <span class="hljs-number">0</span>) <br>        insert_free_block(bp);<br>    <span class="hljs-keyword">return</span> bp;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">find_idx</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">4</span>; i &lt;= <span class="hljs-number">31</span>; i ++)<br>        <span class="hljs-keyword">if</span>(size &lt;= (<span class="hljs-number">1</span> &lt;&lt; i))<br>            <span class="hljs-keyword">return</span> i - <span class="hljs-number">4</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br><br><span class="hljs-type">size_t</span> <span class="hljs-title function_">roundUp2Pow</span><span class="hljs-params">(<span class="hljs-type">size_t</span> num)</span><br>&#123;<br>    num--;<br>    num |= num &gt;&gt; <span class="hljs-number">1</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">2</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">4</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">8</span>;<br>    num |= num &gt;&gt; <span class="hljs-number">16</span>;<br>    num++;<br>    <span class="hljs-keyword">return</span> num;<br>&#125;<br><br><span class="hljs-type">void</span>* <span class="hljs-title function_">find_fit</span><span class="hljs-params">(<span class="hljs-type">size_t</span> asize)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> idx = find_idx(asize);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">size_t</span> i = idx; i &lt; HEAP_SIZE; i ++)<br>    &#123;<br>        <span class="hljs-type">void</span>* cur = GET(GET_HEAP_LIST(i));<br>        <span class="hljs-keyword">while</span>(cur)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(GET_SIZE(HDRP(cur)) &gt;= asize)<br>                <span class="hljs-keyword">return</span> cur;<br>            cur = GET(GET_SUCC(cur));<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">place</span><span class="hljs-params">(<span class="hljs-type">void</span>* bp, <span class="hljs-type">size_t</span> asize)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> csize = GET_SIZE(HDRP(bp));<br>    <span class="hljs-keyword">if</span>((csize - asize) &gt;= <span class="hljs-number">2</span> * DSIZE)<br>    &#123;<br>        delete_pointer(bp);<br>        PUT(HDRP(bp), PACK(asize, <span class="hljs-number">1</span>));<br>        PUT(FTRP(bp), PACK(asize, <span class="hljs-number">1</span>));<br>        bp = NEXT_BLKP(bp);<br>        PUT(HDRP(bp), PACK(csize - asize, <span class="hljs-number">0</span>));<br>        PUT(FTRP(bp), PACK(csize - asize, <span class="hljs-number">0</span>));<br>        <span class="hljs-keyword">if</span>(GET_ALLOC(HDRP(bp)) == <span class="hljs-number">0</span>)<br>            insert_free_block(bp);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        delete_pointer(bp);        <br>        PUT(HDRP(bp), PACK(csize, <span class="hljs-number">1</span>));<br>        PUT(FTRP(bp), PACK(csize, <span class="hljs-number">1</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/* </span><br><span class="hljs-comment"> * mm_malloc - Allocate a block by incrementing the brk pointer.</span><br><span class="hljs-comment"> *     Always allocate a block whose size is a multiple of the alignment.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">mm_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-comment">//return free_list_malloc(size);</span><br>    <span class="hljs-keyword">return</span> heap_list_malloc(size);<br>&#125;<br><br><span class="hljs-type">void</span>* <span class="hljs-title function_">heap_list_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> asize;<br>    <span class="hljs-type">size_t</span> extendsize;<br>    <span class="hljs-type">char</span> *bp;<br>    <span class="hljs-keyword">if</span>(size == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(size &lt;= DSIZE)<br>        asize = <span class="hljs-number">2</span>*DSIZE;<br>    <span class="hljs-keyword">else</span><br>        asize = DSIZE * ((size + (DSIZE) + (DSIZE<span class="hljs-number">-1</span>)) / DSIZE);<br>    <span class="hljs-keyword">if</span>((bp = find_fit(asize)) != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        place(bp, asize);<br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>    extendsize = MAX(asize, CHUNKSIZE);<br>    <span class="hljs-keyword">if</span>((bp = heap_list_extend_heap(extendsize/WSIZE)) == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    place(bp, asize);<br>    <span class="hljs-keyword">return</span> bp;<br>&#125;<br><br><span class="hljs-type">void</span> *<span class="hljs-title function_">free_list_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> asize;<br>    <span class="hljs-type">char</span>* bp;<br>    <span class="hljs-keyword">if</span>(size == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(size &lt;= DSIZE)<br>        asize = <span class="hljs-number">2</span> * DSIZE;<br>    <span class="hljs-keyword">else</span> <br>    &#123;<br>        size += DSIZE;<br>        asize = roundUp2Pow(size);<br>    &#125;<br><br>    <span class="hljs-type">int</span> idx = find_idx(asize);<br>    <span class="hljs-type">void</span>* basePtr = GET_FREE_LIST(idx);<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">void</span>*)GET(basePtr) == <span class="hljs-literal">NULL</span> || GET_SIZE(HDRP(GET(basePtr))) == <span class="hljs-number">0</span>)<br>    &#123;<br>        bp = free_list_extend_heap((asize + <span class="hljs-number">8</span>) * ENTRY_SIZE / WSIZE);<br>        <span class="hljs-keyword">if</span>(bp == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br><br>        <span class="hljs-type">char</span>* cur = bp;<br>        <span class="hljs-type">size_t</span> csize = asize * ENTRY_SIZE;<br>        <span class="hljs-comment">//construct list in allocated area</span><br>        <span class="hljs-keyword">while</span>(csize &gt;= asize)<br>        &#123;<br>            PUT(HDRP(cur), PACK(asize, <span class="hljs-number">0</span>));<br>            PUT(FTRP(cur), PACK(asize, <span class="hljs-number">0</span>));<br>            cur = NEXT_BLKP(cur);<br>            PUT(HDRP(cur), PACK(csize - asize, <span class="hljs-number">0</span>));<br>            PUT(FTRP(cur), PACK(csize - asize, <span class="hljs-number">0</span>));<br>            csize -= asize;<br>        &#125;<br><br>        PUT(basePtr, NEXT_BLKP(bp));<br>        PUT(GET_PRED(NEXT_BLKP(bp)), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(NEXT_BLKP(bp)), NEXT_BLKP(NEXT_BLKP(bp)));<br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>* ptr = NEXT_BLKP(NEXT_BLKP(bp)); GET_SIZE(HDRP(ptr)) &gt; <span class="hljs-number">0</span>; ptr = NEXT_BLKP(ptr))<br>        &#123;<br>            PUT(GET_PRED(ptr), PREV_BLKP(ptr));<br>            PUT(GET_SUCC(ptr), NEXT_BLKP(ptr));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        bp = (<span class="hljs-type">char</span>*)GET(GET_FREE_LIST(idx));<br>        PUT(basePtr, GET(GET_SUCC(bp)));<br>        PUT(GET_PRED(NEXT_BLKP(bp)), <span class="hljs-literal">NULL</span>);<br>        <span class="hljs-keyword">return</span> bp;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm_free - Freeing a block does nothing.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">mm_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span><br>&#123;<br>    <span class="hljs-comment">//free_list_free(ptr);</span><br>    heap_list_free(ptr);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">heap_list_free</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(ptr));<br>    PUT(HDRP(ptr), PACK(size, <span class="hljs-number">0</span>));<br>    PUT(FTRP(ptr), PACK(size, <span class="hljs-number">0</span>));<br>    PUT(GET_PRED(ptr), <span class="hljs-literal">NULL</span>);<br>    PUT(GET_SUCC(ptr), <span class="hljs-literal">NULL</span>);<br>    coalesce(ptr);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">free_list_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> size = GET_SIZE(HDRP(ptr));<br>    size = roundUp2Pow(size);<br>    <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;<br>    idx = find_idx(size);<br>    <span class="hljs-type">void</span>* bp = GET_FREE_LIST(idx);<br>    <span class="hljs-keyword">if</span>((<span class="hljs-type">void</span>*)GET(bp) == <span class="hljs-literal">NULL</span> || GET_SIZE(HDRP(GET(bp))) == <span class="hljs-number">0</span>)<br>    &#123;<br>        PUT(GET_PRED(ptr), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(ptr), GET(bp));<br>        PUT(bp, (<span class="hljs-type">char</span>*)ptr);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-type">char</span>* nxt = (<span class="hljs-type">char</span>*)GET(bp);<br>        PUT(GET_PRED(ptr), <span class="hljs-literal">NULL</span>);<br>        PUT(GET_SUCC(ptr), nxt);<br>        PUT(GET_PRED(nxt), ptr);<br>        PUT(bp, (<span class="hljs-type">char</span>*)ptr);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * mm_realloc - Implemented simply in terms of mm_malloc and mm_free</span><br><span class="hljs-comment"> */</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">mm_realloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> new_size)</span><br>&#123;<br>    <span class="hljs-type">size_t</span> copy_size = GET_SIZE(HDRP(ptr));<br>    <span class="hljs-type">void</span>* new_ptr;<br>    <span class="hljs-keyword">if</span>((new_ptr = mm_malloc(new_size)) == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">if</span>(new_size &lt; copy_size) copy_size = new_size;<br>    <span class="hljs-built_in">memcpy</span>(new_ptr, ptr, copy_size);<br>    mm_free(ptr);<br>    <span class="hljs-keyword">return</span> new_ptr;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="测试-1">测试</h4>
+<p>我们仅对 <code>segregate free list</code> 进行测试，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./mdriver -v -t ./traces/<br>Team Name:Atom<br>Member 1 :Nishiki Chisato:NishikiChisato@outlook.com<br>Using default tracefiles <span class="hljs-keyword">in</span> ./traces/<br>Measuring performance with gettimeofday().<br><br>Results <span class="hljs-keyword">for</span> mm malloc:<br>trace  valid  util     ops      secs  Kops<br> 0       <span class="hljs-built_in">yes</span>   98%    5694  0.000211 26947<br> 1       <span class="hljs-built_in">yes</span>   98%    5848  0.000194 30129<br> 2       <span class="hljs-built_in">yes</span>   97%    6648  0.000253 26277<br> 3       <span class="hljs-built_in">yes</span>   99%    5380  0.000187 28755<br> 4       <span class="hljs-built_in">yes</span>   65%   14400  0.000316 45555<br> 5       <span class="hljs-built_in">yes</span>   93%    4800  0.000277 17347<br> 6       <span class="hljs-built_in">yes</span>   90%    4800  0.000276 17360<br> 7       <span class="hljs-built_in">yes</span>   55%   12000  0.000301 39814<br> 8       <span class="hljs-built_in">yes</span>   51%   24000  0.000563 42667<br> 9       <span class="hljs-built_in">yes</span>   25%   14401  0.031962   451<br>10       <span class="hljs-built_in">yes</span>   29%   14401  0.002123  6782<br>Total          73%  112372  0.036664  3065<br><br>Perf index = 44 (util) + 40 (thru) = 84/100<br></code></pre></td></tr></table></figure>
+<h3 id="结语">结语</h3>
+<p>这个实验做了我 <code>28.5</code>
+个小时，一开始我思路方向错了，导致花费了一半的时间写
+<code>free list</code>，后面一半的时间才重新看回书，开始写
+<code>segregate free list</code>。说实话，整个调试的过程我非常的痛苦，我一直在用
+<code>gdb</code> 不断地调试，最终才把代码逐渐改对</p>
+<p>在写 <code>segregate</code> 的时候，最终有一个 <code>bug</code>
+导致我代码不断地出错，我一直找不到，这个地方也是我耗时最长的，我一直不理解为什么一个已经分配的块会存在于数组当中。最后我不断地从内存往回推，这才发现是双向链表需要对当前节点的前驱和后继的指针也需要进行清空</p>
+<p>回顾整个坐牢的过程，我发现这才是我进步最大的时候，这个过程中我需要不断地去思考我的代码到底哪里出来问题，需要不断地倒推。除吃之外我还学到了非常多的
+<code>gdb</code> 的调试技巧，虽然花了很多时间，但感觉很不错</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CSAPP-lab/" class="category-chain-item">CSAPP_lab</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP-lab/">#CSAPP_lab</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CSAPP_lab MallocLab</div>
+      <div>https://nishikichisato.github.io/2023/07/25/CSAPP_LAB/MallocLab/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 25, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>July 25, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/16/CSAPP_LAB/ShellLab/" title="CSAPP_lab ShellLab">
+                        <span class="hidden-mobile">CSAPP_lab ShellLab</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CSAPP_lab"
+        id="heading-24d6582ec3d2ffe8d6c95577e02bb950" role="tab" data-toggle="collapse" href="#collapse-24d6582ec3d2ffe8d6c95577e02bb950"
+        aria-expanded="true"
+      >
+        CSAPP_lab
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-24d6582ec3d2ffe8d6c95577e02bb950"
+           role="tabpanel" aria-labelledby="heading-24d6582ec3d2ffe8d6c95577e02bb950">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/03/CSAPP_LAB/ArchitectureLab/" title="CSAPP_lab ArchitectureLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab ArchitectureLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/06/27/CSAPP_LAB/AttkackLab/" title="CSAPP_lab AttackLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab AttackLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/04/CSAPP_LAB/BombLab/" title="CSAPP_lab BombLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab BombLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/08/CSAPP_LAB/CacheLab/" title="CSAPP_lab CacheLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab CacheLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/22/CSAPP_LAB/DataLab/" title="CSAPP_lab DataLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab DataLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/25/CSAPP_LAB/MallocLab/" title="CSAPP_lab MallocLab"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CSAPP_lab MallocLab</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/16/CSAPP_LAB/ShellLab/" title="CSAPP_lab ShellLab"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP_lab ShellLab</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

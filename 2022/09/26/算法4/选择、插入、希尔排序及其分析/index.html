@@ -1,0 +1,945 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="说明  本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数 我们所有的算法的讨论基础为升序排列 在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数  ​ 选择排序 选择排序可以说是排序里面最朴素的一种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="选择、插入、希尔排序及其分析">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/09/26/%E7%AE%97%E6%B3%954/%E9%80%89%E6%8B%A9%E3%80%81%E6%8F%92%E5%85%A5%E3%80%81%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="说明  本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数 我们所有的算法的讨论基础为升序排列 在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数  ​ 选择排序 选择排序可以说是排序里面最朴素的一种">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%204/Algorithm%204%20(3).jpg">
+<meta property="article:published_time" content="2022-09-26T15:35:12.897Z">
+<meta property="article:modified_time" content="2023-04-21T03:28:04.161Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="Algorithm 4">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/Algorithm%204/Algorithm%204%20(3).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>选择、插入、希尔排序及其分析 - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="选择、插入、希尔排序及其分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-26 23:35" pubdate>
+          September 26, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">选择、插入、希尔排序及其分析</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 3 months ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="说明">说明</h3>
+<ul>
+<li><p>本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数
+<code>less</code> 和 <code>exch</code>
+，前者用于判断两个数是否满足小于的关系，后者用于交换两个数</p></li>
+<li><p>我们所有的算法的讨论基础为升序排列</p></li>
+<li><p>在研究排序算法的成本时，对于会交换元素的算法，我们关注的是<strong>比较次数</strong>和<strong>交换次数</strong>，对于不交换元素的算法，我们关注的是<strong>数组的访问次数</strong></p></li>
+</ul>
+<p>​</p>
+<h3 id="选择排序">选择排序</h3>
+<p>选择排序可以说是排序里面最朴素的一种想法了，它的基本思想如下：</p>
+<p>选择数组当中最小的元素，将它与第一个元素交换。然后，在剩下的元素当中找到最小的，将它与第二个元素进行交换。如此这般，我们便可以将整个数组进行排序</p>
+<p>代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Selection</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++)<br>		&#123;<br>			<span class="hljs-type">int</span> min = i;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; N; j++)<br>				<span class="hljs-keyword">if</span> (<span class="hljs-built_in">less</span>(a[j], a[min]))<br>					min = j;<br>			<span class="hljs-built_in">exch</span>(a, i, min);<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h4 id="分析">分析</h4>
+<p>数组一共有 <span class="math inline">\(N\)</span> 个元素，对于第
+<span class="math inline">\(i\)</span>
+个元素而言，它需要<strong>一次交换</strong>和 <span class="math inline">\(N-1-i\)</span> 次比较（内层循环从 <span class="math inline">\(i+1\)</span> 开始遍历并且一共有 <span class="math inline">\(N\)</span> 个数）</p>
+<p>因此对于长度为 <span class="math inline">\(N\)</span> 的数组，会有
+<span class="math inline">\(N\)</span> 次交换和 <span class="math inline">\((N-1)+(N-2)+\cdots+1=N(N-1)/2\ \sim\
+N^2/2\)</span> 次比较</p>
+<p>​</p>
+<h3 id="插入排序">插入排序</h3>
+<p>对于数组当中的任意一个元素 <code>i</code>
+，它<strong>前面的元素是有序的</strong>。如果我需要让有序的范围扩大到
+<code>i</code> ，那么我们需要将元素 <code>i</code> 插入到前面的
+<code>i-1</code>
+个元素中的适当位置。为了实现这种插入，我们需要将部分元素向右移动一位（准确来说是比
+<code>i</code> 大的元素全部移动一位）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Insertion</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++)<span class="hljs-comment">//一开始从 1 开始</span><br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">less</span>(a[j], a[j - <span class="hljs-number">1</span>]); j--)<br>				<span class="hljs-built_in">exch</span>(a, j, j - <span class="hljs-number">1</span>);<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h4 id="分析-1">分析</h4>
+<p>由于比较是放在了 <code>for</code>
+循环的判断部分，因此在<strong>最好</strong>的情况下，只需要 <span class="math inline">\(N-1\)</span> 次比较和 <span class="math inline">\(0\)</span> 次交换</p>
+<p>由于每一次移动都会对应一次比较（反过来不行，后面会说明），因此在最坏的情况下需要
+<span class="math inline">\(\sim N^2/2\)</span> 次比较和 <span class="math inline">\(\sim N^2/2\)</span>
+次交换（这里的推导和上面一样，只不过对象是交换的次数，然后再从移动次数得出比较次数）</p>
+<p>对于 <span class="math inline">\(N\)</span>
+个元素的数组，比较的总次数是交换次数加上一个额外的项，该项为 <span class="math inline">\(N\)</span>
+减去待插入元素正好是<strong>「当前已知最小元素的次数」</strong>。在最坏情况下（完全逆序），这一项为
+0 ；在最好情况下（数组本身排好序），这一项为 <span class="math inline">\(N-1\)</span></p>
+<p>我们解释一下什么叫「当前已知最小元素的次数」</p>
+<p>我们知道一次交换必然对应一次比较，这里很容易理解</p>
+<p>那我们思考一个问题，对于那些只需要比较而不需要交换的项，是什么情况</p>
+<p>通过观察可以发现，如果想要进入内层循环，那么<strong>当前元素一定要小于前一个元素</strong>。反过来说，如果当前元素<strong>不是目前已知的最小元素</strong>，那么就只有比较的成本而没有交换的成本。那么，我们通过用
+<span class="math inline">\(N\)</span>
+减去「待插入元素为当前已知最小元素的次数」，得到的就是所有<strong>只需要比较而不需要交换的成本</strong></p>
+<p>我们还有另外一种描述插入排序成本的方法</p>
+<p>我们定义<em>倒置</em>指的是数组当中<strong>两个</strong>顺序颠倒的元素。那么插入排序的<strong>交换次数跟倒置的个数相同</strong>，比较次数大于等于倒置的数量，小于等于倒置的数量加上数组大小再减去
+1 （这里的推导与上面的一致，不过多说明）</p>
+<p>​</p>
+<h3 id="希尔排序">希尔排序</h3>
+<p>我们看到，在插入排序中，它只会比较<strong>相邻元素</strong>，因此元素只能一点点地移动，这种速度非常慢，那么有没有一种可以让元素可以快速移动的办法呢？</p>
+<p>这便有了希尔排序</p>
+<p>该算法的思想是使数组当中<strong>任意</strong>间隔为 <span class="math inline">\(h\)</span> 的元素都是有序的，这样的数组被称为
+<span class="math inline">\(h\)</span> 有序数组。当 <span class="math inline">\(h\)</span>
+很大的时候，便可以实现将一个数快速移动使得它接近最终应该在的位置</p>
+<p>我们通过不断减小 <span class="math inline">\(h\)</span>
+的大小，便可以使得数组逐渐变为有序</p>
+<p>具体的，对于一个 <span class="math inline">\(N\)</span>
+个元素的数组，我们让 <span class="math inline">\(h\)</span> 的大小从
+<span class="math inline">\(N/3\)</span> 不断减小到 1
+（当然也可以用别的）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Insertion</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-type">int</span> h = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">while</span> (h &lt; N / <span class="hljs-number">3</span>)<br>			h = <span class="hljs-number">3</span> * h + <span class="hljs-number">1</span>;<span class="hljs-comment">//1, 4, 13, 40, 121, 364, 1093</span><br>		<span class="hljs-keyword">while</span> (h &gt;= <span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &gt;= h &amp;&amp; <span class="hljs-built_in">less</span>(a[j], a[j - h]); j -= h)<br>					<span class="hljs-built_in">exch</span>(a, j, j - h);<span class="hljs-comment">//j必须大于等于h，不然会数组越界</span><br>			&#125;<br>			h = h / <span class="hljs-number">3</span>;<span class="hljs-comment">//h不断减小</span><br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>​</p>
+<h4 id="分析-2">分析</h4>
+<p>关于该算法的分析，目前并无法准确的给出其时间复杂度的数值，但可以确定的是一定比
+<span class="math inline">\(N^2\)</span> 小</p>
+<p>其实对于中等大小的数组，希尔排序的时间是可以接受的，它还不需要额外的运行空间而且代码量很小。其实还有很多比希尔排序更快的算法，在
+<span class="math inline">\(N\)</span>
+很大的时候，它们的速度也只可能会比希尔排序快两倍（有时还不一定能达到），并且那些算法还更复杂</p>
+<p>总的来说，它的时间是可以接受的并且代码量也小，所有可以使用</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm-4/" class="category-chain-item">Algorithm 4</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithm-4/">#Algorithm 4</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>选择、插入、希尔排序及其分析</div>
+      <div>https://nishikichisato.github.io/2022/09/26/算法4/选择、插入、希尔排序及其分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 26, 2022</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 21, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/27/%E7%AE%97%E6%B3%954/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/" title="归并排序及其分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">归并排序及其分析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/22/%E7%AE%97%E6%B3%954/Union-Find-%E7%AE%97%E6%B3%95/" title="Union-Find 算法">
+                        <span class="hidden-mobile">Union-Find 算法</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Algorithm 4"
+        id="heading-8fd5a684820e52af1c84ce6039ea2490" role="tab" data-toggle="collapse" href="#collapse-8fd5a684820e52af1c84ce6039ea2490"
+        aria-expanded="true"
+      >
+        Algorithm 4
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-8fd5a684820e52af1c84ce6039ea2490"
+           role="tabpanel" aria-labelledby="heading-8fd5a684820e52af1c84ce6039ea2490">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/09/22/%E7%AE%97%E6%B3%954/Union-Find-%E7%AE%97%E6%B3%95/" title="Union-Find 算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Union-Find 算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/27/%E7%AE%97%E6%B3%954/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/" title="归并排序及其分析"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">归并排序及其分析</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/29/%E7%AE%97%E6%B3%954/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90%E5%8F%8A%E5%85%B6%E6%94%B9%E8%BF%9B/" title="快速排序算法分析及其改进"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">快速排序算法分析及其改进</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/26/%E7%AE%97%E6%B3%954/%E9%80%89%E6%8B%A9%E3%80%81%E6%8F%92%E5%85%A5%E3%80%81%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/" title="选择、插入、希尔排序及其分析"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">选择、插入、希尔排序及其分析</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

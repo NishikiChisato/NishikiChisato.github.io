@@ -1,0 +1,1019 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="模板具体化 类模板与函数模板很相似，都有隐式实例化，显示实例化、显示具体化，这些统称为具体化( implicit instantiation) 。类模板的声明用泛型的方式来描述类，而具体化则是以具体的类型来生成对应的类声明。 隐式实例化 在用类声明对象时，我们需要指定其类型，之后编译器会通过类模板来为该类型生成一个类定义（也就是类的具体化，类的模板参数变为已知），即： 1stack&amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 类模板小结">
+<meta property="og:url" content="https://nishikichisato.github.io/2022/07/30/C++%20Primer%20Plus/%E7%B1%BB%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="模板具体化 类模板与函数模板很相似，都有隐式实例化，显示实例化、显示具体化，这些统称为具体化( implicit instantiation) 。类模板的声明用泛型的方式来描述类，而具体化则是以具体的类型来生成对应的类声明。 隐式实例化 在用类声明对象时，我们需要指定其类型，之后编译器会通过类模板来为该类型生成一个类定义（也就是类的具体化，类的模板参数变为已知），即： 1stack&amp;l">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/C++%20Primer%20Plus/C++%20Primer%20Plus%20(1).jpg">
+<meta property="article:published_time" content="2022-07-30T03:23:31.306Z">
+<meta property="article:modified_time" content="2023-04-21T03:31:32.649Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="C++ Primer Plus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/C++%20Primer%20Plus/C++%20Primer%20Plus%20(1).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>C++ 类模板小结 - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++ 类模板小结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-30 11:23" pubdate>
+          July 30, 2022 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++ 类模板小结</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 3 months ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="模板具体化">模板具体化</h2>
+<p>类模板与函数模板很相似，都有隐式实例化，显示实例化、显示具体化，这些统称为具体化(
+implicit instantiation)
+。类模板的声明用<strong>泛型的方式来描述类</strong>，而具体化则是以<strong>具体的类型来生成对应的类声明</strong>。</p>
+<h3 id="隐式实例化">隐式实例化</h3>
+<p>在用类声明对象时，我们需要指定其类型，之后编译器会通过类模板来为该类型生成一个类定义（也就是类的具体化，类的模板参数变为已知），即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">stack&lt;<span class="hljs-type">int</span>&gt;st;<span class="hljs-comment">//编译器会生成一个int类型的类定义，然后用该类定义来实例化对象</span><br></code></pre></td></tr></table></figure>
+<p>这里需要说明的是：类的具体化是指「用指定的类型通过类模板声明来生成对应类型的类定义」。</p>
+<p>我们通常会写出一个带有模板参数的类声明（这个类当中的所有成员方法都写出了模板定义，但我们依旧称整个类为模板类声明），当我们给模板参数指定一个类型的时候，编译器会利用类模板声明自动生成该<strong>类型</strong>所对应的类模板定义（这个时候类模板中的所有模板参数替换为指定的类型）</p>
+<p>这个地方，我们是需要<strong>创建一个对象</strong>之后才会发生隐式实例化，如果没有对象需要创建则不会发生隐式实例化，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">stack&lt;<span class="hljs-type">int</span>&gt;pt*;<span class="hljs-comment">//不会创建对象，自然也不会有隐式实例化，编译器不会为int生成一个类定义</span><br></code></pre></td></tr></table></figure>
+<p>那么为什么是「隐式」呢？</p>
+<p>这里的<strong>隐式</strong>说的应该是类的具体化是隐式的。具体来说，由于<strong>需要创建对象</strong>，那么在创建对象之前就需要<strong>有相应的类定义</strong>，这个时候<strong>类的「具体化」就会被隐式地执行</strong>。</p>
+<p>下面地显式实例化也是同理。虽然没有创建对象，但由于<strong>显式</strong>制定了类型，也就相当于<strong>类的「具体化」会被显式执行</strong>。</p>
+<p>那么为什么要叫「实例化」呢，直接叫「隐式具体化」不就行了？</p>
+<p>我们所说的实例化指的是<strong>用类定义类创建一个对象</strong>，「具体化」仅仅是生成对应的类定义，并不涉及到对象的创建。</p>
+<p>然后，我们需要在这里说明一下什么叫「类声明」和「类定义」。我的理解是：类声明就是只写出类中方法的声明而没有给出定义，类定义是<strong>在前者的基础上给出了类方法的定义</strong>。</p>
+<p>那么「类模板声明」和「类模板定义」就是：前者为<strong>类定义</strong>，不过类当中的类型为模板参数，后者为<strong>类定义</strong>并且类当中的类型为指定类型</p>
+<h3 id="显式实例化">显式实例化</h3>
+<p>显示实例化必须<strong>放在类模板定义所处的名称空间中</strong>。这种情况下，虽然没有创建对象但编译器<strong>利用类模板声明</strong>也会<strong>生成对应类型的类定义</strong>。</p>
+<p>我们只需要用 template 来指定所需类型来声明类即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">stack</span>&lt;<span class="hljs-type">int</span>&gt;;<br></code></pre></td></tr></table></figure>
+<p>这么做之后，<strong>编译器会直接创建一个类型为 <code>int</code>
+的类定义</strong>，就算没有指定对象。</p>
+<h3 id="显式具体化">显式具体化</h3>
+<p>前面说过，<strong>具体化就是用类模板声明来创建对应类型的定义</strong>。有的时候，这种类模板定义并不能满足对于一些特定类型的需求。因此我们需要<strong>为特定的类型单独生成其类模板定义</strong>，这便是显式具体化。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">className</span>&lt;specialized-type-name&gt;<br>&#123;<br>    ...<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>当需要为 <code>speciailized-type-name</code>
+创建对应的类模板定义时，编译器<strong>不会通过类模板声明来创建</strong>而是直接使用显式具体化得到的类定义（看到了吗，具体化就是生成对应类型的类定义）。</p>
+<h3 id="部分具体化">部分具体化</h3>
+<p>如果有多个模板参数，那么我们可以给部分模板参数指定类型，这便是「部分具体化」</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span> &#123;...&#125;;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>&gt;<span class="hljs-comment">//这个部分写的是没有被具体化的模板参数</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&lt;T1, <span class="hljs-type">int</span>&gt; <span class="hljs-comment">//这个部分不用写 class</span><br>&#123;...&#125;;<br></code></pre></td></tr></table></figure>
+<p>当然，有多个模板可供选择的话编译器会选择<strong>具体化程度高的</strong>。</p>
+<p>我们也可以这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&#123;...&#125;;<br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>*&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&#123;...&#125;;<br><br>P&lt;<span class="hljs-type">char</span>&gt; t1;<span class="hljs-comment">//匹配第一个</span><br>P&lt;<span class="hljs-type">char</span>*&gt; t2;<span class="hljs-comment">//匹配第二个</span><br></code></pre></td></tr></table></figure>
+<p>我们还可以更骚：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">T3</span>&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&#123;...&#125;;<span class="hljs-comment">//下面两个都是这个的特化</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>. <span class="hljs-keyword">class</span> <span class="hljs-title class_">T2</span>&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&lt;T1, T2, T2&gt;&#123;...&#125;;<br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T1</span>&gt; <span class="hljs-keyword">class</span> <span class="hljs-title class_">P</span>&lt;T1, T1*, T1*&gt;&#123;...&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="成员模板">成员模板</h2>
+<p>一个类模板当中是可以嵌套另外一个类模板的，这一部分我们主要说明一下如何在类外定义这些东西</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<span class="hljs-comment">//类声明</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">V</span>&gt;<span class="hljs-comment">//这个地方不能写 T , 下面同理</span><br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">HD</span>;        <br>	HD&lt;T&gt;a;<br>	HD&lt;T&gt;b;<br><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">TP</span>(T e1, T e2, T e3, T e4)<br>		: <span class="hljs-built_in">a</span>(e1, e3), <span class="hljs-built_in">b</span>(e2, e4)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Y&gt;</span><br><span class="hljs-function">	Y <span class="hljs-title">cal</span><span class="hljs-params">()</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>这个例子基本上囊括全了，在类模板当中既有<strong>类模板声明</strong>也有<strong>函数模板声明</strong>。不管你怎么写，他们的在类外的定义总归是一样的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">V</span>&gt;<span class="hljs-comment">//同样，不能写 T</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TP</span>&lt;T&gt;::HD <span class="hljs-comment">//类的话前面就是 class ，函数的话前面就是返回值</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">HD</span>(V e1, V e2 = e1)<br>		:<span class="hljs-built_in">a</span>(e1), <span class="hljs-built_in">b</span>(e2)<br>	&#123;  &#125;<br><br>	<span class="hljs-function">V <span class="hljs-title">re_a</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> a; &#125;<br>	<span class="hljs-function">V <span class="hljs-title">re_b</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123; <span class="hljs-keyword">return</span> b; &#125;<br><br><span class="hljs-keyword">private</span>:<br>	V a, b;<br>&#125;;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Y&gt;<br>Y TP&lt;T&gt;::<span class="hljs-built_in">cal</span>()<br>&#123;<br>	<span class="hljs-keyword">return</span> a.<span class="hljs-built_in">re_a</span>() + a.<span class="hljs-built_in">re_b</span>() + b.<span class="hljs-built_in">re_a</span>() + b.<span class="hljs-built_in">re_b</span>();<br>&#125;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> TP&lt;T&gt;::<span class="hljs-built_in">show</span>()<span class="hljs-type">const</span><br>&#123;<br>	cout &lt;&lt; a.<span class="hljs-built_in">re_a</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; a.<span class="hljs-built_in">re_b</span>() &lt;&lt; endl;<br>	cout &lt;&lt; b.<span class="hljs-built_in">re_a</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; b.<span class="hljs-built_in">re_b</span>() &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>关于写了两层 <code>template</code>
+，我需要说明一点的是：由于类内部的类 <code>HD</code> 只能由类名
+<code>TP</code> 解析而得（因为模板是<strong>嵌套</strong>的，绝对不能用
+<code>template T, template V</code>
+这种，这就<strong>不是嵌套了</strong>），而关于类名 <code>TP</code>
+必须要给出其模板参数类型才行，而类 <code>HD</code> 的定义本身也需要一层
+<code>template</code> ，这便才有了两层。</p>
+<p>我需要额外说明一点：这里的 HD 的模板参数跟 TP
+的模板参数不同，当然也可以写成相同，这样的话只需要在类外写一层
+<code>template</code> 就行。</p>
+<h2 id="将模板作为参数">将模板作为参数</h2>
+<p>我们上面提到的类模板的声明都是 <code>template&lt;class T&gt;</code>
+。这里面的 <code>T</code>
+可以表示任何类型，注意，是<strong>「类型」</strong>。那么什么叫「类型」？</p>
+<p>个人理解是「能够用于初始化对象的」叫做类型。</p>
+<p>就比如可以用 <code>int</code> 初始化对象，因此 <code>int</code>
+就是类型；可以用 <code>stack&lt;int&gt;</code> 初始化变量，那么
+<code>stack&lt;int&gt;</code> 就是类型。而我们在模板中所用的参数
+<code>T</code> ，实际上是用<strong>这个类型</strong>来声明模板类。</p>
+<p>也就是说，类模板中的所有成员变量的<strong>类型</strong>都是
+<code>T</code> 。</p>
+<p>那么这里就有问题了。如果我目前所需要写的一个类模板当中的大部分功能可以直接通过
+<code>STL</code> 容器实现，即<strong>我可以通过对 <code>STL</code>
+容器采取复合的操作来实现我的需求</strong>。而这个「复合」，指的就是我自己写的那个类当中的成员变量需要有<strong>类模板</strong>。</p>
+<p>而类模板并不是类型，无法于模板参数 <code>T</code>
+相匹配。为了解决这个问题，我们引入了<strong>将模板作为参数</strong>。</p>
+<p>我们直接看例子吧：</p>
+<p>我们知道，<code>stack</code> 的模板声明为
+<code>template&lt;class _Ty, class _Container = deque&lt;_Ty&gt;&gt;</code>
+。如果我们在类模板中希望使用 <code>stack</code>
+类，那么我们的类模板可以这么定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">_Ty</span>, <span class="hljs-keyword">class</span> <span class="hljs-title class_">_Container</span> = deque&lt;_Ty&gt;&gt;<span class="hljs-keyword">class</span> Type&gt;<br><span class="hljs-keyword">class</span> TE<br>&#123;<br><span class="hljs-keyword">private</span>:<br>	Type&lt;<span class="hljs-type">int</span>&gt;s1;<span class="hljs-comment">//这里可以是其他的类型</span><br>	Type&lt;<span class="hljs-type">int</span>&gt;s2;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我们着重分析一下第一行。一般的都是
+<code>template&lt;class T&gt;</code> （我们这里统一用 <code>class</code>
+）。</p>
+<p>这里的 <code>T</code>
+是<strong>非模板类型</strong>模板参数的意思，这里的 <code>Type</code>
+是<strong>模板类型</strong>模板参数的意思。</p>
+<p>后者需要在前者的前面加上 <code>Type</code>
+是哪种类型的模板（这个模板的模板参数是什么）。</p>
+<p>（这个地方我感觉我的语言说不清楚，我。。。觉得我理解了，但我说不出来。。。。）</p>
+<p>我们后面在使用的时候是这么写的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">TE&lt;stack&gt;T;<br></code></pre></td></tr></table></figure>
+<p>编译器会用 <code>stack</code> 替代 <code>Type</code> ，因此
+<code>Type</code> 必须为模板类型并且该模板类型必须与 <code>stack</code>
+的模板类型一致。</p>
+<h2 id="模板类和友元">模板类和友元</h2>
+<p>模板类的声明中可以加入友元。模板友元分三类。</p>
+<ul>
+<li>非模板友元</li>
+<li>约束模板友元
+<ul>
+<li>友元类型取决于类被实例化时的类型</li>
+</ul></li>
+<li>非约束模板友元
+<ul>
+<li>友元的所有具体化都是类的每一个具体化的友元</li>
+</ul></li>
+</ul>
+<h3 id="非模板友元">非模板友元</h3>
+<p>友元，实际上是给类外对象访问类内成员的一种方法（虽然这种方法会破坏封装）</p>
+<p>我们在友元函数参数的部分通常会写这个类的类型。同理，对于类模板而言，我们需要为该类模板<strong>显式具体化</strong>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(Test&lt;T&gt; rhs)</span></span>;<span class="hljs-comment">//使用类模板中的成员</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//不使用类模板中的成员</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(Test&lt;<span class="hljs-type">int</span>&gt; rhs)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;Chisato&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Chisato&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个其实没有什么好说的，跟普通的类写友元函数一样。我们重点看后面两个</p>
+<h3 id="约束模板友元">约束模板友元</h3>
+<p>你会发现，上面那种写法的话会很麻烦。为什么？</p>
+<p>你想啊， <code>Test</code> 是一个类模板，可以适用于任何类型，而
+<code>fun</code> 函数只能用于 <code>Test</code> 对于 <code>int</code>
+类型的显式具体化，而对于其他类型的显式具体化则没有办法。</p>
+<p>说人话就是，你每用 <code>Test</code>
+来生成某个类型的具体化时，都需要对 <code>fun</code> 进行一次重载。</p>
+<p>好家伙，这不累死人。作为一个优雅（<del>懒惰</del>）的程序员我觉得不允许这种事情的发生。这里便引入了约束模板友元。</p>
+<p>我们想到，既然函数模板可以适用于任何类型，类模板也可以适用于任何类型。如果我将函数模板作为类的友元不就完美了？</p>
+<p>事实上，约束模板友元就是这么做的。</p>
+<p>我们直接看代码吧，这东西。。。。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(T&amp; rhs)</span></span>;<span class="hljs-comment">//一定要在类模板的前面先声明函数模板</span><br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt; <span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span>;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> fun&lt;Test&lt;T&gt;&gt;(Test&lt;T&gt;&amp; rhs);<br>    <span class="hljs-comment">//也可以这么写：friend void fun&lt;&gt;(Test&lt;T&gt;&amp; rhs);</span><br>	<span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-built_in">show</span>&lt;T&gt;();<br><br>	<span class="hljs-built_in">Test</span>(T rhs = <span class="hljs-number">0</span>)<br>		: <span class="hljs-built_in">n</span>(rhs)<br>	&#123;  &#125;<br><span class="hljs-keyword">private</span>:<br>	T n;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(T&amp; rhs)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; rhs.n &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; <span class="hljs-string">&quot;Chisato&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>首先，最上面那个模板声明只能写在同一行，分两行写会报警告（我也不知道为什么，哦卡西）</p>
+<p>至于类模板当中为什么要写成
+<code>friend void fun&lt;Test&lt;T&gt;&gt;(Test&lt;T&gt;&amp; rhs)</code>
+，我们带入一个具体类型可以理解了。</p>
+<p>把 <code>T</code> 替换成 <code>int</code> ，由于 <code>fun</code>
+本身是模板函数，因此需要显式指出其模板参数，那么对于
+<code>Test&lt;int&gt;</code> 类型的对象， <code>fun</code>
+的声明就应该写成
+<code>fun&lt;Test&lt;int&gt;&gt;(Test&lt;int&gt;&amp; rhs)</code> 。</p>
+<p>实际上在模板里面也可以写成
+<code>fun&lt;&gt;(Test&lt;T&gt;&amp; rhs)</code>
+，因为可以通过函数的参数推导得出<strong>前面</strong>那么尖括号里面的内容。</p>
+<p>而如果调用的是 <code>show</code>
+，这玩意没有参数，就需要显式指出其类型了。具体的调用如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function">Test&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">t</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;<br>	<span class="hljs-built_in">fun</span>(t);<br>	Test&lt;<span class="hljs-type">double</span>&gt;<span class="hljs-built_in">r</span>(<span class="hljs-number">15</span>);<br>	<span class="hljs-built_in">fun</span>(r);<br>	<span class="hljs-built_in">show</span>&lt;<span class="hljs-type">int</span>&gt;();<br>	<span class="hljs-built_in">show</span>&lt;<span class="hljs-type">double</span>&gt;();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="非约束友元函数">非约束友元函数</h3>
+<p>前面一种的情况是：<code>int</code> 类型的类的具体化会生成
+<code>int</code> 类型的函数的具体化，反过来， <code>int</code>
+类型的函数的<strong>只能访问</strong> <code>int</code> 类型的类的具体化
+。这被称为是<strong>约束的</strong>。</p>
+<p>当然还有非约束的，这种的情况是：对于一个友元函数，它可以访问<strong>任何</strong>类型的类当中的成员，即<strong>每个函数具体化都是每个类具体化的友元</strong>。</p>
+<p>我们只需要在类内声明友元函数就可以实现这一点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> U&gt; <span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(C&amp;, U&amp;)</span></span>;<br><br>	<span class="hljs-built_in">Test</span>(T rhs = <span class="hljs-number">0</span>)<br>		: <span class="hljs-built_in">n</span>(rhs)<br>	&#123;  &#125;<br><span class="hljs-keyword">private</span>:<br>	T n;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> C, <span class="hljs-keyword">typename</span> U&gt; <span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(C&amp; rhs, U&amp; chs)</span></span><br><span class="hljs-function"></span>&#123;<br>	cout &lt;&lt; rhs.n &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; chs.n &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这种没什么好说的，知道是什么意思就行，还满简单的</p>
+<p>其实就是一个函数模板作为友元存在，整个非约束友元，花里胡哨的（（（</p>
+<p>下面是具体的调用代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	Test&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">t</span>(<span class="hljs-number">10</span>);<br>	Test&lt;<span class="hljs-type">double</span>&gt;<span class="hljs-built_in">r</span>(<span class="hljs-number">1.5</span>);<br>	<span class="hljs-built_in">fun</span>(t, r);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>类模板结束了， 我可以去看 Effective C++
+当中泛型的部分了，走起！！！！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-Primer-Plus/" class="category-chain-item">C++ Primer Plus</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-Primer-Plus/">#C++ Primer Plus</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++ 类模板小结</div>
+      <div>https://nishikichisato.github.io/2022/07/30/C++ Primer Plus/类模板/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 30, 2022</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 21, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%9B%BE%E8%A7%A3%E7%BD%91%E7%BB%9C/" title="小林图解网络笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">小林图解网络笔记</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/30/Effective%20C++/Effective%20C++/" title="Effective C++">
+                        <span class="hidden-mobile">Effective C++</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="C++ Primer Plus"
+        id="heading-a27861b400ba0644f7bc2617a4a577d9" role="tab" data-toggle="collapse" href="#collapse-a27861b400ba0644f7bc2617a4a577d9"
+        aria-expanded="true"
+      >
+        C++ Primer Plus
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-a27861b400ba0644f7bc2617a4a577d9"
+           role="tabpanel" aria-labelledby="heading-a27861b400ba0644f7bc2617a4a577d9">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/07/30/C++%20Primer%20Plus/C++%20primer%20plus%E7%AC%94%E8%AE%B0/" title="C++ Primer Plus 笔记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++ Primer Plus 笔记</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/07/30/C++%20Primer%20Plus/%E7%B1%BB%E6%A8%A1%E6%9D%BF/" title="C++ 类模板小结"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">C++ 类模板小结</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/09/03/C++%20Primer%20Plus/RTTI/" title="RTTI"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">RTTI</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/08/31/C++%20Primer%20Plus/%E5%BC%82%E5%B8%B8/" title="异常"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">异常</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

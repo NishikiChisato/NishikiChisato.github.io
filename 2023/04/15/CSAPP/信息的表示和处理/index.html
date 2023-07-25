@@ -1,0 +1,1512 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信息的表示和处理  信息的表示和处理  编码  无符号(Unsigned)数的编码 补码(Two&#39;s-complement)数的编码 其他编码方式  反码(Ones&#39;Complement)编码 原码(Sign-Magnitude)编码  无符号数与补码数的转换  补码转无符号 无符号转补码  拓展一个数字的位表示  无符号的拓展 补码数的拓展  截断数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP 第二章 信息的表示和处理">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/CSAPP/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="信息的表示和处理  信息的表示和处理  编码  无符号(Unsigned)数的编码 补码(Two&#39;s-complement)数的编码 其他编码方式  反码(Ones&#39;Complement)编码 原码(Sign-Magnitude)编码  无符号数与补码数的转换  补码转无符号 无符号转补码  拓展一个数字的位表示  无符号的拓展 补码数的拓展  截断数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP/CSAPP%20(1).png">
+<meta property="article:published_time" content="2023-04-15T02:39:24.958Z">
+<meta property="article:modified_time" content="2023-04-21T03:11:43.819Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CSAPP/CSAPP%20(1).png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CSAPP 第二章 信息的表示和处理 - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CSAPP 第二章 信息的表示和处理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-15 10:39" pubdate>
+          April 15, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          105 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CSAPP 第二章 信息的表示和处理</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 3 months ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="信息的表示和处理">信息的表示和处理</h1>
+<ul>
+<li><a href="#信息的表示和处理">信息的表示和处理</a>
+<ul>
+<li><a href="#编码">编码</a>
+<ul>
+<li><a href="#无符号unsigned数的编码">无符号(Unsigned)数的编码</a></li>
+<li><a href="#补码twos-complement数的编码">补码(Two's-complement)数的编码</a></li>
+<li><a href="#其他编码方式">其他编码方式</a>
+<ul>
+<li><a href="#反码onescomplement编码">反码(Ones'Complement)编码</a></li>
+<li><a href="#原码sign-magnitude编码">原码(Sign-Magnitude)编码</a></li>
+</ul></li>
+<li><a href="#无符号数与补码数的转换">无符号数与补码数的转换</a>
+<ul>
+<li><a href="#补码转无符号">补码转无符号</a></li>
+<li><a href="#无符号转补码">无符号转补码</a></li>
+</ul></li>
+<li><a href="#拓展一个数字的位表示">拓展一个数字的位表示</a>
+<ul>
+<li><a href="#无符号的拓展">无符号的拓展</a></li>
+<li><a href="#补码数的拓展">补码数的拓展</a></li>
+</ul></li>
+<li><a href="#截断数字">截断数字</a>
+<ul>
+<li><a href="#截断无符号数">截断无符号数</a></li>
+<li><a href="#截断补码数">截断补码数</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#整数运算">整数运算</a>
+<ul>
+<li><a href="#右移方式">右移方式</a></li>
+<li><a href="#无符号加法">无符号加法</a>
+<ul>
+<li><a href="#无符号加法溢出的检测">无符号加法溢出的检测</a></li>
+<li><a href="#无符号的非">无符号的非</a></li>
+</ul></li>
+<li><a href="#补码加法">补码加法</a>
+<ul>
+<li><a href="#补码加法溢出的判断">补码加法溢出的判断</a></li>
+<li><a href="#补码的非">补码的非</a>
+<ul>
+<li><a href="#快速求补码非的办法">快速求补码非的办法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#无符号乘法">无符号乘法</a></li>
+<li><a href="#补码乘法">补码乘法</a></li>
+<li><a href="#乘以常数">乘以常数</a>
+<ul>
+<li><a href="#乘以-2-的次幂">乘以 2 的次幂</a></li>
+<li><a href="#乘以任意常数">乘以任意常数</a></li>
+</ul></li>
+<li><a href="#除以-2-的幂">除以 2 的幂</a>
+<ul>
+<li><a href="#取整的描述">取整的描述</a></li>
+<li><a href="#无符号除法">无符号除法</a></li>
+<li><a href="#补码除法">补码除法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#浮点数">浮点数</a>
+<ul>
+<li><a href="#表示">表示</a>
+<ul>
+<li><a href="#normal">Normal</a></li>
+<li><a href="#denormal">Denormal</a></li>
+<li><a href="#inf--nan">INF &amp; NaN</a></li>
+</ul></li>
+<li><a href="#范围">范围</a></li>
+<li><a href="#舍入">舍入</a>
+<ul>
+<li><a href="#向上舍入">向上舍入</a></li>
+<li><a href="#向下舍入">向下舍入</a></li>
+<li><a href="#向零舍入">向零舍入</a></li>
+<li><a href="#向偶数舍入">向偶数舍入</a></li>
+</ul></li>
+<li><a href="#浮点运算">浮点运算</a></li>
+<li><a href="#类型转换">类型转换</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="编码">编码</h2>
+<h3 id="无符号unsigned数的编码">无符号(Unsigned)数的编码</h3>
+<p>设一个整数数据有 <span class="math inline">\(\omega\)</span>
+位，我们可以将其写成位向量 <span class="math inline">\(\vec x\)</span>
+来表示该向量，或者将其每一位都写出来</p>
+<p><span class="math display">\[
+\vec x = [x_{\omega -1},x_{\omega -2},\cdots, x_1,x_0]
+\]</span></p>
+<p>对于向量 <span class="math inline">\(\vec x = [x_{\omega
+-1},x_{\omega -2},\cdots, x_1,x_0]\)</span> ，有：</p>
+<p><span class="math display">\[
+B2U_{\omega}(\vec x)=\sum_{i=0}^{\omega - 1}x_i 2^{i}
+\]</span></p>
+<h3 id="补码twos-complement数的编码">补码(Two's-complement)数的编码</h3>
+<p>对于向量 <span class="math inline">\(\vec x = [x_{\omega
+-1},x_{\omega -2},\cdots, x_1,x_0]\)</span> ，有：</p>
+<p><span class="math display">\[
+B2T_{\omega}(\vec x)=-x_{\omega - 1}2^{\omega -1}+\sum_{i=0}^{\omega -
+2}x_{i}2^{i}
+\]</span></p>
+<p>对于补码数的编码，其实就是<strong>无符号数的最高位变为负数</strong>，其余都是一样的</p>
+<p>我们以 <span class="math inline">\(4\)</span>
+位的无符号数与补码数为例，讨论二者的表示范围：</p>
+<p>对于 <span class="math inline">\(4\)</span>
+位的无符号数的范围，有：<span class="math inline">\(0\sim
+15\)</span></p>
+<p>对于 <span class="math inline">\(4\)</span>
+位的补码数的范围，有：<span class="math inline">\(-8\sim 7\)</span></p>
+<p>对于补码数而言，负数的个数有 <span class="math inline">\(8\)</span>
+个，<strong>非负数</strong>的个数也有 <span class="math inline">\(8\)</span> 个，这导致了：<span class="math inline">\(|TMin_{\omega}|=|TMax_{\omega}+1|\)</span></p>
+<h3 id="其他编码方式">其他编码方式</h3>
+<h4 id="反码onescomplement编码">反码(Ones'Complement)编码</h4>
+<p><span class="math display">\[
+B2O_{\omega}(\vec x)=-x_{\omega - 1}(2^{\omega -1}-1)+\sum_{i=0}^{\omega
+- 2}x_{i}2^{i}
+\]</span></p>
+<p>反码编码只是在<strong>补码的基础上</strong>将最高位的权重从 <span class="math inline">\(-2^{\omega -1}\)</span> 变为 <span class="math inline">\(-(2^{\omega}-1)\)</span>，其余都跟补码一样</p>
+<h4 id="原码sign-magnitude编码">原码(Sign-Magnitude)编码</h4>
+<p><span class="math display">\[
+B2S_{\omega}(\vec x)=(-1)^{x_{\omega -1}}+\sum_{i=0}^{\omega -
+2}x_{i}2^{i}
+\]</span></p>
+<p>原码的最高位为<strong>符号位</strong>，其余位来决定该数的大小</p>
+<p>这两种编码都有一个问题是，对于数字 <span class="math inline">\(0\)</span> 会有两种解释方式</p>
+<p>在原码中 <span class="math inline">\([00\cdots 0]\)</span> 被解释为
+<span class="math inline">\(+0\)</span>，<span class="math inline">\([10\cdots 0]\)</span> 被解释为 <span class="math inline">\(-0\)</span></p>
+<p>在反码中 <span class="math inline">\([00\cdots 0]\)</span> 被解释为
+<span class="math inline">\(+0\)</span>，<span class="math inline">\([11\cdots 1]\)</span> 被解释为 <span class="math inline">\(-0\)</span></p>
+<p>实际上，浮点数的编码方式就是才有原码编码</p>
+<h3 id="无符号数与补码数的转换">无符号数与补码数的转换</h3>
+<p>对于补码和无符号数之间的转换，<strong>底层的位值表示是不变的</strong>，只是改变了<strong>解释这些位的方式</strong></p>
+<h4 id="补码转无符号">补码转无符号</h4>
+<p><span class="math display">\[
+T2U_{\omega}(\vec x) = \left \{ \begin{matrix}
+x+2^{\omega}, &amp; x \lt 0 \\
+x,            &amp; x \ge 0
+\end{matrix}\right.
+\]</span></p>
+<h4 id="无符号转补码">无符号转补码</h4>
+<p><span class="math display">\[
+U2T_{\omega}(\vec x) = \left \{ \begin{matrix}
+x , &amp; x\le TMax \\
+x-2^{\omega} ,&amp; x \gt TMax
+\end{matrix}\right.
+\]</span></p>
+<h3 id="拓展一个数字的位表示">拓展一个数字的位表示</h3>
+<p>我们主要讨论从一个较小的类型转换到较大的类型</p>
+<h4 id="无符号的拓展">无符号的拓展</h4>
+<p>无符号的拓展被称为零拓展(zero extention)，只需要简单的在开头添加
+<span class="math inline">\(0\)</span> 即可，其原理如下：</p>
+<p>定义长度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u=[u_{\omega -1},u_{\omega -2},\cdots
+,u_1,u_0]\)</span> 和长度为 <span class="math inline">\(\omega
+&#39;\)</span> 的位向量 <span class="math inline">\(\vec
+{u&#39;}=[0,0,\cdots ,0,u_{\omega -1},u_{\omega -2},\cdots
+,u_1,u_0]\)</span> ，其中 <span class="math inline">\(\omega &#39;\gt
+\omega\)</span></p>
+<p>此时有：<span class="math inline">\(B2U(\vec{u})=B2U(\vec{u&#39;})\)</span></p>
+<h4 id="补码数的拓展">补码数的拓展</h4>
+<p>补码数的拓展被称为符号拓展(sign
+extention)，即在前面<strong>添加最高有效位</strong></p>
+<p>最高有效位为 <span class="math inline">\(0\)</span> ，那么添加 <span class="math inline">\(0\)</span> ；最高有效位为 <span class="math inline">\(1\)</span> ，那么添加 <span class="math inline">\(1\)</span></p>
+<p>定义长度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u=[u_{\omega -1},u_{\omega -2},\cdots
+,u_1,u_0]\)</span> 和长度为 <span class="math inline">\(\omega
+&#39;\)</span> 的位向量 <span class="math inline">\(\vec
+{u&#39;}=[{\color{orange}u_{\omega -1},u_{\omega -1},\cdots ,u_{\omega
+-1}},u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]\)</span> ，其中 <span class="math inline">\(\omega &#39;\gt \omega\)</span></p>
+<p>我们有：<span class="math inline">\(B2T(\vec{u})=B2T(\vec{u&#39;})\)</span></p>
+<p>推导：</p>
+<p>我们只需证明：<span class="math inline">\(B2T([{\color
+{orange}u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])=B2T([{\color
+{orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots
+,u_1,u_0])\)</span>
+，便可以说明对于<strong>任意位数的符号拓展，都是满足条件的</strong></p>
+<p>我们按照补码数的定义展开，有：</p>
+<p><span class="math display">\[
+\begin{align*}
+B2T([{\color {orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots
+,u_1,u_0])&amp;=-{\color {orange}u_{\omega
+-1}}2^{\omega}+\sum_{i=0}^{\omega -1}u_{i}2^{i}\\
+&amp;=-{\color {orange}u_{\omega -1}}2^{\omega}+{\color
+{orange}u_{\omega -1}}2^{\omega-1}+\sum_{i=0}^{\omega-2}u_i2^i\\
+&amp;=-{\color {orange}u_{\omega
+-1}}2^{\omega-1}+\sum_{i=0}^{\omega-2}u_i2^i\\
+&amp;=B2T([{\color {orange}u_{\omega -1}},u_{\omega -2},\cdots
+,u_1,u_0])
+\end{align*}
+\]</span></p>
+<p>本质上是使用属性：<span class="math inline">\(2^{\omega}-2^{\omega-1}=2^{\omega-1}\)</span></p>
+<h3 id="截断数字">截断数字</h3>
+<h4 id="截断无符号数">截断无符号数</h4>
+<p>设 <span class="math inline">\(\vec{x}\)</span> 表示位向量 <span class="math inline">\([x_{\omega-1}, x_{\omega-2}, \cdots
+x_1,x_0]\)</span>，<span class="math inline">\(\vec{x&#39;}\)</span>为其<strong>截断为 <span class="math inline">\(k\)</span> 位</strong>的结果：<span class="math inline">\(\vec{x&#39;}=[x_{k-1},x_{k-2},\cdots,x_1,x_0]\)</span>，我们有：<span class="math inline">\(x&#39;=x\bmod 2^k\)</span></p>
+<p><span class="math display">\[
+\begin{align*}
+B2U_{\omega}([x_{\omega-1}, x_{\omega-2}, \cdots x_1,x_0])\bmod
+2^k&amp;=(\sum_{i=0}^{\omega-1}x_i2^{i})\bmod 2^k\\
+&amp;=(\sum_{i=0}^{k-1}x_i2^i)\bmod 2^k\\
+&amp;=B2U_{\omega}([x_{k-1},x_{k-2},\cdots,x_1,x_0])
+\end{align*}
+\]</span></p>
+<p>本质上是对于任意的 <span class="math inline">\(i\ge
+k\)</span>，都有：<span class="math inline">\(2^i\bmod
+2^k=0\)</span></p>
+<h4 id="截断补码数">截断补码数</h4>
+<p>设 <span class="math inline">\(\vec{x}\)</span> 表示位向量 <span class="math inline">\([x_{\omega-1}, x_{\omega-2}, \cdots
+x_1,x_0]\)</span>，<span class="math inline">\(\vec{x&#39;}\)</span>为其<strong>截断为 <span class="math inline">\(k\)</span> 位</strong>的结果：<span class="math inline">\(\vec{x&#39;}=[x_{k-1},x_{k-2},\cdots,x_1,x_0]\)</span>，我们有：<span class="math inline">\(x&#39;=U2T(x\bmod 2^k)\)</span></p>
+<p>本质上是先将位向量<strong>截断为 <span class="math inline">\(k\)</span>
+位</strong>，然后在<strong>从补码的角度诠释位表示</strong></p>
+<h2 id="整数运算">整数运算</h2>
+<h3 id="右移方式">右移方式</h3>
+<p>右移方式有两种：逻辑右移与算术右移</p>
+<p>前者会直接补 <span class="math inline">\(0\)</span>
+，后者会补<strong>最高有效位</strong>；如果最高有效位为 <span class="math inline">\(0\)</span> ，那么便补 <span class="math inline">\(0\)</span> ，如果最高有效位为 <span class="math inline">\(1\)</span> ，那么便补一</p>
+<p>对于无符号数，<strong>右移均为逻辑右移</strong></p>
+<p>对于补码数，<strong>右移均为算术右移</strong></p>
+<h3 id="无符号加法">无符号加法</h3>
+<p>设 <span class="math inline">\(0\le x,y\le
+2^{\omega}\)</span>，有：</p>
+<p><span class="math display">\[
+\begin{align*}
+x+_{\omega}^{u}y=\left \{ \begin{array}{l} x+y,\quad &amp;x+y\le
+2^{\omega}\qquad \text{正常}\\
+x+y-2^{\omega},\quad &amp;x+y\ge 2^{\omega}\qquad \text{溢出}
+\end{array}\right.
+\end{align*}
+\]</span></p>
+<p>两个 <span class="math inline">\(\omega\)</span>
+位的无符号数相加，其结果可能需要 <span class="math inline">\(\omega+1\)</span> 位来表示</p>
+<p>若两个 <span class="math inline">\(\omega\)</span>
+位的无符号数相加，如果加和<strong>会自动截断为 <span class="math inline">\(\omega\)</span> 位</strong></p>
+<h4 id="无符号加法溢出的检测">无符号加法溢出的检测</h4>
+<p>设 <span class="math inline">\(0\le x,y\le UMax_{\omega}\)</span>
+，令 <span class="math inline">\(s=x+_{\omega}^{u}y\)</span> ，当且仅当
+<span class="math inline">\(s\lt x\)</span> （或等价条件 <span class="math inline">\(s\lt y\)</span>）成立时，发生了溢出</p>
+<p>代码判断：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//未发生溢出时返回true，发生溢出时返回false</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">uadd_ok</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> x, <span class="hljs-type">unsigned</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">unsigned</span> sum = x + y;<br>    <span class="hljs-keyword">return</span> sum &gt;= x;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="无符号的非">无符号的非</h4>
+<p>设 <span class="math inline">\(0\le x\lt 2^{\omega}\)</span> ，其
+<span class="math inline">\(\omega\)</span> 位的逆元 <span class="math inline">\(-_{\omega}^{u}x\)</span> 有下式给出：</p>
+<p><span class="math display">\[
+\begin{align*}
+-_{\omega}^{u}x&amp;=\left \{ \begin{matrix} &amp;x,&amp;x=0\\
+&amp;2^{\omega}-x,&amp;x\gt 0
+\end{matrix} \right.
+\end{align*}
+\]</span></p>
+<p>求无符号的非，本质上是对于一个无符号数 <span class="math inline">\(x\)</span> ，找到一个 <span class="math inline">\(y\)</span> 使得：</p>
+<p><span class="math display">\[
+(x+_{\omega}^{u}y)\bmod 2^{\omega}=0
+\]</span></p>
+<p>因此直接在 <span class="math inline">\(x\)</span>
+的基础上加一个<strong>使其溢出的数</strong>即可</p>
+<h3 id="补码加法">补码加法</h3>
+<p>设 <span class="math inline">\(-2^{\omega-1}\le x,y\le
+2^{\omega-1}-1\)</span> ，有：</p>
+<p><span class="math display">\[
+\begin{align*}
+x+_{\omega}^{t}y=\left \{ \begin{array}{l}x+y-2^{\omega},&amp;x+y\ge
+2^{\omega-1}\quad \text{正溢出}\\
+x+y,&amp;-2^{\omega}\le x+y\le 2^{\omega-1}-1 \quad \text{正常}\\
+x+y+2^{\omega},&amp;x+y\lt -2^{\omega-1} \quad \text{负溢出}
+\end{array}\right.
+\end{align*}
+\]</span></p>
+<p>对于 <span class="math inline">\(\omega\)</span>
+位的补码数可表示的最小值为 <span class="math inline">\(-2^{\omega-1}\)</span> ，可表示的最大值为 <span class="math inline">\(2^{\omega-1}-1\)</span></p>
+<p>因此如果两个 <span class="math inline">\(\omega\)</span>
+位的补码数相加，其结果可能需要 <span class="math inline">\(\omega+1\)</span> 位来表示</p>
+<p>如果结果大于 <span class="math inline">\(2^{\omega-1}-1\)</span>
+，则发生<strong>正溢出</strong>，<span class="math inline">\(\omega-1\)</span> 位的值由 <span class="math inline">\(0\)</span> 变为 <span class="math inline">\(1\)</span>，数值上相当于加和结果<strong>减去</strong>
+<span class="math inline">\(2\times2^{\omega-1}=2^{\omega}\)</span></p>
+<p>如果结果小于 <span class="math inline">\(-2^{\omega}\)</span>
+，则发生<strong>负溢出</strong>，<span class="math inline">\(\omega\)</span> 位的会溢出为 <span class="math inline">\(1\)</span>
+，由于我们需要将该位舍去，因此数值上相当于加和结果<strong>加上</strong>
+<span class="math inline">\(2^{\omega}\)</span></p>
+<h4 id="补码加法溢出的判断">补码加法溢出的判断</h4>
+<p>设 <span class="math inline">\(TMin\le x,y\le TMax\)</span> ，令
+<span class="math inline">\(s=x+_{\omega}^{t}y\)</span></p>
+<p><strong>当且仅当 <span class="math inline">\(x\gt 0,y\gt 0\)</span>
+而 <span class="math inline">\(s\le 0\)</span>
+时</strong>，发生<strong>正溢出</strong></p>
+<p><strong>当且仅当 <span class="math inline">\(x\lt 0,y\lt 0\)</span>
+而 <span class="math inline">\(s\ge 0\)</span>
+时</strong>，发生<strong>负溢出</strong></p>
+<p>代码判断：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//返回-1表示负溢出，1表示正溢出，0表示正常</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tadd_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span> &amp;&amp; y &lt; <span class="hljs-number">0</span> &amp;&amp; sum &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x &gt; <span class="hljs-number">0</span> &amp;&amp; y &gt; <span class="hljs-number">0</span> &amp;&amp; sum &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>该程序不能写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tadd_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sum = x + y;<br>    <span class="hljs-keyword">return</span> (sum - x == y) &amp;&amp; (sum - y == x);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这是因为，<strong>无论补码加法是否溢出，<code>sum -x == y</code>
+都始终成立</strong>（补码加法是模数加法，具有循环的特性）</p>
+<p>如果需要判断 <span class="math inline">\(x-y\)</span>
+是否发生溢出，不能写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tsub_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">tadd_ok</span>(x, -y);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当 <span class="math inline">\(y\)</span> 取除 <span class="math inline">\(TMin\)</span> 以外的任何值时，都是满足条件的，但当
+<span class="math inline">\(y=TMin\)</span>
+时，此函数做出了与我们期望相反的行为</p>
+<p>当 <span class="math inline">\(y=TMin\)</span> 时，该函数认为只要
+<span class="math inline">\(x\ge 0\)</span> 时就不会发生溢出，只要 <span class="math inline">\(x\lt
+0\)</span>时就会发生溢出，但实际与此刚好相反</p>
+<p>当 <span class="math inline">\(y=TMin\)</span> 时，<span class="math inline">\(-y=TMin\)</span> ，若 <span class="math inline">\(x\ge 0\)</span>
+，其实际计算结果为<strong>正数</strong>，但位表示却为负数，因此发生了溢出；同理，若
+<span class="math inline">\(x;t 0\)</span>
+，其实际计算结果<strong>依旧</strong>为<strong>正数</strong>，在位表示上，溢出的一位会被舍去，而符号位为
+<span class="math inline">\(0\)</span>
+，即位表示为正数，因此没有发生溢出</p>
+<p>正确写法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//溢出返回1，未溢出返回0</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tsub_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sub = x - y;<br>    <span class="hljs-keyword">return</span> (x &gt; <span class="hljs-number">0</span> &amp;&amp; y &lt; <span class="hljs-number">0</span> &amp;&amp; sub &lt; <span class="hljs-number">0</span>) || (x &lt; <span class="hljs-number">0</span> &amp;&amp; y &gt; <span class="hljs-number">0</span> &amp;&amp; sub &gt; <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="补码的非">补码的非</h4>
+<p>设 <span class="math inline">\(TMin\le x\le TMax\)</span> ，<span class="math inline">\(x\)</span> 的补码非 <span class="math inline">\(-_{\omega}^{t}x\)</span> 由下式给出：</p>
+<p><span class="math display">\[
+\begin{align*}
+-_{\omega}^{t}x=\left \{ \begin{matrix} &amp;TMin,&amp;x=TMin\\
+&amp;-x,&amp;x\gt TMin
+\end{matrix}\right.
+\end{align*}
+\]</span></p>
+<p>补码的非本质上同无符号的非一样，都是找一个数 <span class="math inline">\(y\)</span> 使得 <span class="math inline">\((y+_{\omega}^{t}x)\bmod 2^{\omega}=0\)</span>
+，本质上都是模数加法的溢出</p>
+<p>在位表示上，对于任意值 <span class="math inline">\(x\)</span> ，<span class="math inline">\(\sim x+1\)</span> 所求得的值就是 <span class="math inline">\(x\)</span> 的非，即 <span class="math inline">\(-x\)</span></p>
+<h5 id="快速求补码非的办法">快速求补码非的办法</h5>
+<p>在 <span class="math inline">\(x\)</span> 的二进制表示中，设 <span class="math inline">\(k\)</span> 为最右边的 <span class="math inline">\(1\)</span> 的位置，即 <span class="math inline">\(x\)</span> 的位表示为 <span class="math inline">\([x_{\omega-1},x_{\omega-2},\cdots,x_{k+1},1,0,\cdots,0]\)</span>
+（只要 <span class="math inline">\(x\)</span> 不为 <span class="math inline">\(0\)</span> 就总能找到这样的 <span class="math inline">\(k\)</span>）</p>
+<p>这个值的非的位表示为 <span class="math inline">\([\sim
+x_{\omega-1},\sim x_{\omega-2},\cdots,\sim
+x_{k+1},1,0,\cdots,0]\)</span></p>
+<p>也就等同于，将 <span class="math inline">\(k\)</span>
+的左边所有位均<strong>取反</strong></p>
+<h3 id="无符号乘法">无符号乘法</h3>
+<p>对于 <span class="math inline">\(0\le x,y\le UMax\)</span>
+，无符号乘法结果由下式给出：</p>
+<p><span class="math display">\[
+x*_{\omega}^{u}y=(x*y)\bmod 2^{\omega}
+\]</span></p>
+<p>两个 <span class="math inline">\(\omega\)</span>
+位的数相乘，结果可能需要 <span class="math inline">\(2\omega\)</span>
+位才能表示，因此无符号程序会将结果<strong>截断为 <span class="math inline">\(\omega\)</span> 位</strong></p>
+<h3 id="补码乘法">补码乘法</h3>
+<p>对于 <span class="math inline">\(TMin\le x,y\le TMax\)</span>
+，补码乘法结果由下式给出：</p>
+<p><span class="math display">\[
+x*_{\omega}^{t}y=U2T((x*y)\bmod 2^{\omega})
+\]</span></p>
+<p>其实就是将乘法结果<strong>截断为 <span class="math inline">\(\omega\)</span>
+位，然后再从补码的角度解释</strong></p>
+<h3 id="乘以常数">乘以常数</h3>
+<h4 id="乘以-2-的次幂">乘以 2 的次幂</h4>
+<p>我们先讨论乘以 <span class="math inline">\(2\)</span>
+的次幂的情况</p>
+<p>无论是无符号数还是补码数，乘以 <span class="math inline">\(2^k\)</span> 相当于将位表示左移 <span class="math inline">\(k\)</span> 个单位，然后再对其进行截断，即：</p>
+<p><span class="math display">\[
+x*_{\omega}^{u}2^k=B2U((x*2^k)\bmod 2^{\omega})\\
+x*_{\omega}^{t}2^k=U2T((x*2^k)\bmod 2^{\omega})
+\]</span></p>
+<h4 id="乘以任意常数">乘以任意常数</h4>
+<p>对于乘以任意常数 <span class="math inline">\(K\)</span>
+的情况，我们将 <span class="math inline">\(K\)</span>
+的二进制表示写出来：<span class="math inline">\([(0\cdots 0)(1\cdots
+1)(0\cdots 0)]\)</span> ，必然会是<strong>连续</strong>的 <span class="math inline">\(0,1\)</span> 交替的情况</p>
+<p>例如，<span class="math inline">\(14\)</span> 可以写为 <span class="math inline">\([(0\cdots0)(111)(0)]\)</span>，考虑<strong>位位值</strong>从
+<span class="math inline">\(n\)</span> 到 <span class="math inline">\(m\)</span> 的一组连续的 <span class="math inline">\(1\)</span> （<span class="math inline">\(n\ge
+m\)</span> ，且二者均从 <span class="math inline">\(0\)</span>
+开始）。（对 <span class="math inline">\(14\)</span> 来说，<span class="math inline">\(n=3,m=1\)</span>）我们可以用以下两种方式来将乘以任意常数
+<span class="math inline">\(K\)</span> 转换成加法、减法与移位操作：</p>
+<ul>
+<li><p><span class="math inline">\((x\ll n)+(x\ll (n-1))+\cdots+(x\ll
+m)\)</span></p></li>
+<li><p><span class="math inline">\((x\ll (n + 1))-(x\ll
+m)\)</span></p></li>
+</ul>
+<p>问题：如果加法、减法、移位所需的时间相同，那么当 <span class="math inline">\(n,m\)</span>
+取不同值时，编译器该如何决定选择哪一种操作？</p>
+<p>分类讨论：</p>
+<p>如果 <span class="math inline">\(n=m\)</span>
+，那么第一种只需要一次移位，第二种需要一次减法和两次移位</p>
+<p>如果 <span class="math inline">\(n=m+1\)</span>
+，那么第一种需要两次移位和一次加法，第二种需要两次移位和一次减法</p>
+<p>如果 <span class="math inline">\(n\gt m+1\)</span>
+，那么第二种只会需要两次移位和一次减法，第一种需要 <span class="math inline">\(n-m+1\)</span> 次移位和 <span class="math inline">\(n-m\)</span> 次加法</p>
+<p>综上，我们有如下结论：</p>
+<ul>
+<li>若 <span class="math inline">\(n=m\)</span> ，选第一种</li>
+<li>若 <span class="math inline">\(n=m+1\)</span> ，哪种都行</li>
+<li>若 <span class="math inline">\(n\gt m+1\)</span>，选第二种</li>
+</ul>
+<h3 id="除以-2-的幂">除以 2 的幂</h3>
+<h4 id="取整的描述">取整的描述</h4>
+<p>对于除法，我们期望其结果<strong>总是舍去小数</strong>，这一点对正数和负数我们都期望是成立的</p>
+<p>例如，我们期望：<span class="math inline">\(5\div 2=2,\ -5\div
+2=-2\)</span></p>
+<p>这种舍入我们称为<strong>向零舍入</strong>，即直接舍去小数位</p>
+<p>为了更便于描述该过程，我们需要引入两个符号：下取整与上取整</p>
+<p>对于任意实数 <span class="math inline">\(x\)</span> ，我们定义 <span class="math inline">\(\lfloor x\rfloor\)</span>
+生成唯一<strong>整数</strong> <span class="math inline">\(x&#39;\)</span> 使得 <span class="math inline">\(x&#39;\le x\lt x&#39;+1\)</span>，<span class="math inline">\(\lceil x\rceil\)</span>
+生成唯一<strong>整数</strong> <span class="math inline">\(x&#39;\)</span> 使得 <span class="math inline">\(x&#39;-1\lt x\le x&#39;\)</span></p>
+<p>例如：</p>
+<p><span class="math inline">\(\lfloor 2.5\rfloor\)</span> 生成 <span class="math inline">\(x&#39;=2\)</span> ，使得 <span class="math inline">\(x&#39;\le 2.5\lt x&#39;+1\)</span></p>
+<p><span class="math inline">\(\lfloor -2.5\rfloor\)</span> 生成 <span class="math inline">\(x&#39;=-3\)</span> ，使得 <span class="math inline">\(x&#39;\le -2.5\lt x&#39;+1\)</span></p>
+<p><span class="math inline">\(\lceil 2.5\rceil\)</span> 生成 <span class="math inline">\(x&#39;=3\)</span> ，使得 <span class="math inline">\(x&#39;-1\lt 2.5\le x&#39;\)</span></p>
+<p><span class="math inline">\(\lceil -2.5\rceil\)</span> 生成 <span class="math inline">\(x&#39;=-2\)</span> ，使得 <span class="math inline">\(x&#39;-1\lt -2.5\le x&#39;\)</span></p>
+<p>我们发现，对于整数的<strong>向零舍入</strong>，恰好用<strong>下取整</strong>便可以描述，而对于负数的<strong>向零舍入</strong>，我们需要<strong>上取整</strong>才可以描述</p>
+<h4 id="无符号除法">无符号除法</h4>
+<p>若一个无符号数除以 <span class="math inline">\(2^k\)</span>
+，则对其执行<strong>算术右移 <span class="math inline">\(k\)</span>
+个单位</strong>，所得二进制表示便是<strong>下取整</strong>的结果</p>
+<p>例如：<span class="math inline">\(5=[0101]\)</span>
+，将其右移一位（除以 <span class="math inline">\(2^1\)</span>），所得位表示为 <span class="math inline">\(2=[0010]\)</span>
+，我们发现这恰好变式<strong>下取整</strong></p>
+<p>对于无符号数值 <span class="math inline">\(x\)</span> 和整数 <span class="math inline">\(k\)</span> 而言，<span class="math inline">\(x\gg
+k=\lfloor x/2^k\rfloor\)</span></p>
+<h4 id="补码除法">补码除法</h4>
+<p>对于补码的除法，我们需要在右移的过程中保证符号不变，因此必须执行<strong>算术右移</strong></p>
+<p>我们从一个例子出发，考虑对负数直接执行算术右移的操作后，其结果如何</p>
+<p>如果我期望将 <span class="math inline">\(-5=[1011]\)</span>
+右移一位除以 <span class="math inline">\(2^1\)</span> ，那么所得位表示为
+<span class="math inline">\(-3=[1101]\)</span></p>
+<p>我们发现，不论是逻辑右移还是算术右移，其结果<strong>都是下取整</strong>。这对于正数是合理的，但对于负数却不是我们希望的，我们需要一种办法将下取整转换为上取整</p>
+<p>我们利用如下等式：</p>
+<p><span class="math display">\[
+\lceil x/y\rceil=\lfloor (x+y-1)/y \rfloor
+\]</span></p>
+<p>例如，当 <span class="math inline">\(x=-30,\ y=4\)</span> 时，<span class="math inline">\(\lceil -30/4\rceil=-7\)</span> ，此时我们有 <span class="math inline">\(x+y-1=-27\)</span> ，而 <span class="math inline">\(\lfloor
+(x+y-1)/y\rfloor=\lfloor-27/4\rfloor=-7\)</span></p>
+<p>对于补码数 <span class="math inline">\(x\)</span> 和整数 <span class="math inline">\(k\)</span> 而言，<span class="math inline">\(x\gg
+k=\lceil x/2^k\rceil=\lfloor (x+2^k-1)/2^k \rfloor=(x+(1\ll k)-1)\gg
+k\)</span></p>
+<p>到此为止，我们已经讨论了除以 <span class="math inline">\(2\)</span>
+的幂次的情况，但不幸的是，除法无法像乘法那样推广到除以任意常数 <span class="math inline">\(K\)</span>。换句话说，对于任意常数 <span class="math inline">\(K\)</span>
+，我们无法将其简单地转为<strong>除以多个 <span class="math inline">\(2\)</span> 的幂次相加的情况</strong></p>
+<p>你也许会想，任意一个数都可以分解为 <span class="math inline">\(2\)</span>
+的幂次，并且乘法与除法都满足<strong>分配律</strong>，为什么除法不能像乘法那样分解呢？</p>
+<p>这里的问题在于，除法会有<strong>舍入</strong>的问题（而乘法不具有这种问题），如果将其简单的分解为多个数相除，那么小数的部分将会全部被舍去，这将会导致最终的结果与我们所预期的相差过大</p>
+<h2 id="浮点数">浮点数</h2>
+<h3 id="表示">表示</h3>
+<p>所有二进制小数均可以表示成以下形式：</p>
+<p><span class="math display">\[
+b_m\ b_{m-1}\ b_{m-2}\ \cdots \ b_{2}\ b_{1}\ b_{0}\ .\ b_{-1}\ b_{-2}\
+b_{-3}\ \cdots\  b_{-(n-1)}\ b_{n}
+\]</span></p>
+<p>数学定义如下：</p>
+<p><span class="math display">\[
+b=\sum_{i=-n}^{m}b_i\times 2^i
+\]</span></p>
+<p>基于此，我们给出 <span class="math inline">\(\rm IEEE\)</span>
+浮点标准：</p>
+<p>浮点数表示为：<span class="math inline">\(V=(-1)^s\times M\times
+2^E\)</span></p>
+<ul>
+<li>符号 (<code>sign</code>) <span class="math inline">\(s\)</span>
+用于决定该数为正数 <span class="math inline">\(s=0\)</span> 还是负数
+<span class="math inline">\(s=1\)</span>
+<ul>
+<li>单精度为 <span class="math inline">\(31\)</span> 位，双精度为 <span class="math inline">\(63\)</span> 位</li>
+</ul></li>
+<li>尾数 (<code>significand</code>) <span class="math inline">\(M\)</span> 是一个二进制小数，范围为 <span class="math inline">\(0\sim 1-\epsilon\)</span> (<code>denormal</code>)
+或 <span class="math inline">\(1\sim 2-\epsilon\)</span>
+(<code>normal</code>)
+<ul>
+<li>单精度为 <span class="math inline">\(22\sim 0\)</span> 位，双精度为
+<span class="math inline">\(51\sim 0\)</span></li>
+</ul></li>
+<li>阶码 (<code>exponent</code>) <span class="math inline">\(E\)</span>
+用于对浮点数加权
+<ul>
+<li>单精度为 <span class="math inline">\(30\sim 23\)</span> 位，双精度为
+<span class="math inline">\(62\sim 52\)</span></li>
+</ul></li>
+</ul>
+<p>下面我们以单精度为例，说明 <span class="math inline">\(\rm
+IEEE\)</span> 的三种不同情况：</p>
+<h4 id="normal">Normal</h4>
+<p>当 <code>exp</code>
+位表示<strong>不全为零</strong>（数值为零）<strong>也不全为一</strong>（单精度为
+<span class="math inline">\(255\)</span>，双精度为 <span class="math inline">\(2047\)</span>）时，属于此种情况</p>
+<p>此时阶码值 <span class="math inline">\(E=e-Bias\)</span> ，其中 <span class="math inline">\(e\)</span> 为 <code>exp</code>
+的<strong>无符号</strong>位表示，即 <span class="math inline">\(e_{k-1}e_{k-2}\cdots e_1e_0\)</span> ，而 <span class="math inline">\(Bias\)</span> 的值为 <span class="math inline">\(2^{k-1}-1\)</span>（单精度为 <span class="math inline">\(127\)</span> ，双精度为 <span class="math inline">\(1023\)</span>）</p>
+<p>此时，单精度 <span class="math inline">\(E\)</span> 的范围为 <span class="math inline">\(-126\sim 127\)</span> ，双精度 <span class="math inline">\(E\)</span> 的范围为 <span class="math inline">\(-1022\sim 1023\)</span></p>
+<p>此时 <code>frac</code> 字段的位表示用于描述小数值 <span class="math inline">\(f\)</span>，二进制表示为 <span class="math inline">\(0.f_{n-1}f_{n-2}\cdots f_{1}f_{0}\)</span>
+，而尾数 <span class="math inline">\(M\)</span> 的值为 <span class="math inline">\(1+f\)</span>（采用此种表示可以额外获取一位的精度）</p>
+<h4 id="denormal">Denormal</h4>
+<p>当 <code>exp</code>
+的位表示<strong>全为零</strong>时为此种情况，此时阶码值 <span class="math inline">\(E=1-Bias\)</span>（这是特殊规定的，而不是 <span class="math inline">\(-Bias\)</span>），而尾数 <span class="math inline">\(M\)</span> 的值为 <span class="math inline">\(M=f\)</span>（此时开头不包含隐含的 <span class="math inline">\(1\)</span>）</p>
+<p>非规格数的作用是用于表示那些非常接近 <span class="math inline">\(0.0\)</span> 的数，这被称为逐渐下溢
+<code>gradual underflow</code></p>
+<h4 id="inf-nan">INF &amp; NaN</h4>
+<p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code>
+字段<strong>全为零</strong>时，表示无穷大，分为正无穷大与负无穷大</p>
+<p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code>
+字段<strong>不全为零</strong>时，表示 <span class="math inline">\(NaN\)</span> <code>Not a Number</code></p>
+<hr>
+<h3 id="范围">范围</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;"><code>Description</code></th>
+<th style="text-align: center;"><code>exp</code></th>
+<th style="text-align: center;"><code>frac</code></th>
+<th style="text-align: center;"><code>float</code></th>
+<th style="text-align: center;"><code>double</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><span class="math inline">\(0/0.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0/0.0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(Denormal_{min}\)</span></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><code>00...01</code></td>
+<td style="text-align: center;"><span class="math inline">\(2^{-23}\times 2^{-126}/1.4\times
+10^{-45}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^{-52}\times 2^{-1022}/4.9\times
+2^{-324}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(Denormal_{max}\)</span></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><code>11...11</code></td>
+<td style="text-align: center;"><span class="math inline">\((1-\epsilon)\times 2^{-126}/1.2\times
+10^{-38}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((1-\epsilon)\times 2^{-1022}/2.2\times
+10^{-308}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(Normal_{min}\)</span></td>
+<td style="text-align: center;"><code>00...01</code></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><span class="math inline">\(1\times
+2^{-126}/1.2\times 2^{-38}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\times
+2^{-1022}/2.2\times 2^{-308}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><code>01...11</code></td>
+<td style="text-align: center;"><code>00...00</code></td>
+<td style="text-align: center;"><span class="math inline">\(1\times
+2^{0}/1.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\times
+2^{0}/1.0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(normal_{max}\)</span></td>
+<td style="text-align: center;"><code>11...10</code></td>
+<td style="text-align: center;"><code>11...11</code></td>
+<td style="text-align: center;"><span class="math inline">\((2-\epsilon)\times 2^{127}/3.4\times
+10^{38}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((2-\epsilon)\times 2^{1023}/1.8\times
+10^{308}\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="舍入">舍入</h3>
+<p><span class="math inline">\(\rm IEEE\)</span>
+定义了四种舍入方式，分别如下：</p>
+<h4 id="向上舍入">向上舍入</h4>
+<p>将正数与负数<strong>均向上舍入</strong>，得到值 <span class="math inline">\(x^{+}\)</span> ，使得 <span class="math inline">\(x^{+}\ge x\)</span></p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">正数</th>
+<th style="text-align: center;">负数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(round(1.4)=2\\round(1.6)=2\\round(1.5)=2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-1\\round(-1.6)=-1\\round(-1.5)=-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<h4 id="向下舍入">向下舍入</h4>
+<p>将正数与负数<strong>均向下舍入</strong>，得到值 <span class="math inline">\(x^{-}\)</span> ，使得 <span class="math inline">\(x^{-}\le x\)</span></p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">正数</th>
+<th style="text-align: center;">负数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(round(1.4)=1\\round(1.6)=1\\round(1.5)=1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-2\\round(-1.6)=-2\\round(-1.5)=-2\)</span></td>
+</tr>
+</tbody>
+</table>
+<h4 id="向零舍入">向零舍入</h4>
+<p>将<strong>正数向下舍入</strong>，<strong>负数向上舍入</strong></p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">正数</th>
+<th style="text-align: center;">负数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(round(1.4)=1\\round(1.6)=1\\round(1.5)=1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-1\\round(-1.6)=-1\\round(-1.5)=-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>不难发现，相当于<strong>直接去掉小数位</strong></p>
+<h4 id="向偶数舍入">向偶数舍入</h4>
+<p>将数字<strong>向上或向下舍入</strong>，使得<strong>最低有效位为偶数</strong></p>
+<p>对于十进制小数而言，<strong>小于 <span class="math inline">\(0.5\)</span> 的均向下舍入，大于 <span class="math inline">\(0.5\)</span> 的均向上舍入</strong></p>
+<p>对于等于 <span class="math inline">\(0.5\)</span>
+的数，考虑在原先的基础上<strong>加上或减去</strong> <span class="math inline">\(0.5\)</span> ，最终结果取偶数</p>
+<p>具体来说，<span class="math inline">\(1.5\)</span> 加上或减去 <span class="math inline">\(0.5\)</span> ，得到 <span class="math inline">\(1\)</span> 或 <span class="math inline">\(2\)</span> ，我们取偶数 <span class="math inline">\(2\)</span></p>
+<p>对于二进制小数而言，小数点后所有小于 <span class="math inline">\(0.10\cdots 0\)</span> 的向下舍入，所有大于 <span class="math inline">\(0.10\cdots 0\)</span> 的向上舍入</p>
+<p>对于等于 <span class="math inline">\(0.10\cdots 0\)</span>
+的数，考虑在原先的基础上<strong>加上或减去</strong> <span class="math inline">\(0.10\cdots 0\)</span> ，最终结果取偶数</p>
+<p>具体来说，<span class="math inline">\(10.100\)</span> 可以得到 <span class="math inline">\(11\)</span> 与 <span class="math inline">\(10\)</span> ，在这里取 <span class="math inline">\(10\)</span></p>
+<p>上面的讨论均是以舍入到整数，如果是舍入到小数点后的情况，也是同理</p>
+<hr>
+<h3 id="浮点运算">浮点运算</h3>
+<p>我们定义浮点数加法 <span class="math inline">\(x+^{f}y=Round(x+y)\)</span></p>
+<p>由于浮点数<strong>溢出和舍入</strong>，因此浮点数加法是<strong>可交换的</strong>但<strong>不可结合的</strong>，也就是只满足
+<span class="math inline">\(x+^{f}y=y+^{f}x\)</span></p>
+<p>例如，使用 <code>float</code> 计算 <span class="math inline">\((3.14+1e10)-1e10\)</span> 会得到 <span class="math inline">\(0\)</span> ，但计算 <span class="math inline">\(3.14+(1e10-1e10)\)</span> 会得到 <span class="math inline">\(3.14\)</span></p>
+<p>其次，除了 <span class="math inline">\(NaN\)</span> 和 <span class="math inline">\(\infin\)</span> ，其余的浮点数值均存在逆元，即
+<span class="math inline">\(x+^{f}(-x)=0\)</span></p>
+<p>另一方面，浮点数满足单调性，即对于任意的 <span class="math inline">\(x\)</span> ，如果 <span class="math inline">\(a\ge
+b\)</span> ，那么有 <span class="math inline">\(a+x\ge b+x\)</span>
+，而无符号数与补码数<strong>均不具有此属性</strong></p>
+<p>我们定义浮点数乘法 <span class="math inline">\(x*^{f}y=Round(x\times
+y)\)</span></p>
+<p>同样由于浮点数的舍入与溢出，乘法<strong>只具有交换性而不具有结合性</strong>，并且乘法也<strong>不具有分配性</strong></p>
+<p>例如，使用 <code>float</code> 计算 <span class="math inline">\(1e20*(1e20-1e20)\)</span> 会得到 <span class="math inline">\(0\)</span> ，但计算 <span class="math inline">\(1e20*1e20-1e20*1e20\)</span> 会得到 <span class="math inline">\(NaN\)</span></p>
+<p>另一方面，浮点数的乘法满足单调性，即：</p>
+<p><span class="math display">\[
+a\ge b,c\ge 0\rightarrow a*^{f}c\ge b^{f}c\\
+a\ge b,c\le 0\rightarrow a*^{f}c\le b^{f}c
+\]</span></p>
+<p>此外，如果保证 <span class="math inline">\(x\ne NaN\)</span>
+，那么有：<span class="math inline">\(x*^{f}x\ge 0\)</span></p>
+<p>同样，无符号数与补码数并不具有这些特点</p>
+<h3 id="类型转换">类型转换</h3>
+<ul>
+<li>当 <code>float</code> 或 <code>int</code> 转 <code>double</code>
+时，由于 <code>double</code>
+具有更大的精度，因此<strong>不会发生溢出或舍入</strong></li>
+<li>当 <code>int</code> 转 <code>folat</code>
+时，会<strong>发生舍入</strong>但<strong>不会发生溢出</strong></li>
+<li>当 <code>double</code> 转 <code>folat</code>
+时，由于精度问题，会发生舍入与溢出（溢出到 <span class="math inline">\(\infin\)</span>）</li>
+<li>当 <code>float</code> 或 <code>double</code> 转 <code>int</code>
+时，值会发生<strong>向零舍入</strong>，即正数向下舍入负数向上舍入</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CSAPP/" class="category-chain-item">CSAPP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP/">#CSAPP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CSAPP 第二章 信息的表示和处理</div>
+      <div>https://nishikichisato.github.io/2023/04/15/CSAPP/信息的表示和处理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 15, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>April 21, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/15/Algorithm_Archiv/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">动态规划</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/15/CSAPP/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="CSAPP 第三章 程序的机器级表示">
+                        <span class="hidden-mobile">CSAPP 第三章 程序的机器级表示</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CSAPP"
+        id="heading-2d4b54cf4106dd419d02fb0f312a0731" role="tab" data-toggle="collapse" href="#collapse-2d4b54cf4106dd419d02fb0f312a0731"
+        aria-expanded="true"
+      >
+        CSAPP
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-2d4b54cf4106dd419d02fb0f312a0731"
+           role="tabpanel" aria-labelledby="heading-2d4b54cf4106dd419d02fb0f312a0731">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/04/15/CSAPP/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="CSAPP 第三章 程序的机器级表示"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CSAPP 第三章 程序的机器级表示</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/04/15/CSAPP/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/" title="CSAPP 第二章 信息的表示和处理"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CSAPP 第二章 信息的表示和处理</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
