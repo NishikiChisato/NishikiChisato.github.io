@@ -18,26 +18,26 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="project 0  project 0  Task 1  C++ Basic Critical Component  Task 2  Concurrency  Task 3  Debug bustub  Task 4   Task 1 C++ Basic 我们需要编写一个 Copy-On-Write 的 Trie 树，Trie 树的定义在 trie.">
+    <meta name="description" content="Project 1  Project 1  Task 1  Semantic understanding Data member &amp; Detail of implementation Test  Task 2  Semantic Understanding  Task 3 Harvest To do   Task 1 Task 1 要求我们需要实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CMU15-445 Project 0">
-<meta property="og:url" content="https://nishikichisato.github.io/2023/09/04/CMU15-445/Project%200/index.html">
+<meta property="og:title" content="CMU15-445 Project 1">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/09/19/CMU15-445/Project%201/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="project 0  project 0  Task 1  C++ Basic Critical Component  Task 2  Concurrency  Task 3  Debug bustub  Task 4   Task 1 C++ Basic 我们需要编写一个 Copy-On-Write 的 Trie 树，Trie 树的定义在 trie.">
+<meta property="og:description" content="Project 1  Project 1  Task 1  Semantic understanding Data member &amp; Detail of implementation Test  Task 2  Semantic Understanding  Task 3 Harvest To do   Task 1 Task 1 要求我们需要实现">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(1).jpg">
-<meta property="article:published_time" content="2023-09-03T16:01:40.605Z">
-<meta property="article:modified_time" content="2023-09-03T16:14:30.917Z">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(2).jpg">
+<meta property="article:published_time" content="2023-09-19T01:01:10.769Z">
+<meta property="article:modified_time" content="2023-09-19T01:01:44.168Z">
 <meta property="article:author" content="Nishiki Chisato">
 <meta property="article:tag" content="CMU15-445">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(1).jpg">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(2).jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>CMU15-445 Project 0 - Nishiki Chisato&#39;s Blog</title>
+  <title>CMU15-445 Project 1 - Nishiki Chisato&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -235,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CMU15-445 Project 0"></span>
+            <span id="subtitle" data-typed-text="CMU15-445 Project 1"></span>
           
         </div>
 
@@ -251,8 +251,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-04 00:01" pubdate>
-          September 4, 2023 am
+        <time datetime="2023-09-19 09:01" pubdate>
+          September 19, 2023 am
         </time>
       </span>
     
@@ -333,12 +333,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CMU15-445 Project 0</h1>
+            <h1 style="display: none">CMU15-445 Project 1</h1>
             
               <p class="note note-info">
                 
                   
-                    Last updated on 15 days ago
+                    Last updated on 6 minutes ago
                   
                 
               </p>
@@ -346,159 +346,235 @@
             
               <div class="markdown-body">
                 
-                <h1 id="project-0">project 0</h1>
+                <h1 id="project-1">Project 1</h1>
 <ul>
-<li><a href="#project-0">project 0</a>
+<li><a href="#project-1">Project 1</a>
 <ul>
 <li><a href="#task-1">Task 1</a>
 <ul>
-<li><a href="#c-basic">C++ Basic</a></li>
-<li><a href="#critical-component">Critical Component</a></li>
+<li><a href="#semantic-understanding">Semantic understanding</a></li>
+<li><a href="#data-member--detail-of-implementation">Data member &amp;
+Detail of implementation</a></li>
+<li><a href="#test">Test</a></li>
 </ul></li>
 <li><a href="#task-2">Task 2</a>
 <ul>
-<li><a href="#concurrency">Concurrency</a></li>
+<li><a href="#semantic-understanding-1">Semantic Understanding</a></li>
 </ul></li>
-<li><a href="#task-3">Task 3</a>
-<ul>
-<li><a href="#debug-bustub">Debug bustub</a></li>
-</ul></li>
-<li><a href="#task-4">Task 4</a></li>
+<li><a href="#task-3">Task 3</a></li>
+<li><a href="#harvest">Harvest</a></li>
+<li><a href="#to-do">To do</a></li>
 </ul></li>
 </ul>
 <h2 id="task-1">Task 1</h2>
-<h3 id="c-basic">C++ Basic</h3>
-<p>我们需要编写一个 <code>Copy-On-Write</code> 的 <code>Trie</code>
-树，<code>Trie</code> 树的定义在 <code>trie.h</code> 中，我们需要在
-<code>trie.c</code> 中完成三个函数</p>
-<p><code>trie.h</code> 中有三个类，分别如下：</p>
-<ul>
-<li><code>TrieNode</code>：表示 <code>Trie</code>
-树的普通节点（该节点不含
-<code>value</code>），内部由一个表示当前节点是否存在 <code>value</code>
-的变量 <code>is_value_node_</code> 和一个
-<code>map&lt;char, shared_ptr&lt;const TrieNode&gt;&gt;</code>
-组成。需要说明的是，<code>map</code> 中的 <code>value</code> 是一个指向
-<code>const TrieNode</code> 的智能指针</li>
-<li><code>TrieNodeWithValue</code>：由 <code>TrieNode</code>
-派生而来，在 <code>TrieNode</code> 的基础上新增了一个用于表示
-<code>value</code> 的智能指针</li>
-<li><code>Trie</code>：<code>Trie</code> 树的本体，内部有一个指向
-<code>const TrieNode</code>
-的智能指针（<strong>该智能智能被初始化，因此无法修改其值</strong>）</li>
-</ul>
-<p>一个 <code>shared_ptr&lt;const TrieNode&gt;</code> 智能指针指向一个
-<code>TrieNode</code> 节点，而 <code>TrieNode</code> 节点中的
-<code>map</code> 则含有多个可以指向下一个 <code>TrieNode</code>
-节点的智能指针。也就是说，当 <code>TrieNode</code> 调用
-<code>clone</code>
-时，会复制一份<strong>当前节点</strong>并返回。由于返回的是
-<code>unique_ptr</code>，因为我们只能用 <code>shared_ptr</code>
-的构造函数来接收，然后再对 <code>shared_ptr</code>
-进行赋值，类似于：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::shared_ptr&lt;TrieNode&gt; new_root = std::<span class="hljs-built_in">shared_ptr</span>&lt;TrieNode&gt;(<span class="hljs-keyword">this</span>-&gt;root_-&gt;<span class="hljs-built_in">Clone</span>());<br></code></pre></td></tr></table></figure>
-<p>其次，当我们用遍历指针 <code>ptr</code> 去遍历 <code>Trie</code>
-树的节点时，由于我们需要修改节点，因此该指针的定义为<code>TrieNode</code>。但对于该指针所指向的节点而言，我们需要将下一个节点赋值给当前的
-<code>ptr</code>，这里有一个问题是，<code>map</code> 中的
-<code>value</code> 类型为
-<code>const TrieNode</code>，我们无法直接将一个指向
-<code>const TrieNode</code> 的智能指针赋值给指向 <code>TrieNode</code>
-的智能指针，为了能够使该转型能够发生，我们需要使用
-<code>std::const_pointer_cast</code>，类似于：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">std::shared_ptr&lt;TrieNode&gt; ptr;<br>ptr = std::<span class="hljs-built_in">const_pointer_cast</span>&lt;TrieNode&gt;(ptr-&gt;children_[key[i]]);<br></code></pre></td></tr></table></figure>
-<p><code>std::const_pointer_cast</code>
-当中的类型只需要写指针指向的类型，该操作符可以将一个指向
-<code>const</code> 对象的指针转型成一个指向非 <code>const</code>
-对象的指针</p>
-<p>此外，我们还需要使用 <code>dynamic_cast</code>
-来对指针进行转型，有几点需要注意：</p>
-<ul>
-<li>该操作符用于<strong>继承</strong>关系中的向下转型
-<code>downcasting</code>，也就是说它可以将<strong>基类的指针或引用转换为派生类的指针或引用</strong></li>
-<li>该操作符<strong>只适用于指针或引用类型</strong>，其余的基本类型不适用</li>
-<li>如果转换合法，则返回目标类型的指针或引用，否则返回
-<code>nullptr</code></li>
-</ul>
-<h3 id="critical-component">Critical Component</h3>
-<p><code>Copy-On-Write, COW</code>
-的核心在于写时复制，我们想象有一个进程 <span class="math inline">\(A\)</span> 需要与另外一个进程 <span class="math inline">\(B\)</span> 共享某一块内存区域，通常的做法是将
-<span class="math inline">\(B\)</span> 中的这块内存复制一份给 <span class="math inline">\(A\)</span>，如果使用 <code>COW</code>
-技术，我们可以让这个过程的开销更小</p>
-<p>具体来讲，只要两个进程<strong>均不向该内存区域写入</strong>，那么我们就完全不需要复制一份一模一样的给
-<span class="math inline">\(A\)</span>，在这种情况下，我们可以节省一次复制的成本，这便是写时复制</p>
-<p>这里 <code>Trie</code>
-树的核心在插入和删除操作。对于插入操作而言，由于我们已经确定要修改该
-<code>Trie</code>
-树的某一条路径，因此我们需要<strong>逐个复制该路径上的所有节点</strong>，这一点对于删除操作也是同理</p>
-<p>对于插入操作，分两种情况：</p>
-<ul>
-<li>在非叶子节点处插入时，我们需要 <code>clone</code>
-一遍原先的节点，然后再对该节点赋值</li>
-<li>在叶子节点插入时，我们直接创建新节点然后对该节点赋值即可</li>
-</ul>
-<p>对于删除操作，同样分两种情况：</p>
-<ul>
-<li>在非叶子节点处删除时，我们需要 <code>clone</code>
-一遍原先的节点，然后将其从 <code>TrieNodeWithValue</code> 转换成
-<code>TrieNode</code></li>
-<li>在叶子节点处删除时，在该路径上回溯，只要当前节点没有后继，那么我们便将当前节点删除</li>
-</ul>
-<p>其次，在下图中，由于每个节点是由一个智能指针管理的，因此<strong>那些灰色的节点会被自动释放</strong></p>
-<p><img src="https://15445.courses.cs.cmu.edu/spring2023/project0/trie-03.svg" srcset="/img/loading.gif" lazyload></p>
+<p><code>Task 1</code> 要求我们需要实现一个 <code>LRU-K</code>
+算法（实现 <code>LRUKReplacer</code>），以此来作为
+<code>Buffer Pool Manager</code> 的替换算法</p>
+<h3 id="semantic-understanding">Semantic understanding</h3>
+<p><code>LRU-K</code> 的基本控制单位为 <code>frame</code>，通过计算每个
+<code>frame</code> 的 <code>k-distence</code> 来决定要将哪些
+<code>fream</code> 驱逐出去</p>
+<p>对于访问次数小于 <span class="math inline">\(k\)</span> 的
+<code>frame</code> 而言，其 <code>k-distence</code> 被设置为
+<code>inf</code>；对于访问次数大于等于 <span class="math inline">\(k\)</span> 的 <code>frame</code> 而言，其
+<code>k-distence</code>
+的值为<strong>当前的时间戳减去上次访问的时间戳</strong></p>
+<p>此外，若有多个 <code>k-distence</code> 为
+<code>inf</code>，则驱逐出<strong>总体访问时间最早的那个</strong>，也就是具有最早访问时间的
+<code>frame</code></p>
+<p>这一段在 <code>Writeup</code> 上面的描述如下：</p>
 <blockquote>
-<p>这个问题当时把我卡死了，我一直在想那些灰色的节点该如何释放</p>
+<p>The LRU-K algorithm evicts a frame whose backward k-distance is
+maximum of all frames in the replacer. Backward k-distance is computed
+as the difference in time between current timestamp and the timestamp of
+kth previous access. A frame with fewer than k historical accesses is
+given +inf as its backward k-distance. When multiple frames have +inf
+backward k-distance, the replacer evicts the frame with the earliest
+overall timestamp (i.e., the frame whose least-recent recorded access is
+the overall least recent access, overall, out of all frames).</p>
 </blockquote>
+<p>需要说明的是，这里的<strong>总体访问时间最早</strong>是指该
+<code>frame</code> 具有<strong>最小的时间戳</strong></p>
+<h3 id="data-member-detail-of-implementation">Data member &amp; Detail
+of implementation</h3>
+<p>这里涉及的类有两个，主要的成员含义如下：</p>
+<ul>
+<li><code>LRUKNode</code>：用于记录每个 <code>frame</code>
+的访问历史，在 <code>LRUKReplacer</code> 中有一个哈希表用于存储每个
+<code>frame</code> 与 <code>LRUKNode</code> 之间的映射
+<ul>
+<li><code>history_</code>：该 <code>frame</code> 的访问历史</li>
+<li><code>k_</code>：<code>LRU-K</code> 算法中 <code>k</code>
+的大小</li>
+<li><code>fid_t</code>：该 <code>node</code> 对应的 <code>frame</code>
+的值</li>
+<li><code>is_evictable</code>：该 <code>frame</code> 是否可以被
+<code>evict</code></li>
+</ul></li>
+<li><code>LRUKReplacer</code>：实际提供 <code>LRUK</code>
+算法的类；管理的对象的单位为帧 <code>frame_id_t</code>
+<ul>
+<li><code>node_store_</code>：一个哈希表，用于记录当前的
+<code>frame id</code> 与其访问历史之间的映射</li>
+</ul></li>
+</ul>
+<p>我们实现的 <code>replacer</code> 中的 <code>frame_id_t</code> 是一个
+<code>size_t</code>，实际上其他的类型也可以</p>
+<p>真正需要注意的是对于 <code>evict</code> 函数的理解，由于我们区分了
+<code>k-distence</code> 为 <code>inf</code> 与非 <code>inf</code>
+的情况，因此我们在计算 <code>k-distence</code> 时也需要分开</p>
+<p><strong>对于哪些 <code>k-distence</code> 大于等于 <code>k</code> 的
+<code>frame</code> 而言，我们取的是最大的
+<code>k-distence</code>；而对于哪些 <code>k-distence</code> 为
+<code>inf</code> 的 <code>frame</code> 而言，我们取的是具有最小的
+<code>frame</code></strong></p>
+<p>只要能理解到这里，那么这个也就很容易了</p>
+<h3 id="test">Test</h3>
+<p>测试时需要将 <code>gtest</code> 的 <code>DISABLE_</code>
+标签去掉，在文件 <code>lru_k_replacer_test</code> 中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">TEST</span>(LRUKReplacerTest, DISABLED_SampleTest)<br></code></pre></td></tr></table></figure>
+<p>修改为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">TEST</span>(LRUKReplacerTest, SampleTest)<br></code></pre></td></tr></table></figure>
+<hr>
 <h2 id="task-2">Task 2</h2>
-<h3 id="concurrency">Concurrency</h3>
-<p>在这一部分，我们需要让 <code>Trie</code>
-树支持并发。对于常规的数据结构（不使用
-<code>COW</code>），我们所使用的是
-<code>reader/writer lock</code>，也就是说，允许<strong>多个读者同时读取</strong>，但写者<strong>必须等待所有读者读取完毕后才能写入</strong></p>
-<p>这种设计的弊端是读者与写者不能同时进行，并发度会降低，并且如果一直有读者到来，那么写者将会出现饥饿情况</p>
-<p>使用 <code>COW</code> 则可以提高并发度，因为每次对于
-<code>Trie</code> 树的修改都会 <code>clone</code>
-一条新的支路，因此<strong>读取和写入可以同时进行</strong>，也就是说在多个读者读取的时候，写者依旧可以写入</p>
-<p>由于读取时可能该节点之后被删除，因此每次读取除了返回该节点对应的值，还会返回整颗
-<code>Trie</code> 树的根节点</p>
-<p>这里使用了 <code>std::optional</code>
-作为返回值，这个类是对返回值的结果做了一层封装。如果一个函数的返回值没有意义，但并不是错误，仅仅是作为某种标识（例如返回
-<code>-1, nullptr</code>
-用于表示该函数返回一个不需要的值），那么我们便可以使用
-<code>std::optional</code>。如果是正常的结果那么直接赋值即可，特殊的标识则返回
-<code>nullopt</code></p>
-<p><code>TrieStore</code> 中含有两个
-<code>mutex</code>，<code>root_lock_</code>
-用于保证对根节点的<strong>访问与修改</strong>是按序列化的
-<code>sequential</code>，换句话说，它用于保证所有线程对根节点的访问与修改只能依次进行，不允许出现同时进行；<code>write_lock_</code>
-用于保证写者是按序列化的，因为我们不允许两个写者同时修改
-<code>Trie</code> 树</p>
-<p>对于一个共享变量的修改，处于 <code>critical section</code>
-的操作只有三个：读取、更新、写回。因此对于写者而言，这三个操作<strong>务必要保证其原子性</strong>，也就是说只有当前线程完全执行完这三个操作后，才允许其他线程执行这三个操作。因此，<code>write_lock_</code>
-的作用就是保证<strong>只能有一个线程执行这三个操作</strong></p>
+<p><code>Task 2</code> 是真正去实现一个
+<code>Buffer Pool Manager, bpm</code>，也是这个 <code>Project</code>
+的难点所在</p>
+<h3 id="semantic-understanding-1">Semantic Understanding</h3>
+<p><code>bpm</code> 需要为上层的应用程序提供
+<code>page</code>，并且它自身需要控制将 <code>page</code> 映射到
+<code>frame</code> 以及控制 <code>frame</code>
+从内存到磁盘的换入与换出</p>
+<p>对于上层的应用程序而言，它们可以向 <code>bpm</code> 申请
+<code>page</code>，然后对该 <code>page</code>
+进行写入以及在需要时进行读取</p>
+<p>对于 <code>bpm</code> 而言，它将每个 <code>page</code>
+都映射到唯一的一个 <code>frame</code>，这里的 <code>frame</code>
+是实际在物理内存当中的物理帧
+<code>physical frame</code>。也就是说，<code>bpm</code>
+与操作系统一样提供一层在 <code>physical frame</code> 与
+<code>virtual page</code> 之间的抽象</p>
+<p><code>bpm</code> 为上层应用程序所提供的 <code>page id</code> 的值从
+<code>0</code> 开始递增，但只要条件允许，这个 <code>page id</code>
+就不会存在上界；而 <code>bpm</code> 的 <code>frame id</code>
+的数量<strong>固定</strong>为 <code>bpm</code>
+的大小，由于这是实际存储数据的
+<code>physical frame</code>，因此其数量必然固定</p>
+<p><code>bpm</code> 的 <code>page_table_</code> 用于提供从
+<code>page id</code> 到 <code>frame id</code> 的映射，而
+<code>free_list_</code> 用于实际存储空闲的 <code>frame id</code></p>
+<p><code>NewPage</code> 说明上层应用程序希望向 <code>bpm</code>
+申请一个新的 <code>page</code> 进行读写，只要 <code>bpm</code> 还有空闲
+<code>frame</code> 或者可以逐出某个 <code>frame</code> 所对应的
+<code>page</code>（将这个 <code>page</code> 的内容写入到磁盘，那么这个
+<code>frame</code>
+就暂时空闲了），那么它就可以满足上层应用程序的需求</p>
+<p>需要说明的是，无论是从 <code>free_list</code> 当中获取
+<code>frame</code> 还是直接 <code>evict</code> 所得到的
+<code>frame</code>，都需要<strong>从新对 <code>page_table</code>
+进行赋值</strong></p>
+<p><code>FetchPage</code> 说明上层应用程序希望读取一个已经存在的
+<code>page</code>，这时 <code>bpm</code> 需要通过该 <code>page id</code>
+将对应的 <code>page</code>
+的数据加载到内存中（如果允许的话），然后向上层应用程序返回该页</p>
+<p>在该函数中，一个空闲的 <code>frame</code> 的来源有两种：直接从
+<code>free_list</code> 中读取；<code>evict</code> 掉某个
+<code>frame</code>。无论是哪种方式，<strong>都需要对
+<code>page_table</code> 从新赋值</strong>。当然，如果当前的
+<code>buffer pool</code> 中有，那么就不需要重新赋值</p>
+<blockquote>
+<p>这里需要说明一点，<code>comment</code> 中关于 <code>page</code>
+所在位置的表述有两种： <code>in buffer pool</code> 和
+<code>in page table</code>
+是不一样的，前者理解为当前内存中存在；而后者理解为在
+<code>page table</code> 中存在，也就是说这个 <code>page</code>
+可能不在内存当中</p>
+</blockquote>
+<p><code>UnpinPage</code> 是用于上层应用程序对该 <code>page</code>
+完成操作后调用的函数。上层应用程序通过 <code>new</code> 或者
+<code>fetch</code> 获取一个 <code>page</code> 后，对其进行操作，最后调用
+<code>UnpinPage</code>，<strong>并设置该 <code>page</code> 的
+<code>is_dirty</code> 位</strong></p>
+<p>需要说明的是，<code>UnpinPage</code> 不能将一个 <code>page</code> 的
+<code>is_dirty</code> 从 <code>true</code> 改为
+<code>false</code>，也就是说它只能对 <code>is_dirty</code> 为
+<code>false</code> 的 <code>page</code> 进行设置</p>
+<blockquote>
+<p>在 <code>IsDirty</code> 测试中，我通过 <code>log</code>
+发现了这个问题，也就是先 <code>unpin</code> 设置为
+<code>true</code>，然后 <code>fetch</code> 之后在 <code>unpin</code>
+设置为 <code>false</code>，我们的 <code>unpin</code>
+需要禁止这种行为</p>
+</blockquote>
+<p><code>FlushPage</code> 用于提供一个强制将 <code>page</code>
+写入到磁盘的语义，无论 <code>is_dirty</code> 位是 <code>false</code>
+还是 <code>true</code>。另外，我们不能在 <code>FlushAllPages</code>
+中为每个 <code>page</code> 单独调用
+<code>FlushPage</code>，这会照成死锁</p>
+<p><code>DeletePage</code> 用于直接将一个 <code>page</code>
+删除，也就是说该应用程序不会再次使用该
+<code>page id</code>。该函数只能删除哪些在 <code>buffer pool</code> 中的
+<code>page</code>，对于那些在磁盘中的
+<code>page</code>，该函数<strong>不会将它们读取到内存中然后再删去</strong></p>
+<hr>
 <h2 id="task-3">Task 3</h2>
-<h3 id="debug-bustub">Debug bustub</h3>
-<p><code>bustub</code> 所采用的均为
-<code>gtest</code>，在调试模式下如果我们想使用 <code>gdb</code>
-进行调试的话，可以进行如下操作：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">make trie_debug_test<br>cgdb ./test/trie_debug_test<br></code></pre></td></tr></table></figure>
-<p>在 <code>cgdb</code> 中，如果我们需要跳转到
-<code>trie_debug_test.cpp</code>
-文件的某一行，那么我们只需要在那一行打断点即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cgdb">b trie_debug_test.cpp:22<br></code></pre></td></tr></table></figure>
-<p>上面这一行代码就是在 <code>trie_debug_test.cpp</code> 文件的第
-<code>22</code> 行打断点</p>
-<p>需要说明的是，我们在本地计算得出的结果无法通过
-<code>gradescope</code> 的测评，在 <code>discord</code>
-上有对应的解答：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">likern</span> — <span class="hljs-number">2023</span>/<span class="hljs-number">02</span>/<span class="hljs-number">15</span> <span class="hljs-number">20</span>:<span class="hljs-number">33</span><br><span class="hljs-attribute">Has</span> anyone solved TrieDebugger.TestCase?<br><br><span class="hljs-attribute">I</span>&#x27;ve written manually (<span class="hljs-literal">on</span> the paper) and still get this test failed. While I&#x27;m pretty sure I understand how this works (<span class="hljs-literal">all</span> other tests passed)<br><br><span class="hljs-attribute">Alex</span> Chi — <span class="hljs-number">2023</span>/<span class="hljs-number">02</span>/<span class="hljs-number">15</span> <span class="hljs-number">23</span>:<span class="hljs-number">29</span><br><span class="hljs-attribute">It</span> is possible that your environment produces different random numbers than the grading environment.<br><span class="hljs-attribute">In</span> case your environment is producing different set of random numbers than our grader, replace your TrieDebugger test with:<br><span class="hljs-attribute">auto</span> trie = Trie();<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;65&quot;</span>, <span class="hljs-number">25</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;61&quot;</span>, <span class="hljs-number">65</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;82&quot;</span>, <span class="hljs-number">84</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-number">42</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;16&quot;</span>, <span class="hljs-number">67</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;94&quot;</span>, <span class="hljs-number">53</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;20&quot;</span>, <span class="hljs-number">35</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-number">57</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;93&quot;</span>, <span class="hljs-number">30</span>);<br><span class="hljs-attribute">trie</span> = trie.Put&lt;uint32_t&gt;(<span class="hljs-string">&quot;75&quot;</span>, <span class="hljs-number">29</span>);<br></code></pre></td></tr></table></figure>
-<h2 id="task-4">Task 4</h2>
-<p>这个部分很简单，在 <code>string_expression.h</code>
-当中完成两个大小写转换函数，然后再在 <code>plan_func_call.cpp</code>
-当中去写一下接口即可</p>
-<p>这两个文件可能不好找，可以使用 <code>find</code> 指令来进行查找：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">find ./ -name string_expression.h<br>find ./ -name <span class="hljs-string">&quot;plan_func_call.cpp&quot;</span><br></code></pre></td></tr></table></figure>
-<p>用法为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># filename 加不加引号都可以</span><br>find /path/to/search -name <span class="hljs-string">&quot;filename&quot;</span><br></code></pre></td></tr></table></figure>
+<p>在前面的描述中，我们知道，<code>NewPage</code> 或者
+<code>FetchPage</code> 必须与 <code>UnpinPage</code>
+搭配使用，否则会出现某个 <code>page</code>
+始终在内存当中不会被驱逐出去的情况</p>
+<p>因此此处引入 <code>BasicPageGuard</code>，用于帮助程序员不需要手动
+<code>unpin</code></p>
+<p>与此同时，对于一个 <code>page</code>
+的读取和写入的加锁和解锁也是一对的，同样会发生这种问题，因此
+<code>ReadPageGuard</code>
+用于读取页面时帮助程序员自动解锁，<code>WritePageGuard</code>
+用于写入页面时帮助程序员自动解锁</p>
+<p>在 <code>bpm</code> 中，<code>NewPageGuarded</code> 和
+<code>FetchPageGuarded</code> 都会返回一个
+<code>BasicPageGuard</code>，在对 <code>BasicPageGuard</code>
+进行操作时，其内部会有一个 <code>is_dirty_</code> 参数用于自动调用
+<code>UnpinPage</code> 时的实参</p>
+<p>因此如果我们对该 <code>page</code> 操作后我们期望
+<code>is_dirty</code> 为 <code>true</code>，那么我们需要调用
+<code>AsMut</code> 这个接口；如果我们期望 <code>is_dirty</code> 为
+<code>false</code>，那么我们需要调用 <code>As</code> 这个接口</p>
+<blockquote>
+<p>返回值为 <code>reinterpret_cast&lt;dst&gt;(src)</code>，该操作符会用
+<code>dst</code> 类型重新解释 <code>src</code> 变量</p>
+</blockquote>
+<p>在 <code>BasicPageGuard</code> 的 <code>Drop</code>
+函数中，我们直接调用一次 <code>UnpinPage</code>
+即可，当然为了避免在析构函数中再次调用，我们需要将 <code>bpm</code> 和
+<code>page</code> 指针均设置为 <code>nullptr</code></p>
+<p>在 <code>BasicPageGuard</code> 的 <code>Move constructor</code>
+中，我们会<strong>默认当前的对象还未生成</strong>，因此我们直接将
+<code>this</code> 的相关属性设置为 <code>that</code>
+的相关属性即可。全部完成后，需要将 <code>that</code> 的两个指针设置为
+<code>nullptr</code>，避免重复析构</p>
+<p>在 <code>BasicPageGuard</code> 的 <code>Move operator=</code>
+中，<strong>此时当前对象已经生成</strong>，因此我们需要先对
+<code>this</code> 所值对象执行一次 <code>UnpinPage</code>，然后再将
+<code>this</code> 的相关属性设置为 <code>that</code>
+的相关属性。完成后同样需要将 <code>that</code> 的两个指针设置为
+<code>nullptr</code></p>
+<hr>
+<h2 id="harvest">Harvest</h2>
+<p>独立完成了这个实验，对我的提升真的很大，在此写下我的一点经验</p>
+<ol type="1">
+<li>确保我对于某个函数行为的理解与该函数实际的行为不存在
+<code>semantic</code> 上的区别</li>
+<li>将一个类中的所有函数的行为全部理解过后再开始敲代码，这些函数可能存在调用上的联系（这个实验中每次获取一个
+<code>page</code> 后都需要 <code>unpin</code>）</li>
+<li>在 <code>guardscope</code> 中的
+<code>log</code>，可以试图在本地复现，或者理解该 <code>bug</code>
+是如何产生的</li>
+</ol>
+<blockquote>
+<p><code>guardscope</code> 交了七十多次，七十啊七十</p>
+</blockquote>
+<h2 id="to-do">To do</h2>
+<p><code>innoDB</code> 中的 <code>bpm</code>
+有两个常见优化：<code>prefetch</code> 和 <code>asyncio</code></p>
 
                 
               </div>
@@ -544,8 +620,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CMU15-445 Project 0</div>
-      <div>https://nishikichisato.github.io/2023/09/04/CMU15-445/Project 0/</div>
+      <div>CMU15-445 Project 1</div>
+      <div>https://nishikichisato.github.io/2023/09/19/CMU15-445/Project 1/</div>
     </div>
     <div class="license-meta">
       
@@ -557,13 +633,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 4, 2023</div>
+          <div>September 19, 2023</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 4, 2023</div>
+          <div>September 19, 2023</div>
         </div>
       
       
@@ -600,18 +676,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/19/CMU15-445/Project%201/" title="CMU15-445 Project 1">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CMU15-445 Project 1</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/21/CSAPP_LAB/ProxyLab/" title="CSAPP_lab ProxyLab">
-                        <span class="hidden-mobile">CSAPP_lab ProxyLab</span>
+                      <a href="/2023/09/04/CMU15-445/Project%200/" title="CMU15-445 Project 0">
+                        <span class="hidden-mobile">CMU15-445 Project 0</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -665,7 +735,7 @@
       
         <a href="/2023/09/04/CMU15-445/Project%200/" title="CMU15-445 Project 0"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">CMU15-445 Project 0</span>
         </a>
       
@@ -674,7 +744,7 @@
       
         <a href="/2023/09/19/CMU15-445/Project%201/" title="CMU15-445 Project 1"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">CMU15-445 Project 1</span>
         </a>
       
