@@ -1,0 +1,1200 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Project 2  Project 2  Checkpoint 1  Flexible layout Page Layout Binary Search  Insert  Split Leaf Split Internal  Checkpoint 2  Delete  Determine nearby node Coalesce Redistributi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU15-445 Project 2">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/10/13/CMU15-445/Project%202/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="Project 2  Project 2  Checkpoint 1  Flexible layout Page Layout Binary Search  Insert  Split Leaf Split Internal  Checkpoint 2  Delete  Determine nearby node Coalesce Redistributi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(3).jpg">
+<meta property="article:published_time" content="2023-10-13T13:46:59.353Z">
+<meta property="article:modified_time" content="2023-10-13T13:50:12.123Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CMU15-445">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(3).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CMU15-445 Project 2 - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CMU15-445 Project 2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-13 21:46" pubdate>
+          October 13, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CMU15-445 Project 2</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="project-2">Project 2</h1>
+<ul>
+<li><a href="#project-2">Project 2</a>
+<ul>
+<li><a href="#checkpoint-1">Checkpoint 1</a>
+<ul>
+<li><a href="#flexible-layout">Flexible layout</a></li>
+<li><a href="#page-layout">Page Layout</a></li>
+<li><a href="#binary-search">Binary Search</a></li>
+</ul></li>
+<li><a href="#insert">Insert</a>
+<ul>
+<li><a href="#split-leaf">Split Leaf</a></li>
+<li><a href="#split-internal">Split Internal</a></li>
+</ul></li>
+<li><a href="#checkpoint-2">Checkpoint 2</a>
+<ul>
+<li><a href="#delete">Delete</a>
+<ul>
+<li><a href="#determine-nearby-node">Determine nearby node</a></li>
+<li><a href="#coalesce">Coalesce</a></li>
+<li><a href="#redistribution">Redistribution</a></li>
+</ul></li>
+<li><a href="#iterator">Iterator</a></li>
+<li><a href="#concurrency">Concurrency</a>
+<ul>
+<li><a href="#crabbing-lock">Crabbing lock</a></li>
+<li><a href="#data-race">Data race</a></li>
+<li><a href="#deadlock">Deadlock</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="checkpoint-1">Checkpoint 1</h2>
+<h3 id="flexible-layout">Flexible layout</h3>
+<p>假设 <code>B+ Tree</code> 的 <code>leaf node</code> 与
+<code>internal node</code> 的最大大小分别为：<code>leaf_max_size</code>
+和 <code>internal_max_size</code>，那么：</p>
+<ul>
+<li><code>leaf node</code> 的元素个数最少为：<span class="math inline">\(\lceil (n-1)/2 \rceil\)</span>，最多为：<span class="math inline">\(n-1\)</span></li>
+<li><code>internal node</code> 的元素个数最少为：<span class="math inline">\(\lceil n/2 \rceil\)</span>，最多为：<span class="math inline">\(n\)</span></li>
+</ul>
+<blockquote>
+<p>这里有一个问题是，<code>internal node</code> 的第一个
+<code>key</code>
+为空，那么其对应的元素个数是否应该也发生改变。实际上，这个问题关系到
+<code>internal node</code> 的理解，后面有答案</p>
+</blockquote>
+<p>在我们的 <code>page</code> 的定义中，无论是
+<code>internal page</code> 还是 <code>leaf page</code>，都是以一个
+<code>pair&lt;KeyTYpe, ValueType&gt;</code> 为类型的
+<code>flexible array</code>
+作为结尾，因此<strong>二者本质上对于每个元素所采取的存储方式都是一样的</strong></p>
+<p>换句话说，对于 <code>leaf page</code>，<code>flexible array</code>
+中的每一个下标都对应存储一个 <code>pair</code>，而
+<code>internal page</code> 当中的 <code>flexible array</code>
+中的每一个下标也对应存储一个 <code>pair</code>，<strong>唯一不同的是
+<code>internal page</code> 的第一个 <code>pair</code> 的
+<code>first</code> 不存储元素</strong></p>
+<p>因此，无论是 <code>internal page size</code> 还是
+<code>leaf page size</code>，记录的都是当前该 <code>page</code>
+已经存储的 <code>pair</code> 的数量，不会出现在实际存储的
+<code>ValueType</code> 一样的情况下，<code>internal size</code> 比
+<code>leaf size</code> 要少一个的情况，二者的下标均是从 <span class="math inline">\(0\)</span> 到 <span class="math inline">\(internal/leaf size - 1\)</span></p>
+<p>对于二分查找而言，我们查找的对象是 <code>KeyType</code>，而
+<code>KeyType</code> 是存储在 <code>pair</code> 的 <code>first</code>
+部分里面，因此对于
+<code>internal page</code>，我们需要查找的范围为：<span class="math inline">\([1,n)\)</span>；而对于
+<code>leaf page</code>，我们需要查找的范围为：<span class="math inline">\([0,n)\)</span></p>
+<p>对于二者的 <code>flexible array</code> 的详细结构，可以参考下图：</p>
+<figure>
+<img src="B+Tree_node_layout.png" srcset="/img/loading.gif" lazyload alt="B+Tree_node_layout">
+<figcaption aria-hidden="true">B+Tree_node_layout</figcaption>
+</figure>
+<h3 id="page-layout">Page Layout</h3>
+<p><code>BPlusTreePage</code> 为 <code>BPlusInternalPage</code> 和
+<code>BPlusLeafPage</code> 的基类，它只提供最基本的三个元素，一共占
+<code>12 bytes</code></p>
+<ul>
+<li><code>BPlusInternalPage</code>：<code>metadata</code> 占
+<code>12 bytes</code>；在这基础上增加了一个
+<code>flexible array</code>，后续的所有内容均由其填充</li>
+<li><code>BPlusLeafPage</code> 在这基础上增加了一个指向下一个
+<code>leaf page id</code> 的元素，占 <code>4 bytes</code>，因此
+<code>metadata</code> 占 <code>16 bytes</code>；剩余的所有内容由
+<code>flexible array</code> 进行填充</li>
+</ul>
+<p>需要说明的是，<code>B+Tree</code> 的一个节点占一个
+<code>page</code>，这里的意思是：<strong>在 <code>4KB</code>
+的内容中，<code>B+Tree</code> 的页面 <code>metadata</code> 分别占
+<code>12/16 bytes</code>，其余的才是每一个 <code>pair</code>
+存储的内容</strong>。而每个 <code>page</code> 自身的
+<code>metadata</code> 并不会存放在这 <code>4KB</code>
+当中，这部分的数据是<strong>单独存放的</strong></p>
+<p>值得一提的是，对于 <code>internal page</code>，实际上每个
+<code>pair</code>
+的定义是：<code>pair&lt;KeyType, page_id_t&gt;</code>，而 对于
+<code>leaf page</code>，每个 <code>pair</code>
+的定义是：<code>pair&lt;KeyType, ValueType&gt;</code>。我们可以使用在
+<code>b_plus_tree.h</code> 开头的 <code>InternalPage</code> 和
+<code>LeafPage</code> 来对变量进行定义</p>
+<p>在实际的调试过程中，<code>RID</code> 一般是占 <span class="math inline">\(8\)</span> 字节而 <code>page_id_t</code> 则是
+<span class="math inline">\(4\)</span> 字节，如果发现
+<code>internal page</code> 的 <code>flexible array</code> 出现了 <span class="math inline">\(4\)</span>
+字节的偏移，那么大概率就是页面的定义出现了错误</p>
+<blockquote>
+<p>因此到此为止，我们也就理解了，<code>internal page</code> 当中存放的是
+<span class="math inline">\(n\)</span> 个元素（也就是 <span class="math inline">\(n\)</span> 个 <code>pair</code>），<span class="math inline">\(n\)</span> 个叶节点的 <code>page_id</code> 和
+<span class="math inline">\(n-1\)</span> 个 <code>KeyType</code></p>
+</blockquote>
+<h3 id="binary-search">Binary Search</h3>
+<p>由于我们需要频繁使用 <code>std::lower_bound</code> 和
+<code>std::upper_bound</code>，因此在这里我们需要对二者的行为详细说明一下：</p>
+<p>我们假定待查找区间内的元素为 <code>element</code>，我们传入的元素为
+<code>value</code></p>
+<p><code>std::lower_bound</code> 接受一个范围 <span class="math inline">\([start, end)\)</span>
+作为参数，它会将这个范围划分为两部分，前半部分满足 <span class="math inline">\(element&lt;value\)</span>，而后半部分自然是 <span class="math inline">\(element&gt;=value\)</span>。该函数会返回第一个使得
+<code>element &lt; value</code> 为 <code>false</code>
+的值，也就是<strong>后半区间的起点</strong></p>
+<p><code>std::upper_bound</code> 接受一个范围 <span class="math inline">\([start, end)\)</span>
+作为参数，它同样会将这个范围划分为两部分，前半部分满足 <span class="math inline">\(element&lt;=value\)</span>，后半部分自然是 <span class="math inline">\(element&gt;value\)</span>。它会返回第一个使得
+<code>value &lt; element</code> 为 <code>true</code>
+的值，也就是<strong>后半区间的起点</strong></p>
+<p>举个例子，假设待查找区间为：<span class="math inline">\([1,2,3,4,5,6,7,8,9,10]\)</span>，假设
+<code>value = 5</code>，那么：</p>
+<p>对于 <code>lower_bound</code> 而言，区间被划分为：<span class="math inline">\([1,2,3,4]\)</span> 和 <span class="math inline">\([5,6,7,8,9,10]\)</span>，后半区间的起点为 <span class="math inline">\(5\)</span></p>
+<p>对于 <code>upper_bound</code> 而言，区间被划分为：<span class="math inline">\([1,2,3,4,5]\)</span> 和 <span class="math inline">\([6,7,8,9,10]\)</span>，后半区间的起点为 <span class="math inline">\(6\)</span></p>
+<p><code>std::lower_bound</code> 和 <code>std::upper_bound</code>
+都可以传入一个 <code>predicate</code> 来自定义比较方式，该
+<code>predicate</code>
+的要求为（两个函数都一样）：只要第一个参数<strong>小于</strong>第二个参数，那么返回
+<code>true</code></p>
+<p>例如，我们可以这样写（该函数返回 <code>-1</code>
+表示第一个参数小于第二个参数）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> idx = std::<span class="hljs-built_in">lower_bound</span>(cur_page-&gt;array_, cur_page-&gt;array_ + cur_page-&gt;size_, std::<span class="hljs-built_in">make_pair</span>(key, <span class="hljs-built_in">ValueType</span>()),<br>                            [&amp;](<span class="hljs-type">const</span> MappingType &amp;e1, <span class="hljs-type">const</span> MappingType &amp;e2) &#123;<br>                              <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">comparator_</span>(e1.first, e2.first) == <span class="hljs-number">-1</span>;<br>                            &#125;) -<br>          cur_page-&gt;array_;<br></code></pre></td></tr></table></figure>
+<h2 id="insert">Insert</h2>
+<p><code>insert</code>
+函数的大致思路在书中有伪代码给出，在此我们只关注几个重要的点：</p>
+<h3 id="split-leaf">Split Leaf</h3>
+<p>由于 <code>leaf page</code> 最多只能存放 <span class="math inline">\(n-1\)</span>
+个元素，因此当其大小<strong>已经</strong>等于 <span class="math inline">\(n-1\)</span>
+时，再次插入一个元素就需要进行分裂。而 <code>internal page</code>
+最多能存放 <span class="math inline">\(n\)</span>
+个指针，因此当其大小<strong>已经</strong>等于 <span class="math inline">\(n\)</span> 时，再插入一个元素，就需要进行分裂</p>
+<p>书中的伪代码给出的做法是，先将原先旧节点的所有内容复制到一块新开的内存空间当中，然后将待插入的
+<code>pair</code> 插入进去，最后在分别复制回原先的节点和新的节点</p>
+<p>实际上，这一步我们可以简化。我们先确定待插入的 <code>pair</code>
+应该在旧节点的哪个下标 <code>idx</code> 之后进行插入（可以用
+<code>std::upper_bound</code> 找到），然后再确定总的元素个数
+<code>size</code> 的大小（这等于旧节点的元素个数 <code>OldSize</code>
+再加一）</p>
+<p>然后，我们可以将旧节点中，区间 <span class="math inline">\([size/2,idx]\)</span>
+复制到新节点，<strong>单独对新的 <code>pair</code>
+进行复制</strong>，然后再将旧节点中区间 <span class="math inline">\([idx
++ 1, OldSize)\)</span> 的值复制到新节点</p>
+<p>需要说明的是，这里的 <code>size</code>
+有可能为奇数，那么我们在分裂后，旧节点和新节点谁多一个元素都是允许的，只要保证前后统一即可。在我们实现当中，我是允许旧节点相比于新节点多一个元素，因为我认为这在一定程度上可以减少未来再次分裂的可能性。如果是这样做的话，那么旧节点的复制区间改为
+<span class="math inline">\([size/2+1,idx]\)</span> 和 <span class="math inline">\([idx+1,OldSize]\)</span> 即可</p>
+<p>具体可参考下图：</p>
+<figure>
+<img src="Split_Leaf.png" srcset="/img/loading.gif" lazyload alt="Split_Leaf">
+<figcaption aria-hidden="true">Split_Leaf</figcaption>
+</figure>
+<h3 id="split-internal">Split Internal</h3>
+<p><code>internal page</code> 的分裂与 <code>leaf page</code>
+的分裂在本质上都是一样的，只不过 <code>internal page</code>
+的分裂多了一个不断向父节点插入新的 <code>pair</code> 的过程</p>
+<p>由于 <code>internal page</code> 的第一个 <code>key</code>
+为空，因此我们按照 <code>leaf page</code>
+的分裂方式得到两个节点后，新节点的第一个 <code>key</code> 需要置空</p>
+<p>由于 <code>internal page</code>
+有一个向上传递的过程，传递的值为：<strong>新节点的第一个
+<code>key</code> 以及新节点的
+<code>page_id</code></strong>，也就是说我们需要将第一个 <code>key</code>
+复制一遍后，将其置空，然后将 <code>pair</code> 向上传递，这样便完成了
+<code>internal page</code> 的分裂操作</p>
+<p>需要说明的是，在课本当中的伪代码里面，函数的定义为：<code>insert_in_parent(node N, value K', node N')</code>。这里的意思是，向节点
+<code>N</code> 的父节点中插入一个 <code>pair</code>，其内容为
+<code>(K', N')</code></p>
+<blockquote>
+<p>关于如何快速求出当前节点的父节点，由于对父节点插入的前提一定是对叶节点插入，因此我们可以在找叶节点的时候先将这条路径上的每个节点的
+<code>page_id</code> 记录在 <code>vector</code> 里面，然后每次从
+<code>back()</code> 取值，并 <code>pop</code> 一遍，这样子可以保证每次的
+<code>back()</code> 都是当前节点的父节点</p>
+</blockquote>
+<p>具体参考下图：</p>
+<figure>
+<img src="Split_Parent.png" srcset="/img/loading.gif" lazyload alt="Split_Parent">
+<figcaption aria-hidden="true">Split_Parent</figcaption>
+</figure>
+<hr>
+<p>对于B+树的内部节点，如果是找 <code>second</code>
+的话，那么不能用二分查找</p>
+<h2 id="checkpoint-2">Checkpoint 2</h2>
+<h3 id="delete">Delete</h3>
+<p><code>B+Tree</code> 的 <code>delete</code> 操作在当前节点不满足 <span class="math inline">\(\lceil n/2\rceil\)</span> 时（也就是 <span class="math inline">\((n+1)/2\)</span>），会发生 <code>coalesce</code>
+和 <code>redistribution</code>，这也是 <code>B+Tree</code>
+中较为复杂的部分，我们详细讨论这一部分</p>
+<h4 id="determine-nearby-node">Determine nearby node</h4>
+<p>无论是 <code>coalesce</code> 还是
+<code>redistribution</code>，我们都需要确定当前节点 <span class="math inline">\(N\)</span> 的相邻节点 <span class="math inline">\(N&#39;\)</span>，我们只需要在当前节点 <span class="math inline">\(N\)</span>
+的父节点中找到其相邻节点即可。换句话说，<span class="math inline">\(N\)</span> 和 <span class="math inline">\(N&#39;\)</span> 具有相同的父节点</p>
+<p>需要注意的是，这里我们只能<strong>逐个遍历</strong>父节点当中的内容，而不能简单地使用二分查找。这是因为我们是在父节点中查找当前节点
+<span class="math inline">\(N\)</span> 的
+<code>page id</code>，而在父节点中，<code>key</code> 是有序的，而
+<code>page id</code> 是无序的，因此我们只能逐个遍历</p>
+<p>另外，为了保证与官方提供的 <a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/spring2023/bpt-printer/"><code>bpt-printer</code></a>
+相一致，我们优先选择<strong>后一个节点</strong>。换句话说，只有当前节点是最后一个节点的时候，我们才会选择前一个节点，否则都是选择后一个节点。书中的伪代码是优先选择前一个节点，这样做没有问题，但会与官方提供的
+<code>bpt-printer</code> 所产生的结果不一致</p>
+<blockquote>
+<p>在后面的描述中，我会描述我的实现方法。我是按照官方的
+<code>bpt-printer</code>
+的行为进行设计的，虽然与书中的描述不同，但有可视化的结果进行参考</p>
+</blockquote>
+<p>除了确定相邻节点 <span class="math inline">\(N&#39;\)</span>
+以外，我们还需要确定 <span class="math inline">\(N\)</span> 与 <span class="math inline">\(N&#39;\)</span> 之间的那个
+<code>key</code>，具体如下图：</p>
+<figure>
+<img src="nearby_node.png" srcset="/img/loading.gif" lazyload alt="nearby_node">
+<figcaption aria-hidden="true">nearby_node</figcaption>
+</figure>
+<h4 id="coalesce">Coalesce</h4>
+<p>如果当前节点 <span class="math inline">\(N\)</span> 和相邻节点 <span class="math inline">\(N&#39;\)</span>
+当中的元素个数<strong>小于等于</strong>单个节点的最大大小，那么我们便执行
+<code>coalesce</code></p>
+<ul>
+<li>对于 <code>leaf page</code>，要求小于等于
+<code>leaf_max_size_ - 1</code></li>
+<li>对于 <code>internal page</code>，要求小于等于
+<code>internal_max_size_</code></li>
+</ul>
+<p>对于 <code>leaf page</code> 而言，我们只需要将 <span class="math inline">\(N\)</span> 中的所有元素加到 <span class="math inline">\(N&#39;\)</span>
+中即可（或者反过来），然后对应设置以下 <code>next_page_id_</code>
+即可</p>
+<p>对于 <code>internal page</code> 而言，我们需要将
+<strong><code>key</code></strong> 以及 <span class="math inline">\(N&#39;\)</span> 中的所有元素全部加到 <span class="math inline">\(N\)</span> 中（或者将 <span class="math inline">\(N\)</span> 中的所有元素加到 <span class="math inline">\(N&#39;\)</span> 中）。对于内部节点，由于第一个
+<code>key</code> 为空，因此我们需要将父节点的 <code>key</code>
+加入到新合并得到的节点当中，随后再在父节点中删除 <code>key</code> 和
+<span class="math inline">\(N\)</span>（或者 <span class="math inline">\(N&#39;\)</span>）</p>
+<p>在父节点中，我们是以 <code>key</code> 为单位进行删除的，而
+<code>key</code> 又与其对于的 <code>page id</code>
+组成了一个整体。为了方便，无论当前节点与相邻节点的位置关系如何，我们<strong>始终删除后一个节点</strong>，具体如下图：</p>
+<figure>
+<img src="coalesce_internal.png" srcset="/img/loading.gif" lazyload alt="coalesce_internal">
+<figcaption aria-hidden="true">coalesce_internal</figcaption>
+</figure>
+<p>对于 <code>leaf page</code> 而言，只是少了将<strong>父节点的
+<code>key</code>
+加入到新合并得到的节点中</strong>这一操作，移动的方向以及删除的节点二者是一样的</p>
+<h4 id="redistribution">Redistribution</h4>
+<p>如果 <span class="math inline">\(N\)</span> 与 <span class="math inline">\(N&#39;\)</span>
+的元素个数<strong>大于</strong>单个节点的最大大小，那么我们需要执行
+<code>redistribution</code>。该操作的本质是<strong>向相邻节点借一个元素过来</strong></p>
+<p>对于 <code>leaf page</code> 而言，我们需要考虑二者的位置关系：</p>
+<ul>
+<li>如果 <span class="math inline">\(N\)</span> 在 <span class="math inline">\(N&#39;\)</span> 的前面，那么我们将 <span class="math inline">\(N&#39;\)</span> 的第一个元素加到 <span class="math inline">\(N\)</span> 的后面，将 <span class="math inline">\(N&#39;\)</span>
+中的所有元素向前移动一位，并将<strong>原先父节点当中的 <code>key</code>
+设置为 <span class="math inline">\(N&#39;\)</span> 的第一个
+<code>key</code></strong></li>
+<li>如果 <span class="math inline">\(N\)</span> 在 <span class="math inline">\(N&#39;\)</span> 的后面，那么我们将 <span class="math inline">\(N\)</span> 中的所有元素向后移动一位，将 <span class="math inline">\(N&#39;\)</span> 的最后一个元素加到 <span class="math inline">\(N\)</span> 中，并将<strong>原先父节点当中的
+<code>key</code> 设置为 <span class="math inline">\(N\)</span> 的第一个
+<code>key</code></strong></li>
+</ul>
+<figure>
+<img src="redistribute_leaf.png" srcset="/img/loading.gif" lazyload alt="redistribute_leaf">
+<figcaption aria-hidden="true">redistribute_leaf</figcaption>
+</figure>
+<p>对于 <code>internal page</code>
+而言，我们同样需要考虑二者的位置关系：</p>
+<ul>
+<li>如果 <span class="math inline">\(N\)</span> 在 <span class="math inline">\(N&#39;\)</span>
+的前面，我们需要将<strong>父节点当中的 <code>key</code> 以及 <span class="math inline">\(N&#39;\)</span> 第一个元素当中的
+<code>second</code> 加到 <span class="math inline">\(N\)</span>
+的后面</strong>，然后将<strong>父节点当中的 <code>key</code> 替换为
+<span class="math inline">\(N&#39;\)</span> 第一个元素当中的
+<code>first</code></strong>，最后将 <span class="math inline">\(N&#39;\)</span> 的所有元素向前移动一位</li>
+<li>如果 <span class="math inline">\(N\)</span> 在 <span class="math inline">\(N&#39;\)</span> 的后面，我们需要将 <span class="math inline">\(N\)</span> 先向后移动一位，然后将<strong>父节点的
+<code>key</code> 以及 <span class="math inline">\(N&#39;\)</span>
+的最后一个元素的 <code>second</code> 加到 <span class="math inline">\(N\)</span> 的前面</strong>，然后<strong>用 <span class="math inline">\(N&#39;\)</span> 的最后一个元素的
+<code>first</code> 替换掉父节点的 <code>key</code></strong></li>
+</ul>
+<figure>
+<img src="redistribute_internal.png" srcset="/img/loading.gif" lazyload alt="redistribute_internal">
+<figcaption aria-hidden="true">redistribute_internal</figcaption>
+</figure>
+<h3 id="iterator">Iterator</h3>
+<p>对于 <code>iterator</code>
+的设计，由于该迭代器是只读的，并且我们需要保证在并发的时候不会发生
+<code>data race</code>，因此我们需要一个
+<code>ReadPageGuard</code>；另外，我们还需要获取当前 <code>page</code>
+的下一个 <code>page</code>，因此我们需要一个 <code>bpm</code>
+指针来获取；最后，由于我们需要确定当前 <code>leaf page</code>
+中的元素的位置，因此需要一个 <code>const Mapping*</code> 的指针</p>
+<p>实际上有这三个就以及足够了，我的设计当中加入了一个指向当前
+<code>leaf page</code>
+尾部的指针，用于快速确定当前迭代器是否已经遍历到头了</p>
+<p>我的定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">ReadPageGuard read_guard_;<br><span class="hljs-type">const</span> MappingType *ptr_;<br><span class="hljs-type">const</span> MappingType *end_;<br><span class="hljs-type">page_id_t</span> cur_page_id_;<br>BufferPoolManager *bpm_;<br></code></pre></td></tr></table></figure>
+<h3 id="concurrency">Concurrency</h3>
+<h4 id="crabbing-lock">Crabbing lock</h4>
+<p>并发控制是这个实验最难的一个部分了，我们需要去实现
+<code>crabbing lock</code>，这里需要用到 <code>Context</code>
+这个工具</p>
+<p><code>crabbing lock</code>
+的本质是：对于当前节点而言，如果我们能够确定它的<strong>子节点</strong>是
+<code>safe</code>
+的，那么我们便可以释放<strong>当前节点</strong>的所有祖宗
+<code>ancestors</code>（<strong>不包括当前节点</strong>）。而一个节点是
+<code>safe</code> 的当且仅当它不会执行
+<code>split, coalesce, redistribution</code> 这些操作。换句话说，对于
+<code>insert</code> 操作而言，子节点的元素个数加一<strong>小于</strong>
+<span class="math inline">\(n-1\)</span>，对于 <code>delete</code>
+操作而言，子节点的元素个数减一<strong>大于等于</strong> <span class="math inline">\(\lceil n/2\rceil\)</span></p>
+<p>因此，我们在向下递归到叶节点时便可以对当前节点的子节点进行判断，进而确定是否需要释放之前的节点</p>
+<p>实际上，如果我们确定了当且节点的子节点是安全的，那么<strong>相当于无论子节点发生什么操作，都不会影响到当前节点的之上的节点</strong>。我们不释放当前节点的原因在于，子节点的操作会传递到当前节点，也就是我们需要对当前节点进行修改，因此我们<strong>不能释放当前节点</strong></p>
+<p>对于多线程当中的 <code>data race</code> 和
+<code>deadlock</code>，在此写下一点我的经验</p>
+<h4 id="data-race">Data race</h4>
+<blockquote>
+<p>需要说明的是，<code>Race</code> 和 <code>Contention</code>
+是两个不同的概念：</p>
+<ul>
+<li><code>Contention</code> 是指线程 <span class="math inline">\(A\)</span> 以及访问了线程 <span class="math inline">\(B\)</span> 而 <span class="math inline">\(B\)</span> 需要等待 <span class="math inline">\(A\)</span> 将该资源释放</li>
+<li><code>Race</code> 是指 <span class="math inline">\(A\)</span> 和
+<span class="math inline">\(B\)</span>
+都想要访问该资源，最快的那个将抢先访问，而慢的那个则只能等待。因此这会导致
+<code>Contention</code></li>
+</ul>
+<p>相关链接：<a target="_blank" rel="noopener" href="https://cs.stackexchange.com/questions/126013/thread-contention-vs-race">Thread
+- contention vs race</a></p>
+</blockquote>
+<p>对于这种情况，我们可以在全部线程完成插入、删除、查询等操作后，逐一检查
+<code>B+Tree</code> 当中的数据是否是正确的。换句话说，我们直接对所有的
+<code>leaf page</code>
+进行一次遍历，便可以确定当前存在的元素是否符合预期</p>
+<h4 id="deadlock">Deadlock</h4>
+<p>如果判断产生 <code>deadlock</code>，我们直接进入 <code>cgdb</code>
+，跳转到 <code>join</code>
+的前一条语句当中。这时所有的线程一定都创建完毕并且开始执行。由于多线程的执行具有随机性，因此我们实际上是无法单步执行某个线程的。因此，我们可以故意让
+<code>deadlock</code> 发生，然后跳转到对应的线程，通过
+<code>backtrace</code> 来查看栈帧，并通过 <code>frame</code>
+指令来跳转到对应的栈帧中，然后再对数据进行检查，进而明确
+<code>deadlock</code> 发生的原因</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CMU15-445/" class="category-chain-item">CMU15-445</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CMU15-445/">#CMU15-445</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CMU15-445 Project 2</div>
+      <div>https://nishikichisato.github.io/2023/10/13/CMU15-445/Project 2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 13, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>October 13, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/19/CMU15-445/Project%201/" title="CMU15-445 Project 1">
+                        <span class="hidden-mobile">CMU15-445 Project 1</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CMU15-445"
+        id="heading-c7e40d6acfb761a7d078b50eb85bfaf1" role="tab" data-toggle="collapse" href="#collapse-c7e40d6acfb761a7d078b50eb85bfaf1"
+        aria-expanded="true"
+      >
+        CMU15-445
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c7e40d6acfb761a7d078b50eb85bfaf1"
+           role="tabpanel" aria-labelledby="heading-c7e40d6acfb761a7d078b50eb85bfaf1">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/09/04/CMU15-445/Project%200/" title="CMU15-445 Project 0"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 Project 0</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/09/19/CMU15-445/Project%201/" title="CMU15-445 Project 1"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 Project 1</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/10/13/CMU15-445/Project%202/" title="CMU15-445 Project 2"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CMU15-445 Project 2</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
