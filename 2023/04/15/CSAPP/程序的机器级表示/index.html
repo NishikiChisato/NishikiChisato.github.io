@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="程序的机器级表示 程序的机器级表示 数据格式 &amp; 访问信息 数据格式 访问信息 操作数指示符   指令 &amp; 算术和逻辑操作 &amp; 控制 数据传送指令 数据传送之于指针 数据传送之于转型   压栈与出栈 算术和逻辑操作 基本操作 特殊操作     控制 条件控制 访问条件码 字节设置 条件跳转 基于条件跳转实现条件分支   条件传送 基于条件传送实现条件分支     循环 do">
+    <meta name="description" content="程序的机器级表示  程序的机器级表示  数据格式 &amp; 访问信息  数据格式 访问信息 操作数指示符  指令 &amp; 算术和逻辑操作 &amp; 控制  数据传送指令  数据传送之于指针 数据传送之于转型  压栈与出栈 算术和逻辑操作  基本操作 特殊操作   控制  条件控制 访问条件码  字节设置 条件跳转  基于条件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSAPP 第三章 程序的机器级表示">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/CSAPP/%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="程序的机器级表示 程序的机器级表示 数据格式 &amp; 访问信息 数据格式 访问信息 操作数指示符   指令 &amp; 算术和逻辑操作 &amp; 控制 数据传送指令 数据传送之于指针 数据传送之于转型   压栈与出栈 算术和逻辑操作 基本操作 特殊操作     控制 条件控制 访问条件码 字节设置 条件跳转 基于条件跳转实现条件分支   条件传送 基于条件传送实现条件分支     循环 do">
+<meta property="og:description" content="程序的机器级表示  程序的机器级表示  数据格式 &amp; 访问信息  数据格式 访问信息 操作数指示符  指令 &amp; 算术和逻辑操作 &amp; 控制  数据传送指令  数据传送之于指针 数据传送之于转型  压栈与出栈 算术和逻辑操作  基本操作 特殊操作   控制  条件控制 访问条件码  字节设置 条件跳转  基于条件">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP/CSAPP%20(2).png">
 <meta property="article:published_time" content="2023-04-15T02:39:24.945Z">
@@ -263,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          24k words
+          25k words
         
       </span>
     
@@ -274,7 +274,7 @@
         
         
         
-          203 mins
+          211 mins
         
       </span>
     
@@ -346,559 +346,735 @@
             
               <div class="markdown-body">
                 
-                <h1 id="程序的机器级表示"><a href="#程序的机器级表示" class="headerlink" title="程序的机器级表示"></a>程序的机器级表示</h1><ul>
-<li><a href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA">程序的机器级表示</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F--%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF">数据格式 &amp; 访问信息</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F">数据格式</a></li>
-<li><a href="#%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF">访问信息</a></li>
-<li><a href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8C%87%E7%A4%BA%E7%AC%A6">操作数指示符</a></li>
+                <h1 id="程序的机器级表示">程序的机器级表示</h1>
+<ul>
+<li><a href="#程序的机器级表示">程序的机器级表示</a>
+<ul>
+<li><a href="#数据格式--访问信息">数据格式 &amp; 访问信息</a>
+<ul>
+<li><a href="#数据格式">数据格式</a></li>
+<li><a href="#访问信息">访问信息</a></li>
+<li><a href="#操作数指示符">操作数指示符</a></li>
+</ul></li>
+<li><a href="#指令--算术和逻辑操作--控制">指令 &amp; 算术和逻辑操作
+&amp; 控制</a>
+<ul>
+<li><a href="#数据传送指令">数据传送指令</a>
+<ul>
+<li><a href="#数据传送之于指针">数据传送之于指针</a></li>
+<li><a href="#数据传送之于转型">数据传送之于转型</a></li>
+</ul></li>
+<li><a href="#压栈与出栈">压栈与出栈</a></li>
+<li><a href="#算术和逻辑操作">算术和逻辑操作</a>
+<ul>
+<li><a href="#基本操作">基本操作</a></li>
+<li><a href="#特殊操作">特殊操作</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#控制">控制</a>
+<ul>
+<li><a href="#条件控制">条件控制</a></li>
+<li><a href="#访问条件码">访问条件码</a>
+<ul>
+<li><a href="#字节设置">字节设置</a></li>
+<li><a href="#条件跳转">条件跳转</a>
+<ul>
+<li><a href="#基于条件跳转实现条件分支">基于条件跳转实现条件分支</a></li>
+</ul></li>
+<li><a href="#条件传送">条件传送</a>
+<ul>
+<li><a href="#基于条件传送实现条件分支">基于条件传送实现条件分支</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#循环">循环</a>
+<ul>
+<li><a href="#do-while-循环">do-while 循环</a></li>
+<li><a href="#while-循环">while 循环</a></li>
+<li><a href="#for-循环">for 循环</a></li>
+</ul></li>
+<li><a href="#switch-语句">switch 语句</a></li>
+</ul></li>
+<li><a href="#过程">过程</a>
+<ul>
+<li><a href="#控制转移">控制转移</a>
+<ul>
+<li><a href="#运行时栈">运行时栈</a></li>
+<li><a href="#转移控制">转移控制</a></li>
+</ul></li>
+<li><a href="#数据传送">数据传送</a></li>
+<li><a href="#内存管理">内存管理</a>
+<ul>
+<li><a href="#栈上的局部存储">栈上的局部存储</a></li>
+<li><a href="#寄存器中的局部存储">寄存器中的局部存储</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#数组--结构--联合--对齐--变长栈帧--缓冲区溢出">数组 &amp;
+结构 &amp; 联合 &amp; 对齐 &amp; 变长栈帧 &amp; 缓冲区溢出</a>
+<ul>
+<li><a href="#数组">数组</a></li>
+<li><a href="#结构">结构</a></li>
+<li><a href="#联合">联合</a></li>
+<li><a href="#对齐">对齐</a></li>
+<li><a href="#变长栈帧">变长栈帧</a></li>
+<li><a href="#缓冲区溢出">缓冲区溢出</a>
+<ul>
+<li><a href="#栈随机化">栈随机化</a></li>
+<li><a href="#栈破坏检测">栈破坏检测</a></li>
+<li><a href="#限制代码可执行区域">限制代码可执行区域</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#浮点">浮点</a>
+<ul>
+<li><a href="#avx2-指令集">AVX2 指令集</a></li>
+<li><a href="#浮点操作">浮点操作</a>
+<ul>
+<li><a href="#传送">传送</a></li>
+<li><a href="#转换">转换</a></li>
+<li><a href="#过程-1">过程</a></li>
+<li><a href="#使用浮点常数">使用浮点常数</a></li>
+<li><a href="#运算">运算</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-<li><a href="#%E6%8C%87%E4%BB%A4--%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E6%93%8D%E4%BD%9C--%E6%8E%A7%E5%88%B6">指令 &amp; 算术和逻辑操作 &amp; 控制</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4">数据传送指令</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E4%B9%8B%E4%BA%8E%E6%8C%87%E9%92%88">数据传送之于指针</a></li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E4%B9%8B%E4%BA%8E%E8%BD%AC%E5%9E%8B">数据传送之于转型</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8E%8B%E6%A0%88%E4%B8%8E%E5%87%BA%E6%A0%88">压栈与出栈</a></li>
-<li><a href="#%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E6%93%8D%E4%BD%9C">算术和逻辑操作</a><ul>
-<li><a href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">基本操作</a></li>
-<li><a href="#%E7%89%B9%E6%AE%8A%E6%93%8D%E4%BD%9C">特殊操作</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E6%8E%A7%E5%88%B6">控制</a><ul>
-<li><a href="#%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6">条件控制</a></li>
-<li><a href="#%E8%AE%BF%E9%97%AE%E6%9D%A1%E4%BB%B6%E7%A0%81">访问条件码</a><ul>
-<li><a href="#%E5%AD%97%E8%8A%82%E8%AE%BE%E7%BD%AE">字节设置</a></li>
-<li><a href="#%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC">条件跳转</a><ul>
-<li><a href="#%E5%9F%BA%E4%BA%8E%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF">基于条件跳转实现条件分支</a></li>
-</ul>
-</li>
-<li><a href="#%E6%9D%A1%E4%BB%B6%E4%BC%A0%E9%80%81">条件传送</a><ul>
-<li><a href="#%E5%9F%BA%E4%BA%8E%E6%9D%A1%E4%BB%B6%E4%BC%A0%E9%80%81%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF">基于条件传送实现条件分支</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E5%BE%AA%E7%8E%AF">循环</a><ul>
-<li><a href="#do-while-%E5%BE%AA%E7%8E%AF">do-while 循环</a></li>
-<li><a href="#while-%E5%BE%AA%E7%8E%AF">while 循环</a></li>
-<li><a href="#for-%E5%BE%AA%E7%8E%AF">for 循环</a></li>
-</ul>
-</li>
-<li><a href="#switch-%E8%AF%AD%E5%8F%A5">switch 语句</a></li>
-</ul>
-</li>
-<li><a href="#%E8%BF%87%E7%A8%8B">过程</a><ul>
-<li><a href="#%E6%8E%A7%E5%88%B6%E8%BD%AC%E7%A7%BB">控制转移</a><ul>
-<li><a href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%A0%88">运行时栈</a></li>
-<li><a href="#%E8%BD%AC%E7%A7%BB%E6%8E%A7%E5%88%B6">转移控制</a></li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81">数据传送</a></li>
-<li><a href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86">内存管理</a><ul>
-<li><a href="#%E6%A0%88%E4%B8%8A%E7%9A%84%E5%B1%80%E9%83%A8%E5%AD%98%E5%82%A8">栈上的局部存储</a></li>
-<li><a href="#%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E7%9A%84%E5%B1%80%E9%83%A8%E5%AD%98%E5%82%A8">寄存器中的局部存储</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84--%E7%BB%93%E6%9E%84--%E8%81%94%E5%90%88--%E5%AF%B9%E9%BD%90--%E5%8F%98%E9%95%BF%E6%A0%88%E5%B8%A7--%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA">数组 &amp; 结构 &amp; 联合 &amp; 对齐 &amp; 变长栈帧 &amp; 缓冲区溢出</a><ul>
-<li><a href="#%E6%95%B0%E7%BB%84">数组</a></li>
-<li><a href="#%E7%BB%93%E6%9E%84">结构</a></li>
-<li><a href="#%E8%81%94%E5%90%88">联合</a></li>
-<li><a href="#%E5%AF%B9%E9%BD%90">对齐</a></li>
-<li><a href="#%E5%8F%98%E9%95%BF%E6%A0%88%E5%B8%A7">变长栈帧</a></li>
-<li><a href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA">缓冲区溢出</a><ul>
-<li><a href="#%E6%A0%88%E9%9A%8F%E6%9C%BA%E5%8C%96">栈随机化</a></li>
-<li><a href="#%E6%A0%88%E7%A0%B4%E5%9D%8F%E6%A3%80%E6%B5%8B">栈破坏检测</a></li>
-<li><a href="#%E9%99%90%E5%88%B6%E4%BB%A3%E7%A0%81%E5%8F%AF%E6%89%A7%E8%A1%8C%E5%8C%BA%E5%9F%9F">限制代码可执行区域</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E6%B5%AE%E7%82%B9">浮点</a><ul>
-<li><a href="#avx2-%E6%8C%87%E4%BB%A4%E9%9B%86">AVX2 指令集</a></li>
-<li><a href="#%E6%B5%AE%E7%82%B9%E6%93%8D%E4%BD%9C">浮点操作</a><ul>
-<li><a href="#%E4%BC%A0%E9%80%81">传送</a></li>
-<li><a href="#%E8%BD%AC%E6%8D%A2">转换</a></li>
-<li><a href="#%E8%BF%87%E7%A8%8B-1">过程</a></li>
-<li><a href="#%E4%BD%BF%E7%94%A8%E6%B5%AE%E7%82%B9%E5%B8%B8%E6%95%B0">使用浮点常数</a></li>
-<li><a href="#%E8%BF%90%E7%AE%97">运算</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="数据格式-amp-访问信息"><a href="#数据格式-amp-访问信息" class="headerlink" title="数据格式 &amp; 访问信息"></a>数据格式 &amp; 访问信息</h2><h3 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h3><p>下面我们给出 <code>x86-64</code> 指令集中关于数据大小的指令</p>
+<h2 id="数据格式-访问信息">数据格式 &amp; 访问信息</h2>
+<h3 id="数据格式">数据格式</h3>
+<p>下面我们给出 <code>x86-64</code> 指令集中关于数据大小的指令</p>
 <table>
 <thead>
-<tr>
-<th align="center">C声明</th>
-<th align="center">Intel数据类型</th>
-<th align="center">汇编代码后缀</th>
-<th align="center">大小（字节）</th>
+<tr class="header">
+<th style="text-align: center;">C声明</th>
+<th style="text-align: center;">Intel数据类型</th>
+<th style="text-align: center;">汇编代码后缀</th>
+<th style="text-align: center;">大小（字节）</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>char</code></td>
-<td align="center">字节</td>
-<td align="center"><code>b</code></td>
-<td align="center">1</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>char</code></td>
+<td style="text-align: center;">字节</td>
+<td style="text-align: center;"><code>b</code></td>
+<td style="text-align: center;">1</td>
 </tr>
-<tr>
-<td align="center"><code>short</code></td>
-<td align="center">字</td>
-<td align="center"><code>w</code></td>
-<td align="center">2</td>
+<tr class="even">
+<td style="text-align: center;"><code>short</code></td>
+<td style="text-align: center;">字</td>
+<td style="text-align: center;"><code>w</code></td>
+<td style="text-align: center;">2</td>
 </tr>
-<tr>
-<td align="center"><code>int</code></td>
-<td align="center">双字</td>
-<td align="center"><code>l</code></td>
-<td align="center">4</td>
+<tr class="odd">
+<td style="text-align: center;"><code>int</code></td>
+<td style="text-align: center;">双字</td>
+<td style="text-align: center;"><code>l</code></td>
+<td style="text-align: center;">4</td>
 </tr>
-<tr>
-<td align="center"><code>long</code></td>
-<td align="center">四字</td>
-<td align="center"><code>q</code></td>
-<td align="center">8</td>
+<tr class="even">
+<td style="text-align: center;"><code>long</code></td>
+<td style="text-align: center;">四字</td>
+<td style="text-align: center;"><code>q</code></td>
+<td style="text-align: center;">8</td>
 </tr>
-<tr>
-<td align="center"><code>char*</code></td>
-<td align="center">四字</td>
-<td align="center"><code>q</code></td>
-<td align="center">8</td>
+<tr class="odd">
+<td style="text-align: center;"><code>char*</code></td>
+<td style="text-align: center;">四字</td>
+<td style="text-align: center;"><code>q</code></td>
+<td style="text-align: center;">8</td>
 </tr>
-<tr>
-<td align="center"><code>float</code></td>
-<td align="center">单精度</td>
-<td align="center"><code>s</code></td>
-<td align="center">4</td>
+<tr class="even">
+<td style="text-align: center;"><code>float</code></td>
+<td style="text-align: center;">单精度</td>
+<td style="text-align: center;"><code>s</code></td>
+<td style="text-align: center;">4</td>
 </tr>
-<tr>
-<td align="center"><code>double</code></td>
-<td align="center">双精度</td>
-<td align="center"><code>l</code></td>
-<td align="center">8</td>
+<tr class="odd">
+<td style="text-align: center;"><code>double</code></td>
+<td style="text-align: center;">双精度</td>
+<td style="text-align: center;"><code>l</code></td>
+<td style="text-align: center;">8</td>
 </tr>
-</tbody></table>
-<p>这当中，字 <code>word</code> 表示 $2$ 个字节；双字 <code>double word\long word</code> 表示 $4$ 个字节；四字 <code>quad word</code> 表示 $8$ 个字节</p>
-<p>需要说明的是，汇编代码用 <code>l</code> 表示双字与双精度，这并不会造成歧义，因为整数与浮点数使用的是不同的两套指令和寄存器</p>
+</tbody>
+</table>
+<p>这当中，字 <code>word</code> 表示 <span class="math inline">\(2\)</span> 个字节；双字
+<code>double word\long word</code> 表示 <span class="math inline">\(4\)</span> 个字节；四字 <code>quad word</code>
+表示 <span class="math inline">\(8\)</span> 个字节</p>
+<p>需要说明的是，汇编代码用 <code>l</code>
+表示双字与双精度，这并不会造成歧义，因为整数与浮点数使用的是不同的两套指令和寄存器</p>
 <hr>
-<h3 id="访问信息"><a href="#访问信息" class="headerlink" title="访问信息"></a>访问信息</h3><p>一个 <code>x86-64</code> 的 CPU 包含一组 <strong>$16$ 个存储 $64$ 位的<em>通用目的寄存器</em></strong>，以下为这 $16$ 个寄存器的名称及其作用</p>
-<p>表中从左往右依次为：<code>64</code> 位、<code>32</code> 位、<code>16</code> 位、<code>8</code> 位</p>
+<h3 id="访问信息">访问信息</h3>
+<p>一个 <code>x86-64</code> 的 CPU 包含一组 <strong><span class="math inline">\(16\)</span> 个存储 <span class="math inline">\(64\)</span>
+位的<em>通用目的寄存器</em></strong>，以下为这 <span class="math inline">\(16\)</span> 个寄存器的名称及其作用</p>
+<p>表中从左往右依次为：<code>64</code> 位、<code>32</code>
+位、<code>16</code> 位、<code>8</code> 位</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Register</code></th>
-<th align="center"><code>Function</code></th>
-<th align="center"><code>Register</code></th>
-<th align="center"><code>Function</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Register</code></th>
+<th style="text-align: center;"><code>Function</code></th>
+<th style="text-align: center;"><code>Register</code></th>
+<th style="text-align: center;"><code>Function</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>%rax  %eax  %ax  %al</code></td>
-<td align="center">保存返回值</td>
-<td align="center"><code>%rbx  %ebx  %bx  %bl</code></td>
-<td align="center">被调用者保存</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>%rax  %eax  %ax  %al</code></td>
+<td style="text-align: center;">保存返回值</td>
+<td style="text-align: center;"><code>%rbx  %ebx  %bx  %bl</code></td>
+<td style="text-align: center;">被调用者保存</td>
 </tr>
-<tr>
-<td align="center"><code>%rcx  %ecx  %cx  %cl</code></td>
-<td align="center">第 4 个参数</td>
-<td align="center"><code>%rdx  %edx  %dx  %dl</code></td>
-<td align="center">第 3 个参数</td>
+<tr class="even">
+<td style="text-align: center;"><code>%rcx  %ecx  %cx  %cl</code></td>
+<td style="text-align: center;">第 4 个参数</td>
+<td style="text-align: center;"><code>%rdx  %edx  %dx  %dl</code></td>
+<td style="text-align: center;">第 3 个参数</td>
 </tr>
-<tr>
-<td align="center"><code>%rsi  %esi  %si  %sil</code></td>
-<td align="center">第 2 个参数</td>
-<td align="center"><code>%rdi  %edi  %di  %dil</code></td>
-<td align="center">第 1 个参数</td>
+<tr class="odd">
+<td style="text-align: center;"><code>%rsi  %esi  %si  %sil</code></td>
+<td style="text-align: center;">第 2 个参数</td>
+<td style="text-align: center;"><code>%rdi  %edi  %di  %dil</code></td>
+<td style="text-align: center;">第 1 个参数</td>
 </tr>
-<tr>
-<td align="center"><code>%rbp  %ebp  %bp  %bpl</code></td>
-<td align="center">被调用者保存</td>
-<td align="center"><code>%rsp  %esp  %sp  %spl</code></td>
-<td align="center">栈指针</td>
+<tr class="even">
+<td style="text-align: center;"><code>%rbp  %ebp  %bp  %bpl</code></td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;"><code>%rsp  %esp  %sp  %spl</code></td>
+<td style="text-align: center;">栈指针</td>
 </tr>
-<tr>
-<td align="center"><code>%r8  %r8d  %r8w  %r8b</code></td>
-<td align="center">第 5 个参数</td>
-<td align="center"><code>%r9  %r9d  %r9w  %r9b</code></td>
-<td align="center">第 6 个参数</td>
+<tr class="odd">
+<td style="text-align: center;"><code>%r8  %r8d  %r8w  %r8b</code></td>
+<td style="text-align: center;">第 5 个参数</td>
+<td style="text-align: center;"><code>%r9  %r9d  %r9w  %r9b</code></td>
+<td style="text-align: center;">第 6 个参数</td>
 </tr>
-<tr>
-<td align="center"><code>%r10  %r10d  %r10w  %r10b</code></td>
-<td align="center">调用者保存</td>
-<td align="center"><code>%r11  %r11d  %r11w  %r11b</code></td>
-<td align="center">调用者保存</td>
+<tr class="even">
+<td style="text-align: center;"><code>%r10  %r10d  %r10w  %r10b</code></td>
+<td style="text-align: center;">调用者保存</td>
+<td style="text-align: center;"><code>%r11  %r11d  %r11w  %r11b</code></td>
+<td style="text-align: center;">调用者保存</td>
 </tr>
-<tr>
-<td align="center"><code>%r12  %r12d  %r12w  %r12b</code></td>
-<td align="center">被调用者保存</td>
-<td align="center"><code>%r13  %r13d  %r13w  %r13b</code></td>
-<td align="center">被调用者保存</td>
+<tr class="odd">
+<td style="text-align: center;"><code>%r12  %r12d  %r12w  %r12b</code></td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;"><code>%r13  %r13d  %r13w  %r13b</code></td>
+<td style="text-align: center;">被调用者保存</td>
 </tr>
-<tr>
-<td align="center"><code>%r14  %r14d  %r14w  %r14b</code></td>
-<td align="center">被调用者保存</td>
-<td align="center"><code>%r15  %r15d  %r15w  %r15b</code></td>
-<td align="center">被调用者保存</td>
+<tr class="even">
+<td style="text-align: center;"><code>%r14  %r14d  %r14w  %r14b</code></td>
+<td style="text-align: center;">被调用者保存</td>
+<td style="text-align: center;"><code>%r15  %r15d  %r15w  %r15b</code></td>
+<td style="text-align: center;">被调用者保存</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>不同的指令可以对单个寄存器中不同大小的数据进行操作：</p>
 <ul>
 <li>字节级操作可以访问最低的字节</li>
-<li>$16$ 位操作可以访问最低的 $2$ 个字节</li>
-<li>$32$ 位操作可以访问最低的 $4$ 个字节</li>
-<li>$64$ 位操作可以访问整个寄存器</li>
+<li><span class="math inline">\(16\)</span> 位操作可以访问最低的 <span class="math inline">\(2\)</span> 个字节</li>
+<li><span class="math inline">\(32\)</span> 位操作可以访问最低的 <span class="math inline">\(4\)</span> 个字节</li>
+<li><span class="math inline">\(64\)</span>
+位操作可以访问整个寄存器</li>
 </ul>
-<p>如果某条指令以这些寄存器为目标，对于生成小于 $8$ 字节结果的指令，寄存器中剩余字节由以下两条规则指定：</p>
+<p>如果某条指令以这些寄存器为目标，对于生成小于 <span class="math inline">\(8\)</span>
+字节结果的指令，寄存器中剩余字节由以下两条规则指定：</p>
 <ul>
-<li>生成 $1$ 字节或 $2$ 字节结果的指令会保持剩下的字节不变</li>
-<li>生成 $4$ 字节结果的指令，会使<strong>高位 $4$ 字节全部清零</strong></li>
+<li>生成 <span class="math inline">\(1\)</span> 字节或 <span class="math inline">\(2\)</span> 字节结果的指令会保持剩下的字节不变</li>
+<li>生成 <span class="math inline">\(4\)</span>
+字节结果的指令，会使<strong>高位 <span class="math inline">\(4\)</span>
+字节全部清零</strong></li>
 </ul>
 <hr>
-<h3 id="操作数指示符"><a href="#操作数指示符" class="headerlink" title="操作数指示符"></a>操作数指示符</h3><p>大多数指令有一个或多个操作数 <code>operand</code> ，用以表示该操作中<strong>要使用的源数据值</strong>和<strong>放置目标结果的位置</strong></p>
+<h3 id="操作数指示符">操作数指示符</h3>
+<p>大多数指令有一个或多个操作数 <code>operand</code>
+，用以表示该操作中<strong>要使用的源数据值</strong>和<strong>放置目标结果的位置</strong></p>
 <p>源数据值可以是<strong>常数</strong>给出或者从<strong>寄存器</strong>或<strong>内存</strong>当中读出，其结果可以存放在<strong>寄存器</strong>或<strong>内存</strong></p>
 <p>因此，操作数可以被分为三种类型：</p>
 <ul>
-<li>立即数 <code>immediate</code> ，用以表示常数值，通常用 <code>$</code> 后面跟一个 C 标准的整数</li>
-<li>寄存器 <code>register</code> ，用以表示寄存器的<strong>内容</strong>，我们用 $r_a$ 来表示任意寄存器 $a$ ，而引用 $R[r_a]$ 则可以表示该寄存器的值</li>
-<li>内存引用 <code>memory</code> ，它会根据<strong>计算出来的地址来访问某个内存位置</strong>，我们用 $M_b[Addr]$ 表示从地址 $Addr$ 开始的连续 $b$ 个字节的引用（通常我们省去下标 $b$）</li>
+<li>立即数 <code>immediate</code> ，用以表示常数值，通常用
+<code>$</code> 后面跟一个 C 标准的整数</li>
+<li>寄存器 <code>register</code>
+，用以表示寄存器的<strong>内容</strong>，我们用 <span class="math inline">\(r_a\)</span> 来表示任意寄存器 <span class="math inline">\(a\)</span> ，而引用 <span class="math inline">\(R[r_a]\)</span> 则可以表示该寄存器的值</li>
+<li>内存引用 <code>memory</code>
+，它会根据<strong>计算出来的地址来访问某个内存位置</strong>，我们用
+<span class="math inline">\(M_b[Addr]\)</span> 表示从地址 <span class="math inline">\(Addr\)</span> 开始的连续 <span class="math inline">\(b\)</span> 个字节的引用（通常我们省去下标 <span class="math inline">\(b\)</span>）</li>
 </ul>
 <p>关于在内存当中的寻址模式，在这里我们给出一种最通用的：</p>
-<p>$$<br>Imm(r_b,r_i,s)&#x3D;M[Imm+R[r_b]+s\cdot R[r_i]]<br>$$</p>
-<p>在这里，$Imm$ 为<strong>立即数偏移</strong>，$r_b$ 为<strong>基址寄存器</strong>，$r_i$ 为<strong>变址寄存器</strong>，$s$ 为比例因子，必须是 $1,2,4,8$</p>
-<p>需要注意的是，当采用<strong>基址</strong>与<strong>变址</strong>寄存器来进行内存寻址时，二者<strong>都必须要是 $64$ 位寄存器</strong></p>
+<p><span class="math display">\[
+Imm(r_b,r_i,s)=M[Imm+R[r_b]+s\cdot R[r_i]]
+\]</span></p>
+<p>在这里，<span class="math inline">\(Imm\)</span>
+为<strong>立即数偏移</strong>，<span class="math inline">\(r_b\)</span>
+为<strong>基址寄存器</strong>，<span class="math inline">\(r_i\)</span>
+为<strong>变址寄存器</strong>，<span class="math inline">\(s\)</span>
+为比例因子，必须是 <span class="math inline">\(1,2,4,8\)</span></p>
+<p>需要注意的是，当采用<strong>基址</strong>与<strong>变址</strong>寄存器来进行内存寻址时，二者<strong>都必须要是
+<span class="math inline">\(64\)</span> 位寄存器</strong></p>
 <hr>
-<h2 id="指令-amp-算术和逻辑操作-amp-控制"><a href="#指令-amp-算术和逻辑操作-amp-控制" class="headerlink" title="指令 &amp; 算术和逻辑操作 &amp; 控制"></a>指令 &amp; 算术和逻辑操作 &amp; 控制</h2><h3 id="数据传送指令"><a href="#数据传送指令" class="headerlink" title="数据传送指令"></a>数据传送指令</h3><p>$MOV$ 类指令可以将数据从源位置<strong>复制</strong>目的位置，此过程中不做任何改变。$MOV$ 类由四条基本指令构成，它们的区别仅仅在于操作数据的大小不同，分别是 $1,2,4,8$ 字节</p>
+<h2 id="指令-算术和逻辑操作-控制">指令 &amp; 算术和逻辑操作 &amp;
+控制</h2>
+<h3 id="数据传送指令">数据传送指令</h3>
+<p><span class="math inline">\(MOV\)</span>
+类指令可以将数据从源位置<strong>复制</strong>目的位置，此过程中不做任何改变。<span class="math inline">\(MOV\)</span>
+类由四条基本指令构成，它们的区别仅仅在于操作数据的大小不同，分别是 <span class="math inline">\(1,2,4,8\)</span> 字节</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$MOV \quad S,D$</td>
-<td align="center">$S\rightarrow D$</td>
-<td align="center">传送</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOV \quad
+S,D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S\rightarrow
+D\)</span></td>
+<td style="text-align: center;">传送</td>
 </tr>
-<tr>
-<td align="center"><code>movb\movw\movl\movq</code></td>
-<td align="center"></td>
-<td align="center">分别传送字、字节、二字、四字（从补码角度看待）</td>
+<tr class="even">
+<td style="text-align: center;"><code>movb\movw\movl\movq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">分别传送字、字节、二字、四字（从补码角度看待）</td>
 </tr>
-<tr>
-<td align="center"><code>movabsq</code></td>
-<td align="center"></td>
-<td align="center">传送四字（从无符号的角度看待）</td>
+<tr class="odd">
+<td style="text-align: center;"><code>movabsq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">传送四字（从无符号的角度看待）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p>下面用 <code>movx</code> 来表示 <code>movb\movw\movl\movq</code></p>
 </blockquote>
 <p>源操作数要么是立即数、寄存器或者内存引用，目的操作数要么是寄存器或者内存引用,这里有一条限制是：<strong>两个操作数不能都是内存引用</strong></p>
-<p>这些指令的操作数可以是 $16$ 个寄存器当中有标号部分的任意一个，但需要注意的是，<strong>寄存器的大小必须与指令所指示的大小相一致</strong></p>
+<p>这些指令的操作数可以是 <span class="math inline">\(16\)</span>
+个寄存器当中有标号部分的任意一个，但需要注意的是，<strong>寄存器的大小必须与指令所指示的大小相一致</strong></p>
 <p>无论操作数当中有几个寄存器（一个或两个），它们的<strong>大小都需要与指令所指示的相一致</strong></p>
-<p>例如：<code>movl %eax %rdx</code> 这是错误的，因为源寄存器为 $32$ 位，目的寄存器为 $64$ 位，二者并不相同</p>
+<p>例如：<code>movl %eax %rdx</code> 这是错误的，因为源寄存器为 <span class="math inline">\(32\)</span> 位，目的寄存器为 <span class="math inline">\(64\)</span> 位，二者并不相同</p>
 <p>需要额外说明的是，不能以两个内存引用作为操作数的原因在于，内存引用是<strong>无法确定大小的</strong>，但寄存器或立即数却可以确定大小。因此对于内存到内存的复制，需要先从内存到寄存器，再从寄存器到内存</p>
-<p>$MOV$ 指令只会更新<strong>目的操作数</strong>指定的寄存器字节或内存，其他位置不会发生改变，唯一的例外是使用 <code>movl</code> 且目的地为寄存器时，这会使得高位的 $4$ 字节全部清零</p>
-<p>常规的 <code>movx</code> 指令只能以 $32$ 位<strong>补码</strong>立即数作为源操作数，然后将该数字<strong>符号拓展</strong>得到 $64$ 位的值（也就是前面写的从补码的角度考虑），而 <code>movabsq</code> 则可以以任意 $64$ 位立即数作为源操作数，并且<strong>只能以寄存器作为目的地</strong></p>
-<p>上面的指令如果是以 $1,2$ 为字节单位的指令，则不会对高位进行填充，例如：</p>
+<p><span class="math inline">\(MOV\)</span>
+指令只会更新<strong>目的操作数</strong>指定的寄存器字节或内存，其他位置不会发生改变，唯一的例外是使用
+<code>movl</code> 且目的地为寄存器时，这会使得高位的 <span class="math inline">\(4\)</span> 字节全部清零</p>
+<p>常规的 <code>movx</code> 指令只能以 <span class="math inline">\(32\)</span>
+位<strong>补码</strong>立即数作为源操作数，然后将该数字<strong>符号拓展</strong>得到
+<span class="math inline">\(64\)</span>
+位的值（也就是前面写的从补码的角度考虑），而 <code>movabsq</code>
+则可以以任意 <span class="math inline">\(64\)</span>
+位立即数作为源操作数，并且<strong>只能以寄存器作为目的地</strong></p>
+<p>上面的指令如果是以 <span class="math inline">\(1,2\)</span>
+为字节单位的指令，则不会对高位进行填充，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asm">movabsq $0x0011223344556677, %rax   # %rax = 0011223344556677<br>movb    $-1, %al                    # %rax = 00112233445566FF<br>movw    $-1, %ax                    # %rax = 001122334455FFFF<br>movl    $-1, %eax                   # %rax = 00000000FFFFFFFF<br>movq    $-1, %rax                   # %rax = FFFFFFFFFFFFFFFF<br></code></pre></td></tr></table></figure>
-
-<p>可以看到，以 <code>b</code> 和 <code>w</code> 为大小指定的指令不会对高位进行修改，下面两个 $MOV$ 的拓展类可以实现<strong>对剩余字节的填充</strong></p>
+<p>可以看到，以 <code>b</code> 和 <code>w</code>
+为大小指定的指令不会对高位进行修改，下面两个 <span class="math inline">\(MOV\)</span>
+的拓展类可以实现<strong>对剩余字节的填充</strong></p>
 <ul>
-<li>$MOVZ$ 通过<strong>零拓展</strong>进行填充，将剩余字节填充为 $0$</li>
-<li>$MOVS$ 通过<strong>符号拓展</strong>进行填充，将剩余字节填充为<strong>源操作数的最高位</strong></li>
+<li><span class="math inline">\(MOVZ\)</span>
+通过<strong>零拓展</strong>进行填充，将剩余字节填充为 <span class="math inline">\(0\)</span></li>
+<li><span class="math inline">\(MOVS\)</span>
+通过<strong>符号拓展</strong>进行填充，将剩余字节填充为<strong>源操作数的最高位</strong></li>
 </ul>
 <table>
-<thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">$MOVZ \quad S,R$</td>
-<td align="center">$零拓展(S)\rightarrow R$</td>
-<td align="center">以零拓展进行传送</td>
-</tr>
-<tr>
-<td align="center"><code>movzbw\movzbl\movzwl\movzbq\movzwq</code></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th align="center">指令</th>
-<th align="center">效果</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">$MOVS \quad S,R$</td>
-<td align="center">$符号拓展(S)\rightarrow R$</td>
-<td align="center">以符号拓展进行传送</td>
-</tr>
-<tr>
-<td align="center"><code>movsbw\movsbl\movswl\movsbq\movswq\movslq</code></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"><code>cltq</code></td>
-<td align="center">$符号拓展(%eax)\rightarrow %rax$</td>
-<td align="center">将 <code>%eax</code> 符号拓展后的结果放到 <code>%rax</code> 中</td>
-</tr>
-</tbody></table>
-<p>$MOVZ$ 与 $MOVS$ 均以<strong>寄存器或内存作为源</strong>，以<strong>寄存器作为目的地</strong></p>
-<p>正如上面指令所指示的那样，最后两个字符用以表示大小，第一个指示源操作数的大小，第二个指示目的操作数的大小</p>
-<p>需要说明的是，这里面没有 <code>movzlq</code> ，这是因为对于以 $4$ 字节为操作数的 $MOV$ 指令，会将高位全部置零，因此这条指令没有必要出现</p>
-<p><code>ctlq</code> 指令<strong>没有操作数</strong>，它以 <code>%eax</code> 作为源，将其<strong>符号拓展</strong>后的结果放到 <code>%rax</code> 中，本质上与 <code>movslq %eax, %rax</code> 完全一致</p>
-<hr>
-<h4 id="数据传送之于指针"><a href="#数据传送之于指针" class="headerlink" title="数据传送之于指针"></a>数据传送之于指针</h4><p>C 语言代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> <span class="hljs-title function_">wxchange</span><span class="hljs-params">(<span class="hljs-type">long</span>* xp, <span class="hljs-type">long</span> y)</span><br>&#123;<br>    <span class="hljs-type">long</span> x = *xp;<br>    *xp = y;<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<thead>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOVZ \quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(零拓展(S)\rightarrow R\)</span></td>
+<td style="text-align: center;">以零拓展进行传送</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>movzbw\movzbl\movzwl\movzbq\movzwq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">效果</th>
+<th style="text-align: center;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(MOVS \quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(符号拓展(S)\rightarrow R\)</span></td>
+<td style="text-align: center;">以符号拓展进行传送</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>movsbw\movsbl\movswl\movsbq\movswq\movslq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>cltq</code></td>
+<td style="text-align: center;"><span class="math inline">\(符号拓展(\%eax)\rightarrow \%rax\)</span></td>
+<td style="text-align: center;">将 <code>%eax</code>
+符号拓展后的结果放到 <code>%rax</code> 中</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(MOVZ\)</span> 与 <span class="math inline">\(MOVS\)</span>
+均以<strong>寄存器或内存作为源</strong>，以<strong>寄存器作为目的地</strong></p>
+<p>正如上面指令所指示的那样，最后两个字符用以表示大小，第一个指示源操作数的大小，第二个指示目的操作数的大小</p>
+<p>需要说明的是，这里面没有 <code>movzlq</code> ，这是因为对于以 <span class="math inline">\(4\)</span> 字节为操作数的 <span class="math inline">\(MOV\)</span>
+指令，会将高位全部置零，因此这条指令没有必要出现</p>
+<p><code>ctlq</code> 指令<strong>没有操作数</strong>，它以
+<code>%eax</code> 作为源，将其<strong>符号拓展</strong>后的结果放到
+<code>%rax</code> 中，本质上与 <code>movslq %eax, %rax</code>
+完全一致</p>
+<hr>
+<h4 id="数据传送之于指针">数据传送之于指针</h4>
+<p>C 语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> <span class="hljs-title function_">wxchange</span><span class="hljs-params">(<span class="hljs-type">long</span>* xp, <span class="hljs-type">long</span> y)</span><br>&#123;<br>    <span class="hljs-type">long</span> x = *xp;<br>    *xp = y;<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>对应汇编代码为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asm"># xp in %rdi, y in %rsi<br>movq    (%rdi), %rax<br>movq    %rsi, (%rdi)<br>ret<br></code></pre></td></tr></table></figure>
-
 <p>注意到两点：</p>
 <ul>
 <li>局部变量均<strong>保存在寄存器中</strong>，而不是在内存当中。这是显而易见的，因为访问寄存器比访问内存要快</li>
-<li>由于 <code>xp</code> 传入的是指针，因此<strong>寄存器当中保存的是一个内存引用</strong>，而不是直接将该指针所指对象的值直接放到寄存器中（<code>xp</code> 是从内存当中读取出来的）</li>
+<li>由于 <code>xp</code>
+传入的是指针，因此<strong>寄存器当中保存的是一个内存引用</strong>，而不是直接将该指针所指对象的值直接放到寄存器中（<code>xp</code>
+是从内存当中读取出来的）</li>
 </ul>
 <hr>
-<h4 id="数据传送之于转型"><a href="#数据传送之于转型" class="headerlink" title="数据传送之于转型"></a>数据传送之于转型</h4><p>有如下代码</p>
+<h4 id="数据传送之于转型">数据传送之于转型</h4>
+<p>有如下代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//声明</span><br><span class="hljs-type">src_t</span> *sp;<br><span class="hljs-type">dest_t</span> *dp;<br><span class="hljs-comment">//sp in %rdi, dp in %rsi</span><br><br><span class="hljs-comment">//转型</span><br>*dp = (<span class="hljs-type">dest_t</span>)*sp;<br></code></pre></td></tr></table></figure>
-
-<p>其中 <code>src_t</code> 和 <code>dest_t</code> 均为 <code>typedef</code> 声明的不同数据类型，我们考虑的是不同数据大小之间的转型是如何进行的</p>
+<p>其中 <code>src_t</code> 和 <code>dest_t</code> 均为
+<code>typedef</code>
+声明的不同数据类型，我们考虑的是不同数据大小之间的转型是如何进行的</p>
 <p>把握两个原则：</p>
 <ul>
-<li>从小到大需要拓展<ul>
-<li>有符号数需要做<strong>符号拓展</strong>，使用 $MOVS$ 类指令</li>
-<li>无符号数需要做<strong>零拓展</strong>，使用 $MOVZ$ 类指令</li>
-</ul>
-</li>
+<li>从小到大需要拓展
+<ul>
+<li>有符号数需要做<strong>符号拓展</strong>，使用 <span class="math inline">\(MOVS\)</span> 类指令</li>
+<li>无符号数需要做<strong>零拓展</strong>，使用 <span class="math inline">\(MOVZ\)</span> 类指令</li>
+</ul></li>
 <li>从大到小直接截断</li>
 </ul>
 <p>具体如下表：</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>src_t</code></th>
-<th align="center"><code>dest_t</code></th>
-<th align="center"><code>Command</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>src_t</code></th>
+<th style="text-align: center;"><code>dest_t</code></th>
+<th style="text-align: center;"><code>Command</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>long</code></td>
-<td align="center"><code>long</code></td>
-<td align="center"><code>movq (%rai), %rax; movq %rax, (%rsi)</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>long</code></td>
+<td style="text-align: center;"><code>long</code></td>
+<td style="text-align: center;"><code>movq (%rai), %rax; movq %rax, (%rsi)</code></td>
 </tr>
-<tr>
-<td align="center"><code>char</code></td>
-<td align="center"><code>int</code></td>
-<td align="center"><code>movsbl; movl</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>char</code></td>
+<td style="text-align: center;"><code>int</code></td>
+<td style="text-align: center;"><code>movsbl; movl</code></td>
 </tr>
-<tr>
-<td align="center"><code>char</code></td>
-<td align="center"><code>unsigned</code></td>
-<td align="center"><code>movzbl; movl</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>char</code></td>
+<td style="text-align: center;"><code>unsigned</code></td>
+<td style="text-align: center;"><code>movzbl; movl</code></td>
 </tr>
-<tr>
-<td align="center"><code>unsigned char</code></td>
-<td align="center"><code>int</code></td>
-<td align="center"><code>movzbl; movl</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>unsigned char</code></td>
+<td style="text-align: center;"><code>int</code></td>
+<td style="text-align: center;"><code>movzbl; movl</code></td>
 </tr>
-<tr>
-<td align="center"><code>int</code></td>
-<td align="center"><code>char</code></td>
-<td align="center"><code>movl; movb</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>int</code></td>
+<td style="text-align: center;"><code>char</code></td>
+<td style="text-align: center;"><code>movl; movb</code></td>
 </tr>
-<tr>
-<td align="center"><code>unsigned</code></td>
-<td align="center"><code>unsigned char</code></td>
-<td align="center"><code>movl; movb</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>unsigned</code></td>
+<td style="text-align: center;"><code>unsigned char</code></td>
+<td style="text-align: center;"><code>movl; movb</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h3 id="压栈与出栈"><a href="#压栈与出栈" class="headerlink" title="压栈与出栈"></a>压栈与出栈</h3><p>在 <code>x86-64</code> 中，栈是<strong>向下增长</strong>的，因此<strong>栈顶元素的地址是栈中所有元素当中最低的</strong></p>
+<h3 id="压栈与出栈">压栈与出栈</h3>
+<p>在 <code>x86-64</code>
+中，栈是<strong>向下增长</strong>的，因此<strong>栈顶元素的地址是栈中所有元素当中最低的</strong></p>
 <p>压栈与出栈主要涉及两条指令：</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$pushq\quad S$</td>
-<td align="center">$(R[%rsp]-8)\rightarrow R[%rsp]\S\rightarrow M[R[%rsp]]$</td>
-<td align="center">将 <code>quad word</code> 压入栈</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(pushq\quad
+S\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((R[\%rsp]-8)\rightarrow R[\%rsp]\\S\rightarrow
+M[R[\%rsp]]\)</span></td>
+<td style="text-align: center;">将 <code>quad word</code> 压入栈</td>
 </tr>
-<tr>
-<td align="center">$popq\quad D$</td>
-<td align="center">$M[R[%rsp]]\rightarrow D\(R[%rsp]+8)\rightarrow R[%rsp]$</td>
-<td align="center">将 <code>quad word</code> 弹出栈</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(popq\quad
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(M[R[\%rsp]]\rightarrow D\\(R[\%rsp]+8)\rightarrow
+R[\%rsp]\)</span></td>
+<td style="text-align: center;">将 <code>quad word</code> 弹出栈</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p><code>pushq %rbp</code> 等价于：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">subq $8, %rsp<br>movq %rbp, (%rsp)<br></code></pre></td></tr></table></figure>
-
 <p><code>popq %rax</code> 等价于：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asm">movq (%rsp), %rax<br>addq $8, %rsp<br></code></pre></td></tr></table></figure>
 </blockquote>
 <p>注意到：</p>
 <ul>
-<li><code>push</code> 指令是先将<strong>栈指针减小</strong>，然后再将<strong>寄存器</strong>的值压入栈中，且减少的数值是固定的</li>
-<li><code>pop</code> 指令会先将<strong>内存</strong>当中的值传递到<strong>寄存器</strong>中，然后再<strong>增加栈指针</strong></li>
+<li><code>push</code>
+指令是先将<strong>栈指针减小</strong>，然后再将<strong>寄存器</strong>的值压入栈中，且减少的数值是固定的</li>
+<li><code>pop</code>
+指令会先将<strong>内存</strong>当中的值传递到<strong>寄存器</strong>中，然后再<strong>增加栈指针</strong></li>
 </ul>
 <hr>
-<h3 id="算术和逻辑操作"><a href="#算术和逻辑操作" class="headerlink" title="算术和逻辑操作"></a>算术和逻辑操作</h3><h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><p>下面我们直接给出 <code>x86-64</code> 的一些整数与逻辑操作。这里面当中，除了 <code>leaq</code> 以外，其余的都代表一个指令类，用以对<strong>不同大小的数据进行操作</strong>。例如，$ADD$ 类由 <code>addb; addw; addl; addq</code> 四种组成</p>
+<h3 id="算术和逻辑操作">算术和逻辑操作</h3>
+<h4 id="基本操作">基本操作</h4>
+<p>下面我们直接给出 <code>x86-64</code>
+的一些整数与逻辑操作。这里面当中，除了 <code>leaq</code>
+以外，其余的都代表一个指令类，用以对<strong>不同大小的数据进行操作</strong>。例如，<span class="math inline">\(ADD\)</span> 类由
+<code>addb; addw; addl; addq</code> 四种组成</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$leaq\quad S,\ D$</td>
-<td align="center">$D\ \gets\ &amp;S$</td>
-<td align="center">加载有效地址</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(leaq\quad
+S,\ D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+\&amp;S\)</span></td>
+<td style="text-align: center;">加载有效地址</td>
 </tr>
-<tr>
-<td align="center">$INC\quad D$</td>
-<td align="center">$D\ \gets\ D+1$</td>
-<td align="center">加 1</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(INC\quad
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D+1\)</span></td>
+<td style="text-align: center;">加 1</td>
 </tr>
-<tr>
-<td align="center">$DEC\quad D$</td>
-<td align="center">$D\ \gets\ D-1$</td>
-<td align="center">减 1</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(DEC\quad
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D-1\)</span></td>
+<td style="text-align: center;">减 1</td>
 </tr>
-<tr>
-<td align="center">$NEG\quad D$</td>
-<td align="center">$D\ \gets\ -D$</td>
-<td align="center">取负</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(NEG\quad
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+-D\)</span></td>
+<td style="text-align: center;">取负</td>
 </tr>
-<tr>
-<td align="center">$NOR\quad D$</td>
-<td align="center">$D\ \gets\ \sim D$</td>
-<td align="center">取补</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(NOR\quad
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+\sim D\)</span></td>
+<td style="text-align: center;">取补</td>
 </tr>
-<tr>
-<td align="center">$ADD\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D+S$</td>
-<td align="center">加</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ADD\quad S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D+S\)</span></td>
+<td style="text-align: center;">加</td>
 </tr>
-<tr>
-<td align="center">$SUB\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D-S$</td>
-<td align="center">减</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SUB\quad S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D-S\)</span></td>
+<td style="text-align: center;">减</td>
 </tr>
-<tr>
-<td align="center">$IMUL\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D\times S$</td>
-<td align="center">乘</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(IMUL\quad
+S,\ D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D\times S\)</span></td>
+<td style="text-align: center;">乘</td>
 </tr>
-<tr>
-<td align="center">$XOR\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D \oplus S$</td>
-<td align="center">异或</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(XOR\quad S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D
+\oplus S\)</span></td>
+<td style="text-align: center;">异或</td>
 </tr>
-<tr>
-<td align="center">$OR\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D\ |\ S$</td>
-<td align="center">或</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(OR\quad S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D\
+\|\ S\)</span></td>
+<td style="text-align: center;">或</td>
 </tr>
-<tr>
-<td align="center">$AND\quad S,\ D$</td>
-<td align="center">$D\ \gets\ D\ &amp;\ S$</td>
-<td align="center">与</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(AND\quad S,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\ D\
+\&amp;\ S\)</span></td>
+<td style="text-align: center;">与</td>
 </tr>
-<tr>
-<td align="center">$SAL\quad k,\ D$</td>
-<td align="center">$D\ \gets\ D&lt;&lt;k$</td>
-<td align="center">左移</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(SAL\quad k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&lt;&lt;k\)</span></td>
+<td style="text-align: center;">左移</td>
 </tr>
-<tr>
-<td align="center">$SHL\quad k,\ D$</td>
-<td align="center">$D\ \gets\ D&lt;&lt;k$</td>
-<td align="center">左移，等同于 $SAL$</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SHL\quad k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&lt;&lt;k\)</span></td>
+<td style="text-align: center;">左移，等同于 <span class="math inline">\(SAL\)</span></td>
 </tr>
-<tr>
-<td align="center">$SAR\quad k,\ D$</td>
-<td align="center">$D\ \gets\ D&gt;&gt;_{A}k$</td>
-<td align="center">算术右移</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(SAR\quad k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&gt;&gt;_{A}k\)</span></td>
+<td style="text-align: center;">算术右移</td>
 </tr>
-<tr>
-<td align="center">$SHR\quad k,\ D$</td>
-<td align="center">$D\ \gets\ D&gt;&gt;_{L}k$</td>
-<td align="center">逻辑右移</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(SHR\quad k,\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\ \gets\
+D&gt;&gt;_{L}k\)</span></td>
+<td style="text-align: center;">逻辑右移</td>
 </tr>
-</tbody></table>
-<p>加载有效地址 <code>load effective address</code> 指令 <code>leaq</code> ，可以将数据<strong>从内存读到寄存器中</strong>，需要注意的是，这里的读取内存并不是将那个值读取出来，而是将地址写入到寄存器中，因此用 <code>&amp;</code> 来描述更为合适</p>
-<p>其次 <code>leaq</code> 可以简洁地描述一些算术操作。例如，如果 <code>%rdx</code> 的值为 $x$ ，那么 <code>leaq 7(%rdx, %rdx, 4), %rax</code> 会将 <code>%rax</code> 的值设置成 $5x+7$（这里需要说明的是，$x$ 的值并没有指定，既可以是地址，也可以是数值）</p>
+</tbody>
+</table>
+<p>加载有效地址 <code>load effective address</code> 指令
+<code>leaq</code>
+，可以将数据<strong>从内存读到寄存器中</strong>，需要注意的是，这里的读取内存并不是将那个值读取出来，而是将地址写入到寄存器中，因此用
+<code>&amp;</code> 来描述更为合适</p>
+<p>其次 <code>leaq</code> 可以简洁地描述一些算术操作。例如，如果
+<code>%rdx</code> 的值为 <span class="math inline">\(x\)</span> ，那么
+<code>leaq 7(%rdx, %rdx, 4), %rax</code> 会将 <code>%rax</code>
+的值设置成 <span class="math inline">\(5x+7\)</span>（这里需要说明的是，<span class="math inline">\(x\)</span>
+的值并没有指定，既可以是地址，也可以是数值）</p>
 <p><code>leaq</code> 的目的操作数必须是<strong>寄存器</strong></p>
-<p>移位操作中，需要先给出移位量，再给出需要移位的数。移位量可以是<strong>立即数</strong>，也可以是<strong>字节寄存器 <code>%cl</code> 当中的数值</strong></p>
-<p>需要说明的是，在 <code>x86-64</code> 中，对 $\omega$ 位的数据进行移位操作时，移位量为 <code>%cl</code> 的低 $m$ 个字节，这里 $2^{m}&#x3D;\omega$</p>
-<p>举例来说就是，如果 <code>%cl</code> 的值被置为 <code>0xFF</code> ，那么有：</p>
+<p>移位操作中，需要先给出移位量，再给出需要移位的数。移位量可以是<strong>立即数</strong>，也可以是<strong>字节寄存器
+<code>%cl</code> 当中的数值</strong></p>
+<p>需要说明的是，在 <code>x86-64</code> 中，对 <span class="math inline">\(\omega\)</span> 位的数据进行移位操作时，移位量为
+<code>%cl</code> 的低 <span class="math inline">\(m\)</span>
+个字节，这里 <span class="math inline">\(2^{m}=\omega\)</span></p>
+<p>举例来说就是，如果 <code>%cl</code> 的值被置为 <code>0xFF</code>
+，那么有：</p>
 <ul>
-<li>若 $\omega &#x3D; 8$（对应 <code>salb</code> ），则 <code>%cl</code> 中由低 $3$ 位来决定位移量，这里为 $7$</li>
-<li>若 $\omega &#x3D; 16$（对应 <code>salw</code> ），则 <code>%cl</code> 中由低 $4$ 位来决定位移量，这里位 $15$</li>
-<li>若 $\omega &#x3D; 32$（对应 <code>sall</code> ），则 <code>%cl</code> 中由低 $5$ 位来决定位移量，这里位 $31$</li>
-<li>若 $\omega &#x3D; 64$（对应 <code>salq</code> ），则 <code>%cl</code> 中由低 $6$ 位来决定位移量，这里位 $63$</li>
+<li>若 <span class="math inline">\(\omega = 8\)</span>（对应
+<code>salb</code> ），则 <code>%cl</code> 中由低 <span class="math inline">\(3\)</span> 位来决定位移量，这里为 <span class="math inline">\(7\)</span></li>
+<li>若 <span class="math inline">\(\omega = 16\)</span>（对应
+<code>salw</code> ），则 <code>%cl</code> 中由低 <span class="math inline">\(4\)</span> 位来决定位移量，这里位 <span class="math inline">\(15\)</span></li>
+<li>若 <span class="math inline">\(\omega = 32\)</span>（对应
+<code>sall</code> ），则 <code>%cl</code> 中由低 <span class="math inline">\(5\)</span> 位来决定位移量，这里位 <span class="math inline">\(31\)</span></li>
+<li>若 <span class="math inline">\(\omega = 64\)</span>（对应
+<code>salq</code> ），则 <code>%cl</code> 中由低 <span class="math inline">\(6\)</span> 位来决定位移量，这里位 <span class="math inline">\(63\)</span></li>
 </ul>
 <hr>
-<h4 id="特殊操作"><a href="#特殊操作" class="headerlink" title="特殊操作"></a>特殊操作</h4><p>正如前面所提到的那样，两个 $64$ 位的无符号数或有符号数的结构需要 $128$ 位来进行存储</p>
-<p><code>x86-64</code> 指令集对 $128$ 位（$16$ 字节）同样提供支持，延续之前的命名方式，$16$ 字节被称为<strong>八字</strong>，以下描述的是支持两个 $64$ 位数字的全 $128$ 位乘法或除法的指令：</p>
+<h4 id="特殊操作">特殊操作</h4>
+<p>正如前面所提到的那样，两个 <span class="math inline">\(64\)</span>
+位的无符号数或有符号数的结构需要 <span class="math inline">\(128\)</span> 位来进行存储</p>
+<p><code>x86-64</code> 指令集对 <span class="math inline">\(128\)</span>
+位（<span class="math inline">\(16\)</span>
+字节）同样提供支持，延续之前的命名方式，<span class="math inline">\(16\)</span>
+字节被称为<strong>八字</strong>，以下描述的是支持两个 <span class="math inline">\(64\)</span> 位数字的全 <span class="math inline">\(128\)</span> 位乘法或除法的指令：</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$imulq\quad S\mulq\quad S$</td>
-<td align="center">$S\times R[%rax]\rightarrow R[%rdx]:R[%rax]\S\times R[%rax]\rightarrow R[%rdx]:R[%rax]$</td>
-<td align="center">$有符号全乘法\无符号全乘法$</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(imulq\quad
+S\\mulq\quad S\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S\times
+R[\%rax]\rightarrow R[\%rdx]:R[\%rax]\\S\times R[\%rax]\rightarrow
+R[\%rdx]:R[\%rax]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(有符号全乘法\\无符号全乘法\)</span></td>
 </tr>
-<tr>
-<td align="center">$cqto$</td>
-<td align="center">$符号拓展(R[%rax])\rightarrow R[%rdx]:R[%rax]$</td>
-<td align="center">$转换为八字$</td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cqto\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(符号拓展(R[\%rax])\rightarrow
+R[\%rdx]:R[\%rax]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(转换为八字\)</span></td>
 </tr>
-<tr>
-<td align="center">$idivq\quad S\divq\quad S$</td>
-<td align="center">$R[%rdx]:R[%rax]\div S\rightarrow R[%rax]\R[%rdx]:R[%rax]\bmod S\rightarrow R[%rdx]$</td>
-<td align="center">$有符号除法\无符号除法$</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(idivq\quad
+S\\divq\quad S\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R[\%rdx]:R[\%rax]\div S\rightarrow
+R[\%rax]\\R[\%rdx]:R[\%rax]\bmod S\rightarrow R[\%rdx]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(有符号除法\\无符号除法\)</span></td>
 </tr>
-</tbody></table>
-<p>前面给出过一种双操作数的 $IMUL$ 类指令，用于实现两个 $64$ 位数的乘积，其结果还是 $64$ 位数，本质上是实现 $<em>_{64}^{u}$ 与 $</em>_{64}^{t}$</p>
-<p>对于乘法，<code>x86-64</code> 提供一种单操作数的指令用于计算无符号数和有符号数的全 $128$ 位乘积。两条指令均要求一个数由<strong>寄存器</strong> <code>%rax</code> 给出，另一个由<strong>操作数的形式给出</strong>。而最终的结果，低 $64$ 位存储于 <code>$rax</code> 中，高 $64$ 位存储于 <code>%rdx</code> 中</p>
-<p>对于 $128$ 位的全除法则略有不同，两条指令以<strong>寄存器</strong> <code>%rdx</code> （低 $64$ 位）和 <code>%rax</code> （高 $64$ 位）中的 $128$ 位数作为<strong>被除数</strong>，以<strong>操作数的形式给出除数</strong>。最终将商存储在 <code>%rax</code> ，余数存储在 <code>%rdx</code> （商存在低 $64$ 位，余数存储在高 $64$ 位）</p>
-<p>除法的 $divq$ 指令支持 $128$ 位的被除数，但很多时候被除数一般为 $64$ 位，存放于 <code>%rax</code> 中，此时 <code>%rdx</code> 应当被设为<strong>全零</strong>（无符号除法）或者 <strong><code>%rax</code> 的符号位</strong>（有符号除法）。而该操作可以用 $cqto$ 完成</p>
-<p>该指令不需要操作数，它可以隐式读出 <code>%rax</code> 的符号位并将其复制到 <code>%rdx</code> 中</p>
+</tbody>
+</table>
+<p>前面给出过一种双操作数的 <span class="math inline">\(IMUL\)</span>
+类指令，用于实现两个 <span class="math inline">\(64\)</span>
+位数的乘积，其结果还是 <span class="math inline">\(64\)</span>
+位数，本质上是实现 <span class="math inline">\(*_{64}^{u}\)</span> 与
+<span class="math inline">\(*_{64}^{t}\)</span></p>
+<p>对于乘法，<code>x86-64</code>
+提供一种单操作数的指令用于计算无符号数和有符号数的全 <span class="math inline">\(128\)</span>
+位乘积。两条指令均要求一个数由<strong>寄存器</strong> <code>%rax</code>
+给出，另一个由<strong>操作数的形式给出</strong>。而最终的结果，低 <span class="math inline">\(64\)</span> 位存储于 <code>$rax</code> 中，高
+<span class="math inline">\(64\)</span> 位存储于 <code>%rdx</code>
+中</p>
+<p>对于 <span class="math inline">\(128\)</span>
+位的全除法则略有不同，两条指令以<strong>寄存器</strong>
+<code>%rdx</code> （低 <span class="math inline">\(64\)</span> 位）和
+<code>%rax</code> （高 <span class="math inline">\(64\)</span> 位）中的
+<span class="math inline">\(128\)</span>
+位数作为<strong>被除数</strong>，以<strong>操作数的形式给出除数</strong>。最终将商存储在
+<code>%rax</code> ，余数存储在 <code>%rdx</code> （商存在低 <span class="math inline">\(64\)</span> 位，余数存储在高 <span class="math inline">\(64\)</span> 位）</p>
+<p>除法的 <span class="math inline">\(divq\)</span> 指令支持 <span class="math inline">\(128\)</span> 位的被除数，但很多时候被除数一般为
+<span class="math inline">\(64\)</span> 位，存放于 <code>%rax</code>
+中，此时 <code>%rdx</code>
+应当被设为<strong>全零</strong>（无符号除法）或者
+<strong><code>%rax</code>
+的符号位</strong>（有符号除法）。而该操作可以用 <span class="math inline">\(cqto\)</span> 完成</p>
+<p>该指令不需要操作数，它可以隐式读出 <code>%rax</code>
+的符号位并将其复制到 <code>%rdx</code> 中</p>
 <hr>
-<h2 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h2><p>当遇到条件语句、循环语句和分支语句时，就需要有条件地执行指令了，也就是改变控制流或者数据流，而实现控制流改变的方式有两种：「条件控制」和「条件传送」，下面我们逐一介绍</p>
-<h3 id="条件控制"><a href="#条件控制" class="headerlink" title="条件控制"></a>条件控制</h3><p>CPU 除了维护整数寄存器以外，还会维护一组单个位的条件码 <code>condition code</code> ，这些条件码用于描述<strong>最近</strong>的算术或逻辑操作的属性。我们通过检测这些条件码的方式来实现控制流的改变这个过程，称为<strong>条件控制</strong></p>
+<h2 id="控制">控制</h2>
+<p>当遇到条件语句、循环语句和分支语句时，就需要有条件地执行指令了，也就是改变控制流或者数据流，而实现控制流改变的方式有两种：「条件控制」和「条件传送」，下面我们逐一介绍</p>
+<h3 id="条件控制">条件控制</h3>
+<p>CPU 除了维护整数寄存器以外，还会维护一组单个位的条件码
+<code>condition code</code>
+，这些条件码用于描述<strong>最近</strong>的算术或逻辑操作的属性。我们通过检测这些条件码的方式来实现控制流的改变这个过程，称为<strong>条件控制</strong></p>
 <p>常用的条件码有：</p>
 <ul>
 <li><code>CF</code>：进位标志——最近的操作使最高位产生了进位，用于检查无符号操作的溢出</li>
@@ -906,1020 +1082,1327 @@
 <li><code>SF</code>：符号标志——最近的操作得到的结果为负数</li>
 <li><code>OF</code>：溢出标志——最近的操作导致补码的溢出，正溢出或负溢出</li>
 </ul>
-<p>上面列出的指令中，除了 $lea$ 不会设置标志位外，其余的都会设置标志位并且会改变寄存器的值，下面介绍两种<strong>只设置标志位而不改变寄存器数值</strong>的指令</p>
+<p>上面列出的指令中，除了 <span class="math inline">\(lea\)</span>
+不会设置标志位外，其余的都会设置标志位并且会改变寄存器的值，下面介绍两种<strong>只设置标志位而不改变寄存器数值</strong>的指令</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Base On</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Base On</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$CMP\quad S_1,\ S_2$</td>
-<td align="center">$S_2-S_1$</td>
-<td align="center">$比较$</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(CMP\quad
+S_1,\ S_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S_2-S_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(比较\)</span></td>
 </tr>
-<tr>
-<td align="center"><code>cmpb\cmpw\cmpl\cmpq</code></td>
-<td align="center"></td>
-<td align="center"><code>比较字节\字\双字\四字</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>cmpb\cmpw\cmpl\cmpq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><code>比较字节\字\双字\四字</code></td>
 </tr>
-<tr>
-<td align="center">$TEST\quad S_1,\ S_2$</td>
-<td align="center">$S_2\And S_1$</td>
-<td align="center">$测试$</td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(TEST\quad
+S_1,\ S_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S_2\And
+S_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(测试\)</span></td>
 </tr>
-<tr>
-<td align="center"><code>testb\testw\testl\testq</code></td>
-<td align="center"></td>
-<td align="center"><code>测试字节\字\双字\四字</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>testb\testw\testl\testq</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><code>测试字节\字\双字\四字</code></td>
 </tr>
-</tbody></table>
-<p>$TEST$ 指令的<strong>两个操作数是一样的</strong>，用于判断是小于零，等于零，还是大于零</p>
+</tbody>
+</table>
+<p><span class="math inline">\(TEST\)</span>
+指令的<strong>两个操作数是一样的</strong>，用于判断是小于零，等于零，还是大于零</p>
 <p>关于条件码设置的具体细节（设置了哪些条件码），我们可以不用关注，因为这不重要，重要的是基于条件码所产生的条件控制才是我们应当关注的重点</p>
-<h3 id="访问条件码"><a href="#访问条件码" class="headerlink" title="访问条件码"></a>访问条件码</h3><p>条件码不会直接读取，常用的使用方式有三种：</p>
+<h3 id="访问条件码">访问条件码</h3>
+<p>条件码不会直接读取，常用的使用方式有三种：</p>
 <ul>
-<li>将条件码的组合设置某个字节为 $0$ 或者 $1$</li>
+<li>将条件码的组合设置某个字节为 <span class="math inline">\(0\)</span>
+或者 <span class="math inline">\(1\)</span></li>
 <li>根据条件码跳转到程序的某个其他部分</li>
 <li>根据条件码来传送数据</li>
 </ul>
 <p>下面我们分别介绍这三者的使用</p>
-<h4 id="字节设置"><a href="#字节设置" class="headerlink" title="字节设置"></a>字节设置</h4><p>我们可以用一整组 $\rm SET$ 指令来对某个字节设置成 $0$ 或者 $1$ ，指令当中的后缀指的是<strong>不同的条件</strong>，而不是像之前那样表示数据的大小</p>
-<p>$\rm SET$ 指令的目的操作数是<strong>低位单字节寄存器</strong>或者<strong>一个字节的内存地址</strong>，而对于寄存器而言，为了得到一个 $32$ 位或 $64$ 位的结果，我们必须对高位进行<strong>清零</strong></p>
+<h4 id="字节设置">字节设置</h4>
+<p>我们可以用一整组 <span class="math inline">\(\rm SET\)</span>
+指令来对某个字节设置成 <span class="math inline">\(0\)</span> 或者 <span class="math inline">\(1\)</span>
+，指令当中的后缀指的是<strong>不同的条件</strong>，而不是像之前那样表示数据的大小</p>
+<p><span class="math inline">\(\rm SET\)</span>
+指令的目的操作数是<strong>低位单字节寄存器</strong>或者<strong>一个字节的内存地址</strong>，而对于寄存器而言，为了得到一个
+<span class="math inline">\(32\)</span> 位或 <span class="math inline">\(64\)</span>
+位的结果，我们必须对高位进行<strong>清零</strong></p>
 <p>具体指令如下：</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Synonyms</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Condition</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Synonyms</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Condition</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$sete\ D$</td>
-<td align="center">$setz$</td>
-<td align="center">$D\gets ZF$</td>
-<td align="center"><code>相等、零</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(sete\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+ZF\)</span></td>
+<td style="text-align: center;"><code>相等、零</code></td>
 </tr>
-<tr>
-<td align="center">$setne\ D$</td>
-<td align="center">$setnz$</td>
-<td align="center">$D\gets\ ZF$</td>
-<td align="center"><code>不等、非零</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setne\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\
+ZF\)</span></td>
+<td style="text-align: center;"><code>不等、非零</code></td>
 </tr>
-<tr>
-<td align="center">$sets\ D$</td>
-<td align="center"></td>
-<td align="center">$D\gets SF$</td>
-<td align="center"><code>负数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(sets\
+D\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+SF\)</span></td>
+<td style="text-align: center;"><code>负数</code></td>
 </tr>
-<tr>
-<td align="center">$setns\ D$</td>
-<td align="center"></td>
-<td align="center">$D\gets\  SF$</td>
-<td align="center"><code>非负数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setns\
+D\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\  SF\)</span></td>
+<td style="text-align: center;"><code>非负数</code></td>
 </tr>
-<tr>
-<td align="center">$setg\ D$</td>
-<td align="center">$setnle$</td>
-<td align="center">$D\gets\sim(SF \oplus OF)\And ZF$</td>
-<td align="center"><code>大于（有符号 &gt; ）</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setg\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnle\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\sim(SF \oplus OF)\And ZF\)</span></td>
+<td style="text-align: center;"><code>大于（有符号 &gt; ）</code></td>
 </tr>
-<tr>
-<td align="center">$setge\ D$</td>
-<td align="center">$setnl$</td>
-<td align="center">$D\gets\sim(SF \oplus OF)$</td>
-<td align="center"><code>大于等于（有符号 &gt;= ）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setge\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnl\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets\sim(SF \oplus OF)\)</span></td>
+<td style="text-align: center;"><code>大于等于（有符号 &gt;= ）</code></td>
 </tr>
-<tr>
-<td align="center">$setl\ D$</td>
-<td align="center">$setnge$</td>
-<td align="center">$D\gets SF \oplus OF$</td>
-<td align="center"><code>小于（有符号 &lt; ）</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setl\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnge\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets SF
+\oplus OF\)</span></td>
+<td style="text-align: center;"><code>小于（有符号 &lt; ）</code></td>
 </tr>
-<tr>
-<td align="center">$setle\ D$</td>
-<td align="center">$setng$</td>
-<td align="center">$D\gets (SF \oplus OF)\vee ZF$</td>
-<td align="center"><code>小于等于（有符号 &lt;= ）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setle\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setng\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets (SF
+\oplus OF)\vee ZF\)</span></td>
+<td style="text-align: center;"><code>小于等于（有符号 &lt;= ）</code></td>
 </tr>
-<tr>
-<td align="center">$seta\ D$</td>
-<td align="center">$setnbe$</td>
-<td align="center">$D\gets \sim CF\And ZF$</td>
-<td align="center"><code>超过（无符号 &gt; ）</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(seta\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnbe\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets \sim
+CF\And ZF\)</span></td>
+<td style="text-align: center;"><code>超过（无符号 &gt; ）</code></td>
 </tr>
-<tr>
-<td align="center">$setae\ D$</td>
-<td align="center">$setnb$</td>
-<td align="center">$D\gets \sim CF$</td>
-<td align="center"><code>超过或相等（无符号 &gt;=）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setae\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnb\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets \sim
+CF\)</span></td>
+<td style="text-align: center;"><code>超过或相等（无符号 &gt;=）</code></td>
 </tr>
-<tr>
-<td align="center">$setb\ D$</td>
-<td align="center">$setnae$</td>
-<td align="center">$D\gets CF$</td>
-<td align="center"><code>低于（无符号 &lt; ）</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(setb\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setnae\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+CF\)</span></td>
+<td style="text-align: center;"><code>低于（无符号 &lt; ）</code></td>
 </tr>
-<tr>
-<td align="center">$setbe\ D$</td>
-<td align="center">$setna$</td>
-<td align="center">$D\gets CF\vee ZF$</td>
-<td align="center"><code>低于或相等（无符号 &lt;= ）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(setbe\
+D\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(setna\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(D\gets
+CF\vee ZF\)</span></td>
+<td style="text-align: center;"><code>低于或相等（无符号 &lt;= ）</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>在实际的汇编代码中，我们并不需要关注这些是如何推导的，我们只需要知道<strong>根据什么条件</strong>设置了<strong>哪个位置的值即可</strong></p>
 <p>举个例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asm">int comp(data_t a, data_t b)<br># a in %rdi, b in %rsi<br><br>comp:<br>  cmpq    %rsi, %rdi    # compare a : b<br>  setl    %al           # set low-order byte of %eax<br>  movzbl  %al, %eax     # clear rest of %eax<br>  ret<br></code></pre></td></tr></table></figure>
-
-<p>注意到，汇编代码中只是用 <code>setl</code> 指令根据 $a$ 与 $b$ 的值设置了 <code>%al</code> 的值，我们并<strong>不需要关注标志位的情况</strong></p>
+<p>注意到，汇编代码中只是用 <code>setl</code> 指令根据 <span class="math inline">\(a\)</span> 与 <span class="math inline">\(b\)</span> 的值设置了 <code>%al</code>
+的值，我们并<strong>不需要关注标志位的情况</strong></p>
 <hr>
-<h4 id="条件跳转"><a href="#条件跳转" class="headerlink" title="条件跳转"></a>条件跳转</h4><p>跳转指令会导致程序的执行切换到一个全新的位置，跳转的目的地通常用一个标号 <code>label</code> 指明，比如：</p>
+<h4 id="条件跳转">条件跳转</h4>
+<p>跳转指令会导致程序的执行切换到一个全新的位置，跳转的目的地通常用一个标号
+<code>label</code> 指明，比如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asm">  jmp .L1<br>  movq<br>.L1<br>  pushq<br></code></pre></td></tr></table></figure>
-
 <p>在产生目标代码文件时，编译器会确定所有<strong>带标号的指令的地址</strong>，也就是将跳转目标作为跳转指令编码的一部分进行考虑</p>
 <p>下面给出不同的跳转指令，总共分为<strong>无条件跳转</strong>和<strong>条件跳转</strong></p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Synonyms</code></th>
-<th align="center"><code>Condition</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Synonyms</code></th>
+<th style="text-align: center;"><code>Condition</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$jmp\ Lable$</td>
-<td align="center"></td>
-<td align="center"><code>无</code></td>
-<td align="center"><code>直接跳转（直接跳转到以寄存器的值为地址的地方）</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jmp\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><code>无</code></td>
+<td style="text-align: center;"><code>直接跳转（直接跳转到以寄存器的值为地址的地方）</code></td>
 </tr>
-<tr>
-<td align="center">$jmp\ *Operand$</td>
-<td align="center"></td>
-<td align="center"><code>无</code></td>
-<td align="center"><code>间接跳转（以寄存器的值作为地址再次跳转）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jmp\
+*Operand\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><code>无</code></td>
+<td style="text-align: center;"><code>间接跳转（以寄存器的值作为地址再次跳转）</code></td>
 </tr>
-<tr>
-<td align="center">$je\ Lable$</td>
-<td align="center">$jz$</td>
-<td align="center">$ZF$</td>
-<td align="center"><code>相等、零</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(je\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(ZF\)</span></td>
+<td style="text-align: center;"><code>相等、零</code></td>
 </tr>
-<tr>
-<td align="center">$jne\ Lable$</td>
-<td align="center">$jnz$</td>
-<td align="center">$\sim ZF$</td>
-<td align="center"><code>不相等、非零</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jne\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+ZF\)</span></td>
+<td style="text-align: center;"><code>不相等、非零</code></td>
 </tr>
-<tr>
-<td align="center">$js\ Lable$</td>
-<td align="center"></td>
-<td align="center">$SF$</td>
-<td align="center"><code>负数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(js\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(SF\)</span></td>
+<td style="text-align: center;"><code>负数</code></td>
 </tr>
-<tr>
-<td align="center">$jns\ Lable$</td>
-<td align="center"></td>
-<td align="center">$\sim SF$</td>
-<td align="center"><code>非负数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jns\
+Lable\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+SF\)</span></td>
+<td style="text-align: center;"><code>非负数</code></td>
 </tr>
-<tr>
-<td align="center">$jg\ Lable$</td>
-<td align="center">$jnle$</td>
-<td align="center">$\sim(SF \oplus OF)\And ZF$</td>
-<td align="center"><code>有符号大于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jg\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnle\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim(SF
+\oplus OF)\And ZF\)</span></td>
+<td style="text-align: center;"><code>有符号大于</code></td>
 </tr>
-<tr>
-<td align="center">$jge\ Lable$</td>
-<td align="center">$jnl$</td>
-<td align="center">$\sim(SF \oplus OF)$</td>
-<td align="center"><code>有符号大于等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jge\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnl\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim(SF
+\oplus OF)\)</span></td>
+<td style="text-align: center;"><code>有符号大于等于</code></td>
 </tr>
-<tr>
-<td align="center">$jl\ Lable$</td>
-<td align="center">$jnge$</td>
-<td align="center">$SF \oplus OF$</td>
-<td align="center"><code>有符号小于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jl\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnge\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(SF \oplus
+OF\)</span></td>
+<td style="text-align: center;"><code>有符号小于</code></td>
 </tr>
-<tr>
-<td align="center">$jle\ Lable$</td>
-<td align="center">$jne$</td>
-<td align="center">$(SF \oplus OF)\vee ZF$</td>
-<td align="center"><code>有符号小于等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jle\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jne\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((SF \oplus
+OF)\vee ZF\)</span></td>
+<td style="text-align: center;"><code>有符号小于等于</code></td>
 </tr>
-<tr>
-<td align="center">$ja\ Lable$</td>
-<td align="center">$jnbe$</td>
-<td align="center">$\sim CF\And ZF$</td>
-<td align="center"><code>无符号超过</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ja\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnbe\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim CF\And
+ZF\)</span></td>
+<td style="text-align: center;"><code>无符号超过</code></td>
 </tr>
-<tr>
-<td align="center">$jae\ Lable$</td>
-<td align="center">$jnb$</td>
-<td align="center">$\sim CF$</td>
-<td align="center"><code>无符号超过或等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jae\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnb\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+CF\)</span></td>
+<td style="text-align: center;"><code>无符号超过或等于</code></td>
 </tr>
-<tr>
-<td align="center">$jb\ Lable$</td>
-<td align="center">$jnae$</td>
-<td align="center">$CF$</td>
-<td align="center"><code>无符号低于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(jb\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jnae\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(CF\)</span></td>
+<td style="text-align: center;"><code>无符号低于</code></td>
 </tr>
-<tr>
-<td align="center">$jbe\ Lable$</td>
-<td align="center">$jna$</td>
-<td align="center">$CF\vee ZF$</td>
-<td align="center"><code>无符号低于或等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(jbe\
+Lable\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(jna\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(CF\vee
+ZF\)</span></td>
+<td style="text-align: center;"><code>无符号低于或等于</code></td>
 </tr>
-</tbody></table>
-<p>$jmp$ 为无条件跳转，分为<strong>直接跳转</strong>和<strong>间接跳转</strong>两种</p>
+</tbody>
+</table>
+<p><span class="math inline">\(jmp\)</span>
+为无条件跳转，分为<strong>直接跳转</strong>和<strong>间接跳转</strong>两种</p>
 <p>直接跳转是以标号作为跳转目标，就如上面所演示的那样</p>
-<p>间接跳转以寄存器或内存当中的某个值作为跳转目标，通常写法带有 <code>*</code> </p>
+<p>间接跳转以寄存器或内存当中的某个值作为跳转目标，通常写法带有
+<code>*</code></p>
 <p>例如：</p>
-<p><code>jmp *%rax</code> 以寄存器 <code>%rax</code> 的值作为跳转目标；<code>jmp *(%rax)</code> 以寄存器 <code>%rax</code> 的值作为地址，以该地址所对应的值为跳转目标</p>
+<p><code>jmp *%rax</code> 以寄存器 <code>%rax</code>
+的值作为跳转目标；<code>jmp *(%rax)</code> 以寄存器 <code>%rax</code>
+的值作为地址，以该地址所对应的值为跳转目标</p>
 <p>需要说明的是，只有无条件跳转才可以<strong>间接跳转</strong>，有条件跳转不能间接跳转</p>
 <p>关于跳转指令的编码，规则为：以目标指令地址与跳转指令后面那条指令的地址之间的差值作为编码</p>
-<h5 id="基于条件跳转实现条件分支"><a href="#基于条件跳转实现条件分支" class="headerlink" title="基于条件跳转实现条件分支"></a>基于条件跳转实现条件分支</h5><p>对于 C 语言当中的 <code>if-else</code> 语句，其通用形式如下：</p>
+<h5 id="基于条件跳转实现条件分支">基于条件跳转实现条件分支</h5>
+<p>对于 C 语言当中的 <code>if-else</code> 语句，其通用形式如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(test-expr)<br>    then-statement<br><span class="hljs-keyword">else</span><br>    <span class="hljs-keyword">else</span>-statement<br></code></pre></td></tr></table></figure>
-
-<p>这里的 <em>test-expr</em> 是一个整数表达式，其值只有零（解释为假）或非零（解释为真），下面的两条分支语句 <em>then-statement</em> 和 <em>else-statement</em> <strong>只会执行一个</strong></p>
-<p>对于这种形式，汇编通常会产生如下代码，我们用 <code>C</code> 语言来描述其程序控制流</p>
+<p>这里的 <em>test-expr</em>
+是一个整数表达式，其值只有零（解释为假）或非零（解释为真），下面的两条分支语句
+<em>then-statement</em> 和 <em>else-statement</em>
+<strong>只会执行一个</strong></p>
+<p>对于这种形式，汇编通常会产生如下代码，我们用 <code>C</code>
+语言来描述其程序控制流</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">t = test-expr<br><span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> <span class="hljs-literal">false</span>;<br>	then-statement<br>    <span class="hljs-keyword">goto</span> done;<br><span class="hljs-literal">false</span>:<br>	<span class="hljs-keyword">else</span>-statement<br>done:<br></code></pre></td></tr></table></figure>
-
-<p>也就是说，汇编器会为 <em>then-statement</em> 和 <em>else-statement</em> <strong>生成各自的代码块，但只会执行一个</strong></p>
+<p>也就是说，汇编器会为 <em>then-statement</em> 和
+<em>else-statement</em>
+<strong>生成各自的代码块，但只会执行一个</strong></p>
 <p>举个例子，考虑如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">if</span> (x &gt; y)<br>		result = x - y;<br>	<span class="hljs-keyword">else</span><br>		result = y - x;<br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>我们将其汇编代码翻译为等效的 <code>C</code> 语言代码，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test_goto</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">bool</span> t = x &gt; y;<br>	<span class="hljs-keyword">if</span> (!t)<br>		<span class="hljs-keyword">goto</span> x_g_y;<br>	result = y - x;<br>    <span class="hljs-keyword">return</span> result;<br>x_g_y:<br>	result = x - y;<br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="条件传送"><a href="#条件传送" class="headerlink" title="条件传送"></a>条件传送</h4><p>我们前面介绍过 $MOV$ 类指令，那是<strong>无条件传送指令</strong>，我们在此给出条件传送的版本</p>
+<h4 id="条件传送">条件传送</h4>
+<p>我们前面介绍过 <span class="math inline">\(MOV\)</span>
+类指令，那是<strong>无条件传送指令</strong>，我们在此给出条件传送的版本</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Synonyms</code></th>
-<th align="center"><code>Condition</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Synonyms</code></th>
+<th style="text-align: center;"><code>Condition</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$cmove\quad S,R$</td>
-<td align="center">$cmovz$</td>
-<td align="center">$ZF$</td>
-<td align="center"><code>相等、零</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmove\quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(ZF\)</span></td>
+<td style="text-align: center;"><code>相等、零</code></td>
 </tr>
-<tr>
-<td align="center">$cmovne\quad S,R$</td>
-<td align="center">$cmovnz$</td>
-<td align="center">$\sim ZF$</td>
-<td align="center"><code>不相等、非零</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovne\quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnz\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+ZF\)</span></td>
+<td style="text-align: center;"><code>不相等、非零</code></td>
 </tr>
-<tr>
-<td align="center">$cmovs\quad S,R$</td>
-<td align="center"></td>
-<td align="center">$\sim SF$</td>
-<td align="center"><code>负数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovs\quad
+S,R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+SF\)</span></td>
+<td style="text-align: center;"><code>负数</code></td>
 </tr>
-<tr>
-<td align="center">$cmovns\quad S,R$</td>
-<td align="center"></td>
-<td align="center">$\sim SF$</td>
-<td align="center"><code>非负数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovns\quad
+S,R\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+SF\)</span></td>
+<td style="text-align: center;"><code>非负数</code></td>
 </tr>
-<tr>
-<td align="center">$cmovg\quad S,R$</td>
-<td align="center">$cmovnle$</td>
-<td align="center">$\sim(SF \oplus OF)\And ZF$</td>
-<td align="center"><code>有符号大于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovg\quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnle\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim(SF
+\oplus OF)\And ZF\)</span></td>
+<td style="text-align: center;"><code>有符号大于</code></td>
 </tr>
-<tr>
-<td align="center">$cmovge\quad S,R$</td>
-<td align="center">$cmovnl$</td>
-<td align="center">$\sim(SF \oplus OF)$</td>
-<td align="center"><code>有符号大于等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovge\quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnl\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim(SF
+\oplus OF)\)</span></td>
+<td style="text-align: center;"><code>有符号大于等于</code></td>
 </tr>
-<tr>
-<td align="center">$cmovl\quad S,R$</td>
-<td align="center">$cmovnge$</td>
-<td align="center">$SF \oplus OF$</td>
-<td align="center"><code>有符号小于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovl\quad
+S,R\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnge\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(SF \oplus
+OF\)</span></td>
+<td style="text-align: center;"><code>有符号小于</code></td>
 </tr>
-<tr>
-<td align="center">$cmovle$</td>
-<td align="center">$cmovng$</td>
-<td align="center">$(SF \oplus OF)\vee ZF$</td>
-<td align="center"><code>有符号小于等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovle\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovng\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((SF \oplus
+OF)\vee ZF\)</span></td>
+<td style="text-align: center;"><code>有符号小于等于</code></td>
 </tr>
-<tr>
-<td align="center">$cmova$</td>
-<td align="center">$cmovnbe$</td>
-<td align="center">$\sim CF\And ZF$</td>
-<td align="center"><code>无符号超过</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmova\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnbe\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim CF\And
+ZF\)</span></td>
+<td style="text-align: center;"><code>无符号超过</code></td>
 </tr>
-<tr>
-<td align="center">$cmovae$</td>
-<td align="center">$cmovnb$</td>
-<td align="center">$\sim CF$</td>
-<td align="center"><code>无符号超过或等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovae\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnb\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sim
+CF\)</span></td>
+<td style="text-align: center;"><code>无符号超过或等于</code></td>
 </tr>
-<tr>
-<td align="center">$cmovb$</td>
-<td align="center">$cmovnae$</td>
-<td align="center">$CF$</td>
-<td align="center"><code>无符号低于</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(cmovb\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovnae\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(CF\)</span></td>
+<td style="text-align: center;"><code>无符号低于</code></td>
 </tr>
-<tr>
-<td align="center">$cmovbe$</td>
-<td align="center">$cmovna$</td>
-<td align="center">$CF\vee ZF$</td>
-<td align="center"><code>无符号低于或等于</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(cmovbe\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(cmovna\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(CF\vee
+ZF\)</span></td>
+<td style="text-align: center;"><code>无符号低于或等于</code></td>
 </tr>
-</tbody></table>
-<p>条件传送的源操作数为<strong>寄存器</strong>或<strong>内存地址</strong>，目的操作数为<strong>寄存器</strong>。条件传送的源和目的地可以是 $16$ 位，$32$ 位，$64$ 位，但<strong>不支持单字节传送</strong>（而无条件传送指令则会显式指定大小）</p>
-<h5 id="基于条件传送实现条件分支"><a href="#基于条件传送实现条件分支" class="headerlink" title="基于条件传送实现条件分支"></a>基于条件传送实现条件分支</h5><p>需要事先说明的是，基于条件传送的实现应用场景<strong>十分有限</strong></p>
-<p>处理器通过使用流水线 <code>pipelining</code> 设计来获取高性能，这要求能够<strong>事先确定要执行的指令序列</strong>，这样能够保证流水线中充满了指令</p>
+</tbody>
+</table>
+<p>条件传送的源操作数为<strong>寄存器</strong>或<strong>内存地址</strong>，目的操作数为<strong>寄存器</strong>。条件传送的源和目的地可以是
+<span class="math inline">\(16\)</span> 位，<span class="math inline">\(32\)</span> 位，<span class="math inline">\(64\)</span>
+位，但<strong>不支持单字节传送</strong>（而无条件传送指令则会显式指定大小）</p>
+<h5 id="基于条件传送实现条件分支">基于条件传送实现条件分支</h5>
+<p>需要事先说明的是，基于条件传送的实现应用场景<strong>十分有限</strong></p>
+<p>处理器通过使用流水线 <code>pipelining</code>
+设计来获取高性能，这要求能够<strong>事先确定要执行的指令序列</strong>，这样能够保证流水线中充满了指令</p>
 <p>在遇到分支时，处理器会猜测一条路线，将该路线的指令全部加载到流水线中。显然如果猜测失败则会相应的时间惩罚，这便是条件控制实现的问题</p>
 <blockquote>
-<h6 id="如何确定分支预测错误的惩罚"><a href="#如何确定分支预测错误的惩罚" class="headerlink" title="如何确定分支预测错误的惩罚"></a>如何确定分支预测错误的惩罚</h6><p>设预测错误的概率为 $p$ ，如果没有预测错误所需时间为 $T_{ok}$ ，预测错误的处罚为 $T_{mp}$</p>
-<p>因此，代码的平均执行时间为：$T_{avg}(p)&#x3D;(1-p)T_{ok}+p(T_{ok}+T_{mp})&#x3D;T_{ok}+pT_{mp}$</p>
-<p>如果已知 $T_{ok}$ （预测可靠）和 $T_{ran}$ （预测随机，$p&#x3D;0.5$），我们要确定 $T_{mp}$ </p>
-<p>将其带入得：$T_{ran}&#x3D;T_{ok}+0.5T_{mp}$ ，所以有 $T_{mp}&#x3D;2(T_{ran}-T_{ok})$</p>
+<h6 id="如何确定分支预测错误的惩罚">如何确定分支预测错误的惩罚</h6>
+<p>设预测错误的概率为 <span class="math inline">\(p\)</span>
+，如果没有预测错误所需时间为 <span class="math inline">\(T_{ok}\)</span>
+，预测错误的处罚为 <span class="math inline">\(T_{mp}\)</span></p>
+<p>因此，代码的平均执行时间为：<span class="math inline">\(T_{avg}(p)=(1-p)T_{ok}+p(T_{ok}+T_{mp})=T_{ok}+pT_{mp}\)</span></p>
+<p>如果已知 <span class="math inline">\(T_{ok}\)</span> （预测可靠）和
+<span class="math inline">\(T_{ran}\)</span> （预测随机，<span class="math inline">\(p=0.5\)</span>），我们要确定 <span class="math inline">\(T_{mp}\)</span></p>
+<p>将其带入得：<span class="math inline">\(T_{ran}=T_{ok}+0.5T_{mp}\)</span> ，所以有 <span class="math inline">\(T_{mp}=2(T_{ran}-T_{ok})\)</span></p>
 </blockquote>
 <p>基于条件传送是指，处理器会对两条支路均进行计算，最后通过判断来确定该返回哪个值（此汇编代码由编译器生成）</p>
-<p>还是上面的例子，基于条件传送生成的汇编代码对应的 <code>C</code> 代码如下：</p>
+<p>还是上面的例子，基于条件传送生成的汇编代码对应的 <code>C</code>
+代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">test_goto</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> rval = x - y;<br>	<span class="hljs-type">int</span> eval = y - x;<br>	<span class="hljs-type">int</span> test = x &gt; y;<br>	<span class="hljs-keyword">if</span> (!test)<span class="hljs-comment">//当条件不满足是返回eval</span><br>		rval = eval;<br>	<span class="hljs-keyword">return</span> rval;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>更一般地，我们考虑下面条件和赋值表达式的通用形式</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">v = test-expr ? then-statement : <span class="hljs-keyword">else</span>-statement<br></code></pre></td></tr></table></figure>
-
 <p>基于条件控制的汇编器会得到如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">t = test-expr;<br><span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> <span class="hljs-literal">false</span>;<br>    v = then-statement;<br>	<span class="hljs-keyword">goto</span> done;<br><span class="hljs-literal">false</span>:<br>	v = <span class="hljs-keyword">else</span>-statement;<br>done:<br></code></pre></td></tr></table></figure>
-
 <p>而基于条件传送的汇编器会得到如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">v = then-statement;<br>ve = <span class="hljs-keyword">else</span>-statement;<br>t = test-expr;<br><span class="hljs-keyword">if</span>(!t)<br>    v = ve;<br></code></pre></td></tr></table></figure>
-
-<p>在开头已经说明的是，条件传送的应用场景十分有限，如果 <em>then-expr</em> 和 <em>else-expr</em> 需要做大量的计算，那么当条件不满足时，所作出的工作也就白费了，因此哪怕冒着预测错误招致的处罚，编译器也会更倾向于生成<strong>基于条件跳转</strong>的条件分支指令</p>
+<p>在开头已经说明的是，条件传送的应用场景十分有限，如果
+<em>then-expr</em> 和 <em>else-expr</em>
+需要做大量的计算，那么当条件不满足时，所作出的工作也就白费了，因此哪怕冒着预测错误招致的处罚，编译器也会更倾向于生成<strong>基于条件跳转</strong>的条件分支指令</p>
 <hr>
-<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h4 id="do-while-循环"><a href="#do-while-循环" class="headerlink" title="do-while 循环"></a>do-while 循环</h4><p><code>do-while</code> 语句的通用形式如下：</p>
+<h3 id="循环">循环</h3>
+<h4 id="do-while-循环">do-while 循环</h4>
+<p><code>do-while</code> 语句的通用形式如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">do</span><br>  body-<span class="hljs-function">statement</span><br><span class="hljs-function">  <span class="hljs-title">while</span><span class="hljs-params">(test-expr)</span></span>;<br></code></pre></td></tr></table></figure>
-
-<p>代码首先会执行一遍 <em>body-statement</em> ，然后对 <em>test-expr</em> 求值，如果结构非零，则继续循环</p>
+<p>代码首先会执行一遍 <em>body-statement</em> ，然后对
+<em>test-expr</em> 求值，如果结构非零，则继续循环</p>
 <p>将其汇编语言翻译为等价的 <code>C</code> 语言形式如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">loop:<br>  body-statement<br>  t = test-expr;<br>  <span class="hljs-keyword">if</span>(t)<br>    <span class="hljs-keyword">goto</span> loop;<br></code></pre></td></tr></table></figure>
-
-<h4 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h4><p><code>while</code> 循环语句的通用形式如下：</p>
+<h4 id="while-循环">while 循环</h4>
+<p><code>while</code> 循环语句的通用形式如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(test-expr)<br>  body-statement<br></code></pre></td></tr></table></figure>
-
-<p>与 <code>do-while</code> 不同的是，<code>while</code> 循环会先执行一次条件判断，此时就有可能直接结束循环，在此给出两种其翻译方法</p>
-<p>第一种被称为 <em>jump-to-middle</em> 策略，它首先执行一次无条件跳转，到达循环的底部进行判断，此后再依据判断结果决定是否循环</p>
+<p>与 <code>do-while</code> 不同的是，<code>while</code>
+循环会先执行一次条件判断，此时就有可能直接结束循环，在此给出两种其翻译方法</p>
+<p>第一种被称为 <em>jump-to-middle</em>
+策略，它首先执行一次无条件跳转，到达循环的底部进行判断，此后再依据判断结果决定是否循环</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp">  <span class="hljs-keyword">goto</span> test;<br>loop:<br>  body-statement;<br>test:<br>  t = test-expr;<br>  <span class="hljs-keyword">while</span>(t)<br>    <span class="hljs-keyword">goto</span> loop;<br></code></pre></td></tr></table></figure>
-
-<p>第二种翻译方法被称为 <em>guarded-do</em> 策略。这种策略首先使用条件分支进行一次判断，如果成立的话则转为 <code>do-while</code> 循环，不成立的话直接跳过</p>
+<p>第二种翻译方法被称为 <em>guarded-do</em>
+策略。这种策略首先使用条件分支进行一次判断，如果成立的话则转为
+<code>do-while</code> 循环，不成立的话直接跳过</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">  t = test-expr;<br>  <span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> done;<br>loop:<br>  body-statement;<br>  t = test-expr;<br>  <span class="hljs-keyword">if</span>(t)<br>    <span class="hljs-keyword">goto</span> loop;<br>done:<br></code></pre></td></tr></table></figure>
-
-<p>实际上，<code>GCC</code> 编译器会更偏向于使用 <em>guarded-do</em> 策略，<em>jump-to-middle</em> 策略虽然更容易阅读，但是由于会多执行一次跳转指令，因此相应的开销更大</p>
-<h4 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h4><p><code>for</code> 循环的通用形式如下：</p>
+<p>实际上，<code>GCC</code> 编译器会更偏向于使用 <em>guarded-do</em>
+策略，<em>jump-to-middle</em>
+策略虽然更容易阅读，但是由于会多执行一次跳转指令，因此相应的开销更大</p>
+<h4 id="for-循环">for 循环</h4>
+<p><code>for</code> 循环的通用形式如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(init-expr; test-expr; update-expr)<br>  body-statement<br></code></pre></td></tr></table></figure>
-
 <p>本质上，这个代码与以下的 <code>while</code> 循环等价</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">init-expr;<br><span class="hljs-keyword">while</span>(test-expr)<br>&#123;<br>  body-statement;<br>  update-expr;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>采取 <code>jump-to-middle</code> 策略如下：</p>
-<p>&#96;&#96;cpp<br>  init-expr;<br>  goto test;<br>loop:<br>  body-statement;<br>  update-expr;<br>test:<br>  t &#x3D; test-expr;<br>  while(t)<br>    goto loop;</p>
+<p>``cpp init-expr; goto test; loop: body-statement; update-expr; test:
+t = test-expr; while(t) goto loop;</p>
 <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs gauss">采取 *guarded-<span class="hljs-keyword">do</span>* 策略则是：<br>```cpp<br>  init-<span class="hljs-keyword">expr</span>;<br>  t = test-<span class="hljs-keyword">expr</span>;<br>  <span class="hljs-keyword">if</span>(!t)<br>    <span class="hljs-keyword">goto</span> done;<br>loop:<br>  body-statement;<br>  update-<span class="hljs-keyword">expr</span>;<br>  t = test-<span class="hljs-keyword">expr</span>;<br>  <span class="hljs-keyword">if</span>(t)<br>    <span class="hljs-keyword">goto</span> loop;<br>done:<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h3 id="switch-语句"><a href="#switch-语句" class="headerlink" title="switch 语句"></a>switch 语句</h3><p><code>switch</code> 可以通过一个整数索引进行多重分支，通常通过跳转表 <code>jump table</code> 来实现</p>
-<p>相比于用很长的 <code>if-else</code> ，用跳转表的优点在于只需要根据输入值进行一次跳转而不需要进行多次判断，效率更高</p>
+<h3 id="switch-语句">switch 语句</h3>
+<p><code>switch</code> 可以通过一个整数索引进行多重分支，通常通过跳转表
+<code>jump table</code> 来实现</p>
+<p>相比于用很长的 <code>if-else</code>
+，用跳转表的优点在于只需要根据输入值进行一次跳转而不需要进行多次判断，效率更高</p>
 <p>考虑如下函数：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">f</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span><br>&#123;<br>    <span class="hljs-type">int</span> val = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">switch</span>(x)<br>    &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>            val = <span class="hljs-number">2</span>;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>: <br>            val = <span class="hljs-number">10</span>;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">default</span>:<br>            val = <span class="hljs-number">-1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> val;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><code>x</code> 的有效值为 $1$ 和 $5$，但由于跳转表的实现是一个数值，因此跳转表需要包含的下标为 $1$ 到 $5$ ，还需要加上 <code>default</code> ，因此跳转表一共需要 $6$ 个表项</p>
+<p><code>x</code> 的有效值为 <span class="math inline">\(1\)</span> 和
+<span class="math inline">\(5\)</span>，但由于跳转表的实现是一个数值，因此跳转表需要包含的下标为
+<span class="math inline">\(1\)</span> 到 <span class="math inline">\(5\)</span> ，还需要加上 <code>default</code>
+，因此跳转表一共需要 <span class="math inline">\(6\)</span> 个表项</p>
 <p>下面是用 <code>C</code> 语言描述汇编代码的结果：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">f</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span><br>&#123;<br>    <span class="hljs-type">int</span> val = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 使用跳转表实现 switch-case 语句</span><br>    <span class="hljs-type">static</span> <span class="hljs-type">void</span> *jump_table[] = &#123;<br>        &amp;&amp;default_case, &amp;&amp;L1, &amp;&amp;default_case,<br>        &amp;&amp;default_case, &amp;&amp;defaule_case, &amp;&amp;L2<br>    &#125;;<br><br>    <span class="hljs-comment">// 根据 x 的值跳转到不同的位置</span><br>    <span class="hljs-keyword">if</span> (x &lt;= <span class="hljs-number">5</span>)<br>        <span class="hljs-keyword">goto</span> *jump_table[x];<br>    <span class="hljs-keyword">else</span> <span class="hljs-comment">// 默认分支</span><br>        <span class="hljs-keyword">goto</span> default_case;<br><br>L1:<br>    <span class="hljs-comment">// case 1 处理逻辑</span><br>    val = <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">goto</span> return_val;<br><br>L2:<br>    <span class="hljs-comment">// case 5 处理逻辑</span><br>    val = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">goto</span> return_val;<br><br>default_case:<br>    <span class="hljs-comment">// 默认处理逻辑</span><br>    val = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">goto</span> return_val;<br><br>return_val:<br>    <span class="hljs-keyword">return</span> val;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>在 <code>C</code> 语言中，<code>&amp;&amp;</code> 用来表示一个标签，这个标签实际上是一个<strong>内存地址</strong>，类型为 <code>void*</code></p>
-<p>可以看到，在跳转表中，下标为 <code>1</code> 和 <code>5</code> 的位置会跳到 <code>L1</code> 和 <code>L2</code> ，其余的全部跳到 <code>default_case</code></p>
+<p>在 <code>C</code> 语言中，<code>&amp;&amp;</code>
+用来表示一个标签，这个标签实际上是一个<strong>内存地址</strong>，类型为
+<code>void*</code></p>
+<p>可以看到，在跳转表中，下标为 <code>1</code> 和 <code>5</code>
+的位置会跳到 <code>L1</code> 和 <code>L2</code> ，其余的全部跳到
+<code>default_case</code></p>
 <p>对应汇编代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs asm"># x in %rdi<br>f:<br>    # 跳转表实现 switch-case 语句<br>    cmpq    $5, %rdi                # 比较 x 是否小于等于 5<br>    ja      .L3                     # 如果大于 5，跳转到标记点 L3<br>    jmp     *.jump_table(,%rdi,8)   # 通过计算跳转表中的偏移量和跳转到对应标记点<br><br>.L2:<br>    movl    $10, -8(%rbp)   # 如果 x 等于 5，执行相应的逻辑<br>    jmp     .L4             # 跳转到返回值处理部分<br><br>.L1:<br>    movl    $2, -8(%rbp)    # 如果 x 等于 1，执行相应的逻辑<br>    jmp     .L4             # 跳转到返回值处理部分<br><br>.L3:<br>    movl    $-1, -8(%rbp)   # 默认情况，执行相应的逻辑<br>.L4:<br>    movl    -8(%rbp), %eax  # 将返回值从栈中取出并存储到寄存器 eax 中<br>    leave                   # 恢复堆栈<br>    ret                     # 返回函数调用位置<br><br>.section        .rodata<br>    .align 8             # 向 8 对齐        <br>.jump_table:<br>    .quad   .L3          # 标记点 default_case 的地址<br>    .quad   .L1          # 标记点 L1 的地址<br>    .quad   .L3          # 标记点 default_case 的地址<br>    .quad   .L3          # 标记点 default_case 的地址<br>    .quad   .L2          # 标记点 L2 的地址<br></code></pre></td></tr></table></figure>
-
-<p>跳转表的引用采用的是间接引用 <code>jmp *.jump_table(,%rdi,8)</code> ，<code>%rdi</code> 为索引 <code>x</code>，<code>.jump_table</code> 为跳转表表头</p>
-<p>跳转表声明在 <code>.rodata</code> （只读数据 <code>read only data</code>）的目标代码中。这当中有 $5$ 个标号，<strong>每个标号都代表一个地址</strong>，大小与四字相同</p>
+<p>跳转表的引用采用的是间接引用 <code>jmp *.jump_table(,%rdi,8)</code>
+，<code>%rdi</code> 为索引 <code>x</code>，<code>.jump_table</code>
+为跳转表表头</p>
+<p>跳转表声明在 <code>.rodata</code> （只读数据
+<code>read only data</code>）的目标代码中。这当中有 <span class="math inline">\(5\)</span>
+个标号，<strong>每个标号都代表一个地址</strong>，大小与四字相同</p>
 <hr>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>过程提供了一种用于封装代码方式，用<strong>一组指定的参数</strong>和<strong>一个可选的返回值</strong>实现某种功能，然后我们可以在函数的任何部分调用该过程</p>
-<p>在不同的语言中，过程的表现形式各有不同：函数 <code>function</code> 、方法 <code>methor</code> 、子例程 <code>subroutine</code> 、处理函数 <code>handler</code> 等，这些均可以统称<em>过程</em></p>
-<p>假设过程 $P$ 调用过程 $Q$ ，$Q$ 执行完之后返回 $P$ ，为了实现过程的机器级支持，需要提供以下机制：</p>
+<h2 id="过程">过程</h2>
+<p>过程提供了一种用于封装代码方式，用<strong>一组指定的参数</strong>和<strong>一个可选的返回值</strong>实现某种功能，然后我们可以在函数的任何部分调用该过程</p>
+<p>在不同的语言中，过程的表现形式各有不同：函数 <code>function</code>
+、方法 <code>methor</code> 、子例程 <code>subroutine</code> 、处理函数
+<code>handler</code> 等，这些均可以统称<em>过程</em></p>
+<p>假设过程 <span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> ，<span class="math inline">\(Q\)</span> 执行完之后返回 <span class="math inline">\(P\)</span>
+，为了实现过程的机器级支持，需要提供以下机制：</p>
 <ul>
-<li>传递控制。当进入过程 $Q$ 时，程序计数器需要设置为过程 $Q$ 的起始地址；在返回时，程序计数器需要设置为过程 $P$ 中调用过程 $Q$ 后面那条语句的地址</li>
-<li>传递数据。$P$ 需要向 $Q$ 传递一个或多个数据，$Q$ 需要向 $P$ 返回至多一个数据</li>
-<li>分配和释放内存。在开始时，可能需要为 $Q$ 的局部变量分配空间；在返回时，又需要释放这些空间</li>
+<li>传递控制。当进入过程 <span class="math inline">\(Q\)</span>
+时，程序计数器需要设置为过程 <span class="math inline">\(Q\)</span>
+的起始地址；在返回时，程序计数器需要设置为过程 <span class="math inline">\(P\)</span> 中调用过程 <span class="math inline">\(Q\)</span> 后面那条语句的地址</li>
+<li>传递数据。<span class="math inline">\(P\)</span> 需要向 <span class="math inline">\(Q\)</span> 传递一个或多个数据，<span class="math inline">\(Q\)</span> 需要向 <span class="math inline">\(P\)</span> 返回至多一个数据</li>
+<li>分配和释放内存。在开始时，可能需要为 <span class="math inline">\(Q\)</span>
+的局部变量分配空间；在返回时，又需要释放这些空间</li>
 </ul>
 <p>下面，我们按照传递控制、传递数据、内存管理的顺序分别介绍</p>
 <hr>
-<h3 id="控制转移"><a href="#控制转移" class="headerlink" title="控制转移"></a>控制转移</h3><h4 id="运行时栈"><a href="#运行时栈" class="headerlink" title="运行时栈"></a>运行时栈</h4><p>在过程 $P$ 调用过程 $Q$ 的例子中，我们发现当 $Q$ 执行时，$P$ 以及所有向上追溯到 $P$ 的过程均处于<strong>被挂起</strong>的状态。另一方面，当执行 $Q$ 时，我们需要为其分配空间用于存储局部变量，或者调用下一个过程。当 $Q$ 返回时，我们需要将 $Q$ 所占用的空间全部释放掉，此时回到调用 $Q$ 的上一级过程</p>
-<p>上述这整个调用过程，恰好可以用栈来描述。当过程 $P$ 执行时，控制流处于 $P$ 所在的区域，当调用 $Q$ 时，相当于将 $Q$ <strong>压入</strong> $P$ 的上方，此时控制流处于 $Q$ 所在的区域。因此我们将这个栈称为<strong>运行时栈</strong></p>
-<p><code>x86-64</code> 的栈向低地址增长，因此栈顶在低地址，栈底在高地址。栈指针 <code>%rsp</code> 指向栈顶，我们可以用 <code>pushq</code> 或 <code>popq</code> 向栈顶压入或弹出元素</p>
+<h3 id="控制转移">控制转移</h3>
+<h4 id="运行时栈">运行时栈</h4>
+<p>在过程 <span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> 的例子中，我们发现当 <span class="math inline">\(Q\)</span> 执行时，<span class="math inline">\(P\)</span> 以及所有向上追溯到 <span class="math inline">\(P\)</span>
+的过程均处于<strong>被挂起</strong>的状态。另一方面，当执行 <span class="math inline">\(Q\)</span>
+时，我们需要为其分配空间用于存储局部变量，或者调用下一个过程。当 <span class="math inline">\(Q\)</span> 返回时，我们需要将 <span class="math inline">\(Q\)</span> 所占用的空间全部释放掉，此时回到调用
+<span class="math inline">\(Q\)</span> 的上一级过程</p>
+<p>上述这整个调用过程，恰好可以用栈来描述。当过程 <span class="math inline">\(P\)</span> 执行时，控制流处于 <span class="math inline">\(P\)</span> 所在的区域，当调用 <span class="math inline">\(Q\)</span> 时，相当于将 <span class="math inline">\(Q\)</span> <strong>压入</strong> <span class="math inline">\(P\)</span> 的上方，此时控制流处于 <span class="math inline">\(Q\)</span>
+所在的区域。因此我们将这个栈称为<strong>运行时栈</strong></p>
+<p><code>x86-64</code>
+的栈向低地址增长，因此栈顶在低地址，栈底在高地址。栈指针
+<code>%rsp</code> 指向栈顶，我们可以用 <code>pushq</code> 或
+<code>popq</code> 向栈顶压入或弹出元素</p>
 <p>当执行一个过程所需的空间<strong>超出寄存器所能存放的大小时</strong>，就需要在栈上分配空间，此空间被称为该过程的<strong>栈帧</strong>（如果一个过程不需要栈帧，那么就不会分配），需要注意的是，栈帧一般都是<strong>定长的</strong>，在<strong>过程开始</strong>时通过以下指令分配好：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asm">subq $16, %rsp   # 分配 16 字节的栈帧<br></code></pre></td></tr></table></figure>
-
 <p>而过程结束时则通过以下指令回收：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asm">addq $16, %rsp   # 回收栈帧<br></code></pre></td></tr></table></figure>
-
-<p>当前正在执行的过程的栈帧总是位于栈顶，栈帧主要是用于保存该过程的相关信息。当过程 $P$ 调用过程 $Q$ 时，会先将返回地址<strong>压入 $P$ 的栈帧中</strong>，表明当 $Q$ 返回时需要从哪里开始继续执行代码（通常是调用语句的下一条语句的地址）。这个返回地址是过程 $P$ 栈帧的一部分，因为它指明了过程 $P$ 的相关属性</p>
-<p>而对于过程 $Q$ 而言，则会拓展当前栈的边界（向下拓展），用于分配其栈帧所需要的空间。在这个空间中，过程可以<strong>保存寄存器的值</strong>、<strong>分配局部变量</strong>、<strong>为其他调用过程分配参数</strong>。对于一个栈帧的通用结构，如下图所示：</p>
-<p><img src="%E5%87%BD%E6%95%B0%E6%A0%88%E5%B8%A7.png" srcset="/img/loading.gif" lazyload alt="函数栈帧"></p>
+<p>当前正在执行的过程的栈帧总是位于栈顶，栈帧主要是用于保存该过程的相关信息。当过程
+<span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> 时，会先将返回地址<strong>压入 <span class="math inline">\(P\)</span> 的栈帧中</strong>，表明当 <span class="math inline">\(Q\)</span>
+返回时需要从哪里开始继续执行代码（通常是调用语句的下一条语句的地址）。这个返回地址是过程
+<span class="math inline">\(P\)</span> 栈帧的一部分，因为它指明了过程
+<span class="math inline">\(P\)</span> 的相关属性</p>
+<p>而对于过程 <span class="math inline">\(Q\)</span>
+而言，则会拓展当前栈的边界（向下拓展），用于分配其栈帧所需要的空间。在这个空间中，过程可以<strong>保存寄存器的值</strong>、<strong>分配局部变量</strong>、<strong>为其他调用过程分配参数</strong>。对于一个栈帧的通用结构，如下图所示：</p>
+<figure>
+<img src="函数栈帧.png" srcset="/img/loading.gif" lazyload alt="函数栈帧">
+<figcaption aria-hidden="true">函数栈帧</figcaption>
+</figure>
 <p>也就是说，处于栈顶的栈帧总是当前正在执行的过程</p>
 <hr>
-<h4 id="转移控制"><a href="#转移控制" class="headerlink" title="转移控制"></a>转移控制</h4><p>将控制从过程 $P$ 转移到过程 $Q$ 只需要简单地将程序计数器的值设为 $Q$ 起始位置的地址即可。在 $Q$ 返回的时候，处理器必须知道在 $P$ 中继续执行指令的地址</p>
-<p>在 <code>x86-64</code> 中，这个过程是通过一组指令 $call\quad Q$ 和 $ret$ 执行的</p>
-<p>$call\quad Q$ 会将地址 $A$ <strong>压入栈中</strong>，并将程序计数器的值设为 $Q$ 的起始地址。这里的 $A$ 被称为<strong>返回地址</strong>，也就是 $call$ 指令后面的那条指令的地址</p>
-<p>$ret$ 会将返回地址 $A$ 从栈中<strong>弹出</strong>，并将程序计数器设置为 $A$</p>
+<h4 id="转移控制">转移控制</h4>
+<p>将控制从过程 <span class="math inline">\(P\)</span> 转移到过程 <span class="math inline">\(Q\)</span> 只需要简单地将程序计数器的值设为 <span class="math inline">\(Q\)</span> 起始位置的地址即可。在 <span class="math inline">\(Q\)</span> 返回的时候，处理器必须知道在 <span class="math inline">\(P\)</span> 中继续执行指令的地址</p>
+<p>在 <code>x86-64</code> 中，这个过程是通过一组指令 <span class="math inline">\(call\quad Q\)</span> 和 <span class="math inline">\(ret\)</span> 执行的</p>
+<p><span class="math inline">\(call\quad Q\)</span> 会将地址 <span class="math inline">\(A\)</span>
+<strong>压入栈中</strong>，并将程序计数器的值设为 <span class="math inline">\(Q\)</span> 的起始地址。这里的 <span class="math inline">\(A\)</span> 被称为<strong>返回地址</strong>，也就是
+<span class="math inline">\(call\)</span> 指令后面的那条指令的地址</p>
+<p><span class="math inline">\(ret\)</span> 会将返回地址 <span class="math inline">\(A\)</span>
+从栈中<strong>弹出</strong>，并将程序计数器设置为 <span class="math inline">\(A\)</span></p>
 <p>下面给出两条指令的一般形式：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$call\quad Label$</td>
-<td align="center"><code>过程调用（直接）</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(call\quad
+Label\)</span></td>
+<td style="text-align: center;"><code>过程调用（直接）</code></td>
 </tr>
-<tr>
-<td align="center">$call\quad *Operand$</td>
-<td align="center"><code>过程调用（间接）</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(call\quad
+*Operand\)</span></td>
+<td style="text-align: center;"><code>过程调用（间接）</code></td>
 </tr>
-<tr>
-<td align="center">$ret$</td>
-<td align="center"><code>从调用过程中返回</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ret\)</span></td>
+<td style="text-align: center;"><code>从调用过程中返回</code></td>
 </tr>
-</tbody></table>
-<p>$call$ 指令的目标，为被调用过程的起始地址。同跳转一样，可以是直接的（用已确定地址的标号），也可以是间接的（从寄存器或内存中读取）</p>
-<p>需要说明的是：在返回时，<strong>返回值保存在寄存器 <code>%rax</code> 中</strong></p>
-<h3 id="数据传送"><a href="#数据传送" class="headerlink" title="数据传送"></a>数据传送</h3><p>当调用一个过程时，除了要将控制传递外，还需要传递相应的参数，而该过程也可能会返回相应的参数。在 <code>x86-64</code> 中，数据的传送大多是通过寄存器实现的</p>
-<p>在<a href="#%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF">访问信息</a>那里我们看到，$16$ 个寄存器中有专门用于传递参数的，分别为：</p>
+</tbody>
+</table>
+<p><span class="math inline">\(call\)</span>
+指令的目标，为被调用过程的起始地址。同跳转一样，可以是直接的（用已确定地址的标号），也可以是间接的（从寄存器或内存中读取）</p>
+<p>需要说明的是：在返回时，<strong>返回值保存在寄存器 <code>%rax</code>
+中</strong></p>
+<h3 id="数据传送">数据传送</h3>
+<p>当调用一个过程时，除了要将控制传递外，还需要传递相应的参数，而该过程也可能会返回相应的参数。在
+<code>x86-64</code> 中，数据的传送大多是通过寄存器实现的</p>
+<p>在<a href="#访问信息">访问信息</a>那里我们看到，<span class="math inline">\(16\)</span>
+个寄存器中有专门用于传递参数的，分别为：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Parameter Order</code></th>
-<th align="center"><code>Register</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Parameter Order</code></th>
+<th style="text-align: center;"><code>Register</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>1</code></td>
-<td align="center"><code>%rdi</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>1</code></td>
+<td style="text-align: center;"><code>%rdi</code></td>
 </tr>
-<tr>
-<td align="center"><code>2</code></td>
-<td align="center"><code>%rsi</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>2</code></td>
+<td style="text-align: center;"><code>%rsi</code></td>
 </tr>
-<tr>
-<td align="center"><code>3</code></td>
-<td align="center"><code>%rdx</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>3</code></td>
+<td style="text-align: center;"><code>%rdx</code></td>
 </tr>
-<tr>
-<td align="center"><code>4</code></td>
-<td align="center"><code>%rcx</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>4</code></td>
+<td style="text-align: center;"><code>%rcx</code></td>
 </tr>
-<tr>
-<td align="center"><code>5</code></td>
-<td align="center"><code>%r8</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>5</code></td>
+<td style="text-align: center;"><code>%r8</code></td>
 </tr>
-<tr>
-<td align="center"><code>6</code></td>
-<td align="center"><code>%r9</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>6</code></td>
+<td style="text-align: center;"><code>%r9</code></td>
 </tr>
-</tbody></table>
-<p>说明：这些寄存器分别可用 $64$、$32$、$16$、$8$ 位的，这里并没有列出</p>
-<p>如果一个过程有超过 $6$ 个参数，那么<strong>超过的部分就需要通过栈来传递</strong>。假设过程 $P$ 调用过程 $Q$ ，这当中需要传递 $n\ (n\gt 6)$ 个参数，那么 <strong>$P$ 的栈帧</strong>必须要存储第 $7$ 到第 $n$ 号参数</p>
-<p><img src="%E5%87%BD%E6%95%B0%E6%A0%88%E5%B8%A7.png" srcset="/img/loading.gif" lazyload alt="函数栈帧"></p>
-<p>如上图所示，$P$ 需要将参数 $1\sim 6$ 放入寄存器中，把参数 $7\sim n$ 放到<strong>自己</strong>的栈帧中，而参数 $7$ 位于栈顶。通过栈传递参数时，所有的数据大小都需要按 $8$ 的倍数对齐。参数复制完毕后就可以将控制转移到 $Q$ 了</p>
-<p>相应地，如果 $Q$ 也调用了另一个超过 $6$ 个参数的过程，那么它也需要在<strong>自己</strong>的栈帧中为超出 $6$ 个参数的部分分配空间，这对应图中的「参数构造区」</p>
+</tbody>
+</table>
+<p>说明：这些寄存器分别可用 <span class="math inline">\(64\)</span>、<span class="math inline">\(32\)</span>、<span class="math inline">\(16\)</span>、<span class="math inline">\(8\)</span> 位的，这里并没有列出</p>
+<p>如果一个过程有超过 <span class="math inline">\(6\)</span>
+个参数，那么<strong>超过的部分就需要通过栈来传递</strong>。假设过程
+<span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> ，这当中需要传递 <span class="math inline">\(n\ (n\gt 6)\)</span> 个参数，那么 <strong><span class="math inline">\(P\)</span> 的栈帧</strong>必须要存储第 <span class="math inline">\(7\)</span> 到第 <span class="math inline">\(n\)</span> 号参数</p>
+<figure>
+<img src="函数栈帧.png" srcset="/img/loading.gif" lazyload alt="函数栈帧">
+<figcaption aria-hidden="true">函数栈帧</figcaption>
+</figure>
+<p>如上图所示，<span class="math inline">\(P\)</span> 需要将参数 <span class="math inline">\(1\sim 6\)</span> 放入寄存器中，把参数 <span class="math inline">\(7\sim n\)</span>
+放到<strong>自己</strong>的栈帧中，而参数 <span class="math inline">\(7\)</span>
+位于栈顶。通过栈传递参数时，所有的数据大小都需要按 <span class="math inline">\(8\)</span>
+的倍数对齐。参数复制完毕后就可以将控制转移到 <span class="math inline">\(Q\)</span> 了</p>
+<p>相应地，如果 <span class="math inline">\(Q\)</span>
+也调用了另一个超过 <span class="math inline">\(6\)</span>
+个参数的过程，那么它也需要在<strong>自己</strong>的栈帧中为超出 <span class="math inline">\(6\)</span>
+个参数的部分分配空间，这对应图中的「参数构造区」</p>
 <hr>
-<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>我们知道在过程的开始时，会通过 <code>add</code> 指令分配栈帧，在过程结束时会通过 <code>sub</code> 指令回收栈帧，但我们还需要细化这个过程</p>
-<h4 id="栈上的局部存储"><a href="#栈上的局部存储" class="headerlink" title="栈上的局部存储"></a>栈上的局部存储</h4><p>数据除了放置在寄存器中，还会有放置内存（函数对应的栈帧中）当中的可能，情况如下：</p>
+<h3 id="内存管理">内存管理</h3>
+<p>我们知道在过程的开始时，会通过 <code>add</code>
+指令分配栈帧，在过程结束时会通过 <code>sub</code>
+指令回收栈帧，但我们还需要细化这个过程</p>
+<h4 id="栈上的局部存储">栈上的局部存储</h4>
+<p>数据除了放置在寄存器中，还会有放置内存（函数对应的栈帧中）当中的可能，情况如下：</p>
 <ul>
 <li>寄存器空间无法存储所有的本地变量</li>
-<li>对一个局部变量使用取地址 <code>&amp;</code> ，得到的指针必须存储与内存中</li>
+<li>对一个局部变量使用取地址 <code>&amp;</code>
+，得到的指针必须存储与内存中</li>
 <li>当局部变量是<strong>数组或结构</strong>时，需要通过指针或引用才能访问，因此必须存储与内存中</li>
 </ul>
 <p>举个例子</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>&#123;<br>    <span class="hljs-type">int</span>* px = &amp;x;<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
 <p>该函数对应汇编代码为“</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asm">foo:<br>    pushq   %rbp          # 将当前帧的底部指针压入栈中<br>    movq    %rsp, %rbp    # 设置新的帧的底部指针为当前栈顶指针<br><br>    leaq    -4(%rbp), %rax   # 将x的地址存储在rax寄存器中<br>    movq    %rax, -8(%rbp)   # 将x的地址存储到px变量中<br><br>    nop     # 空操作，用于占位符<br>    popq    %rbp          # 恢复上一帧的底部指针<br>    ret                  # 返回<br></code></pre></td></tr></table></figure>
-
-<p>可以看到，<code>%rax</code> 的地址存储在内存当中，也就是说 <strong><code>px</code> 是存储在内存而不是寄存器中</strong></p>
+<p>可以看到，<code>%rax</code> 的地址存储在内存当中，也就是说
+<strong><code>px</code> 是存储在内存而不是寄存器中</strong></p>
 <p>存储局部变量的区域在栈帧中被标记为「局部变量」</p>
-<h4 id="寄存器中的局部存储"><a href="#寄存器中的局部存储" class="headerlink" title="寄存器中的局部存储"></a>寄存器中的局部存储</h4><p>我们知道，寄存器是唯一被<strong>所有过程共享的资源</strong>。虽然在过程的相互调用中，只会有一个过程访问寄存器，但我们需要保证当一个过程调用另一个过程时，被调用者不会<strong>覆盖</strong>调用者稍后会使用的资源</p>
-<p>为此，<code>x86-64</code> 规定了部分寄存器分为<strong>调用者保存</strong>和<strong>被调用者保存</strong></p>
-<p>寄存器 <code>%rbx</code>、<code>%rbp</code> 和 <code>%r12 ~ %人5</code> 被划分为<strong>被调用者保存</strong>寄存器</p>
-<p>当过程 $P$ 调用过程 $Q$ 时，$Q$ 需要保证这些寄存器的值从 $Q$ 回到 $P$ 与调用 $Q$ 之前的值一样。而过程 $Q$ 保证一个寄存器的值不变，要么不去改变它，要么在自己的栈帧中保存该寄存器的值，然后在返回时弹出该值（这样的话 $Q$ 就可以随意修改该寄存器了）。若寄存器的值被压入栈帧中，则会被标记为「被保存的寄存器」</p>
-<p>其余所有寄存器，除了栈指针 <code>%rsp</code> 外，都被划分为<strong>调用者保存</strong>寄存器，这意味者任何调用过程均可以修改这些寄存器的值，因此它们会被调用者保存。可以这样理解「调用者保存」：当过程 $P$ 调用过程 $Q$ 时，为了实现 $Q$ 可以任意修改该寄存器的值，将该寄存器的值保存就是 $P$ 的责任</p>
+<h4 id="寄存器中的局部存储">寄存器中的局部存储</h4>
+<p>我们知道，寄存器是唯一被<strong>所有过程共享的资源</strong>。虽然在过程的相互调用中，只会有一个过程访问寄存器，但我们需要保证当一个过程调用另一个过程时，被调用者不会<strong>覆盖</strong>调用者稍后会使用的资源</p>
+<p>为此，<code>x86-64</code>
+规定了部分寄存器分为<strong>调用者保存</strong>和<strong>被调用者保存</strong></p>
+<p>寄存器 <code>%rbx</code>、<code>%rbp</code> 和
+<code>%r12 ~ %人5</code> 被划分为<strong>被调用者保存</strong>寄存器</p>
+<p>当过程 <span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> 时，<span class="math inline">\(Q\)</span> 需要保证这些寄存器的值从 <span class="math inline">\(Q\)</span> 回到 <span class="math inline">\(P\)</span> 与调用 <span class="math inline">\(Q\)</span> 之前的值一样。而过程 <span class="math inline">\(Q\)</span>
+保证一个寄存器的值不变，要么不去改变它，要么在自己的栈帧中保存该寄存器的值，然后在返回时弹出该值（这样的话
+<span class="math inline">\(Q\)</span>
+就可以随意修改该寄存器了）。若寄存器的值被压入栈帧中，则会被标记为「被保存的寄存器」</p>
+<p>其余所有寄存器，除了栈指针 <code>%rsp</code>
+外，都被划分为<strong>调用者保存</strong>寄存器，这意味者任何调用过程均可以修改这些寄存器的值，因此它们会被调用者保存。可以这样理解「调用者保存」：当过程
+<span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> 时，为了实现 <span class="math inline">\(Q\)</span>
+可以任意修改该寄存器的值，将该寄存器的值保存就是 <span class="math inline">\(P\)</span> 的责任</p>
 <hr>
-<h2 id="数组-amp-结构-amp-联合-amp-对齐-amp-变长栈帧-amp-缓冲区溢出"><a href="#数组-amp-结构-amp-联合-amp-对齐-amp-变长栈帧-amp-缓冲区溢出" class="headerlink" title="数组 &amp; 结构 &amp; 联合 &amp; 对齐 &amp; 变长栈帧 &amp; 缓冲区溢出"></a>数组 &amp; 结构 &amp; 联合 &amp; 对齐 &amp; 变长栈帧 &amp; 缓冲区溢出</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>当声明数组：<code>T D[R][C]</code></p>
+<h2 id="数组-结构-联合-对齐-变长栈帧-缓冲区溢出">数组 &amp; 结构 &amp;
+联合 &amp; 对齐 &amp; 变长栈帧 &amp; 缓冲区溢出</h2>
+<h3 id="数组">数组</h3>
+<p>当声明数组：<code>T D[R][C]</code></p>
 <p>其元素 <code>D[i][j]</code> 在内存当中的地址为：</p>
-<p>$$<br>&amp;D[i][j]&#x3D;x_0+L(C\times i+j)<br>$$</p>
-<p>其中 $x_0$ 为数组起始地址，$L$ 为类型 <code>D</code> 的大小</p>
-<p>假设我们定义了一个 $5\times 3$ 的数组，$x_0,\ i,\ j$ 分别存储在寄存器 <code>%rdi</code>, <code>%rsi</code>, <code>%rdx</code> ，当需要访问元素 <code>D[i][j]</code> 时，有：</p>
+<p><span class="math display">\[
+\&amp;D[i][j]=x_0+L(C\times i+j)
+\]</span></p>
+<p>其中 <span class="math inline">\(x_0\)</span> 为数组起始地址，<span class="math inline">\(L\)</span> 为类型 <code>D</code> 的大小</p>
+<p>假设我们定义了一个 <span class="math inline">\(5\times 3\)</span>
+的数组，<span class="math inline">\(x_0,\ i,\ j\)</span>
+分别存储在寄存器 <code>%rdi</code>, <code>%rsi</code>, <code>%rdx</code>
+，当需要访问元素 <code>D[i][j]</code> 时，有：</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs perl">lea<span class="hljs-string">q  (%rsi, %rsi, 2)</span>,  %rax  <span class="hljs-comment"># 计算 3i</span><br>lea<span class="hljs-string">q  (%rdi, %rax, 4)</span>,  %rax  <span class="hljs-comment"># 计算 4 * 3i + x</span><br>movl  (%rax, %rdx, <span class="hljs-number">4</span>),  %eax  <span class="hljs-comment"># 读取内存 M[x + 4(3 * i + j)] </span><br></code></pre></td></tr></table></figure>
-
-<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>在不考虑内存对齐的情况下，结构当中的数据按照其定义顺序依次排列，例如：</p>
+<h3 id="结构">结构</h3>
+<p>在不考虑内存对齐的情况下，结构当中的数据按照其定义顺序依次排列，例如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">rec</span><br>&#123;<br>    <span class="hljs-type">int</span> a;<br>    <span class="hljs-type">long</span> b;<br>    <span class="hljs-type">char</span>* c;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p>变量 <code>rec val</code> 当中各成员的偏移如下：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>menber</code></th>
-<th align="center"><code>offset</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>menber</code></th>
+<th style="text-align: center;"><code>offset</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>val</code></td>
-<td align="center"><code>0</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>val</code></td>
+<td style="text-align: center;"><code>0</code></td>
 </tr>
-<tr>
-<td align="center"><code>val.a</code></td>
-<td align="center"><code>0</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>val.a</code></td>
+<td style="text-align: center;"><code>0</code></td>
 </tr>
-<tr>
-<td align="center"><code>val.b</code></td>
-<td align="center"><code>4</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>val.b</code></td>
+<td style="text-align: center;"><code>4</code></td>
 </tr>
-<tr>
-<td align="center"><code>val.c</code></td>
-<td align="center"><code>4 + 8 = 12</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>val.c</code></td>
+<td style="text-align: center;"><code>4 + 8 = 12</code></td>
 </tr>
-</tbody></table>
-<p>也就是说，变量 <code>val</code> 的地址与第一个成员变量的地址一样，往后的每个成员按前面成员的字节大小进行内存偏移</p>
-<p>变量 <code>val</code> 的总大小为（<code>64</code> 位机器，不考虑内存对齐）：$4+8+8&#x3D;20$</p>
-<h3 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h3><p>联合允许<strong>用多种数据类型来引用同一个内存块</strong>，用联合声明的变量大小为<strong>最大字段的大小</strong>。考虑下面的声明：</p>
+</tbody>
+</table>
+<p>也就是说，变量 <code>val</code>
+的地址与第一个成员变量的地址一样，往后的每个成员按前面成员的字节大小进行内存偏移</p>
+<p>变量 <code>val</code> 的总大小为（<code>64</code>
+位机器，不考虑内存对齐）：<span class="math inline">\(4+8+8=20\)</span></p>
+<h3 id="联合">联合</h3>
+<p>联合允许<strong>用多种数据类型来引用同一个内存块</strong>，用联合声明的变量大小为<strong>最大字段的大小</strong>。考虑下面的声明：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">st</span><br>&#123;<br>    <span class="hljs-type">char</span> c;<br>    <span class="hljs-type">int</span>[<span class="hljs-number">2</span>] i;<br>    <span class="hljs-type">double</span> v;<br>&#125;;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">un</span><br>&#123;<br>    <span class="hljs-type">char</span> c;<br>    <span class="hljs-type">int</span>[<span class="hljs-number">2</span>] i;<br>    <span class="hljs-type">double</span> v;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p>字段偏移分别（考虑内存对齐）为：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>type</code></th>
-<th align="center"><code>c</code></th>
-<th align="center"><code>i</code></th>
-<th align="center"><code>v</code></th>
-<th align="center"><code>size</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>type</code></th>
+<th style="text-align: center;"><code>c</code></th>
+<th style="text-align: center;"><code>i</code></th>
+<th style="text-align: center;"><code>v</code></th>
+<th style="text-align: center;"><code>size</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>st</code></td>
-<td align="center"><code>0</code></td>
-<td align="center"><code>4</code></td>
-<td align="center"><code>16</code></td>
-<td align="center"><code>24</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>st</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>4</code></td>
+<td style="text-align: center;"><code>16</code></td>
+<td style="text-align: center;"><code>24</code></td>
 </tr>
-<tr>
-<td align="center"><code>un</code></td>
-<td align="center"><code>0</code></td>
-<td align="center"><code>0</code></td>
-<td align="center"><code>0</code></td>
-<td align="center"><code>8</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>un</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>8</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
-<p>后面内存对齐部分会解释为什么 <code>v</code> 是以 <code>16</code> 开始</p>
+<p>后面内存对齐部分会解释为什么 <code>v</code> 是以 <code>16</code>
+开始</p>
 </blockquote>
-<p>不同于结构的是，该联合的大小仅为 $8$ 字节，并且允许三种不同类型访问同一块内存。通常，这种行为是不安全的，一种联合的应用场景是，我们<strong>事先已知两个不同字段的使用是互斥的</strong>，那么将其声明为联合而不是结构则可以有效<strong>节约内存</strong></p>
-<p>举个例子，如果我们想实现一个二叉树，满足：每个叶子节点都有两个 <code>double</code> 数据；每个内部节点都有指向两个孩子的指针而没有数据</p>
+<p>不同于结构的是，该联合的大小仅为 <span class="math inline">\(8\)</span>
+字节，并且允许三种不同类型访问同一块内存。通常，这种行为是不安全的，一种联合的应用场景是，我们<strong>事先已知两个不同字段的使用是互斥的</strong>，那么将其声明为联合而不是结构则可以有效<strong>节约内存</strong></p>
+<p>举个例子，如果我们想实现一个二叉树，满足：每个叶子节点都有两个
+<code>double</code>
+数据；每个内部节点都有指向两个孩子的指针而没有数据</p>
 <p>在此种定义下，每个节点的数据和指针的使用就是<strong>互斥</strong>的，我们考虑将其声明为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">union</span> <span class="hljs-title class_">node</span><br>&#123;<br>    <span class="hljs-keyword">struct</span> &#123;<br>        <span class="hljs-keyword">union</span> <span class="hljs-title class_">node</span>* left;<br>        <span class="hljs-keyword">union</span> <span class="hljs-title class_">node</span>* right;<br>    &#125;internal;<br>    <span class="hljs-type">double</span> data[<span class="hljs-number">2</span>];<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>此种定义下的大小为 $16$ ，如果单纯将其声明为结构，那么大小为 $32$ ，节约了一般的字节</p>
+<p>此种定义下的大小为 <span class="math inline">\(16\)</span>
+，如果单纯将其声明为结构，那么大小为 <span class="math inline">\(32\)</span> ，节约了一般的字节</p>
 <p>这么声明有一个问题是，我们没办法确定一个节点到达是叶子还是内部节点，因此在其基础上添加一个枚举类型来表示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">enum</span> &#123; LEAF, INTERNAL &#125; nodetype;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span><br>&#123;<br>    nodetype type;<br>    <span class="hljs-keyword">union</span> &#123;<br>        <span class="hljs-keyword">struct</span> &#123;<br>            <span class="hljs-keyword">union</span> <span class="hljs-title class_">node</span>* left;<br>            <span class="hljs-keyword">union</span> <span class="hljs-title class_">node</span>* right;<br>        &#125;internal;<br>        <span class="hljs-type">double</span> data[<span class="hljs-number">2</span>];<br>    &#125;info;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>这样，一个节点的大小变为 $24$ ，在这个例子中单个节点内存节省了 $25%$</p>
+<p>这样，一个节点的大小变为 <span class="math inline">\(24\)</span>
+，在这个例子中单个节点内存节省了 <span class="math inline">\(25\%\)</span></p>
 <p>联合还可以用来访问<strong>不同数据类型的位模式</strong>，比如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">union</span>  <br>&#123;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> a;<br>    <span class="hljs-type">double</span> b;<br>&#125;val;<br></code></pre></td></tr></table></figure>
-
-<p>这样对于变量 <code>val</code> 而言，其位模式我们可以既可以从 <code>unsigoned long</code> 的角度视之，也可以从 <code>double</code> 的角度视之</p>
+<p>这样对于变量 <code>val</code> 而言，其位模式我们可以既可以从
+<code>unsigoned long</code> 的角度视之，也可以从 <code>double</code>
+的角度视之</p>
 <p>一个应用场景是是用于判断当前机器是大端存储还是小端存储，如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">fun</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">union</span> &#123; <span class="hljs-type">int</span> a; <span class="hljs-type">char</span> b; &#125; val;<br>    val.a = <span class="hljs-number">0x11223344</span>;<br>    <span class="hljs-comment">//高位在前为大端，低位在前为小端，11为高位</span><br>    <span class="hljs-keyword">if</span>(val.b == <span class="hljs-number">0x11</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;big endian&quot;</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;little endian&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h3><p>数据在内存当中的对齐原则为：任何 $K$ 字节的<strong>基本对象</strong>的地址必须是 $K$ 的倍数，基于此，基本类型的对齐数分别为：</p>
+<h3 id="对齐">对齐</h3>
+<p>数据在内存当中的对齐原则为：任何 <span class="math inline">\(K\)</span>
+字节的<strong>基本对象</strong>的地址必须是 <span class="math inline">\(K\)</span>
+的倍数，基于此，基本类型的对齐数分别为：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>type</code></th>
-<th align="center"><code>align</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>type</code></th>
+<th style="text-align: center;"><code>align</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>char</code></td>
-<td align="center"><code>1</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>char</code></td>
+<td style="text-align: center;"><code>1</code></td>
 </tr>
-<tr>
-<td align="center"><code>short</code></td>
-<td align="center"><code>2</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>short</code></td>
+<td style="text-align: center;"><code>2</code></td>
 </tr>
-<tr>
-<td align="center"><code>int, float</code></td>
-<td align="center"><code>4</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>int, float</code></td>
+<td style="text-align: center;"><code>4</code></td>
 </tr>
-<tr>
-<td align="center"><code>char*, long, double</code></td>
-<td align="center"><code>8</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>char*, long, double</code></td>
+<td style="text-align: center;"><code>8</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>对于结构而言，其大小必须对齐为<strong>最大基本成员大小的整数倍</strong></p>
 <p>举个例子：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">S1</span><br>&#123;<br>    <span class="hljs-type">int</span> a;<br>    <span class="hljs-type">char</span> b;<br>    <span class="hljs-type">int</span> c;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p>偏移量为：<code>a -- 0</code>、<code>b -- 4</code>、<code>c -- 8</code></p>
-<p>我们发现 <code>b</code> 的后面填补了三个字节，这是因为需要保证 <code>c</code> 的偏移量为其大小的整数倍，也就是需要对齐 $8$</p>
+<p>我们发现 <code>b</code> 的后面填补了三个字节，这是因为需要保证
+<code>c</code> 的偏移量为其大小的整数倍，也就是需要对齐 <span class="math inline">\(8\)</span></p>
 <p>再来一个：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">S2</span><br>&#123;<br>    <span class="hljs-type">long</span> <span class="hljs-type">long</span> a;<br>    S1 b;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>该对象大小为 $24$，<code>a</code> 的偏移量为 $0$ ，<code>b</code> 按照其最大成员的大小的倍数进行对齐（也就是 $4$），此时大小计算得到 $20$ </p>
-<p>然后，<code>S2</code> 对象整体的大小需要与最大成员的大小的倍数进行对齐，其成员有：<code>a -- align: 8</code>、<code>b -- align: 4</code> ，因此需要与 $8$ 对齐，整体大小为 $24$</p>
+<p>该对象大小为 <span class="math inline">\(24\)</span>，<code>a</code>
+的偏移量为 <span class="math inline">\(0\)</span> ，<code>b</code>
+按照其最大成员的大小的倍数进行对齐（也就是 <span class="math inline">\(4\)</span>），此时大小计算得到 <span class="math inline">\(20\)</span></p>
+<p>然后，<code>S2</code>
+对象整体的大小需要与最大成员的大小的倍数进行对齐，其成员有：<code>a -- align: 8</code>、<code>b -- align: 4</code>
+，因此需要与 <span class="math inline">\(8\)</span> 对齐，整体大小为
+<span class="math inline">\(24\)</span></p>
 <p>到此为止我们便引出了一个问题：该如何排列结构体内部的成员使得整体所占空间最小？</p>
-<p>对于成员均为 $2$ 的幂次大小的结构体，一个有效的策略是，我们按照其大小<strong>降序</strong>的顺序排列成员，可以使得整体所占内存最小</p>
-<h3 id="变长栈帧"><a href="#变长栈帧" class="headerlink" title="变长栈帧"></a>变长栈帧</h3><p>我们目前见过的代码，在<strong>编译期</strong>就可以预先确定栈帧的大小，但有些函数的局部存储需要在运行期才能确定，比如使用 <code>malloc</code> 申请的内存</p>
-<p>这个时候固定长度的栈帧就不足以满足需求了，因此 <code>x86-64</code> 允许使用变长栈帧</p>
-<p>在 <code>x86-64</code> 中，用寄存器 <code>%rbp</code> 作为帧指针 <code>frame pointer</code>（也被称为基指针 <code>base pointer</code>）</p>
-<p>当使用帧指针时，必须把 <code>%rbp</code> 原先的指保存在栈帧中，因为这是<strong>被调用者保存寄存器</strong>。然后在整个执行过程中，<strong>保证 <code>%rbp</code> 都指向固定位置</strong>，用局部变量相对于 <code>%rbp</code> 的偏移量来引用内存</p>
+<p>对于成员均为 <span class="math inline">\(2\)</span>
+的幂次大小的结构体，一个有效的策略是，我们按照其大小<strong>降序</strong>的顺序排列成员，可以使得整体所占内存最小</p>
+<h3 id="变长栈帧">变长栈帧</h3>
+<p>我们目前见过的代码，在<strong>编译期</strong>就可以预先确定栈帧的大小，但有些函数的局部存储需要在运行期才能确定，比如使用
+<code>malloc</code> 申请的内存</p>
+<p>这个时候固定长度的栈帧就不足以满足需求了，因此 <code>x86-64</code>
+允许使用变长栈帧</p>
+<p>在 <code>x86-64</code> 中，用寄存器 <code>%rbp</code> 作为帧指针
+<code>frame pointer</code>（也被称为基指针
+<code>base pointer</code>）</p>
+<p>当使用帧指针时，必须把 <code>%rbp</code>
+原先的指保存在栈帧中，因为这是<strong>被调用者保存寄存器</strong>。然后在整个执行过程中，<strong>保证
+<code>%rbp</code> 都指向固定位置</strong>，用局部变量相对于
+<code>%rbp</code> 的偏移量来引用内存</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asm">push rbp      # 保存调用者的rbp寄存器值<br>mov rbp, rsp  # 设置当前函数的rbp寄存器为当前堆栈指针<br>sub rsp, 4    # 分配4个字节的局部变量空间<br><br>...<br><br>mov rsp, rbp # 恢复堆栈指针<br>pop rbp      # 恢复调用者的rbp寄存器值<br>ret          # 返回函数调用<br></code></pre></td></tr></table></figure>
-
-<p>在上面的代码中，首先将 <code>%rbp</code> 当前值压入栈中予以保存，然后将当中栈指针的值赋给 <code>%rbp</code>，之后是对可以确定大小的局部变量分配栈帧</p>
-<p>在省略的代码中，可以用局部变量相对于 <code>%rbp</code> 的偏移量来访问内存，例如：<code>movq -8(%rbp), %rax</code></p>
-<p>在函数的结尾，我们首先需要将栈指针 <code>%rsp</code> 恢复到最初的值，也就是将 <code>%rbp</code> 赋值给 <code>%rsp</code>（<code>%rbp</code> 的值始终不发生改变），然后，我们需要从栈中弹出最开始保存的 <code>%rbp</code> 的值还给 <code>%rbp</code> ，最后再返回</p>
-<h3 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h3><p>在过程 $P$ 调用过程 $Q$ 时，$P$ 会将返回地址 $add$（调用指令的下一条指令的地址）压入到自己的栈帧中，然后控制转移到 $Q$</p>
-<p>$Q$ 的栈帧处于<strong>低地址</strong>，返回地址 $add$ 处于高地址，如果 $Q$ 调用了某个不安全的函数，导致<strong>覆盖</strong>了 $P$ 的返回地址 $add$，此时程序便无法正常运行，这被称为缓冲区溢出 <code>buffer overflow</code></p>
-<p>这种不安全的函数在 <code>C</code> 语言中有很多，例如：<code>get</code>、<code>strcpy</code>、<code>strcat</code>、<code>scanf</code>、<code>sprintf</code> 这些，它们都没有范围限制，很容易就会导致溢出风险</p>
-<p>缓冲区溢出更致命的错误是会让程序执行一个它原本不愿意执行的程序，这也是一种最常见的网络攻击的手段。攻击者可以给程序输入一个字符串，这个字符串包含一些可执行程序的字节编码，这被称为攻击代码 <code>exploit code</code>，另外的一些字节会用一个指向攻击代码的指针替换原本的返回地址，那么执行 <code>ret</code> 指令就会跳转到攻击代码，这对于系统而言风险极高</p>
-<p>往后，我们介绍一些在 <code>Linux</code> 中，<code>GCC</code> 所提供的来对抗这种情况的机制</p>
-<h4 id="栈随机化"><a href="#栈随机化" class="headerlink" title="栈随机化"></a>栈随机化</h4><p>为了在系统中插入指向攻击代码的指针，那么必须要知道攻击代码的地址。在过去程序的栈地址非常容易预测</p>
-<p>栈随机化的思想是使得栈在每次程序运行时都有所不同。也就是机器运行同样的代码，但每次的地址都不一样。具体实现为当程序的开始时在栈上随机分配 $0\sim n$ 个字节的空间而<strong>不使用它</strong>，这样程序每次执行时后续的栈空间也就发生了变化</p>
-<p>这里有一个矛盾的问题是，$n$ 必须足够大以至于保证获得足够的空间变化，$n$ 又必须足够小以保证不至于浪费过多的空间</p>
-<p>这种机制只能在一定程度上阻止缓冲区溢出，因为攻击者可以通过暴力穷举的方式来猜出程序真实的执行地址（具体做法为在攻击代码前插入很粗糙的 <code>nop</code> 指令，该指令只会让程序计数器加一而不产生其他任何影响）</p>
-<h4 id="栈破坏检测"><a href="#栈破坏检测" class="headerlink" title="栈破坏检测"></a>栈破坏检测</h4><p>我们可以在栈中<strong>随机</strong>插入特殊的金丝雀 <code>canary</code> 值。在程序执行完后检测金丝雀值，如果发生改变则程序终止</p>
+<p>在上面的代码中，首先将 <code>%rbp</code>
+当前值压入栈中予以保存，然后将当中栈指针的值赋给
+<code>%rbp</code>，之后是对可以确定大小的局部变量分配栈帧</p>
+<p>在省略的代码中，可以用局部变量相对于 <code>%rbp</code>
+的偏移量来访问内存，例如：<code>movq -8(%rbp), %rax</code></p>
+<p>在函数的结尾，我们首先需要将栈指针 <code>%rsp</code>
+恢复到最初的值，也就是将 <code>%rbp</code> 赋值给
+<code>%rsp</code>（<code>%rbp</code>
+的值始终不发生改变），然后，我们需要从栈中弹出最开始保存的
+<code>%rbp</code> 的值还给 <code>%rbp</code> ，最后再返回</p>
+<h3 id="缓冲区溢出">缓冲区溢出</h3>
+<p>在过程 <span class="math inline">\(P\)</span> 调用过程 <span class="math inline">\(Q\)</span> 时，<span class="math inline">\(P\)</span> 会将返回地址 <span class="math inline">\(add\)</span>（调用指令的下一条指令的地址）压入到自己的栈帧中，然后控制转移到
+<span class="math inline">\(Q\)</span></p>
+<p><span class="math inline">\(Q\)</span>
+的栈帧处于<strong>低地址</strong>，返回地址 <span class="math inline">\(add\)</span> 处于高地址，如果 <span class="math inline">\(Q\)</span>
+调用了某个不安全的函数，导致<strong>覆盖</strong>了 <span class="math inline">\(P\)</span> 的返回地址 <span class="math inline">\(add\)</span>，此时程序便无法正常运行，这被称为缓冲区溢出
+<code>buffer overflow</code></p>
+<p>这种不安全的函数在 <code>C</code>
+语言中有很多，例如：<code>get</code>、<code>strcpy</code>、<code>strcat</code>、<code>scanf</code>、<code>sprintf</code>
+这些，它们都没有范围限制，很容易就会导致溢出风险</p>
+<p>缓冲区溢出更致命的错误是会让程序执行一个它原本不愿意执行的程序，这也是一种最常见的网络攻击的手段。攻击者可以给程序输入一个字符串，这个字符串包含一些可执行程序的字节编码，这被称为攻击代码
+<code>exploit code</code>，另外的一些字节会用一个指向攻击代码的指针替换原本的返回地址，那么执行
+<code>ret</code> 指令就会跳转到攻击代码，这对于系统而言风险极高</p>
+<p>往后，我们介绍一些在 <code>Linux</code> 中，<code>GCC</code>
+所提供的来对抗这种情况的机制</p>
+<h4 id="栈随机化">栈随机化</h4>
+<p>为了在系统中插入指向攻击代码的指针，那么必须要知道攻击代码的地址。在过去程序的栈地址非常容易预测</p>
+<p>栈随机化的思想是使得栈在每次程序运行时都有所不同。也就是机器运行同样的代码，但每次的地址都不一样。具体实现为当程序的开始时在栈上随机分配
+<span class="math inline">\(0\sim n\)</span>
+个字节的空间而<strong>不使用它</strong>，这样程序每次执行时后续的栈空间也就发生了变化</p>
+<p>这里有一个矛盾的问题是，<span class="math inline">\(n\)</span>
+必须足够大以至于保证获得足够的空间变化，<span class="math inline">\(n\)</span>
+又必须足够小以保证不至于浪费过多的空间</p>
+<p>这种机制只能在一定程度上阻止缓冲区溢出，因为攻击者可以通过暴力穷举的方式来猜出程序真实的执行地址（具体做法为在攻击代码前插入很粗糙的
+<code>nop</code>
+指令，该指令只会让程序计数器加一而不产生其他任何影响）</p>
+<h4 id="栈破坏检测">栈破坏检测</h4>
+<p>我们可以在栈中<strong>随机</strong>插入特殊的金丝雀
+<code>canary</code>
+值。在程序执行完后检测金丝雀值，如果发生改变则程序终止</p>
 <p>金丝雀的插入与检测代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asm"># 插入<br>movq %fs:40, %rax<br>movq %rax, 8(%rsp)<br><br>...<br><br># 检查<br>movq 8(%rsp), %rax<br>xorq %fs:40, %rax<br></code></pre></td></tr></table></figure>
-
-<p>首先从内存当中读取一个值，将其放入到 <code>8(%rsp)</code> 的位置。金丝雀值的采用 <code>%fs:40</code> 的寻址，这是段寻址 <code>segmented addressing</code>，在现代操作系统中已经很少见了</p>
-<p>在检查时，通过 <code>xor</code> 指令，如果两个数相同，那种该指令得到的结果为 $0$ ，此时可以正常返回</p>
-<h4 id="限制代码可执行区域"><a href="#限制代码可执行区域" class="headerlink" title="限制代码可执行区域"></a>限制代码可执行区域</h4><p>在内存中，将保存编译器产生的代码的那段内存设定为可执行，其余部分限制为只允许读和写，这样便可以限制程序的执行区域，避免程序执行意外的代码</p>
+<p>首先从内存当中读取一个值，将其放入到 <code>8(%rsp)</code>
+的位置。金丝雀值的采用 <code>%fs:40</code> 的寻址，这是段寻址
+<code>segmented addressing</code>，在现代操作系统中已经很少见了</p>
+<p>在检查时，通过 <code>xor</code>
+指令，如果两个数相同，那种该指令得到的结果为 <span class="math inline">\(0\)</span> ，此时可以正常返回</p>
+<h4 id="限制代码可执行区域">限制代码可执行区域</h4>
+<p>在内存中，将保存编译器产生的代码的那段内存设定为可执行，其余部分限制为只允许读和写，这样便可以限制程序的执行区域，避免程序执行意外的代码</p>
 <hr>
-<h2 id="浮点"><a href="#浮点" class="headerlink" title="浮点"></a>浮点</h2><h3 id="AVX2-指令集"><a href="#AVX2-指令集" class="headerlink" title="AVX2 指令集"></a>AVX2 指令集</h3><p>在 <code>x86</code> 架构的处理器中，指令集 $\rm AVX2$ 可以执行高速浮点运算，$\rm AVX2$ 是 $\rm AVX$ <code>Advanced Vector Extension</code>  的第二个版本</p>
+<h2 id="浮点">浮点</h2>
+<h3 id="avx2-指令集">AVX2 指令集</h3>
+<p>在 <code>x86</code> 架构的处理器中，指令集 <span class="math inline">\(\rm AVX2\)</span> 可以执行高速浮点运算，<span class="math inline">\(\rm AVX2\)</span> 是 <span class="math inline">\(\rm AVX\)</span>
+<code>Advanced Vector Extension</code> 的第二个版本</p>
 <blockquote>
-<p><code>x86</code> 和 <code>x86-64</code> 的区别：这两者都是指 <code>Intel</code> 公司的 <code>CPU</code> 架构，区别在于<strong>地址总线的位数</strong>和<strong>支持的内存容量</strong></p>
-<p>最开始的 <code>x86</code> 是 $32$ 位地址总线的，因此其内存只能访问 $4GB$</p>
-<p>而 <code>x86-64</code> 是 <code>x86</code> 的 $64$ 位版本，有 $64$ 位地址总线，可寻址范围达 $2^{64}&#x3D;16EB$ <code>exabytes</code></p>
-<p>现代计算机通常采用 <code>x86-64</code> 架构，也就是应用程序为 <code>64</code> 位，但 <code>32</code> 位的程序依然可以在 <code>x86-64</code> 上运行</p>
+<p><code>x86</code> 和 <code>x86-64</code> 的区别：这两者都是指
+<code>Intel</code> 公司的 <code>CPU</code>
+架构，区别在于<strong>地址总线的位数</strong>和<strong>支持的内存容量</strong></p>
+<p>最开始的 <code>x86</code> 是 <span class="math inline">\(32\)</span>
+位地址总线的，因此其内存只能访问 <span class="math inline">\(4GB\)</span></p>
+<p>而 <code>x86-64</code> 是 <code>x86</code> 的 <span class="math inline">\(64\)</span> 位版本，有 <span class="math inline">\(64\)</span> 位地址总线，可寻址范围达 <span class="math inline">\(2^{64}=16EB\)</span> <code>exabytes</code></p>
+<p>现代计算机通常采用 <code>x86-64</code> 架构，也就是应用程序为
+<code>64</code> 位，但 <code>32</code> 位的程序依然可以在
+<code>x86-64</code> 上运行</p>
 </blockquote>
-<p>指令集 $\rm AVX2$ <strong>提供了 $16$ 个 $256$ 位的寄存器</strong>，分别命名为 <code>%ymm0 ~ %ymm15</code>。当对<strong>标量数据</strong>进行操作时，这些<strong>寄存器只保存浮点数</strong>。</p>
-<p><code>ymm</code> 用于保存 $32$ 位自己，**<code>xmm</code> 可以访问低 $16$ 个字节**</p>
+<p>指令集 <span class="math inline">\(\rm AVX2\)</span> <strong>提供了
+<span class="math inline">\(16\)</span> 个 <span class="math inline">\(256\)</span> 位的寄存器</strong>，分别命名为
+<code>%ymm0 ~ %ymm15</code>。当对<strong>标量数据</strong>进行操作时，这些<strong>寄存器只保存浮点数</strong>。</p>
+<p><code>ymm</code> 用于保存 <span class="math inline">\(32\)</span>
+位自己，<strong><code>xmm</code> 可以访问低 <span class="math inline">\(16\)</span> 个字节</strong></p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Register</code></th>
-<th align="center"><code>Register</code></th>
-<th align="center"><code>Effect</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Register</code></th>
+<th style="text-align: center;"><code>Register</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$ymm0$</td>
-<td align="center">$xmm0$</td>
-<td align="center"><code>1st FP arg.返回值</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm0\)</span></td>
+<td style="text-align: center;"><code>1st FP arg.返回值</code></td>
 </tr>
-<tr>
-<td align="center">$ymm1$</td>
-<td align="center">$xmm1$</td>
-<td align="center"><code>2nd FP 参数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm1\)</span></td>
+<td style="text-align: center;"><code>2nd FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm2$</td>
-<td align="center">$xmm2$</td>
-<td align="center"><code>3rd FP 参数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm2\)</span></td>
+<td style="text-align: center;"><code>3rd FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm3$</td>
-<td align="center">$xmm3$</td>
-<td align="center"><code>4th FP 参数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm3\)</span></td>
+<td style="text-align: center;"><code>4th FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm4$</td>
-<td align="center">$xmm4$</td>
-<td align="center"><code>5th FP 参数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm4\)</span></td>
+<td style="text-align: center;"><code>5th FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm5$</td>
-<td align="center">$xmm5$</td>
-<td align="center"><code>6th FP 参数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm5\)</span></td>
+<td style="text-align: center;"><code>6th FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm6$</td>
-<td align="center">$xmm6$</td>
-<td align="center"><code>7th FP 参数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm6\)</span></td>
+<td style="text-align: center;"><code>7th FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm7$</td>
-<td align="center">$xmm7$</td>
-<td align="center"><code>8th FP 参数</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm7\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm7\)</span></td>
+<td style="text-align: center;"><code>8th FP 参数</code></td>
 </tr>
-<tr>
-<td align="center">$ymm8$</td>
-<td align="center">$xmm8$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm8\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm9$</td>
-<td align="center">$xmm9$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm9\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm10$</td>
-<td align="center">$xmm10$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm10\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm10\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm11$</td>
-<td align="center">$xmm11$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm11\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm11\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm12$</td>
-<td align="center">$xmm12$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm12\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm12\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm13$</td>
-<td align="center">$xmm13$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm13\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm13\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm14$</td>
-<td align="center">$xmm14$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(ymm14\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm14\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-<tr>
-<td align="center">$ymm15$</td>
-<td align="center">$xmm15$</td>
-<td align="center"><code>调用者保存</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(ymm15\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(xmm15\)</span></td>
+<td style="text-align: center;"><code>调用者保存</code></td>
 </tr>
-</tbody></table>
-<p>需要说明的是，<code>xmm</code> 寄存器主要用于 $\rm SSE$ <code>Streaming SIMD Extension</code> 指令集，<code>ymm</code> 则是 $AVX2$ 指令集引入的，往后我们说明的对象统一为 $\rm AVX2$ 指令集</p>
-<p>$AVX2$ 指令集支持<strong>向量指令</strong>和<strong>标量指令</strong></p>
+</tbody>
+</table>
+<p>需要说明的是，<code>xmm</code> 寄存器主要用于 <span class="math inline">\(\rm SSE\)</span>
+<code>Streaming SIMD Extension</code> 指令集，<code>ymm</code> 则是
+<span class="math inline">\(AVX2\)</span>
+指令集引入的，往后我们说明的对象统一为 <span class="math inline">\(\rm
+AVX2\)</span> 指令集</p>
+<p><span class="math inline">\(AVX2\)</span>
+指令集支持<strong>向量指令</strong>和<strong>标量指令</strong></p>
 <ul>
-<li><p><strong>标量指令</strong>是对<strong>单个数据值</strong>进行操作的指令，对象通常是<strong>正数和浮点数</strong>，操作包括加减乘除等基本运算以及比较、转换、存储的基本操作</p>
-</li>
-<li><p><strong>向量指令</strong>是<strong>同时对多个数据值</strong>进行操作的指令，也被称为 $\rm SIMD$ <code>Single Instruction, Multiple Data</code>，向量指令是将多个标量合并为一个指令，以提升运行效率</p>
-</li>
+<li><p><strong>标量指令</strong>是对<strong>单个数据值</strong>进行操作的指令，对象通常是<strong>正数和浮点数</strong>，操作包括加减乘除等基本运算以及比较、转换、存储的基本操作</p></li>
+<li><p><strong>向量指令</strong>是<strong>同时对多个数据值</strong>进行操作的指令，也被称为
+<span class="math inline">\(\rm SIMD\)</span>
+<code>Single Instruction, Multiple Data</code>，向量指令是将多个标量合并为一个指令，以提升运行效率</p></li>
 </ul>
 <hr>
-<h3 id="浮点操作"><a href="#浮点操作" class="headerlink" title="浮点操作"></a>浮点操作</h3><p>当对标量数据进行操作时，由于只会使用到 $128$ 位字节，因此不论是整数还是浮点数，<strong>均用 <code>xmm</code> 寄存器来进行存取</strong></p>
-<h4 id="传送"><a href="#传送" class="headerlink" title="传送"></a>传送</h4><p>下面给出从 <code>xmm</code> 寄存器到内存或从内存到 <code>xmm</code> 寄存器的传送浮点数的相关指令。由于引用内存的指令一定是标量指令，因此它们的操作对象只能是标量而不是向量。数据要么保存在 <code>xmm</code> 寄存器中（表中用 $\rm X$ 表示），要么保存在内存当中（表中用 $M_{32}$ 或 $M_{64} 表示$）</p>
-<p>需要说明的是，无论是否对齐，这些指令都能正确的执行，但 $32$ 为数据最好对齐 $4$，$64$ 位数据最好对齐 $8$</p>
+<h3 id="浮点操作">浮点操作</h3>
+<p>当对标量数据进行操作时，由于只会使用到 <span class="math inline">\(128\)</span>
+位字节，因此不论是整数还是浮点数，<strong>均用 <code>xmm</code>
+寄存器来进行存取</strong></p>
+<h4 id="传送">传送</h4>
+<p>下面给出从 <code>xmm</code> 寄存器到内存或从内存到 <code>xmm</code>
+寄存器的传送浮点数的相关指令。由于引用内存的指令一定是标量指令，因此它们的操作对象只能是标量而不是向量。数据要么保存在
+<code>xmm</code> 寄存器中（表中用 <span class="math inline">\(\rm
+X\)</span> 表示），要么保存在内存当中（表中用 <span class="math inline">\(M_{32}\)</span> 或 <span class="math inline">\(M_{64} 表示\)</span>）</p>
+<p>需要说明的是，无论是否对齐，这些指令都能正确的执行，但 <span class="math inline">\(32\)</span> 为数据最好对齐 <span class="math inline">\(4\)</span>，<span class="math inline">\(64\)</span> 位数据最好对齐 <span class="math inline">\(8\)</span></p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>src</code></th>
-<th align="center"><code>dest</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>src</code></th>
+<th style="text-align: center;"><code>dest</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>vmovss</code></td>
-<td align="center">$M_{32}&#x2F;X$</td>
-<td align="center">$X&#x2F;M_{32}$</td>
-<td align="center"><code>传送单精度数值</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>vmovss</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{32}/X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{32}\)</span></td>
+<td style="text-align: center;"><code>传送单精度数值</code></td>
 </tr>
-<tr>
-<td align="center"><code>vmovsd</code></td>
-<td align="center">$M_{64}&#x2F;X$</td>
-<td align="center">$X&#x2F;M_{64}$</td>
-<td align="center"><code>传送双精度数值</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vmovsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{64}/X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{64}\)</span></td>
+<td style="text-align: center;"><code>传送双精度数值</code></td>
 </tr>
-<tr>
-<td align="center"><code>vmovaps</code></td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>传送对齐的封装好的单精度数值</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>vmovaps</code></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>传送对齐的封装好的单精度数值</code></td>
 </tr>
-<tr>
-<td align="center"><code>vmovapd</code></td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>传送对齐的封装好的双精度数值</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vmovapd</code></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>传送对齐的封装好的双精度数值</code></td>
 </tr>
-</tbody></table>
-<p><code>vmovss/vmovsd</code> 指令只能在寄存器与内存当中进行传送，不能在寄存器与寄存器或内存与内存当中传送。当在寄存器与寄存器之间传送数据时，编译器使用 <code>vmovaps/vmovapd</code> 指令。指令中的 <code>a</code> 表示 <code>aligned</code>，也就是数据要求对齐</p>
+</tbody>
+</table>
+<p><code>vmovss/vmovsd</code>
+指令只能在寄存器与内存当中进行传送，不能在寄存器与寄存器或内存与内存当中传送。当在寄存器与寄存器之间传送数据时，编译器使用
+<code>vmovaps/vmovapd</code> 指令。指令中的 <code>a</code> 表示
+<code>aligned</code>，也就是数据要求对齐</p>
 <hr>
-<h4 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h4><p>当把浮点数向整数转换时，会执行截断 <code>truncation</code> 操作，将<strong>值向零舍入</strong></p>
+<h4 id="转换">转换</h4>
+<p>当把浮点数向整数转换时，会执行截断 <code>truncation</code>
+操作，将<strong>值向零舍入</strong></p>
 <p>数据转换的指令分为双操作数和三操作数，双操作数用于浮点转整数，三操作数用于整数转浮点</p>
 <ul>
 <li>双操作数</li>
 </ul>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>src</code></th>
-<th align="center"><code>dest</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>src</code></th>
+<th style="text-align: center;"><code>dest</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>vcvttss2si</code></td>
-<td align="center">$X&#x2F;M_{32}$</td>
-<td align="center">$R_{32}$</td>
-<td align="center"><code>将单精度截断为整数</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>vcvttss2si</code></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_{32}\)</span></td>
+<td style="text-align: center;"><code>将单精度截断为整数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvttsd2si</code></td>
-<td align="center">$X&#x2F;M_{64}$</td>
-<td align="center">$R_{32}$</td>
-<td align="center"><code>将双精度截断为整数</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vcvttsd2si</code></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{64}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_{32}\)</span></td>
+<td style="text-align: center;"><code>将双精度截断为整数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvttss2siq</code></td>
-<td align="center">$X&#x2F;M_{32}$</td>
-<td align="center">$R_{64}$</td>
-<td align="center"><code>将单精度截断为四字整数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>vcvttss2siq</code></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_{64}\)</span></td>
+<td style="text-align: center;"><code>将单精度截断为四字整数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvttsd2siq</code></td>
-<td align="center">$X&#x2F;M_{64}$</td>
-<td align="center">$R_{64}$</td>
-<td align="center"><code>将双精度截断为四字整数</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vcvttsd2siq</code></td>
+<td style="text-align: center;"><span class="math inline">\(X/M_{64}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R_{64}\)</span></td>
+<td style="text-align: center;"><code>将双精度截断为四字整数</code></td>
 </tr>
-</tbody></table>
-<p>表中 $R_{32}$ 表示 $32$ 为通用寄存器，如 <code>$eax</code>，$R_{64}$ 表示 $64$ 通用寄存器，如 <code>%rax</code></p>
+</tbody>
+</table>
+<p>表中 <span class="math inline">\(R_{32}\)</span> 表示 <span class="math inline">\(32\)</span> 为通用寄存器，如
+<code>$eax</code>，<span class="math inline">\(R_{64}\)</span> 表示
+<span class="math inline">\(64\)</span> 通用寄存器，如
+<code>%rax</code></p>
 <ul>
 <li>三操作数</li>
 </ul>
-<table>
+<table style="width:100%;">
+
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>src1</code></th>
-<th align="center"><code>src2</code></th>
-<th align="center"><code>dest</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>src1</code></th>
+<th style="text-align: center;"><code>src2</code></th>
+<th style="text-align: center;"><code>dest</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>vcvtsi2si</code></td>
-<td align="center">$M_{32}&#x2F;R_{32}$</td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>整数转为单精度数</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>vcvtsi2si</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{32}/R_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>整数转为单精度数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvtsi2sd</code></td>
-<td align="center">$M_{32}&#x2F;R_{32}$</td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>将整数转为双精度数</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vcvtsi2sd</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{32}/R_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>将整数转为双精度数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvtsi2ssq</code></td>
-<td align="center">$M_{64}&#x2F;R_{64}$</td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>将四字整数转为单精度数</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>vcvtsi2ssq</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{64}/R_{64}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>将四字整数转为单精度数</code></td>
 </tr>
-<tr>
-<td align="center"><code>vcvtsi2sdq</code></td>
-<td align="center">$M_{64}&#x2F;R_{64}$</td>
-<td align="center">$X$</td>
-<td align="center">$X$</td>
-<td align="center"><code>将四字整数转为双精度数</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vcvtsi2sdq</code></td>
+<td style="text-align: center;"><span class="math inline">\(M_{64}/R_{64}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><code>将四字整数转为双精度数</code></td>
 </tr>
-</tbody></table>
-<p>三操作数指令中，有两个源和一个目的。第一个源读自内存或通用寄存器，<strong>第二个源只影响高位字节</strong>，在这里我们直接将其忽略（设为 $X$），因此在实际的使用场景中，后两个操作数通常是一样的，例如：<code>vcvtsi2sdq %rax, %xmm1, %xmm1</code></p>
+</tbody>
+</table>
+<p>三操作数指令中，有两个源和一个目的。第一个源读自内存或通用寄存器，<strong>第二个源只影响高位字节</strong>，在这里我们直接将其忽略（设为
+<span class="math inline">\(X\)</span>），因此在实际的使用场景中，后两个操作数通常是一样的，例如：<code>vcvtsi2sdq %rax, %xmm1, %xmm1</code></p>
 <hr>
-<h4 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h4><ul>
-<li><p><code>xmm0 ~ xmm7</code> 寄存器最多可以传递 $8$ 个参数，按照参数列表出现的顺序来使用这些寄存器，如果参数多余 $8$ 个则用栈来传递</p>
-</li>
-<li><p><code>xmm0</code> 用于保存函数的返回值</p>
-</li>
-<li><p>所有 <code>xmm</code> 寄存器均为调用者保存，因此被调用者可以直接覆盖这些寄存器当中的任意一个</p>
-</li>
+<h4 id="过程-1">过程</h4>
+<ul>
+<li><p><code>xmm0 ~ xmm7</code> 寄存器最多可以传递 <span class="math inline">\(8\)</span>
+个参数，按照参数列表出现的顺序来使用这些寄存器，如果参数多余 <span class="math inline">\(8\)</span> 个则用栈来传递</p></li>
+<li><p><code>xmm0</code> 用于保存函数的返回值</p></li>
+<li><p>所有 <code>xmm</code>
+寄存器均为调用者保存，因此被调用者可以直接覆盖这些寄存器当中的任意一个</p></li>
 </ul>
 <p>例如：函数声明 <code>double f1(int x, double y, long z)</code></p>
-<p>其中 <code>x</code> 放在 <code>xmm0</code> 中，<code>y</code> 放在 <code>%rdi</code> 中，<code>z</code> 放在 <code>%rsi</code> 中</p>
+<p>其中 <code>x</code> 放在 <code>xmm0</code> 中，<code>y</code> 放在
+<code>%rdi</code> 中，<code>z</code> 放在 <code>%rsi</code> 中</p>
 <hr>
-<h4 id="使用浮点常数"><a href="#使用浮点常数" class="headerlink" title="使用浮点常数"></a>使用浮点常数</h4><p>与整数运输不同，$AVX2$ 浮点操作不能<strong>使用立即数</strong>作为操作数，因此编译器<strong>必须为所有的常量分配空间</strong>，然后从内存当中读入</p>
+<h4 id="使用浮点常数">使用浮点常数</h4>
+<p>与整数运输不同，<span class="math inline">\(AVX2\)</span>
+浮点操作不能<strong>使用立即数</strong>作为操作数，因此编译器<strong>必须为所有的常量分配空间</strong>，然后从内存当中读入</p>
 <p>具体看下面这个函数：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">double</span> <span class="hljs-title function_">f</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1.8</span> * x + <span class="hljs-number">32.0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>汇编代码为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asm">f:<br>    movsd %xmm0, %xmm1     # 将参数x从xmm0寄存器移动到xmm1寄存器<br>    mulsd .LC0(%rip), %xmm1   # xmm1 = 1.8 * xmm1<br>    addsd .LC1(%rip), %xmm1   # xmm1 = xmm1 + 32.0<br>    ret                      # 返回结果<br>.LC0:<br>    .double 1.8             # 存储常数1.8<br>.LC1:<br>    .double 32.0            # 存储常数32.0<br></code></pre></td></tr></table></figure>
-
-<p>可以看到汇编代码中有两个标签 <code>.LC0</code> 和 <code>.LC1</code> 用来指示<strong>两个字面值在内存当中的地址</strong>（这两个字面值在内存当中以 <code>double</code> 的形式存储）</p>
+<p>可以看到汇编代码中有两个标签 <code>.LC0</code> 和 <code>.LC1</code>
+用来指示<strong>两个字面值在内存当中的地址</strong>（这两个字面值在内存当中以
+<code>double</code> 的形式存储）</p>
 <p>也就是说，这两个字面值是需要占用内存的</p>
-<h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>下面的标量 $\rm AVX2$ 指令中，每条指令都有一个或两个源操作数，一个目的操作数。第一个源操作数可以是 <code>xmm</code> 寄存器或内存位置，第二个源操作数和目的操作数必须是 <code>xmm</code> 寄存器。每条指令分为单精度和双精度两种</p>
+<h4 id="运算">运算</h4>
+<p>下面的标量 <span class="math inline">\(\rm AVX2\)</span>
+指令中，每条指令都有一个或两个源操作数，一个目的操作数。第一个源操作数可以是
+<code>xmm</code> 寄存器或内存位置，第二个源操作数和目的操作数必须是
+<code>xmm</code> 寄存器。每条指令分为单精度和双精度两种</p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Single Precision</code></th>
-<th align="center"><code>Double Precision</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Single Precision</code></th>
+<th style="text-align: center;"><code>Double Precision</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>vaddss</code></td>
-<td align="center"><code>vaddsd</code></td>
-<td align="center">$S_2+S_1\rightarrow D$</td>
-<td align="center"><code>浮点数加法</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>vaddss</code></td>
+<td style="text-align: center;"><code>vaddsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2+S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数加法</code></td>
 </tr>
-<tr>
-<td align="center"><code>vsubss</code></td>
-<td align="center"><code>vsubsd</code></td>
-<td align="center">$S_2-S_1\rightarrow D$</td>
-<td align="center"><code>浮点数减法</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vsubss</code></td>
+<td style="text-align: center;"><code>vsubsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2-S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数减法</code></td>
 </tr>
-<tr>
-<td align="center"><code>vmelss</code></td>
-<td align="center"><code>vmelsd</code></td>
-<td align="center">$S_2\times S_1\rightarrow D$</td>
-<td align="center"><code>浮点数乘法</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>vmelss</code></td>
+<td style="text-align: center;"><code>vmelsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2\times
+S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数乘法</code></td>
 </tr>
-<tr>
-<td align="center"><code>vdivss</code></td>
-<td align="center"><code>vdivsd</code></td>
-<td align="center">$S_2&#x2F;S_1\rightarrow D$</td>
-<td align="center"><code>浮点数除法</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vdivss</code></td>
+<td style="text-align: center;"><code>vdivsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2/S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数除法</code></td>
 </tr>
-<tr>
-<td align="center"><code>vmaxss</code></td>
-<td align="center"><code>vmaxsd</code></td>
-<td align="center">$\max(S_2,S_1)\rightarrow D$</td>
-<td align="center"><code>浮点数最大值</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>vmaxss</code></td>
+<td style="text-align: center;"><code>vmaxsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(\max(S_2,S_1)\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数最大值</code></td>
 </tr>
-<tr>
-<td align="center"><code>vminss</code></td>
-<td align="center"><code>vminsd</code></td>
-<td align="center">$\min(S_2,S_1)\rightarrow D$</td>
-<td align="center"><code>浮点数最小值</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vminss</code></td>
+<td style="text-align: center;"><code>vminsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(\min(S_2,S_1)\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数最小值</code></td>
 </tr>
-<tr>
-<td align="center"><code>sqrtss</code></td>
-<td align="center"><code>sqrtsd</code></td>
-<td align="center">$\sqrt{S_1}\rightarrow D$</td>
-<td align="center"><code>浮点数平方根</code></td>
+<tr class="odd">
+<td style="text-align: center;"><code>sqrtss</code></td>
+<td style="text-align: center;"><code>sqrtsd</code></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{S_1}\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>浮点数平方根</code></td>
 </tr>
-</tbody></table>
-<p>$\rm AVX2$ 指令集还提供位级运算和比较运算</p>
-<p>位级运算会更新整个 <code>xmm</code> 寄存器，<strong>对两个源寄存器的所有位均执行同样的操作</strong></p>
+</tbody>
+</table>
+<p><span class="math inline">\(\rm AVX2\)</span>
+指令集还提供位级运算和比较运算</p>
+<p>位级运算会更新整个 <code>xmm</code>
+寄存器，<strong>对两个源寄存器的所有位均执行同样的操作</strong></p>
 <table>
+
 <thead>
-<tr>
-<th align="center"><code>Single Precision</code></th>
-<th align="center"><code>Double Precision</code></th>
-<th align="center"><code>Effect</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Single Precision</code></th>
+<th style="text-align: center;"><code>Double Precision</code></th>
+<th style="text-align: center;"><code>Effect</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>vxorps</code></td>
-<td align="center"><code>vxorpd</code></td>
-<td align="center">$S_2\oplus S_1\rightarrow D$</td>
-<td align="center"><code>位级异或</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>vxorps</code></td>
+<td style="text-align: center;"><code>vxorpd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2\oplus
+S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>位级异或</code></td>
 </tr>
-<tr>
-<td align="center"><code>vandps</code></td>
-<td align="center"><code>vandpd</code></td>
-<td align="center">$S_2\And S_1\rightarrow D$</td>
-<td align="center"><code>位级与</code></td>
+<tr class="even">
+<td style="text-align: center;"><code>vandps</code></td>
+<td style="text-align: center;"><code>vandpd</code></td>
+<td style="text-align: center;"><span class="math inline">\(S_2\And
+S_1\rightarrow D\)</span></td>
+<td style="text-align: center;"><code>位级与</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>比较操作如下：</p>
 <table>
 <thead>
-<tr>
-<th align="center"><code>Command</code></th>
-<th align="center"><code>Based on</code></th>
-<th align="center"><code>Description</code></th>
+<tr class="header">
+<th style="text-align: center;"><code>Command</code></th>
+<th style="text-align: center;"><code>Based on</code></th>
+<th style="text-align: center;"><code>Description</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">$vucomiss\ S1,S2$</td>
-<td align="center">$S2-S1$</td>
-<td align="center"><code>比较单精度数值</code></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(vucomiss\
+S1,S2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S2-S1\)</span></td>
+<td style="text-align: center;"><code>比较单精度数值</code></td>
 </tr>
-<tr>
-<td align="center">$vucomisd\ S1,S2$</td>
-<td align="center">$S2-S1$</td>
-<td align="center"><code>比较双精度数值</code></td>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(vucomisd\
+S1,S2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S2-S1\)</span></td>
+<td style="text-align: center;"><code>比较双精度数值</code></td>
 </tr>
-</tbody></table>
-<p>其中 $S_1$ 可以在 <code>xmm</code> 寄存器或内存中，$S_2$ 必须在 <code>xmm</code> 寄存器中</p>
+</tbody>
+</table>
+<p>其中 <span class="math inline">\(S_1\)</span> 可以在 <code>xmm</code>
+寄存器或内存中，<span class="math inline">\(S_2\)</span> 必须在
+<code>xmm</code> 寄存器中</p>
 
                 
               </div>
