@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="信息的表示和处理  信息的表示和处理  编码  无符号(Unsigned)数的编码 补码(Two&#39;s-complement)数的编码 其他编码方式  反码(Ones&#39;Complement)编码 原码(Sign-Magnitude)编码  无符号数与补码数的转换  补码转无符号 无符号转补码  拓展一个数字的位表示  无符号的拓展 补码数的拓展  截断数">
+    <meta name="description" content="信息的表示和处理 信息的表示和处理 编码 无符号(Unsigned)数的编码 补码(Two’s-complement)数的编码 其他编码方式 反码(Ones’Complement)编码 原码(Sign-Magnitude)编码   无符号数与补码数的转换 补码转无符号 无符号转补码   拓展一个数字的位表示 无符号的拓展 补码数的拓展   截断数字 截断无符号数 截断补码数     整数运算 右移">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSAPP 第二章 信息的表示和处理">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/CSAPP/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="信息的表示和处理  信息的表示和处理  编码  无符号(Unsigned)数的编码 补码(Two&#39;s-complement)数的编码 其他编码方式  反码(Ones&#39;Complement)编码 原码(Sign-Magnitude)编码  无符号数与补码数的转换  补码转无符号 无符号转补码  拓展一个数字的位表示  无符号的拓展 补码数的拓展  截断数">
+<meta property="og:description" content="信息的表示和处理 信息的表示和处理 编码 无符号(Unsigned)数的编码 补码(Two’s-complement)数的编码 其他编码方式 反码(Ones’Complement)编码 原码(Sign-Magnitude)编码   无符号数与补码数的转换 补码转无符号 无符号转补码   拓展一个数字的位表示 无符号的拓展 补码数的拓展   截断数字 截断无符号数 截断补码数     整数运算 右移">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP/CSAPP%20(1).png">
 <meta property="article:published_time" content="2023-04-15T02:39:24.958Z">
@@ -263,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k words
+          12k words
         
       </span>
     
@@ -274,7 +274,7 @@
         
         
         
-          105 mins
+          104 mins
         
       </span>
     
@@ -346,663 +346,378 @@
             
               <div class="markdown-body">
                 
-                <h1 id="信息的表示和处理">信息的表示和处理</h1>
-<ul>
-<li><a href="#信息的表示和处理">信息的表示和处理</a>
-<ul>
-<li><a href="#编码">编码</a>
-<ul>
-<li><a href="#无符号unsigned数的编码">无符号(Unsigned)数的编码</a></li>
-<li><a href="#补码twos-complement数的编码">补码(Two's-complement)数的编码</a></li>
-<li><a href="#其他编码方式">其他编码方式</a>
-<ul>
-<li><a href="#反码onescomplement编码">反码(Ones'Complement)编码</a></li>
-<li><a href="#原码sign-magnitude编码">原码(Sign-Magnitude)编码</a></li>
-</ul></li>
-<li><a href="#无符号数与补码数的转换">无符号数与补码数的转换</a>
-<ul>
-<li><a href="#补码转无符号">补码转无符号</a></li>
-<li><a href="#无符号转补码">无符号转补码</a></li>
-</ul></li>
-<li><a href="#拓展一个数字的位表示">拓展一个数字的位表示</a>
-<ul>
-<li><a href="#无符号的拓展">无符号的拓展</a></li>
-<li><a href="#补码数的拓展">补码数的拓展</a></li>
-</ul></li>
-<li><a href="#截断数字">截断数字</a>
-<ul>
-<li><a href="#截断无符号数">截断无符号数</a></li>
-<li><a href="#截断补码数">截断补码数</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#整数运算">整数运算</a>
-<ul>
-<li><a href="#右移方式">右移方式</a></li>
-<li><a href="#无符号加法">无符号加法</a>
-<ul>
-<li><a href="#无符号加法溢出的检测">无符号加法溢出的检测</a></li>
-<li><a href="#无符号的非">无符号的非</a></li>
-</ul></li>
-<li><a href="#补码加法">补码加法</a>
-<ul>
-<li><a href="#补码加法溢出的判断">补码加法溢出的判断</a></li>
-<li><a href="#补码的非">补码的非</a>
-<ul>
-<li><a href="#快速求补码非的办法">快速求补码非的办法</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#无符号乘法">无符号乘法</a></li>
-<li><a href="#补码乘法">补码乘法</a></li>
-<li><a href="#乘以常数">乘以常数</a>
-<ul>
-<li><a href="#乘以-2-的次幂">乘以 2 的次幂</a></li>
-<li><a href="#乘以任意常数">乘以任意常数</a></li>
-</ul></li>
-<li><a href="#除以-2-的幂">除以 2 的幂</a>
-<ul>
-<li><a href="#取整的描述">取整的描述</a></li>
-<li><a href="#无符号除法">无符号除法</a></li>
-<li><a href="#补码除法">补码除法</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#浮点数">浮点数</a>
-<ul>
-<li><a href="#表示">表示</a>
-<ul>
+                <h1 id="信息的表示和处理"><a href="#信息的表示和处理" class="headerlink" title="信息的表示和处理"></a>信息的表示和处理</h1><ul>
+<li><a href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86">信息的表示和处理</a><ul>
+<li><a href="#%E7%BC%96%E7%A0%81">编码</a><ul>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7unsigned%E6%95%B0%E7%9A%84%E7%BC%96%E7%A0%81">无符号(Unsigned)数的编码</a></li>
+<li><a href="#%E8%A1%A5%E7%A0%81twos-complement%E6%95%B0%E7%9A%84%E7%BC%96%E7%A0%81">补码(Two’s-complement)数的编码</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F">其他编码方式</a><ul>
+<li><a href="#%E5%8F%8D%E7%A0%81onescomplement%E7%BC%96%E7%A0%81">反码(Ones’Complement)编码</a></li>
+<li><a href="#%E5%8E%9F%E7%A0%81sign-magnitude%E7%BC%96%E7%A0%81">原码(Sign-Magnitude)编码</a></li>
+</ul>
+</li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E8%A1%A5%E7%A0%81%E6%95%B0%E7%9A%84%E8%BD%AC%E6%8D%A2">无符号数与补码数的转换</a><ul>
+<li><a href="#%E8%A1%A5%E7%A0%81%E8%BD%AC%E6%97%A0%E7%AC%A6%E5%8F%B7">补码转无符号</a></li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E8%BD%AC%E8%A1%A5%E7%A0%81">无符号转补码</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8B%93%E5%B1%95%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97%E7%9A%84%E4%BD%8D%E8%A1%A8%E7%A4%BA">拓展一个数字的位表示</a><ul>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9A%84%E6%8B%93%E5%B1%95">无符号的拓展</a></li>
+<li><a href="#%E8%A1%A5%E7%A0%81%E6%95%B0%E7%9A%84%E6%8B%93%E5%B1%95">补码数的拓展</a></li>
+</ul>
+</li>
+<li><a href="#%E6%88%AA%E6%96%AD%E6%95%B0%E5%AD%97">截断数字</a><ul>
+<li><a href="#%E6%88%AA%E6%96%AD%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0">截断无符号数</a></li>
+<li><a href="#%E6%88%AA%E6%96%AD%E8%A1%A5%E7%A0%81%E6%95%B0">截断补码数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97">整数运算</a><ul>
+<li><a href="#%E5%8F%B3%E7%A7%BB%E6%96%B9%E5%BC%8F">右移方式</a></li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8A%A0%E6%B3%95">无符号加法</a><ul>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8A%A0%E6%B3%95%E6%BA%A2%E5%87%BA%E7%9A%84%E6%A3%80%E6%B5%8B">无符号加法溢出的检测</a></li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%9A%84%E9%9D%9E">无符号的非</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95">补码加法</a><ul>
+<li><a href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95%E6%BA%A2%E5%87%BA%E7%9A%84%E5%88%A4%E6%96%AD">补码加法溢出的判断</a></li>
+<li><a href="#%E8%A1%A5%E7%A0%81%E7%9A%84%E9%9D%9E">补码的非</a><ul>
+<li><a href="#%E5%BF%AB%E9%80%9F%E6%B1%82%E8%A1%A5%E7%A0%81%E9%9D%9E%E7%9A%84%E5%8A%9E%E6%B3%95">快速求补码非的办法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E4%B9%98%E6%B3%95">无符号乘法</a></li>
+<li><a href="#%E8%A1%A5%E7%A0%81%E4%B9%98%E6%B3%95">补码乘法</a></li>
+<li><a href="#%E4%B9%98%E4%BB%A5%E5%B8%B8%E6%95%B0">乘以常数</a><ul>
+<li><a href="#%E4%B9%98%E4%BB%A5-2-%E7%9A%84%E6%AC%A1%E5%B9%82">乘以 2 的次幂</a></li>
+<li><a href="#%E4%B9%98%E4%BB%A5%E4%BB%BB%E6%84%8F%E5%B8%B8%E6%95%B0">乘以任意常数</a></li>
+</ul>
+</li>
+<li><a href="#%E9%99%A4%E4%BB%A5-2-%E7%9A%84%E5%B9%82">除以 2 的幂</a><ul>
+<li><a href="#%E5%8F%96%E6%95%B4%E7%9A%84%E6%8F%8F%E8%BF%B0">取整的描述</a></li>
+<li><a href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E9%99%A4%E6%B3%95">无符号除法</a></li>
+<li><a href="#%E8%A1%A5%E7%A0%81%E9%99%A4%E6%B3%95">补码除法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E6%95%B0">浮点数</a><ul>
+<li><a href="#%E8%A1%A8%E7%A4%BA">表示</a><ul>
 <li><a href="#normal">Normal</a></li>
 <li><a href="#denormal">Denormal</a></li>
 <li><a href="#inf--nan">INF &amp; NaN</a></li>
-</ul></li>
-<li><a href="#范围">范围</a></li>
-<li><a href="#舍入">舍入</a>
-<ul>
-<li><a href="#向上舍入">向上舍入</a></li>
-<li><a href="#向下舍入">向下舍入</a></li>
-<li><a href="#向零舍入">向零舍入</a></li>
-<li><a href="#向偶数舍入">向偶数舍入</a></li>
-</ul></li>
-<li><a href="#浮点运算">浮点运算</a></li>
-<li><a href="#类型转换">类型转换</a></li>
-</ul></li>
-</ul></li>
 </ul>
-<h2 id="编码">编码</h2>
-<h3 id="无符号unsigned数的编码">无符号(Unsigned)数的编码</h3>
-<p>设一个整数数据有 <span class="math inline">\(\omega\)</span>
-位，我们可以将其写成位向量 <span class="math inline">\(\vec x\)</span>
-来表示该向量，或者将其每一位都写出来</p>
-<p><span class="math display">\[
-\vec x = [x_{\omega -1},x_{\omega -2},\cdots, x_1,x_0]
-\]</span></p>
-<p>对于向量 <span class="math inline">\(\vec x = [x_{\omega
--1},x_{\omega -2},\cdots, x_1,x_0]\)</span> ，有：</p>
-<p><span class="math display">\[
-B2U_{\omega}(\vec x)=\sum_{i=0}^{\omega - 1}x_i 2^{i}
-\]</span></p>
-<h3 id="补码twos-complement数的编码">补码(Two's-complement)数的编码</h3>
-<p>对于向量 <span class="math inline">\(\vec x = [x_{\omega
--1},x_{\omega -2},\cdots, x_1,x_0]\)</span> ，有：</p>
-<p><span class="math display">\[
-B2T_{\omega}(\vec x)=-x_{\omega - 1}2^{\omega -1}+\sum_{i=0}^{\omega -
-2}x_{i}2^{i}
-\]</span></p>
+</li>
+<li><a href="#%E8%8C%83%E5%9B%B4">范围</a></li>
+<li><a href="#%E8%88%8D%E5%85%A5">舍入</a><ul>
+<li><a href="#%E5%90%91%E4%B8%8A%E8%88%8D%E5%85%A5">向上舍入</a></li>
+<li><a href="#%E5%90%91%E4%B8%8B%E8%88%8D%E5%85%A5">向下舍入</a></li>
+<li><a href="#%E5%90%91%E9%9B%B6%E8%88%8D%E5%85%A5">向零舍入</a></li>
+<li><a href="#%E5%90%91%E5%81%B6%E6%95%B0%E8%88%8D%E5%85%A5">向偶数舍入</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97">浮点运算</a></li>
+<li><a href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">类型转换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="无符号-Unsigned-数的编码"><a href="#无符号-Unsigned-数的编码" class="headerlink" title="无符号(Unsigned)数的编码"></a>无符号(Unsigned)数的编码</h3><p>设一个整数数据有 $\omega$ 位，我们可以将其写成位向量 $\vec x$ 来表示该向量，或者将其每一位都写出来</p>
+<p>$$<br>\vec x &#x3D; [x_{\omega -1},x_{\omega -2},\cdots, x_1,x_0]<br>$$</p>
+<p>对于向量 $\vec x &#x3D; [x_{\omega -1},x_{\omega -2},\cdots, x_1,x_0]$ ，有：</p>
+<p>$$<br>B2U_{\omega}(\vec x)&#x3D;\sum_{i&#x3D;0}^{\omega - 1}x_i 2^{i}<br>$$</p>
+<h3 id="补码-Two’s-complement-数的编码"><a href="#补码-Two’s-complement-数的编码" class="headerlink" title="补码(Two’s-complement)数的编码"></a>补码(Two’s-complement)数的编码</h3><p>对于向量 $\vec x &#x3D; [x_{\omega -1},x_{\omega -2},\cdots, x_1,x_0]$ ，有：</p>
+<p>$$<br>B2T_{\omega}(\vec x)&#x3D;-x_{\omega - 1}2^{\omega -1}+\sum_{i&#x3D;0}^{\omega - 2}x_{i}2^{i}<br>$$</p>
 <p>对于补码数的编码，其实就是<strong>无符号数的最高位变为负数</strong>，其余都是一样的</p>
-<p>我们以 <span class="math inline">\(4\)</span>
-位的无符号数与补码数为例，讨论二者的表示范围：</p>
-<p>对于 <span class="math inline">\(4\)</span>
-位的无符号数的范围，有：<span class="math inline">\(0\sim
-15\)</span></p>
-<p>对于 <span class="math inline">\(4\)</span>
-位的补码数的范围，有：<span class="math inline">\(-8\sim 7\)</span></p>
-<p>对于补码数而言，负数的个数有 <span class="math inline">\(8\)</span>
-个，<strong>非负数</strong>的个数也有 <span class="math inline">\(8\)</span> 个，这导致了：<span class="math inline">\(|TMin_{\omega}|=|TMax_{\omega}+1|\)</span></p>
-<h3 id="其他编码方式">其他编码方式</h3>
-<h4 id="反码onescomplement编码">反码(Ones'Complement)编码</h4>
-<p><span class="math display">\[
-B2O_{\omega}(\vec x)=-x_{\omega - 1}(2^{\omega -1}-1)+\sum_{i=0}^{\omega
-- 2}x_{i}2^{i}
-\]</span></p>
-<p>反码编码只是在<strong>补码的基础上</strong>将最高位的权重从 <span class="math inline">\(-2^{\omega -1}\)</span> 变为 <span class="math inline">\(-(2^{\omega}-1)\)</span>，其余都跟补码一样</p>
-<h4 id="原码sign-magnitude编码">原码(Sign-Magnitude)编码</h4>
-<p><span class="math display">\[
-B2S_{\omega}(\vec x)=(-1)^{x_{\omega -1}}+\sum_{i=0}^{\omega -
-2}x_{i}2^{i}
-\]</span></p>
+<p>我们以 $4$ 位的无符号数与补码数为例，讨论二者的表示范围：</p>
+<p>对于 $4$ 位的无符号数的范围，有：$0\sim 15$</p>
+<p>对于 $4$ 位的补码数的范围，有：$-8\sim 7$</p>
+<p>对于补码数而言，负数的个数有 $8$ 个，<strong>非负数</strong>的个数也有 $8$ 个，这导致了：$|TMin_{\omega}|&#x3D;|TMax_{\omega}+1|$</p>
+<h3 id="其他编码方式"><a href="#其他编码方式" class="headerlink" title="其他编码方式"></a>其他编码方式</h3><h4 id="反码-Ones’Complement-编码"><a href="#反码-Ones’Complement-编码" class="headerlink" title="反码(Ones’Complement)编码"></a>反码(Ones’Complement)编码</h4><p>$$<br>B2O_{\omega}(\vec x)&#x3D;-x_{\omega - 1}(2^{\omega -1}-1)+\sum_{i&#x3D;0}^{\omega - 2}x_{i}2^{i}<br>$$</p>
+<p>反码编码只是在<strong>补码的基础上</strong>将最高位的权重从 $-2^{\omega -1}$ 变为 $-(2^{\omega}-1)$，其余都跟补码一样</p>
+<h4 id="原码-Sign-Magnitude-编码"><a href="#原码-Sign-Magnitude-编码" class="headerlink" title="原码(Sign-Magnitude)编码"></a>原码(Sign-Magnitude)编码</h4><p>$$<br>B2S_{\omega}(\vec x)&#x3D;(-1)^{x_{\omega -1}}+\sum_{i&#x3D;0}^{\omega - 2}x_{i}2^{i}<br>$$</p>
 <p>原码的最高位为<strong>符号位</strong>，其余位来决定该数的大小</p>
-<p>这两种编码都有一个问题是，对于数字 <span class="math inline">\(0\)</span> 会有两种解释方式</p>
-<p>在原码中 <span class="math inline">\([00\cdots 0]\)</span> 被解释为
-<span class="math inline">\(+0\)</span>，<span class="math inline">\([10\cdots 0]\)</span> 被解释为 <span class="math inline">\(-0\)</span></p>
-<p>在反码中 <span class="math inline">\([00\cdots 0]\)</span> 被解释为
-<span class="math inline">\(+0\)</span>，<span class="math inline">\([11\cdots 1]\)</span> 被解释为 <span class="math inline">\(-0\)</span></p>
+<p>这两种编码都有一个问题是，对于数字 $0$ 会有两种解释方式</p>
+<p>在原码中 $[00\cdots 0]$ 被解释为 $+0$，$[10\cdots 0]$ 被解释为 $-0$</p>
+<p>在反码中 $[00\cdots 0]$ 被解释为 $+0$，$[11\cdots 1]$ 被解释为 $-0$</p>
 <p>实际上，浮点数的编码方式就是才有原码编码</p>
-<h3 id="无符号数与补码数的转换">无符号数与补码数的转换</h3>
-<p>对于补码和无符号数之间的转换，<strong>底层的位值表示是不变的</strong>，只是改变了<strong>解释这些位的方式</strong></p>
-<h4 id="补码转无符号">补码转无符号</h4>
-<p><span class="math display">\[
-T2U_{\omega}(\vec x) = \left \{ \begin{matrix}
-x+2^{\omega}, &amp; x \lt 0 \\
-x,            &amp; x \ge 0
-\end{matrix}\right.
-\]</span></p>
-<h4 id="无符号转补码">无符号转补码</h4>
-<p><span class="math display">\[
-U2T_{\omega}(\vec x) = \left \{ \begin{matrix}
-x , &amp; x\le TMax \\
-x-2^{\omega} ,&amp; x \gt TMax
-\end{matrix}\right.
-\]</span></p>
-<h3 id="拓展一个数字的位表示">拓展一个数字的位表示</h3>
-<p>我们主要讨论从一个较小的类型转换到较大的类型</p>
-<h4 id="无符号的拓展">无符号的拓展</h4>
-<p>无符号的拓展被称为零拓展(zero extention)，只需要简单的在开头添加
-<span class="math inline">\(0\)</span> 即可，其原理如下：</p>
-<p>定义长度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u=[u_{\omega -1},u_{\omega -2},\cdots
-,u_1,u_0]\)</span> 和长度为 <span class="math inline">\(\omega
-&#39;\)</span> 的位向量 <span class="math inline">\(\vec
-{u&#39;}=[0,0,\cdots ,0,u_{\omega -1},u_{\omega -2},\cdots
-,u_1,u_0]\)</span> ，其中 <span class="math inline">\(\omega &#39;\gt
-\omega\)</span></p>
-<p>此时有：<span class="math inline">\(B2U(\vec{u})=B2U(\vec{u&#39;})\)</span></p>
-<h4 id="补码数的拓展">补码数的拓展</h4>
-<p>补码数的拓展被称为符号拓展(sign
-extention)，即在前面<strong>添加最高有效位</strong></p>
-<p>最高有效位为 <span class="math inline">\(0\)</span> ，那么添加 <span class="math inline">\(0\)</span> ；最高有效位为 <span class="math inline">\(1\)</span> ，那么添加 <span class="math inline">\(1\)</span></p>
-<p>定义长度为 <span class="math inline">\(\omega\)</span> 的位向量 <span class="math inline">\(\vec u=[u_{\omega -1},u_{\omega -2},\cdots
-,u_1,u_0]\)</span> 和长度为 <span class="math inline">\(\omega
-&#39;\)</span> 的位向量 <span class="math inline">\(\vec
-{u&#39;}=[{\color{orange}u_{\omega -1},u_{\omega -1},\cdots ,u_{\omega
--1}},u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]\)</span> ，其中 <span class="math inline">\(\omega &#39;\gt \omega\)</span></p>
-<p>我们有：<span class="math inline">\(B2T(\vec{u})=B2T(\vec{u&#39;})\)</span></p>
+<h3 id="无符号数与补码数的转换"><a href="#无符号数与补码数的转换" class="headerlink" title="无符号数与补码数的转换"></a>无符号数与补码数的转换</h3><p>对于补码和无符号数之间的转换，<strong>底层的位值表示是不变的</strong>，只是改变了<strong>解释这些位的方式</strong></p>
+<h4 id="补码转无符号"><a href="#补码转无符号" class="headerlink" title="补码转无符号"></a>补码转无符号</h4><p>$$<br>T2U_{\omega}(\vec x) &#x3D; \left { \begin{matrix}<br>x+2^{\omega}, &amp; x \lt 0 \<br>x,            &amp; x \ge 0<br>\end{matrix}\right.<br>$$</p>
+<h4 id="无符号转补码"><a href="#无符号转补码" class="headerlink" title="无符号转补码"></a>无符号转补码</h4><p>$$<br>U2T_{\omega}(\vec x) &#x3D; \left { \begin{matrix}<br>x , &amp; x\le TMax \<br>x-2^{\omega} ,&amp; x \gt TMax<br>\end{matrix}\right.<br>$$</p>
+<h3 id="拓展一个数字的位表示"><a href="#拓展一个数字的位表示" class="headerlink" title="拓展一个数字的位表示"></a>拓展一个数字的位表示</h3><p>我们主要讨论从一个较小的类型转换到较大的类型</p>
+<h4 id="无符号的拓展"><a href="#无符号的拓展" class="headerlink" title="无符号的拓展"></a>无符号的拓展</h4><p>无符号的拓展被称为零拓展(zero extention)，只需要简单的在开头添加 $0$ 即可，其原理如下：</p>
+<p>定义长度为 $\omega$ 的位向量 $\vec u&#x3D;[u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]$ 和长度为 $\omega ‘$ 的位向量 $\vec {u’}&#x3D;[0,0,\cdots ,0,u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]$ ，其中 $\omega ‘\gt \omega$</p>
+<p>此时有：$B2U(\vec{u})&#x3D;B2U(\vec{u’})$</p>
+<h4 id="补码数的拓展"><a href="#补码数的拓展" class="headerlink" title="补码数的拓展"></a>补码数的拓展</h4><p>补码数的拓展被称为符号拓展(sign extention)，即在前面<strong>添加最高有效位</strong></p>
+<p>最高有效位为 $0$ ，那么添加 $0$ ；最高有效位为 $1$ ，那么添加 $1$</p>
+<p>定义长度为 $\omega$ 的位向量 $\vec u&#x3D;[u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]$ 和长度为 $\omega ‘$ 的位向量 $\vec {u’}&#x3D;[{\color{orange}u_{\omega -1},u_{\omega -1},\cdots ,u_{\omega -1}},u_{\omega -1},u_{\omega -2},\cdots ,u_1,u_0]$ ，其中 $\omega ‘\gt \omega$</p>
+<p>我们有：$B2T(\vec{u})&#x3D;B2T(\vec{u’})$</p>
 <p>推导：</p>
-<p>我们只需证明：<span class="math inline">\(B2T([{\color
-{orange}u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])=B2T([{\color
-{orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots
-,u_1,u_0])\)</span>
-，便可以说明对于<strong>任意位数的符号拓展，都是满足条件的</strong></p>
+<p>我们只需证明：$B2T([{\color {orange}u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])&#x3D;B2T([{\color {orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])$ ，便可以说明对于<strong>任意位数的符号拓展，都是满足条件的</strong></p>
 <p>我们按照补码数的定义展开，有：</p>
-<p><span class="math display">\[
-\begin{align*}
-B2T([{\color {orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots
-,u_1,u_0])&amp;=-{\color {orange}u_{\omega
--1}}2^{\omega}+\sum_{i=0}^{\omega -1}u_{i}2^{i}\\
-&amp;=-{\color {orange}u_{\omega -1}}2^{\omega}+{\color
-{orange}u_{\omega -1}}2^{\omega-1}+\sum_{i=0}^{\omega-2}u_i2^i\\
-&amp;=-{\color {orange}u_{\omega
--1}}2^{\omega-1}+\sum_{i=0}^{\omega-2}u_i2^i\\
-&amp;=B2T([{\color {orange}u_{\omega -1}},u_{\omega -2},\cdots
-,u_1,u_0])
-\end{align*}
-\]</span></p>
-<p>本质上是使用属性：<span class="math inline">\(2^{\omega}-2^{\omega-1}=2^{\omega-1}\)</span></p>
-<h3 id="截断数字">截断数字</h3>
-<h4 id="截断无符号数">截断无符号数</h4>
-<p>设 <span class="math inline">\(\vec{x}\)</span> 表示位向量 <span class="math inline">\([x_{\omega-1}, x_{\omega-2}, \cdots
-x_1,x_0]\)</span>，<span class="math inline">\(\vec{x&#39;}\)</span>为其<strong>截断为 <span class="math inline">\(k\)</span> 位</strong>的结果：<span class="math inline">\(\vec{x&#39;}=[x_{k-1},x_{k-2},\cdots,x_1,x_0]\)</span>，我们有：<span class="math inline">\(x&#39;=x\bmod 2^k\)</span></p>
-<p><span class="math display">\[
-\begin{align*}
-B2U_{\omega}([x_{\omega-1}, x_{\omega-2}, \cdots x_1,x_0])\bmod
-2^k&amp;=(\sum_{i=0}^{\omega-1}x_i2^{i})\bmod 2^k\\
-&amp;=(\sum_{i=0}^{k-1}x_i2^i)\bmod 2^k\\
-&amp;=B2U_{\omega}([x_{k-1},x_{k-2},\cdots,x_1,x_0])
-\end{align*}
-\]</span></p>
-<p>本质上是对于任意的 <span class="math inline">\(i\ge
-k\)</span>，都有：<span class="math inline">\(2^i\bmod
-2^k=0\)</span></p>
-<h4 id="截断补码数">截断补码数</h4>
-<p>设 <span class="math inline">\(\vec{x}\)</span> 表示位向量 <span class="math inline">\([x_{\omega-1}, x_{\omega-2}, \cdots
-x_1,x_0]\)</span>，<span class="math inline">\(\vec{x&#39;}\)</span>为其<strong>截断为 <span class="math inline">\(k\)</span> 位</strong>的结果：<span class="math inline">\(\vec{x&#39;}=[x_{k-1},x_{k-2},\cdots,x_1,x_0]\)</span>，我们有：<span class="math inline">\(x&#39;=U2T(x\bmod 2^k)\)</span></p>
-<p>本质上是先将位向量<strong>截断为 <span class="math inline">\(k\)</span>
-位</strong>，然后在<strong>从补码的角度诠释位表示</strong></p>
-<h2 id="整数运算">整数运算</h2>
-<h3 id="右移方式">右移方式</h3>
-<p>右移方式有两种：逻辑右移与算术右移</p>
-<p>前者会直接补 <span class="math inline">\(0\)</span>
-，后者会补<strong>最高有效位</strong>；如果最高有效位为 <span class="math inline">\(0\)</span> ，那么便补 <span class="math inline">\(0\)</span> ，如果最高有效位为 <span class="math inline">\(1\)</span> ，那么便补一</p>
+<p>$$<br>\begin{align*}<br>B2T([{\color {orange}u_{\omega -1},u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])&amp;&#x3D;-{\color {orange}u_{\omega -1}}2^{\omega}+\sum_{i&#x3D;0}^{\omega -1}u_{i}2^{i}\<br>&amp;&#x3D;-{\color {orange}u_{\omega -1}}2^{\omega}+{\color {orange}u_{\omega -1}}2^{\omega-1}+\sum_{i&#x3D;0}^{\omega-2}u_i2^i\<br>&amp;&#x3D;-{\color {orange}u_{\omega -1}}2^{\omega-1}+\sum_{i&#x3D;0}^{\omega-2}u_i2^i\<br>&amp;&#x3D;B2T([{\color {orange}u_{\omega -1}},u_{\omega -2},\cdots ,u_1,u_0])<br>\end{align*}<br>$$</p>
+<p>本质上是使用属性：$2^{\omega}-2^{\omega-1}&#x3D;2^{\omega-1}$</p>
+<h3 id="截断数字"><a href="#截断数字" class="headerlink" title="截断数字"></a>截断数字</h3><h4 id="截断无符号数"><a href="#截断无符号数" class="headerlink" title="截断无符号数"></a>截断无符号数</h4><p>设 $\vec{x}$ 表示位向量 $[x_{\omega-1}, x_{\omega-2}, \cdots x_1,x_0]$，$\vec{x’}$为其<strong>截断为 $k$ 位</strong>的结果：$\vec{x’}&#x3D;[x_{k-1},x_{k-2},\cdots,x_1,x_0]$，我们有：$x’&#x3D;x\bmod 2^k$</p>
+<p>$$<br>\begin{align*}<br>B2U_{\omega}([x_{\omega-1}, x_{\omega-2}, \cdots x_1,x_0])\bmod 2^k&amp;&#x3D;(\sum_{i&#x3D;0}^{\omega-1}x_i2^{i})\bmod 2^k\<br>&amp;&#x3D;(\sum_{i&#x3D;0}^{k-1}x_i2^i)\bmod 2^k\<br>&amp;&#x3D;B2U_{\omega}([x_{k-1},x_{k-2},\cdots,x_1,x_0])<br>\end{align*}<br>$$</p>
+<p>本质上是对于任意的 $i\ge k$，都有：$2^i\bmod 2^k&#x3D;0$</p>
+<h4 id="截断补码数"><a href="#截断补码数" class="headerlink" title="截断补码数"></a>截断补码数</h4><p>设 $\vec{x}$ 表示位向量 $[x_{\omega-1}, x_{\omega-2}, \cdots x_1,x_0]$，$\vec{x’}$为其<strong>截断为 $k$ 位</strong>的结果：$\vec{x’}&#x3D;[x_{k-1},x_{k-2},\cdots,x_1,x_0]$，我们有：$x’&#x3D;U2T(x\bmod 2^k)$</p>
+<p>本质上是先将位向量<strong>截断为 $k$ 位</strong>，然后在<strong>从补码的角度诠释位表示</strong></p>
+<h2 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h2><h3 id="右移方式"><a href="#右移方式" class="headerlink" title="右移方式"></a>右移方式</h3><p>右移方式有两种：逻辑右移与算术右移</p>
+<p>前者会直接补 $0$ ，后者会补<strong>最高有效位</strong>；如果最高有效位为 $0$ ，那么便补 $0$ ，如果最高有效位为 $1$ ，那么便补一</p>
 <p>对于无符号数，<strong>右移均为逻辑右移</strong></p>
 <p>对于补码数，<strong>右移均为算术右移</strong></p>
-<h3 id="无符号加法">无符号加法</h3>
-<p>设 <span class="math inline">\(0\le x,y\le
-2^{\omega}\)</span>，有：</p>
-<p><span class="math display">\[
-\begin{align*}
-x+_{\omega}^{u}y=\left \{ \begin{array}{l} x+y,\quad &amp;x+y\le
-2^{\omega}\qquad \text{正常}\\
-x+y-2^{\omega},\quad &amp;x+y\ge 2^{\omega}\qquad \text{溢出}
-\end{array}\right.
-\end{align*}
-\]</span></p>
-<p>两个 <span class="math inline">\(\omega\)</span>
-位的无符号数相加，其结果可能需要 <span class="math inline">\(\omega+1\)</span> 位来表示</p>
-<p>若两个 <span class="math inline">\(\omega\)</span>
-位的无符号数相加，如果加和<strong>会自动截断为 <span class="math inline">\(\omega\)</span> 位</strong></p>
-<h4 id="无符号加法溢出的检测">无符号加法溢出的检测</h4>
-<p>设 <span class="math inline">\(0\le x,y\le UMax_{\omega}\)</span>
-，令 <span class="math inline">\(s=x+_{\omega}^{u}y\)</span> ，当且仅当
-<span class="math inline">\(s\lt x\)</span> （或等价条件 <span class="math inline">\(s\lt y\)</span>）成立时，发生了溢出</p>
+<h3 id="无符号加法"><a href="#无符号加法" class="headerlink" title="无符号加法"></a>无符号加法</h3><p>设 $0\le x,y\le 2^{\omega}$，有：</p>
+<p>$$<br>\begin{align*}<br>x+_{\omega}^{u}y&#x3D;\left { \begin{array}{l} x+y,\quad &amp;x+y\le 2^{\omega}\qquad \text{正常}\<br>x+y-2^{\omega},\quad &amp;x+y\ge 2^{\omega}\qquad \text{溢出}<br>\end{array}\right.<br>\end{align*}<br>$$</p>
+<p>两个 $\omega$ 位的无符号数相加，其结果可能需要 $\omega+1$ 位来表示</p>
+<p>若两个 $\omega$ 位的无符号数相加，如果加和<strong>会自动截断为 $\omega$ 位</strong></p>
+<h4 id="无符号加法溢出的检测"><a href="#无符号加法溢出的检测" class="headerlink" title="无符号加法溢出的检测"></a>无符号加法溢出的检测</h4><p>设 $0\le x,y\le UMax_{\omega}$ ，令 $s&#x3D;x+_{\omega}^{u}y$ ，当且仅当 $s\lt x$ （或等价条件 $s\lt y$）成立时，发生了溢出</p>
 <p>代码判断：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//未发生溢出时返回true，发生溢出时返回false</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">uadd_ok</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> x, <span class="hljs-type">unsigned</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">unsigned</span> sum = x + y;<br>    <span class="hljs-keyword">return</span> sum &gt;= x;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="无符号的非">无符号的非</h4>
-<p>设 <span class="math inline">\(0\le x\lt 2^{\omega}\)</span> ，其
-<span class="math inline">\(\omega\)</span> 位的逆元 <span class="math inline">\(-_{\omega}^{u}x\)</span> 有下式给出：</p>
-<p><span class="math display">\[
-\begin{align*}
--_{\omega}^{u}x&amp;=\left \{ \begin{matrix} &amp;x,&amp;x=0\\
-&amp;2^{\omega}-x,&amp;x\gt 0
-\end{matrix} \right.
-\end{align*}
-\]</span></p>
-<p>求无符号的非，本质上是对于一个无符号数 <span class="math inline">\(x\)</span> ，找到一个 <span class="math inline">\(y\)</span> 使得：</p>
-<p><span class="math display">\[
-(x+_{\omega}^{u}y)\bmod 2^{\omega}=0
-\]</span></p>
-<p>因此直接在 <span class="math inline">\(x\)</span>
-的基础上加一个<strong>使其溢出的数</strong>即可</p>
-<h3 id="补码加法">补码加法</h3>
-<p>设 <span class="math inline">\(-2^{\omega-1}\le x,y\le
-2^{\omega-1}-1\)</span> ，有：</p>
-<p><span class="math display">\[
-\begin{align*}
-x+_{\omega}^{t}y=\left \{ \begin{array}{l}x+y-2^{\omega},&amp;x+y\ge
-2^{\omega-1}\quad \text{正溢出}\\
-x+y,&amp;-2^{\omega}\le x+y\le 2^{\omega-1}-1 \quad \text{正常}\\
-x+y+2^{\omega},&amp;x+y\lt -2^{\omega-1} \quad \text{负溢出}
-\end{array}\right.
-\end{align*}
-\]</span></p>
-<p>对于 <span class="math inline">\(\omega\)</span>
-位的补码数可表示的最小值为 <span class="math inline">\(-2^{\omega-1}\)</span> ，可表示的最大值为 <span class="math inline">\(2^{\omega-1}-1\)</span></p>
-<p>因此如果两个 <span class="math inline">\(\omega\)</span>
-位的补码数相加，其结果可能需要 <span class="math inline">\(\omega+1\)</span> 位来表示</p>
-<p>如果结果大于 <span class="math inline">\(2^{\omega-1}-1\)</span>
-，则发生<strong>正溢出</strong>，<span class="math inline">\(\omega-1\)</span> 位的值由 <span class="math inline">\(0\)</span> 变为 <span class="math inline">\(1\)</span>，数值上相当于加和结果<strong>减去</strong>
-<span class="math inline">\(2\times2^{\omega-1}=2^{\omega}\)</span></p>
-<p>如果结果小于 <span class="math inline">\(-2^{\omega}\)</span>
-，则发生<strong>负溢出</strong>，<span class="math inline">\(\omega\)</span> 位的会溢出为 <span class="math inline">\(1\)</span>
-，由于我们需要将该位舍去，因此数值上相当于加和结果<strong>加上</strong>
-<span class="math inline">\(2^{\omega}\)</span></p>
-<h4 id="补码加法溢出的判断">补码加法溢出的判断</h4>
-<p>设 <span class="math inline">\(TMin\le x,y\le TMax\)</span> ，令
-<span class="math inline">\(s=x+_{\omega}^{t}y\)</span></p>
-<p><strong>当且仅当 <span class="math inline">\(x\gt 0,y\gt 0\)</span>
-而 <span class="math inline">\(s\le 0\)</span>
-时</strong>，发生<strong>正溢出</strong></p>
-<p><strong>当且仅当 <span class="math inline">\(x\lt 0,y\lt 0\)</span>
-而 <span class="math inline">\(s\ge 0\)</span>
-时</strong>，发生<strong>负溢出</strong></p>
+
+<h4 id="无符号的非"><a href="#无符号的非" class="headerlink" title="无符号的非"></a>无符号的非</h4><p>设 $0\le x\lt 2^{\omega}$ ，其 $\omega$ 位的逆元 $-_{\omega}^{u}x$ 有下式给出：</p>
+<p>$$<br>\begin{align*}<br>-_{\omega}^{u}x&amp;&#x3D;\left { \begin{matrix} &amp;x,&amp;x&#x3D;0\<br>&amp;2^{\omega}-x,&amp;x\gt 0<br>\end{matrix} \right.<br>\end{align*}<br>$$</p>
+<p>求无符号的非，本质上是对于一个无符号数 $x$ ，找到一个 $y$ 使得：</p>
+<p>$$<br>(x+_{\omega}^{u}y)\bmod 2^{\omega}&#x3D;0<br>$$</p>
+<p>因此直接在 $x$ 的基础上加一个<strong>使其溢出的数</strong>即可</p>
+<h3 id="补码加法"><a href="#补码加法" class="headerlink" title="补码加法"></a>补码加法</h3><p>设 $-2^{\omega-1}\le x,y\le 2^{\omega-1}-1$ ，有：</p>
+<p>$$<br>\begin{align*}<br>x+_{\omega}^{t}y&#x3D;\left { \begin{array}{l}x+y-2^{\omega},&amp;x+y\ge 2^{\omega-1}\quad \text{正溢出}\<br>x+y,&amp;-2^{\omega}\le x+y\le 2^{\omega-1}-1 \quad \text{正常}\<br>x+y+2^{\omega},&amp;x+y\lt -2^{\omega-1} \quad \text{负溢出}<br>\end{array}\right.<br>\end{align*}<br>$$</p>
+<p>对于 $\omega$ 位的补码数可表示的最小值为 $-2^{\omega-1}$ ，可表示的最大值为 $2^{\omega-1}-1$</p>
+<p>因此如果两个 $\omega$ 位的补码数相加，其结果可能需要 $\omega+1$ 位来表示</p>
+<p>如果结果大于 $2^{\omega-1}-1$ ，则发生<strong>正溢出</strong>，$\omega-1$ 位的值由 $0$ 变为 $1$，数值上相当于加和结果<strong>减去</strong> $2\times2^{\omega-1}&#x3D;2^{\omega}$ </p>
+<p>如果结果小于 $-2^{\omega}$ ，则发生<strong>负溢出</strong>，$\omega$ 位的会溢出为 $1$ ，由于我们需要将该位舍去，因此数值上相当于加和结果<strong>加上</strong> $2^{\omega}$</p>
+<h4 id="补码加法溢出的判断"><a href="#补码加法溢出的判断" class="headerlink" title="补码加法溢出的判断"></a>补码加法溢出的判断</h4><p>设 $TMin\le x,y\le TMax$ ，令 $s&#x3D;x+_{\omega}^{t}y$ </p>
+<p><strong>当且仅当 $x\gt 0,y\gt 0$ 而 $s\le 0$ 时</strong>，发生<strong>正溢出</strong></p>
+<p><strong>当且仅当 $x\lt 0,y\lt 0$ 而 $s\ge 0$ 时</strong>，发生<strong>负溢出</strong></p>
 <p>代码判断：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//返回-1表示负溢出，1表示正溢出，0表示正常</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tadd_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span> &amp;&amp; y &lt; <span class="hljs-number">0</span> &amp;&amp; sum &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x &gt; <span class="hljs-number">0</span> &amp;&amp; y &gt; <span class="hljs-number">0</span> &amp;&amp; sum &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>该程序不能写成：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tadd_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sum = x + y;<br>    <span class="hljs-keyword">return</span> (sum - x == y) &amp;&amp; (sum - y == x);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这是因为，<strong>无论补码加法是否溢出，<code>sum -x == y</code>
-都始终成立</strong>（补码加法是模数加法，具有循环的特性）</p>
-<p>如果需要判断 <span class="math inline">\(x-y\)</span>
-是否发生溢出，不能写成：</p>
+
+<p>这是因为，<strong>无论补码加法是否溢出，<code>sum -x == y</code> 都始终成立</strong>（补码加法是模数加法，具有循环的特性）</p>
+<p>如果需要判断 $x-y$ 是否发生溢出，不能写成：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tsub_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">tadd_ok</span>(x, -y);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>当 <span class="math inline">\(y\)</span> 取除 <span class="math inline">\(TMin\)</span> 以外的任何值时，都是满足条件的，但当
-<span class="math inline">\(y=TMin\)</span>
-时，此函数做出了与我们期望相反的行为</p>
-<p>当 <span class="math inline">\(y=TMin\)</span> 时，该函数认为只要
-<span class="math inline">\(x\ge 0\)</span> 时就不会发生溢出，只要 <span class="math inline">\(x\lt
-0\)</span>时就会发生溢出，但实际与此刚好相反</p>
-<p>当 <span class="math inline">\(y=TMin\)</span> 时，<span class="math inline">\(-y=TMin\)</span> ，若 <span class="math inline">\(x\ge 0\)</span>
-，其实际计算结果为<strong>正数</strong>，但位表示却为负数，因此发生了溢出；同理，若
-<span class="math inline">\(x;t 0\)</span>
-，其实际计算结果<strong>依旧</strong>为<strong>正数</strong>，在位表示上，溢出的一位会被舍去，而符号位为
-<span class="math inline">\(0\)</span>
-，即位表示为正数，因此没有发生溢出</p>
+
+<p>当 $y$ 取除 $TMin$ 以外的任何值时，都是满足条件的，但当 $y&#x3D;TMin$ 时，此函数做出了与我们期望相反的行为</p>
+<p>当 $y&#x3D;TMin$ 时，该函数认为只要 $x\ge 0$ 时就不会发生溢出，只要 $x\lt 0$时就会发生溢出，但实际与此刚好相反</p>
+<p>当 $y&#x3D;TMin$ 时，$-y&#x3D;TMin$ ，若 $x\ge 0$ ，其实际计算结果为<strong>正数</strong>，但位表示却为负数，因此发生了溢出；同理，若 $x;t 0$ ，其实际计算结果<strong>依旧</strong>为<strong>正数</strong>，在位表示上，溢出的一位会被舍去，而符号位为 $0$ ，即位表示为正数，因此没有发生溢出</p>
 <p>正确写法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//溢出返回1，未溢出返回0</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tsub_ok</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sub = x - y;<br>    <span class="hljs-keyword">return</span> (x &gt; <span class="hljs-number">0</span> &amp;&amp; y &lt; <span class="hljs-number">0</span> &amp;&amp; sub &lt; <span class="hljs-number">0</span>) || (x &lt; <span class="hljs-number">0</span> &amp;&amp; y &gt; <span class="hljs-number">0</span> &amp;&amp; sub &gt; <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="补码的非">补码的非</h4>
-<p>设 <span class="math inline">\(TMin\le x\le TMax\)</span> ，<span class="math inline">\(x\)</span> 的补码非 <span class="math inline">\(-_{\omega}^{t}x\)</span> 由下式给出：</p>
-<p><span class="math display">\[
-\begin{align*}
--_{\omega}^{t}x=\left \{ \begin{matrix} &amp;TMin,&amp;x=TMin\\
-&amp;-x,&amp;x\gt TMin
-\end{matrix}\right.
-\end{align*}
-\]</span></p>
-<p>补码的非本质上同无符号的非一样，都是找一个数 <span class="math inline">\(y\)</span> 使得 <span class="math inline">\((y+_{\omega}^{t}x)\bmod 2^{\omega}=0\)</span>
-，本质上都是模数加法的溢出</p>
-<p>在位表示上，对于任意值 <span class="math inline">\(x\)</span> ，<span class="math inline">\(\sim x+1\)</span> 所求得的值就是 <span class="math inline">\(x\)</span> 的非，即 <span class="math inline">\(-x\)</span></p>
-<h5 id="快速求补码非的办法">快速求补码非的办法</h5>
-<p>在 <span class="math inline">\(x\)</span> 的二进制表示中，设 <span class="math inline">\(k\)</span> 为最右边的 <span class="math inline">\(1\)</span> 的位置，即 <span class="math inline">\(x\)</span> 的位表示为 <span class="math inline">\([x_{\omega-1},x_{\omega-2},\cdots,x_{k+1},1,0,\cdots,0]\)</span>
-（只要 <span class="math inline">\(x\)</span> 不为 <span class="math inline">\(0\)</span> 就总能找到这样的 <span class="math inline">\(k\)</span>）</p>
-<p>这个值的非的位表示为 <span class="math inline">\([\sim
-x_{\omega-1},\sim x_{\omega-2},\cdots,\sim
-x_{k+1},1,0,\cdots,0]\)</span></p>
-<p>也就等同于，将 <span class="math inline">\(k\)</span>
-的左边所有位均<strong>取反</strong></p>
-<h3 id="无符号乘法">无符号乘法</h3>
-<p>对于 <span class="math inline">\(0\le x,y\le UMax\)</span>
-，无符号乘法结果由下式给出：</p>
-<p><span class="math display">\[
-x*_{\omega}^{u}y=(x*y)\bmod 2^{\omega}
-\]</span></p>
-<p>两个 <span class="math inline">\(\omega\)</span>
-位的数相乘，结果可能需要 <span class="math inline">\(2\omega\)</span>
-位才能表示，因此无符号程序会将结果<strong>截断为 <span class="math inline">\(\omega\)</span> 位</strong></p>
-<h3 id="补码乘法">补码乘法</h3>
-<p>对于 <span class="math inline">\(TMin\le x,y\le TMax\)</span>
-，补码乘法结果由下式给出：</p>
-<p><span class="math display">\[
-x*_{\omega}^{t}y=U2T((x*y)\bmod 2^{\omega})
-\]</span></p>
-<p>其实就是将乘法结果<strong>截断为 <span class="math inline">\(\omega\)</span>
-位，然后再从补码的角度解释</strong></p>
-<h3 id="乘以常数">乘以常数</h3>
-<h4 id="乘以-2-的次幂">乘以 2 的次幂</h4>
-<p>我们先讨论乘以 <span class="math inline">\(2\)</span>
-的次幂的情况</p>
-<p>无论是无符号数还是补码数，乘以 <span class="math inline">\(2^k\)</span> 相当于将位表示左移 <span class="math inline">\(k\)</span> 个单位，然后再对其进行截断，即：</p>
-<p><span class="math display">\[
-x*_{\omega}^{u}2^k=B2U((x*2^k)\bmod 2^{\omega})\\
-x*_{\omega}^{t}2^k=U2T((x*2^k)\bmod 2^{\omega})
-\]</span></p>
-<h4 id="乘以任意常数">乘以任意常数</h4>
-<p>对于乘以任意常数 <span class="math inline">\(K\)</span>
-的情况，我们将 <span class="math inline">\(K\)</span>
-的二进制表示写出来：<span class="math inline">\([(0\cdots 0)(1\cdots
-1)(0\cdots 0)]\)</span> ，必然会是<strong>连续</strong>的 <span class="math inline">\(0,1\)</span> 交替的情况</p>
-<p>例如，<span class="math inline">\(14\)</span> 可以写为 <span class="math inline">\([(0\cdots0)(111)(0)]\)</span>，考虑<strong>位位值</strong>从
-<span class="math inline">\(n\)</span> 到 <span class="math inline">\(m\)</span> 的一组连续的 <span class="math inline">\(1\)</span> （<span class="math inline">\(n\ge
-m\)</span> ，且二者均从 <span class="math inline">\(0\)</span>
-开始）。（对 <span class="math inline">\(14\)</span> 来说，<span class="math inline">\(n=3,m=1\)</span>）我们可以用以下两种方式来将乘以任意常数
-<span class="math inline">\(K\)</span> 转换成加法、减法与移位操作：</p>
+
+<h4 id="补码的非"><a href="#补码的非" class="headerlink" title="补码的非"></a>补码的非</h4><p>设 $TMin\le x\le TMax$ ，$x$ 的补码非 $-_{\omega}^{t}x$ 由下式给出：</p>
+<p>$$<br>\begin{align*}<br>-_{\omega}^{t}x&#x3D;\left { \begin{matrix} &amp;TMin,&amp;x&#x3D;TMin\<br>&amp;-x,&amp;x\gt TMin<br>\end{matrix}\right.<br>\end{align*}<br>$$</p>
+<p>补码的非本质上同无符号的非一样，都是找一个数 $y$ 使得 $(y+_{\omega}^{t}x)\bmod 2^{\omega}&#x3D;0$ ，本质上都是模数加法的溢出</p>
+<p>在位表示上，对于任意值 $x$ ，$\sim x+1$ 所求得的值就是 $x$ 的非，即 $-x$</p>
+<h5 id="快速求补码非的办法"><a href="#快速求补码非的办法" class="headerlink" title="快速求补码非的办法"></a>快速求补码非的办法</h5><p>在 $x$ 的二进制表示中，设 $k$ 为最右边的 $1$ 的位置，即 $x$ 的位表示为 $[x_{\omega-1},x_{\omega-2},\cdots,x_{k+1},1,0,\cdots,0]$ （只要 $x$ 不为 $0$ 就总能找到这样的 $k$）</p>
+<p>这个值的非的位表示为 $[\sim x_{\omega-1},\sim x_{\omega-2},\cdots,\sim x_{k+1},1,0,\cdots,0]$</p>
+<p>也就等同于，将 $k$ 的左边所有位均<strong>取反</strong></p>
+<h3 id="无符号乘法"><a href="#无符号乘法" class="headerlink" title="无符号乘法"></a>无符号乘法</h3><p>对于 $0\le x,y\le UMax$ ，无符号乘法结果由下式给出：</p>
+<p>$$<br>x*_{\omega}^{u}y&#x3D;(x*y)\bmod 2^{\omega}<br>$$</p>
+<p>两个 $\omega$ 位的数相乘，结果可能需要 $2\omega$ 位才能表示，因此无符号程序会将结果<strong>截断为 $\omega$ 位</strong></p>
+<h3 id="补码乘法"><a href="#补码乘法" class="headerlink" title="补码乘法"></a>补码乘法</h3><p>对于 $TMin\le x,y\le TMax$ ，补码乘法结果由下式给出：</p>
+<p>$$<br>x*_{\omega}^{t}y&#x3D;U2T((x*y)\bmod 2^{\omega})<br>$$</p>
+<p>其实就是将乘法结果<strong>截断为 $\omega$ 位，然后再从补码的角度解释</strong></p>
+<h3 id="乘以常数"><a href="#乘以常数" class="headerlink" title="乘以常数"></a>乘以常数</h3><h4 id="乘以-2-的次幂"><a href="#乘以-2-的次幂" class="headerlink" title="乘以 2 的次幂"></a>乘以 2 的次幂</h4><p>我们先讨论乘以 $2$ 的次幂的情况</p>
+<p>无论是无符号数还是补码数，乘以 $2^k$ 相当于将位表示左移 $k$ 个单位，然后再对其进行截断，即：</p>
+<p>$$<br>x*_{\omega}^{u}2^k&#x3D;B2U((x<em>2^k)\bmod 2^{\omega})\<br>x</em>_{\omega}^{t}2^k&#x3D;U2T((x*2^k)\bmod 2^{\omega})<br>$$</p>
+<h4 id="乘以任意常数"><a href="#乘以任意常数" class="headerlink" title="乘以任意常数"></a>乘以任意常数</h4><p>对于乘以任意常数 $K$ 的情况，我们将 $K$ 的二进制表示写出来：$[(0\cdots 0)(1\cdots 1)(0\cdots 0)]$ ，必然会是<strong>连续</strong>的 $0,1$ 交替的情况</p>
+<p>例如，$14$ 可以写为 $[(0\cdots0)(111)(0)]$，考虑<strong>位位值</strong>从 $n$ 到 $m$ 的一组连续的 $1$ （$n\ge m$ ，且二者均从 $0$ 开始）。（对 $14$ 来说，$n&#x3D;3,m&#x3D;1$）我们可以用以下两种方式来将乘以任意常数 $K$ 转换成加法、减法与移位操作：</p>
 <ul>
-<li><p><span class="math inline">\((x\ll n)+(x\ll (n-1))+\cdots+(x\ll
-m)\)</span></p></li>
-<li><p><span class="math inline">\((x\ll (n + 1))-(x\ll
-m)\)</span></p></li>
+<li><p>$(x\ll n)+(x\ll (n-1))+\cdots+(x\ll m)$</p>
+</li>
+<li><p>$(x\ll (n + 1))-(x\ll m)$</p>
+</li>
 </ul>
-<p>问题：如果加法、减法、移位所需的时间相同，那么当 <span class="math inline">\(n,m\)</span>
-取不同值时，编译器该如何决定选择哪一种操作？</p>
+<p>问题：如果加法、减法、移位所需的时间相同，那么当 $n,m$ 取不同值时，编译器该如何决定选择哪一种操作？</p>
 <p>分类讨论：</p>
-<p>如果 <span class="math inline">\(n=m\)</span>
-，那么第一种只需要一次移位，第二种需要一次减法和两次移位</p>
-<p>如果 <span class="math inline">\(n=m+1\)</span>
-，那么第一种需要两次移位和一次加法，第二种需要两次移位和一次减法</p>
-<p>如果 <span class="math inline">\(n\gt m+1\)</span>
-，那么第二种只会需要两次移位和一次减法，第一种需要 <span class="math inline">\(n-m+1\)</span> 次移位和 <span class="math inline">\(n-m\)</span> 次加法</p>
+<p>如果 $n&#x3D;m$ ，那么第一种只需要一次移位，第二种需要一次减法和两次移位</p>
+<p>如果 $n&#x3D;m+1$ ，那么第一种需要两次移位和一次加法，第二种需要两次移位和一次减法</p>
+<p>如果 $n\gt m+1$ ，那么第二种只会需要两次移位和一次减法，第一种需要 $n-m+1$ 次移位和 $n-m$ 次加法</p>
 <p>综上，我们有如下结论：</p>
 <ul>
-<li>若 <span class="math inline">\(n=m\)</span> ，选第一种</li>
-<li>若 <span class="math inline">\(n=m+1\)</span> ，哪种都行</li>
-<li>若 <span class="math inline">\(n\gt m+1\)</span>，选第二种</li>
+<li>若 $n&#x3D;m$ ，选第一种</li>
+<li>若 $n&#x3D;m+1$ ，哪种都行</li>
+<li>若 $n\gt m+1$，选第二种</li>
 </ul>
-<h3 id="除以-2-的幂">除以 2 的幂</h3>
-<h4 id="取整的描述">取整的描述</h4>
-<p>对于除法，我们期望其结果<strong>总是舍去小数</strong>，这一点对正数和负数我们都期望是成立的</p>
-<p>例如，我们期望：<span class="math inline">\(5\div 2=2,\ -5\div
-2=-2\)</span></p>
+<h3 id="除以-2-的幂"><a href="#除以-2-的幂" class="headerlink" title="除以 2 的幂"></a>除以 2 的幂</h3><h4 id="取整的描述"><a href="#取整的描述" class="headerlink" title="取整的描述"></a>取整的描述</h4><p>对于除法，我们期望其结果<strong>总是舍去小数</strong>，这一点对正数和负数我们都期望是成立的</p>
+<p>例如，我们期望：$5\div 2&#x3D;2,\ -5\div 2&#x3D;-2$</p>
 <p>这种舍入我们称为<strong>向零舍入</strong>，即直接舍去小数位</p>
 <p>为了更便于描述该过程，我们需要引入两个符号：下取整与上取整</p>
-<p>对于任意实数 <span class="math inline">\(x\)</span> ，我们定义 <span class="math inline">\(\lfloor x\rfloor\)</span>
-生成唯一<strong>整数</strong> <span class="math inline">\(x&#39;\)</span> 使得 <span class="math inline">\(x&#39;\le x\lt x&#39;+1\)</span>，<span class="math inline">\(\lceil x\rceil\)</span>
-生成唯一<strong>整数</strong> <span class="math inline">\(x&#39;\)</span> 使得 <span class="math inline">\(x&#39;-1\lt x\le x&#39;\)</span></p>
+<p>对于任意实数 $x$ ，我们定义 $\lfloor x\rfloor$ 生成唯一<strong>整数</strong> $x’$ 使得 $x’\le x\lt x’+1$，$\lceil x\rceil$ 生成唯一<strong>整数</strong> $x’$ 使得 $x’-1\lt x\le x’$</p>
 <p>例如：</p>
-<p><span class="math inline">\(\lfloor 2.5\rfloor\)</span> 生成 <span class="math inline">\(x&#39;=2\)</span> ，使得 <span class="math inline">\(x&#39;\le 2.5\lt x&#39;+1\)</span></p>
-<p><span class="math inline">\(\lfloor -2.5\rfloor\)</span> 生成 <span class="math inline">\(x&#39;=-3\)</span> ，使得 <span class="math inline">\(x&#39;\le -2.5\lt x&#39;+1\)</span></p>
-<p><span class="math inline">\(\lceil 2.5\rceil\)</span> 生成 <span class="math inline">\(x&#39;=3\)</span> ，使得 <span class="math inline">\(x&#39;-1\lt 2.5\le x&#39;\)</span></p>
-<p><span class="math inline">\(\lceil -2.5\rceil\)</span> 生成 <span class="math inline">\(x&#39;=-2\)</span> ，使得 <span class="math inline">\(x&#39;-1\lt -2.5\le x&#39;\)</span></p>
+<p>$\lfloor 2.5\rfloor$ 生成 $x’&#x3D;2$ ，使得 $x’\le 2.5\lt x’+1$</p>
+<p>$\lfloor -2.5\rfloor$ 生成 $x’&#x3D;-3$ ，使得 $x’\le -2.5\lt x’+1$</p>
+<p>$\lceil 2.5\rceil$ 生成 $x’&#x3D;3$ ，使得 $x’-1\lt 2.5\le x’$</p>
+<p>$\lceil -2.5\rceil$ 生成 $x’&#x3D;-2$ ，使得 $x’-1\lt -2.5\le x’$</p>
 <p>我们发现，对于整数的<strong>向零舍入</strong>，恰好用<strong>下取整</strong>便可以描述，而对于负数的<strong>向零舍入</strong>，我们需要<strong>上取整</strong>才可以描述</p>
-<h4 id="无符号除法">无符号除法</h4>
-<p>若一个无符号数除以 <span class="math inline">\(2^k\)</span>
-，则对其执行<strong>算术右移 <span class="math inline">\(k\)</span>
-个单位</strong>，所得二进制表示便是<strong>下取整</strong>的结果</p>
-<p>例如：<span class="math inline">\(5=[0101]\)</span>
-，将其右移一位（除以 <span class="math inline">\(2^1\)</span>），所得位表示为 <span class="math inline">\(2=[0010]\)</span>
-，我们发现这恰好变式<strong>下取整</strong></p>
-<p>对于无符号数值 <span class="math inline">\(x\)</span> 和整数 <span class="math inline">\(k\)</span> 而言，<span class="math inline">\(x\gg
-k=\lfloor x/2^k\rfloor\)</span></p>
-<h4 id="补码除法">补码除法</h4>
-<p>对于补码的除法，我们需要在右移的过程中保证符号不变，因此必须执行<strong>算术右移</strong></p>
+<h4 id="无符号除法"><a href="#无符号除法" class="headerlink" title="无符号除法"></a>无符号除法</h4><p>若一个无符号数除以 $2^k$ ，则对其执行<strong>算术右移 $k$ 个单位</strong>，所得二进制表示便是<strong>下取整</strong>的结果</p>
+<p>例如：$5&#x3D;[0101]$ ，将其右移一位（除以 $2^1$），所得位表示为 $2&#x3D;[0010]$ ，我们发现这恰好变式<strong>下取整</strong></p>
+<p>对于无符号数值 $x$ 和整数 $k$ 而言，$x\gg k&#x3D;\lfloor x&#x2F;2^k\rfloor$</p>
+<h4 id="补码除法"><a href="#补码除法" class="headerlink" title="补码除法"></a>补码除法</h4><p>对于补码的除法，我们需要在右移的过程中保证符号不变，因此必须执行<strong>算术右移</strong></p>
 <p>我们从一个例子出发，考虑对负数直接执行算术右移的操作后，其结果如何</p>
-<p>如果我期望将 <span class="math inline">\(-5=[1011]\)</span>
-右移一位除以 <span class="math inline">\(2^1\)</span> ，那么所得位表示为
-<span class="math inline">\(-3=[1101]\)</span></p>
+<p>如果我期望将 $-5&#x3D;[1011]$ 右移一位除以 $2^1$ ，那么所得位表示为 $-3&#x3D;[1101]$</p>
 <p>我们发现，不论是逻辑右移还是算术右移，其结果<strong>都是下取整</strong>。这对于正数是合理的，但对于负数却不是我们希望的，我们需要一种办法将下取整转换为上取整</p>
 <p>我们利用如下等式：</p>
-<p><span class="math display">\[
-\lceil x/y\rceil=\lfloor (x+y-1)/y \rfloor
-\]</span></p>
-<p>例如，当 <span class="math inline">\(x=-30,\ y=4\)</span> 时，<span class="math inline">\(\lceil -30/4\rceil=-7\)</span> ，此时我们有 <span class="math inline">\(x+y-1=-27\)</span> ，而 <span class="math inline">\(\lfloor
-(x+y-1)/y\rfloor=\lfloor-27/4\rfloor=-7\)</span></p>
-<p>对于补码数 <span class="math inline">\(x\)</span> 和整数 <span class="math inline">\(k\)</span> 而言，<span class="math inline">\(x\gg
-k=\lceil x/2^k\rceil=\lfloor (x+2^k-1)/2^k \rfloor=(x+(1\ll k)-1)\gg
-k\)</span></p>
-<p>到此为止，我们已经讨论了除以 <span class="math inline">\(2\)</span>
-的幂次的情况，但不幸的是，除法无法像乘法那样推广到除以任意常数 <span class="math inline">\(K\)</span>。换句话说，对于任意常数 <span class="math inline">\(K\)</span>
-，我们无法将其简单地转为<strong>除以多个 <span class="math inline">\(2\)</span> 的幂次相加的情况</strong></p>
-<p>你也许会想，任意一个数都可以分解为 <span class="math inline">\(2\)</span>
-的幂次，并且乘法与除法都满足<strong>分配律</strong>，为什么除法不能像乘法那样分解呢？</p>
+<p>$$<br>\lceil x&#x2F;y\rceil&#x3D;\lfloor (x+y-1)&#x2F;y \rfloor<br>$$</p>
+<p>例如，当 $x&#x3D;-30,\ y&#x3D;4$ 时，$\lceil -30&#x2F;4\rceil&#x3D;-7$ ，此时我们有 $x+y-1&#x3D;-27$ ，而 $\lfloor (x+y-1)&#x2F;y\rfloor&#x3D;\lfloor-27&#x2F;4\rfloor&#x3D;-7$</p>
+<p>对于补码数 $x$ 和整数 $k$ 而言，$x\gg k&#x3D;\lceil x&#x2F;2^k\rceil&#x3D;\lfloor (x+2^k-1)&#x2F;2^k \rfloor&#x3D;(x+(1\ll k)-1)\gg k$</p>
+<p>到此为止，我们已经讨论了除以 $2$ 的幂次的情况，但不幸的是，除法无法像乘法那样推广到除以任意常数 $K$。换句话说，对于任意常数 $K$ ，我们无法将其简单地转为<strong>除以多个 $2$ 的幂次相加的情况</strong></p>
+<p>你也许会想，任意一个数都可以分解为 $2$ 的幂次，并且乘法与除法都满足<strong>分配律</strong>，为什么除法不能像乘法那样分解呢？</p>
 <p>这里的问题在于，除法会有<strong>舍入</strong>的问题（而乘法不具有这种问题），如果将其简单的分解为多个数相除，那么小数的部分将会全部被舍去，这将会导致最终的结果与我们所预期的相差过大</p>
-<h2 id="浮点数">浮点数</h2>
-<h3 id="表示">表示</h3>
-<p>所有二进制小数均可以表示成以下形式：</p>
-<p><span class="math display">\[
-b_m\ b_{m-1}\ b_{m-2}\ \cdots \ b_{2}\ b_{1}\ b_{0}\ .\ b_{-1}\ b_{-2}\
-b_{-3}\ \cdots\  b_{-(n-1)}\ b_{n}
-\]</span></p>
+<h2 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h2><h3 id="表示"><a href="#表示" class="headerlink" title="表示"></a>表示</h3><p>所有二进制小数均可以表示成以下形式：</p>
+<p>$$<br>b_m\ b_{m-1}\ b_{m-2}\ \cdots \ b_{2}\ b_{1}\ b_{0}\ .\ b_{-1}\ b_{-2}\ b_{-3}\ \cdots\  b_{-(n-1)}\ b_{n}<br>$$</p>
 <p>数学定义如下：</p>
-<p><span class="math display">\[
-b=\sum_{i=-n}^{m}b_i\times 2^i
-\]</span></p>
-<p>基于此，我们给出 <span class="math inline">\(\rm IEEE\)</span>
-浮点标准：</p>
-<p>浮点数表示为：<span class="math inline">\(V=(-1)^s\times M\times
-2^E\)</span></p>
+<p>$$<br>b&#x3D;\sum_{i&#x3D;-n}^{m}b_i\times 2^i<br>$$</p>
+<p>基于此，我们给出 $\rm IEEE$ 浮点标准：</p>
+<p>浮点数表示为：$V&#x3D;(-1)^s\times M\times 2^E$</p>
 <ul>
-<li>符号 (<code>sign</code>) <span class="math inline">\(s\)</span>
-用于决定该数为正数 <span class="math inline">\(s=0\)</span> 还是负数
-<span class="math inline">\(s=1\)</span>
-<ul>
-<li>单精度为 <span class="math inline">\(31\)</span> 位，双精度为 <span class="math inline">\(63\)</span> 位</li>
-</ul></li>
-<li>尾数 (<code>significand</code>) <span class="math inline">\(M\)</span> 是一个二进制小数，范围为 <span class="math inline">\(0\sim 1-\epsilon\)</span> (<code>denormal</code>)
-或 <span class="math inline">\(1\sim 2-\epsilon\)</span>
-(<code>normal</code>)
-<ul>
-<li>单精度为 <span class="math inline">\(22\sim 0\)</span> 位，双精度为
-<span class="math inline">\(51\sim 0\)</span></li>
-</ul></li>
-<li>阶码 (<code>exponent</code>) <span class="math inline">\(E\)</span>
-用于对浮点数加权
-<ul>
-<li>单精度为 <span class="math inline">\(30\sim 23\)</span> 位，双精度为
-<span class="math inline">\(62\sim 52\)</span></li>
-</ul></li>
+<li>符号 (<code>sign</code>) $s$ 用于决定该数为正数 $s&#x3D;0$ 还是负数 $s&#x3D;1$<ul>
+<li>单精度为 $31$ 位，双精度为 $63$ 位</li>
 </ul>
-<p>下面我们以单精度为例，说明 <span class="math inline">\(\rm
-IEEE\)</span> 的三种不同情况：</p>
-<h4 id="normal">Normal</h4>
-<p>当 <code>exp</code>
-位表示<strong>不全为零</strong>（数值为零）<strong>也不全为一</strong>（单精度为
-<span class="math inline">\(255\)</span>，双精度为 <span class="math inline">\(2047\)</span>）时，属于此种情况</p>
-<p>此时阶码值 <span class="math inline">\(E=e-Bias\)</span> ，其中 <span class="math inline">\(e\)</span> 为 <code>exp</code>
-的<strong>无符号</strong>位表示，即 <span class="math inline">\(e_{k-1}e_{k-2}\cdots e_1e_0\)</span> ，而 <span class="math inline">\(Bias\)</span> 的值为 <span class="math inline">\(2^{k-1}-1\)</span>（单精度为 <span class="math inline">\(127\)</span> ，双精度为 <span class="math inline">\(1023\)</span>）</p>
-<p>此时，单精度 <span class="math inline">\(E\)</span> 的范围为 <span class="math inline">\(-126\sim 127\)</span> ，双精度 <span class="math inline">\(E\)</span> 的范围为 <span class="math inline">\(-1022\sim 1023\)</span></p>
-<p>此时 <code>frac</code> 字段的位表示用于描述小数值 <span class="math inline">\(f\)</span>，二进制表示为 <span class="math inline">\(0.f_{n-1}f_{n-2}\cdots f_{1}f_{0}\)</span>
-，而尾数 <span class="math inline">\(M\)</span> 的值为 <span class="math inline">\(1+f\)</span>（采用此种表示可以额外获取一位的精度）</p>
-<h4 id="denormal">Denormal</h4>
-<p>当 <code>exp</code>
-的位表示<strong>全为零</strong>时为此种情况，此时阶码值 <span class="math inline">\(E=1-Bias\)</span>（这是特殊规定的，而不是 <span class="math inline">\(-Bias\)</span>），而尾数 <span class="math inline">\(M\)</span> 的值为 <span class="math inline">\(M=f\)</span>（此时开头不包含隐含的 <span class="math inline">\(1\)</span>）</p>
-<p>非规格数的作用是用于表示那些非常接近 <span class="math inline">\(0.0\)</span> 的数，这被称为逐渐下溢
-<code>gradual underflow</code></p>
-<h4 id="inf-nan">INF &amp; NaN</h4>
-<p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code>
-字段<strong>全为零</strong>时，表示无穷大，分为正无穷大与负无穷大</p>
-<p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code>
-字段<strong>不全为零</strong>时，表示 <span class="math inline">\(NaN\)</span> <code>Not a Number</code></p>
+</li>
+<li>尾数 (<code>significand</code>) $M$ 是一个二进制小数，范围为 $0\sim 1-\epsilon$ (<code>denormal</code>) 或 $1\sim 2-\epsilon$ (<code>normal</code>)<ul>
+<li>单精度为 $22\sim 0$ 位，双精度为 $51\sim 0$</li>
+</ul>
+</li>
+<li>阶码 (<code>exponent</code>) $E$ 用于对浮点数加权<ul>
+<li>单精度为 $30\sim 23$ 位，双精度为 $62\sim 52$</li>
+</ul>
+</li>
+</ul>
+<p>下面我们以单精度为例，说明 $\rm IEEE$ 的三种不同情况：</p>
+<h4 id="Normal"><a href="#Normal" class="headerlink" title="Normal"></a>Normal</h4><p>当 <code>exp</code> 位表示<strong>不全为零</strong>（数值为零）<strong>也不全为一</strong>（单精度为 $255$，双精度为 $2047$）时，属于此种情况</p>
+<p>此时阶码值 $E&#x3D;e-Bias$ ，其中 $e$ 为 <code>exp</code> 的<strong>无符号</strong>位表示，即 $e_{k-1}e_{k-2}\cdots e_1e_0$ ，而 $Bias$ 的值为 $2^{k-1}-1$（单精度为 $127$ ，双精度为 $1023$）</p>
+<p>此时，单精度 $E$ 的范围为 $-126\sim 127$ ，双精度 $E$ 的范围为 $-1022\sim 1023$</p>
+<p>此时 <code>frac</code> 字段的位表示用于描述小数值 $f$，二进制表示为 $0.f_{n-1}f_{n-2}\cdots f_{1}f_{0}$ ，而尾数 $M$ 的值为 $1+f$（采用此种表示可以额外获取一位的精度）</p>
+<h4 id="Denormal"><a href="#Denormal" class="headerlink" title="Denormal"></a>Denormal</h4><p>当 <code>exp</code> 的位表示<strong>全为零</strong>时为此种情况，此时阶码值 $E&#x3D;1-Bias$（这是特殊规定的，而不是 $-Bias$），而尾数 $M$ 的值为 $M&#x3D;f$（此时开头不包含隐含的 $1$）</p>
+<p>非规格数的作用是用于表示那些非常接近 $0.0$ 的数，这被称为逐渐下溢 <code>gradual underflow</code></p>
+<h4 id="INF-amp-NaN"><a href="#INF-amp-NaN" class="headerlink" title="INF &amp; NaN"></a>INF &amp; NaN</h4><p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code> 字段<strong>全为零</strong>时，表示无穷大，分为正无穷大与负无穷大</p>
+<p>当 <code>exp</code> 字段<strong>全为一</strong>且 <code>frac</code> 字段<strong>不全为零</strong>时，表示 $NaN$ <code>Not a Number</code></p>
 <hr>
-<h3 id="范围">范围</h3>
-<table>
-
+<h3 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h3><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;"><code>Description</code></th>
-<th style="text-align: center;"><code>exp</code></th>
-<th style="text-align: center;"><code>frac</code></th>
-<th style="text-align: center;"><code>float</code></th>
-<th style="text-align: center;"><code>double</code></th>
+<tr>
+<th align="center"><code>Description</code></th>
+<th align="center"><code>exp</code></th>
+<th align="center"><code>frac</code></th>
+<th align="center"><code>float</code></th>
+<th align="center"><code>double</code></th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>0</code></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><span class="math inline">\(0/0.0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(0/0.0\)</span></td>
+<tbody><tr>
+<td align="center"><code>0</code></td>
+<td align="center"><code>00...00</code></td>
+<td align="center"><code>00...00</code></td>
+<td align="center">$0&#x2F;0.0$</td>
+<td align="center">$0&#x2F;0.0$</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(Denormal_{min}\)</span></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><code>00...01</code></td>
-<td style="text-align: center;"><span class="math inline">\(2^{-23}\times 2^{-126}/1.4\times
-10^{-45}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(2^{-52}\times 2^{-1022}/4.9\times
-2^{-324}\)</span></td>
+<tr>
+<td align="center">$Denormal_{min}$</td>
+<td align="center"><code>00...00</code></td>
+<td align="center"><code>00...01</code></td>
+<td align="center">$2^{-23}\times 2^{-126}&#x2F;1.4\times 10^{-45}$</td>
+<td align="center">$2^{-52}\times 2^{-1022}&#x2F;4.9\times 2^{-324}$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(Denormal_{max}\)</span></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><code>11...11</code></td>
-<td style="text-align: center;"><span class="math inline">\((1-\epsilon)\times 2^{-126}/1.2\times
-10^{-38}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((1-\epsilon)\times 2^{-1022}/2.2\times
-10^{-308}\)</span></td>
+<tr>
+<td align="center">$Denormal_{max}$</td>
+<td align="center"><code>00...00</code></td>
+<td align="center"><code>11...11</code></td>
+<td align="center">$(1-\epsilon)\times 2^{-126}&#x2F;1.2\times 10^{-38}$</td>
+<td align="center">$(1-\epsilon)\times 2^{-1022}&#x2F;2.2\times 10^{-308}$</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(Normal_{min}\)</span></td>
-<td style="text-align: center;"><code>00...01</code></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><span class="math inline">\(1\times
-2^{-126}/1.2\times 2^{-38}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\times
-2^{-1022}/2.2\times 2^{-308}\)</span></td>
+<tr>
+<td align="center">$Normal_{min}$</td>
+<td align="center"><code>00...01</code></td>
+<td align="center"><code>00...00</code></td>
+<td align="center">$1\times 2^{-126}&#x2F;1.2\times 2^{-38}$</td>
+<td align="center">$1\times 2^{-1022}&#x2F;2.2\times 2^{-308}$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
-<td style="text-align: center;"><code>01...11</code></td>
-<td style="text-align: center;"><code>00...00</code></td>
-<td style="text-align: center;"><span class="math inline">\(1\times
-2^{0}/1.0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\times
-2^{0}/1.0\)</span></td>
+<tr>
+<td align="center">$1$</td>
+<td align="center"><code>01...11</code></td>
+<td align="center"><code>00...00</code></td>
+<td align="center">$1\times 2^{0}&#x2F;1.0$</td>
+<td align="center">$1\times 2^{0}&#x2F;1.0$</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(normal_{max}\)</span></td>
-<td style="text-align: center;"><code>11...10</code></td>
-<td style="text-align: center;"><code>11...11</code></td>
-<td style="text-align: center;"><span class="math inline">\((2-\epsilon)\times 2^{127}/3.4\times
-10^{38}\)</span></td>
-<td style="text-align: center;"><span class="math inline">\((2-\epsilon)\times 2^{1023}/1.8\times
-10^{308}\)</span></td>
+<tr>
+<td align="center">$normal_{max}$</td>
+<td align="center"><code>11...10</code></td>
+<td align="center"><code>11...11</code></td>
+<td align="center">$(2-\epsilon)\times 2^{127}&#x2F;3.4\times 10^{38}$</td>
+<td align="center">$(2-\epsilon)\times 2^{1023}&#x2F;1.8\times 10^{308}$</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <hr>
-<h3 id="舍入">舍入</h3>
-<p><span class="math inline">\(\rm IEEE\)</span>
-定义了四种舍入方式，分别如下：</p>
-<h4 id="向上舍入">向上舍入</h4>
-<p>将正数与负数<strong>均向上舍入</strong>，得到值 <span class="math inline">\(x^{+}\)</span> ，使得 <span class="math inline">\(x^{+}\ge x\)</span></p>
+<h3 id="舍入"><a href="#舍入" class="headerlink" title="舍入"></a>舍入</h3><p>$\rm IEEE$ 定义了四种舍入方式，分别如下：</p>
+<h4 id="向上舍入"><a href="#向上舍入" class="headerlink" title="向上舍入"></a>向上舍入</h4><p>将正数与负数<strong>均向上舍入</strong>，得到值 $x^{+}$ ，使得 $x^{+}\ge x$</p>
 <table>
-
 <thead>
-<tr class="header">
-<th style="text-align: center;">正数</th>
-<th style="text-align: center;">负数</th>
+<tr>
+<th align="center">正数</th>
+<th align="center">负数</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(round(1.4)=2\\round(1.6)=2\\round(1.5)=2\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-1\\round(-1.6)=-1\\round(-1.5)=-1\)</span></td>
+<tbody><tr>
+<td align="center">$round(1.4)&#x3D;2\round(1.6)&#x3D;2\round(1.5)&#x3D;2$</td>
+<td align="center">$round(-1.4)&#x3D;-1\round(-1.6)&#x3D;-1\round(-1.5)&#x3D;-1$</td>
 </tr>
-</tbody>
-</table>
-<h4 id="向下舍入">向下舍入</h4>
-<p>将正数与负数<strong>均向下舍入</strong>，得到值 <span class="math inline">\(x^{-}\)</span> ，使得 <span class="math inline">\(x^{-}\le x\)</span></p>
+</tbody></table>
+<h4 id="向下舍入"><a href="#向下舍入" class="headerlink" title="向下舍入"></a>向下舍入</h4><p>将正数与负数<strong>均向下舍入</strong>，得到值 $x^{-}$ ，使得 $x^{-}\le x$</p>
 <table>
-
 <thead>
-<tr class="header">
-<th style="text-align: center;">正数</th>
-<th style="text-align: center;">负数</th>
+<tr>
+<th align="center">正数</th>
+<th align="center">负数</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(round(1.4)=1\\round(1.6)=1\\round(1.5)=1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-2\\round(-1.6)=-2\\round(-1.5)=-2\)</span></td>
+<tbody><tr>
+<td align="center">$round(1.4)&#x3D;1\round(1.6)&#x3D;1\round(1.5)&#x3D;1$</td>
+<td align="center">$round(-1.4)&#x3D;-2\round(-1.6)&#x3D;-2\round(-1.5)&#x3D;-2$</td>
 </tr>
-</tbody>
-</table>
-<h4 id="向零舍入">向零舍入</h4>
-<p>将<strong>正数向下舍入</strong>，<strong>负数向上舍入</strong></p>
+</tbody></table>
+<h4 id="向零舍入"><a href="#向零舍入" class="headerlink" title="向零舍入"></a>向零舍入</h4><p>将<strong>正数向下舍入</strong>，<strong>负数向上舍入</strong></p>
 <table>
-
 <thead>
-<tr class="header">
-<th style="text-align: center;">正数</th>
-<th style="text-align: center;">负数</th>
+<tr>
+<th align="center">正数</th>
+<th align="center">负数</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(round(1.4)=1\\round(1.6)=1\\round(1.5)=1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(round(-1.4)=-1\\round(-1.6)=-1\\round(-1.5)=-1\)</span></td>
+<tbody><tr>
+<td align="center">$round(1.4)&#x3D;1\round(1.6)&#x3D;1\round(1.5)&#x3D;1$</td>
+<td align="center">$round(-1.4)&#x3D;-1\round(-1.6)&#x3D;-1\round(-1.5)&#x3D;-1$</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>不难发现，相当于<strong>直接去掉小数位</strong></p>
-<h4 id="向偶数舍入">向偶数舍入</h4>
-<p>将数字<strong>向上或向下舍入</strong>，使得<strong>最低有效位为偶数</strong></p>
-<p>对于十进制小数而言，<strong>小于 <span class="math inline">\(0.5\)</span> 的均向下舍入，大于 <span class="math inline">\(0.5\)</span> 的均向上舍入</strong></p>
-<p>对于等于 <span class="math inline">\(0.5\)</span>
-的数，考虑在原先的基础上<strong>加上或减去</strong> <span class="math inline">\(0.5\)</span> ，最终结果取偶数</p>
-<p>具体来说，<span class="math inline">\(1.5\)</span> 加上或减去 <span class="math inline">\(0.5\)</span> ，得到 <span class="math inline">\(1\)</span> 或 <span class="math inline">\(2\)</span> ，我们取偶数 <span class="math inline">\(2\)</span></p>
-<p>对于二进制小数而言，小数点后所有小于 <span class="math inline">\(0.10\cdots 0\)</span> 的向下舍入，所有大于 <span class="math inline">\(0.10\cdots 0\)</span> 的向上舍入</p>
-<p>对于等于 <span class="math inline">\(0.10\cdots 0\)</span>
-的数，考虑在原先的基础上<strong>加上或减去</strong> <span class="math inline">\(0.10\cdots 0\)</span> ，最终结果取偶数</p>
-<p>具体来说，<span class="math inline">\(10.100\)</span> 可以得到 <span class="math inline">\(11\)</span> 与 <span class="math inline">\(10\)</span> ，在这里取 <span class="math inline">\(10\)</span></p>
+<h4 id="向偶数舍入"><a href="#向偶数舍入" class="headerlink" title="向偶数舍入"></a>向偶数舍入</h4><p>将数字<strong>向上或向下舍入</strong>，使得<strong>最低有效位为偶数</strong></p>
+<p>对于十进制小数而言，<strong>小于 $0.5$ 的均向下舍入，大于 $0.5$ 的均向上舍入</strong></p>
+<p>对于等于 $0.5$ 的数，考虑在原先的基础上<strong>加上或减去</strong> $0.5$ ，最终结果取偶数</p>
+<p>具体来说，$1.5$ 加上或减去 $0.5$ ，得到 $1$ 或 $2$ ，我们取偶数 $2$</p>
+<p>对于二进制小数而言，小数点后所有小于 $0.10\cdots 0$ 的向下舍入，所有大于 $0.10\cdots 0$ 的向上舍入</p>
+<p>对于等于 $0.10\cdots 0$ 的数，考虑在原先的基础上<strong>加上或减去</strong> $0.10\cdots 0$ ，最终结果取偶数</p>
+<p>具体来说，$10.100$ 可以得到 $11$ 与 $10$ ，在这里取 $10$</p>
 <p>上面的讨论均是以舍入到整数，如果是舍入到小数点后的情况，也是同理</p>
 <hr>
-<h3 id="浮点运算">浮点运算</h3>
-<p>我们定义浮点数加法 <span class="math inline">\(x+^{f}y=Round(x+y)\)</span></p>
-<p>由于浮点数<strong>溢出和舍入</strong>，因此浮点数加法是<strong>可交换的</strong>但<strong>不可结合的</strong>，也就是只满足
-<span class="math inline">\(x+^{f}y=y+^{f}x\)</span></p>
-<p>例如，使用 <code>float</code> 计算 <span class="math inline">\((3.14+1e10)-1e10\)</span> 会得到 <span class="math inline">\(0\)</span> ，但计算 <span class="math inline">\(3.14+(1e10-1e10)\)</span> 会得到 <span class="math inline">\(3.14\)</span></p>
-<p>其次，除了 <span class="math inline">\(NaN\)</span> 和 <span class="math inline">\(\infin\)</span> ，其余的浮点数值均存在逆元，即
-<span class="math inline">\(x+^{f}(-x)=0\)</span></p>
-<p>另一方面，浮点数满足单调性，即对于任意的 <span class="math inline">\(x\)</span> ，如果 <span class="math inline">\(a\ge
-b\)</span> ，那么有 <span class="math inline">\(a+x\ge b+x\)</span>
-，而无符号数与补码数<strong>均不具有此属性</strong></p>
-<p>我们定义浮点数乘法 <span class="math inline">\(x*^{f}y=Round(x\times
-y)\)</span></p>
+<h3 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h3><p>我们定义浮点数加法 $x+^{f}y&#x3D;Round(x+y)$</p>
+<p>由于浮点数<strong>溢出和舍入</strong>，因此浮点数加法是<strong>可交换的</strong>但<strong>不可结合的</strong>，也就是只满足 $x+^{f}y&#x3D;y+^{f}x$</p>
+<p>例如，使用 <code>float</code> 计算 $(3.14+1e10)-1e10$ 会得到 $0$ ，但计算 $3.14+(1e10-1e10)$ 会得到 $3.14$</p>
+<p>其次，除了 $NaN$ 和 $\infin$ ，其余的浮点数值均存在逆元，即 $x+^{f}(-x)&#x3D;0$</p>
+<p>另一方面，浮点数满足单调性，即对于任意的 $x$ ，如果 $a\ge b$ ，那么有 $a+x\ge b+x$ ，而无符号数与补码数<strong>均不具有此属性</strong></p>
+<p>我们定义浮点数乘法 $x*^{f}y&#x3D;Round(x\times y)$</p>
 <p>同样由于浮点数的舍入与溢出，乘法<strong>只具有交换性而不具有结合性</strong>，并且乘法也<strong>不具有分配性</strong></p>
-<p>例如，使用 <code>float</code> 计算 <span class="math inline">\(1e20*(1e20-1e20)\)</span> 会得到 <span class="math inline">\(0\)</span> ，但计算 <span class="math inline">\(1e20*1e20-1e20*1e20\)</span> 会得到 <span class="math inline">\(NaN\)</span></p>
+<p>例如，使用 <code>float</code> 计算 $1e20*(1e20-1e20)$ 会得到 $0$ ，但计算 $1e20<em>1e20-1e20</em>1e20$ 会得到 $NaN$</p>
 <p>另一方面，浮点数的乘法满足单调性，即：</p>
-<p><span class="math display">\[
-a\ge b,c\ge 0\rightarrow a*^{f}c\ge b^{f}c\\
-a\ge b,c\le 0\rightarrow a*^{f}c\le b^{f}c
-\]</span></p>
-<p>此外，如果保证 <span class="math inline">\(x\ne NaN\)</span>
-，那么有：<span class="math inline">\(x*^{f}x\ge 0\)</span></p>
+<p>$$<br>a\ge b,c\ge 0\rightarrow a<em>^{f}c\ge b^{f}c\<br>a\ge b,c\le 0\rightarrow a</em>^{f}c\le b^{f}c<br>$$</p>
+<p>此外，如果保证 $x\ne NaN$ ，那么有：$x*^{f}x\ge 0$</p>
 <p>同样，无符号数与补码数并不具有这些特点</p>
-<h3 id="类型转换">类型转换</h3>
-<ul>
-<li>当 <code>float</code> 或 <code>int</code> 转 <code>double</code>
-时，由于 <code>double</code>
-具有更大的精度，因此<strong>不会发生溢出或舍入</strong></li>
-<li>当 <code>int</code> 转 <code>folat</code>
-时，会<strong>发生舍入</strong>但<strong>不会发生溢出</strong></li>
-<li>当 <code>double</code> 转 <code>folat</code>
-时，由于精度问题，会发生舍入与溢出（溢出到 <span class="math inline">\(\infin\)</span>）</li>
-<li>当 <code>float</code> 或 <code>double</code> 转 <code>int</code>
-时，值会发生<strong>向零舍入</strong>，即正数向下舍入负数向上舍入</li>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ul>
+<li>当 <code>float</code> 或 <code>int</code> 转 <code>double</code> 时，由于 <code>double</code> 具有更大的精度，因此<strong>不会发生溢出或舍入</strong></li>
+<li>当 <code>int</code> 转 <code>folat</code> 时，会<strong>发生舍入</strong>但<strong>不会发生溢出</strong></li>
+<li>当 <code>double</code> 转 <code>folat</code> 时，由于精度问题，会发生舍入与溢出（溢出到 $\infin$）</li>
+<li>当 <code>float</code> 或 <code>double</code> 转 <code>int</code> 时，值会发生<strong>向零舍入</strong>，即正数向下舍入负数向上舍入</li>
 </ul>
 
                 
@@ -1105,9 +820,9 @@ a\ge b,c\le 0\rightarrow a*^{f}c\le b^{f}c
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/15/Algorithm_Archiv/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">
+                      <a href="/2023/04/15/Algorithm_Archiv/LeetCode/" title="LeetCode">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">动态规划</span>
+                        <span class="hidden-mobile">LeetCode</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     

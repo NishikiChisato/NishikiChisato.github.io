@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="动态规划  动态规划  问题索引 线性 DP  数字三角形  基础 变式  LIS (最长上升子序列 )  基础 变式  LCS (最长公共子序列) LCS 变式 LICS (最长上升公共子序列) 用多少个最长上升子序列可以覆盖一个给定的序列 求可变序列与给定数同余的方案数 将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的">
+    <meta name="description" content="动态规划 动态规划 问题索引 线性 DP 数字三角形 基础 变式   LIS (最长上升子序列 ) 基础 变式   LCS (最长公共子序列) LCS 变式 LICS (最长上升公共子序列) 用多少个最长上升子序列可以覆盖一个给定的序列 求可变序列与给定数同余的方案数 将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值   背包 基础 变式 体积定义为「至少」 特">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态规划">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/Algorithm_Archiv/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="动态规划  动态规划  问题索引 线性 DP  数字三角形  基础 变式  LIS (最长上升子序列 )  基础 变式  LCS (最长公共子序列) LCS 变式 LICS (最长上升公共子序列) 用多少个最长上升子序列可以覆盖一个给定的序列 求可变序列与给定数同余的方案数 将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的">
+<meta property="og:description" content="动态规划 动态规划 问题索引 线性 DP 数字三角形 基础 变式   LIS (最长上升子序列 ) 基础 变式   LCS (最长公共子序列) LCS 变式 LICS (最长上升公共子序列) 用多少个最长上升子序列可以覆盖一个给定的序列 求可变序列与给定数同余的方案数 将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值   背包 基础 变式 体积定义为「至少」 特">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%20Archiv/Algorithm%20Archiv%20(1).jpg">
 <meta property="article:published_time" content="2023-04-15T02:45:28.356Z">
@@ -274,7 +274,7 @@
         
         
         
-          179 mins
+          176 mins
         
       </span>
     
@@ -346,666 +346,411 @@
             
               <div class="markdown-body">
                 
-                <h1 id="动态规划">动态规划</h1>
-<ul>
-<li><a href="#动态规划">动态规划</a>
-<ul>
-<li><a href="#问题索引">问题索引</a></li>
-<li><a href="#线性-dp">线性 DP</a>
-<ul>
-<li><a href="#数字三角形">数字三角形</a>
-<ul>
-<li><a href="#基础">基础</a></li>
-<li><a href="#变式">变式</a></li>
-</ul></li>
-<li><a href="#lis-最长上升子序列-">LIS (最长上升子序列 )</a>
-<ul>
-<li><a href="#基础-1">基础</a></li>
-<li><a href="#变式-1">变式</a></li>
-</ul></li>
-<li><a href="#lcs-最长公共子序列">LCS (最长公共子序列)</a></li>
-<li><a href="#lcs-变式">LCS 变式</a></li>
-<li><a href="#lics-最长上升公共子序列">LICS
-(最长上升公共子序列)</a></li>
-<li><a href="#用多少个最长上升子序列可以覆盖一个给定的序列">用多少个最长上升子序列可以覆盖一个给定的序列</a></li>
-<li><a href="#求可变序列与给定数同余的方案数">求可变序列与给定数同余的方案数</a></li>
-<li><a href="#将给定序列分段保证每段和不超过给定数情况下求每段中所有数的最大值之和的最小值">将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</a></li>
-</ul></li>
-<li><a href="#背包">背包</a>
-<ul>
-<li><a href="#基础-2">基础</a></li>
-<li><a href="#变式-2">变式</a>
-<ul>
-<li><a href="#体积定义为至少">体积定义为「至少」</a></li>
-<li><a href="#特殊化的有依赖背包问题">特殊化的「有依赖」背包问题</a></li>
-<li><a href="#一般化的有依赖背包背包问题">一般化的「有依赖」背包背包问题</a></li>
-<li><a href="#求方案数与具体方案">求方案数与具体方案</a></li>
-<li><a href="#贪心将无限集缩小为有限集">「贪心」将无限集缩小为有限集</a></li>
-<li><a href="#单调队列优化多重背包">单调队列优化多重背包</a></li>
-<li><a href="#二维费用背包问题">二维费用背包问题</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#状态机-dp">状态机 DP</a>
-<ul>
-<li><a href="#基础-3">基础</a></li>
-<li><a href="#变式-3">变式</a></li>
-</ul></li>
-<li><a href="#状态压缩-dp">状态压缩 DP</a>
-<ul>
-<li><a href="#基础-4">基础</a></li>
-<li><a href="#变式-4">变式</a></li>
-</ul></li>
-<li><a href="#区间-dp">区间 DP</a>
-<ul>
-<li><a href="#基础-5">基础</a></li>
-<li><a href="#变式-5">变式</a>
-<ul>
-<li><a href="#环形问题的一般化处理思路">环形问题的一般化处理思路</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#树形-dp">树形 DP</a>
-<ul>
-<li><a href="#基础-6">基础</a></li>
-<li><a href="#变式-6">变式</a></li>
-</ul></li>
-<li><a href="#数位-dp">数位 DP</a>
-<ul>
-<li><a href="#基础-7">基础</a></li>
-</ul></li>
-<li><a href="#单调队列优化">单调队列优化</a>
-<ul>
-<li><a href="#基础-8">基础</a></li>
-<li><a href="#变式-7">变式</a></li>
-</ul></li>
-</ul></li>
+                <h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><ul>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a><ul>
+<li><a href="#%E9%97%AE%E9%A2%98%E7%B4%A2%E5%BC%95">问题索引</a></li>
+<li><a href="#%E7%BA%BF%E6%80%A7-dp">线性 DP</a><ul>
+<li><a href="#%E6%95%B0%E5%AD%97%E4%B8%89%E8%A7%92%E5%BD%A2">数字三角形</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F">变式</a></li>
 </ul>
-<h2 id="问题索引">问题索引</h2>
-<p>单调队列中，<strong>只需考虑队头元素</strong>：<a href="#单调队列优化多重背包">单调队列优化多重背包</a></p>
-<p>单调队列中，<strong>需要考虑所有元素</strong>：<a href="#将给定序列分段保证每段和不超过给定数情况下求每段中所有数的最大值之和的最小值">将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</a></p>
-<h2 id="线性-dp">线性 DP</h2>
-<h3 id="数字三角形">数字三角形</h3>
-<h4 id="基础">基础</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1017/">AcWing
-1015. 摘花生</a></p>
-<h4 id="变式">变式</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160302/">AcWing 1018.
-最低通行费</a></p>
-<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1020/">AcWing
-1018. 最低通行费</a></p>
+</li>
+<li><a href="#lis-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97-">LIS (最长上升子序列 )</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-1">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-1">变式</a></li>
+</ul>
+</li>
+<li><a href="#lcs-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97">LCS (最长公共子序列)</a></li>
+<li><a href="#lcs-%E5%8F%98%E5%BC%8F">LCS 变式</a></li>
+<li><a href="#lics-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97">LICS (最长上升公共子序列)</a></li>
+<li><a href="#%E7%94%A8%E5%A4%9A%E5%B0%91%E4%B8%AA%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97%E5%8F%AF%E4%BB%A5%E8%A6%86%E7%9B%96%E4%B8%80%E4%B8%AA%E7%BB%99%E5%AE%9A%E7%9A%84%E5%BA%8F%E5%88%97">用多少个最长上升子序列可以覆盖一个给定的序列</a></li>
+<li><a href="#%E6%B1%82%E5%8F%AF%E5%8F%98%E5%BA%8F%E5%88%97%E4%B8%8E%E7%BB%99%E5%AE%9A%E6%95%B0%E5%90%8C%E4%BD%99%E7%9A%84%E6%96%B9%E6%A1%88%E6%95%B0">求可变序列与给定数同余的方案数</a></li>
+<li><a href="#%E5%B0%86%E7%BB%99%E5%AE%9A%E5%BA%8F%E5%88%97%E5%88%86%E6%AE%B5%E4%BF%9D%E8%AF%81%E6%AF%8F%E6%AE%B5%E5%92%8C%E4%B8%8D%E8%B6%85%E8%BF%87%E7%BB%99%E5%AE%9A%E6%95%B0%E6%83%85%E5%86%B5%E4%B8%8B%E6%B1%82%E6%AF%8F%E6%AE%B5%E4%B8%AD%E6%89%80%E6%9C%89%E6%95%B0%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC%E4%B9%8B%E5%92%8C%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC">将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</a></li>
+</ul>
+</li>
+<li><a href="#%E8%83%8C%E5%8C%85">背包</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-2">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-2">变式</a><ul>
+<li><a href="#%E4%BD%93%E7%A7%AF%E5%AE%9A%E4%B9%89%E4%B8%BA%E8%87%B3%E5%B0%91">体积定义为「至少」</a></li>
+<li><a href="#%E7%89%B9%E6%AE%8A%E5%8C%96%E7%9A%84%E6%9C%89%E4%BE%9D%E8%B5%96%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">特殊化的「有依赖」背包问题</a></li>
+<li><a href="#%E4%B8%80%E8%88%AC%E5%8C%96%E7%9A%84%E6%9C%89%E4%BE%9D%E8%B5%96%E8%83%8C%E5%8C%85%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">一般化的「有依赖」背包背包问题</a></li>
+<li><a href="#%E6%B1%82%E6%96%B9%E6%A1%88%E6%95%B0%E4%B8%8E%E5%85%B7%E4%BD%93%E6%96%B9%E6%A1%88">求方案数与具体方案</a></li>
+<li><a href="#%E8%B4%AA%E5%BF%83%E5%B0%86%E6%97%A0%E9%99%90%E9%9B%86%E7%BC%A9%E5%B0%8F%E4%B8%BA%E6%9C%89%E9%99%90%E9%9B%86">「贪心」将无限集缩小为有限集</a></li>
+<li><a href="#%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%E4%BC%98%E5%8C%96%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85">单调队列优化多重背包</a></li>
+<li><a href="#%E4%BA%8C%E7%BB%B4%E8%B4%B9%E7%94%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">二维费用背包问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%8A%B6%E6%80%81%E6%9C%BA-dp">状态机 DP</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-3">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-3">变式</a></li>
+</ul>
+</li>
+<li><a href="#%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9-dp">状态压缩 DP</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-4">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-4">变式</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8C%BA%E9%97%B4-dp">区间 DP</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-5">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-5">变式</a><ul>
+<li><a href="#%E7%8E%AF%E5%BD%A2%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%80%E8%88%AC%E5%8C%96%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF">环形问题的一般化处理思路</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%A0%91%E5%BD%A2-dp">树形 DP</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-6">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-6">变式</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E4%BD%8D-dp">数位 DP</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-7">基础</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%E4%BC%98%E5%8C%96">单调队列优化</a><ul>
+<li><a href="#%E5%9F%BA%E7%A1%80-8">基础</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-7">变式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="问题索引"><a href="#问题索引" class="headerlink" title="问题索引"></a>问题索引</h2><p>单调队列中，<strong>只需考虑队头元素</strong>：<a href="#%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%E4%BC%98%E5%8C%96%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85">单调队列优化多重背包</a></p>
+<p>单调队列中，<strong>需要考虑所有元素</strong>：<a href="#%E5%B0%86%E7%BB%99%E5%AE%9A%E5%BA%8F%E5%88%97%E5%88%86%E6%AE%B5%E4%BF%9D%E8%AF%81%E6%AF%8F%E6%AE%B5%E5%92%8C%E4%B8%8D%E8%B6%85%E8%BF%87%E7%BB%99%E5%AE%9A%E6%95%B0%E6%83%85%E5%86%B5%E4%B8%8B%E6%B1%82%E6%AF%8F%E6%AE%B5%E4%B8%AD%E6%89%80%E6%9C%89%E6%95%B0%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC%E4%B9%8B%E5%92%8C%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC">将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</a></p>
+<h2 id="线性-DP"><a href="#线性-DP" class="headerlink" title="线性 DP"></a>线性 DP</h2><h3 id="数字三角形"><a href="#数字三角形" class="headerlink" title="数字三角形"></a>数字三角形</h3><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1017/">AcWing 1015. 摘花生</a></p>
+<h4 id="变式"><a href="#变式" class="headerlink" title="变式"></a>变式</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160302/">AcWing 1018. 最低通行费</a></p>
+<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1020/">AcWing 1018. 最低通行费</a></p>
 <hr>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1029/">AcWing
-1027. 方格取数</a></p>
-<p>这道题本质上是<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160295/">AcWing 1015.
-摘花生</a>的增强版，走的次数变为两次</p>
-<p>考虑与上题同样的做法，设 <span class="math inline">\(f[i_1,j_1,i_2,j_2]\)</span> 所表示集合为：所有从
-<span class="math inline">\((1,1),(1,1)\)</span> 分别走到 <span class="math inline">\((i_1,j_1),(i_2,j_2)\)</span>
-的方案数，集合的属性为所有方案中的价值最大值</p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1029/">AcWing 1027. 方格取数</a></p>
+<p>这道题本质上是<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160295/">AcWing 1015. 摘花生</a>的增强版，走的次数变为两次</p>
+<p>考虑与上题同样的做法，设 $f[i_1,j_1,i_2,j_2]$ 所表示集合为：所有从 $(1,1),(1,1)$ 分别走到 $(i_1,j_1),(i_2,j_2)$ 的方案数，集合的属性为所有方案中的价值最大值</p>
 <p>由于同一个数只能取一次，因此当两条路线相交时，对应的数只能被加一次，考虑两条路线相交时的条件：</p>
-<p>当两条路线第一次相交时，有 <span class="math inline">\(i_1=i_2,j_1=j_2\)</span>
-，并且两条路线的<strong>长度</strong>相同，即 <span class="math inline">\(i_1+j_1=i_2+j_2\)</span></p>
-<p>设 <span class="math inline">\(i_1+j_1=i_2+j_2=k\)</span>，我们时刻用
-<span class="math inline">\(k\)</span>
-来表示<strong>单条路径的长度</strong></p>
-<p>由于是同时走的，因此<strong>两条路线的长度始终相等</strong>，因此只要
-<span class="math inline">\(i_1=i_2\)</span>
-，我们便可以判断二者是否重合</p>
-<p>基于上述讨论，我们便可以省去一维，得以重新定义递推函数 <span class="math inline">\(f[k][i_1][i_2]\)</span> ，其中 <span class="math inline">\(k\)</span> 表示<strong>路径长度</strong></p>
-<p>对于点 <span class="math inline">\((i_1,j_1),(i_2,j_2)\)</span>
-，两条路线一共有四种走法：</p>
+<p>当两条路线第一次相交时，有 $i_1&#x3D;i_2,j_1&#x3D;j_2$ ，并且两条路线的<strong>长度</strong>相同，即 $i_1+j_1&#x3D;i_2+j_2$</p>
+<p>设 $i_1+j_1&#x3D;i_2+j_2&#x3D;k$，我们时刻用 $k$ 来表示<strong>单条路径的长度</strong></p>
+<p>由于是同时走的，因此<strong>两条路线的长度始终相等</strong>，因此只要 $i_1&#x3D;i_2$ ，我们便可以判断二者是否重合</p>
+<p>基于上述讨论，我们便可以省去一维，得以重新定义递推函数 $f[k][i_1][i_2]$ ，其中 $k$ 表示<strong>路径长度</strong></p>
+<p>对于点 $(i_1,j_1),(i_2,j_2)$ ，两条路线一共有四种走法：</p>
 <ul>
-<li>均向下，即 <span class="math inline">\((i_1,j_1-1)(i_2,j_2-1)\)</span> 到 <span class="math inline">\((i_1,j_1),(i_2,j_2)\)</span> ，对应状态为 <span class="math inline">\(f[k-1][i_1][i_2]\)</span></li>
-<li>均向右，即 <span class="math inline">\((i_1-1,j_1),(i_2-1,j_2)\)</span> 到 <span class="math inline">\((i_1,j_1),(i_2,j_2)\)</span> ，对应状态为 <span class="math inline">\(f[k-1][i_1-1][i_2-1]\)</span></li>
-<li>一个向下，另一个向右，即 <span class="math inline">\((i_1-1,j_1),(i_2,j_2-1)\)</span> 或者 <span class="math inline">\((i_1,j_1-1),(i_2-1,j_2)\)</span> 到 <span class="math inline">\((i_1,j_1),(i_2,j_2)\)</span> ，对应状态为 <span class="math inline">\(f[k-1][i_1-1][i_2]\)</span> 或者 <span class="math inline">\(f[k-1][i_1][i_2-1]\)</span></li>
+<li>均向下，即 $(i_1,j_1-1)(i_2,j_2-1)$ 到 $(i_1,j_1),(i_2,j_2)$ ，对应状态为 $f[k-1][i_1][i_2]$</li>
+<li>均向右，即 $(i_1-1,j_1),(i_2-1,j_2)$ 到 $(i_1,j_1),(i_2,j_2)$ ，对应状态为 $f[k-1][i_1-1][i_2-1]$</li>
+<li>一个向下，另一个向右，即 $(i_1-1,j_1),(i_2,j_2-1)$ 或者 $(i_1,j_1-1),(i_2-1,j_2)$ 到 $(i_1,j_1),(i_2,j_2)$ ，对应状态为 $f[k-1][i_1-1][i_2]$ 或者 $f[k-1][i_1][i_2-1]$</li>
 </ul>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">15</span>;<br><span class="hljs-type">int</span> g[N][N], f[<span class="hljs-number">2</span> * N][N][N];<br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-type">int</span> x, y, w;<br>    <span class="hljs-keyword">while</span>(cin &gt;&gt; x &gt;&gt; y &gt;&gt; w, x || y || w)<br>        g[x][y] = w;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">2</span>; k &lt;= <span class="hljs-number">2</span> * n; k ++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i1 = <span class="hljs-number">1</span>; i1 &lt;= n; i1 ++)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i2 = <span class="hljs-number">1</span>; i2 &lt;= n; i2 ++)<br>            &#123;<br>                <span class="hljs-type">int</span> j1 = k - i1, j2 = k - i2;<br>                <span class="hljs-keyword">if</span>(j1 &gt;= <span class="hljs-number">1</span> &amp;&amp; j1 &lt;= n &amp;&amp; j2 &gt;= <span class="hljs-number">1</span> &amp;&amp; j2 &lt;= n)<br>                &#123;<br>                    <span class="hljs-type">int</span>&amp; v = f[k][i1][i2];<br>                    <span class="hljs-type">int</span> t = g[i1][j1];<br>                    <span class="hljs-keyword">if</span>(i1 != i2) t += g[i2][j2];<br>                    v = <span class="hljs-built_in">max</span>(v, f[k - <span class="hljs-number">1</span>][i1 - <span class="hljs-number">1</span>][i2 - <span class="hljs-number">1</span>] + t);<br>                    v = <span class="hljs-built_in">max</span>(v, f[k - <span class="hljs-number">1</span>][i1 - <span class="hljs-number">1</span>][i2] + t);<br>                    v = <span class="hljs-built_in">max</span>(v, f[k - <span class="hljs-number">1</span>][i1][i2 - <span class="hljs-number">1</span>] + t);<br>                    v = <span class="hljs-built_in">max</span>(v, f[k - <span class="hljs-number">1</span>][i1][i2] + t);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[<span class="hljs-number">2</span> * n][n][n] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/277/">AcWing
-275. 传纸条</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/277/">AcWing 275. 传纸条</a></p>
 <p>本题跟上一题一样，可以直接套上一题的代码</p>
 <p>需要注意的是，当两条路线重合时，总可以通过对重合点进行微调，使得调整后的两条路径和的价值<strong>大于等于</strong>未调整前的，这其实是贪心的思路</p>
-<p>需要注意的是，由于本题 <span class="math inline">\(1\le i\le m, 1\le
-j\le n\)</span>，而 <span class="math inline">\(j=k-i\)</span> ，因此
-<span class="math inline">\(i\ge n-k,i\le k-1\)</span></p>
-<p>由于 <span class="math inline">\(k\)</span> 会增大到 <span class="math inline">\(m+n\)</span>
-，又可能导致越界，因此在赋初值时需要取 <span class="math inline">\(max\)</span> ，终点值需要取 <span class="math inline">\(min\)</span></p>
+<p>需要注意的是，由于本题 $1\le i\le m, 1\le j\le n$，而 $j&#x3D;k-i$ ，因此 $i\ge n-k,i\le k-1$ </p>
+<p>由于 $k$ 会增大到 $m+n$ ，又可能导致越界，因此在赋初值时需要取 $max$ ，终点值需要取 $min$</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">55</span>;<br><span class="hljs-type">int</span> g[N][N], f[<span class="hljs-number">2</span> * N][N][N];<br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; m &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i ++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++) cin &gt;&gt; g[i][j];<br>        <span class="hljs-comment">//j = k - i, 1 &lt;= j &lt;= n    ==&gt;  </span><br>        <span class="hljs-comment">//1 &lt;= k - i &lt;= n           ==&gt; </span><br>        <span class="hljs-comment">//i &gt;= n - k, i &lt;= k - 1</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">2</span>; k &lt;= n + m; k ++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i1 = <span class="hljs-built_in">max</span>(k - n, <span class="hljs-number">1</span>); i1 &lt;= <span class="hljs-built_in">min</span>(m, k - <span class="hljs-number">1</span>); i1 ++)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i2 = <span class="hljs-built_in">max</span>(k - n, <span class="hljs-number">1</span>); i2 &lt;= <span class="hljs-built_in">min</span>(m, k - <span class="hljs-number">1</span>); i2 ++)<br>            &#123;<br>                <span class="hljs-type">int</span> j1 = k - i1, j2 = k - i2;<br>                <span class="hljs-type">int</span> t = g[i1][j1];<br>                <span class="hljs-keyword">if</span>(i1 != i2) t += g[i2][j2];<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> a = <span class="hljs-number">0</span>; a &lt;= <span class="hljs-number">1</span>; a ++)<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> b = <span class="hljs-number">0</span>; b &lt;= <span class="hljs-number">1</span>; b ++)<br>                        f[k][i1][i2] = <span class="hljs-built_in">max</span>(f[k][i1][i2], f[k - <span class="hljs-number">1</span>][i1 - a][i2 - b] + t);<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[m + n][m][m] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h3 id="lis-最长上升子序列">LIS (最长上升子序列 )</h3>
-<h4 id="基础-1">基础</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/897/">AcWing
-895. 最长上升子序列</a></p>
-<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160375/">AcWing 895.
-最长上升子序列</a></p>
+<h3 id="LIS-最长上升子序列"><a href="#LIS-最长上升子序列" class="headerlink" title="LIS (最长上升子序列 )"></a>LIS (最长上升子序列 )</h3><h4 id="基础-1"><a href="#基础-1" class="headerlink" title="基础"></a>基础</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/897/">AcWing 895. 最长上升子序列</a></p>
+<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160375/">AcWing 895. 最长上升子序列</a></p>
 <hr>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160399/">AcWing 896.
-最长上升子序列 II</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160399/">AcWing 896. 最长上升子序列 II</a></p>
 <p>考虑贪心思路，如果我期望一条上升子序列尽可能长，那么我应当让结尾的数尽可能小，这样才能够让更多的数接在当前这条子序列的后面</p>
-<p>我们设 <strong><span class="math inline">\(q[i]\)</span> 表示长度为
-<span class="math inline">\(i\)</span>
-的上升子序列的结尾的数</strong>，显然 <strong><span class="math inline">\(q[i]\)</span> 单调上升</strong></p>
-<p>当前遍历到的数为 <span class="math inline">\(w[i]\)</span>
-，我们考虑将 <span class="math inline">\(w[i]\)</span>
-加到<strong>最后一个「严格」比其小的元素的后面</strong>， 由于 <span class="math inline">\(q[i]\)</span>
-具有二分性，因此这一步可以使用二分</p>
+<p>我们设 <strong>$q[i]$ 表示长度为 $i$ 的上升子序列的结尾的数</strong>，显然 <strong>$q[i]$ 单调上升</strong></p>
+<p>当前遍历到的数为 $w[i]$ ，我们考虑将 $w[i]$ 加到<strong>最后一个「严格」比其小的元素的后面</strong>， 由于 $q[i]$ 具有二分性，因此这一步可以使用二分</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> n;<br><span class="hljs-type">int</span> w[N], q[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n ; i++) cin &gt;&gt; w[i];<br>    <span class="hljs-type">int</span> len = <span class="hljs-number">0</span>;<br>    q[<span class="hljs-number">0</span>] = <span class="hljs-number">-1e9</span>;<span class="hljs-comment">//这里我们设定一个初值，不设也可以</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> l = <span class="hljs-number">0</span>, r = len;<br>        <span class="hljs-keyword">while</span>(l &lt; r)<br>        &#123;<br>            <span class="hljs-type">int</span> mid = l + r + <span class="hljs-number">1</span> &gt;&gt; <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span>(q[mid] &lt; w[i]) l = mid;<br>            <span class="hljs-keyword">else</span> r = mid - <span class="hljs-number">1</span>;<br>        &#125;<br>        q[l + <span class="hljs-number">1</span>] = w[i];<br>        len = <span class="hljs-built_in">max</span>(len, l + <span class="hljs-number">1</span>);<br>    &#125;<br>    cout &lt;&lt; len &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h4 id="变式-1">变式</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1019/">AcWing
-1017. 怪盗基德的滑翔翼</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1016/">AcWing
-1014. 登山</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/484/">AcWing
-482. 合唱队形</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1014/">AcWing
-1012. 友好城市</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1018/">AcWing
-1016. 最大上升子序列和</a></p>
+<h4 id="变式-1"><a href="#变式-1" class="headerlink" title="变式"></a>变式</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1019/">AcWing 1017. 怪盗基德的滑翔翼</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1016/">AcWing 1014. 登山</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/484/">AcWing 482. 合唱队形</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1014/">AcWing 1012. 友好城市</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1018/">AcWing 1016. 最大上升子序列和</a></p>
 <hr>
-<h3 id="lcs-最长公共子序列">LCS (最长公共子序列)</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/899/">AcWing
-897. 最长公共子序列</a></p>
-<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160673/">AcWing 897.
-最长公共子序列</a></p>
+<h3 id="LCS-最长公共子序列"><a href="#LCS-最长公共子序列" class="headerlink" title="LCS (最长公共子序列)"></a>LCS (最长公共子序列)</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/899/">AcWing 897. 最长公共子序列</a></p>
+<p>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160673/">AcWing 897. 最长公共子序列</a></p>
 <hr>
-<h3 id="lcs-变式">LCS 变式</h3>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-common-supersequence/">LeetCode
-1092. 最短公共超序列</a></p>
+<h3 id="LCS-变式"><a href="#LCS-变式" class="headerlink" title="LCS 变式"></a>LCS 变式</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-common-supersequence/">LeetCode 1092. 最短公共超序列</a></p>
 <hr>
-<h3 id="lics-最长上升公共子序列">LICS (最长上升公共子序列)</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161001/">AcWing 272.
-最长公共上升子序列</a></p>
-<p>我们首先回顾一下 <code>LIS</code> 与 <code>LCS</code>
-的状态定义：</p>
-<p><code>LIS</code>：<span class="math inline">\(f[i]\)</span>
-表示集合为所有以 <span class="math inline">\(a[i]\)</span>
-为结尾的最长上升子序列，属性为最长上升子序列的长度最大值（其中长度的最小值为
-<span class="math inline">\(1\)</span>）</p>
-<p><code>LCS</code>：<span class="math inline">\(f[i][j]\)</span>
-表示所有<strong>由 <span class="math inline">\(a[0\cdots i]\)</span> 和
-<span class="math inline">\(b[0\cdots j]\)</span>
-组成的公共子序列</strong>，属性为公共子序列的长度最大值（由这个区间组成，并不是一定会出现这个区间内的所有数）</p>
+<h3 id="LICS-最长上升公共子序列"><a href="#LICS-最长上升公共子序列" class="headerlink" title="LICS (最长上升公共子序列)"></a>LICS (最长上升公共子序列)</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161001/">AcWing 272. 最长公共上升子序列</a></p>
+<p>我们首先回顾一下 <code>LIS</code> 与 <code>LCS</code> 的状态定义：</p>
+<p><code>LIS</code>：$f[i]$ 表示集合为所有以 $a[i]$ 为结尾的最长上升子序列，属性为最长上升子序列的长度最大值（其中长度的最小值为 $1$）</p>
+<p><code>LCS</code>：$f[i][j]$ 表示所有<strong>由 $a[0\cdots i]$ 和 $b[0\cdots j]$ 组成的公共子序列</strong>，属性为公共子序列的长度最大值（由这个区间组成，并不是一定会出现这个区间内的所有数）</p>
 <p>划分集合时，二者如下：</p>
-<p><code>LIS</code>：考虑第 <span class="math inline">\(i\)</span>
-个数的前一个数下标 <span class="math inline">\(j\)</span>
-的可能情况，<span class="math inline">\(j\)</span> 的取值为 <span class="math inline">\(1\sim i - 1\)</span>，只要满足 <span class="math inline">\(a[j]\lt a[i]\)</span>
-，我们便可以从该状态转移过来</p>
-<p><code>LCS</code>：考虑 <span class="math inline">\(a[i]\)</span> 和
-<span class="math inline">\(b[j]\)</span>
-是否在公共子序列中，进而可以分出四种情况</p>
+<p><code>LIS</code>：考虑第 $i$ 个数的前一个数下标 $j$ 的可能情况，$j$ 的取值为 $1\sim i - 1$，只要满足 $a[j]\lt a[i]$ ，我们便可以从该状态转移过来</p>
+<p><code>LCS</code>：考虑 $a[i]$ 和 $b[j]$ 是否在公共子序列中，进而可以分出四种情况</p>
 <p>本题考虑类似的思路：</p>
-<p><span class="math inline">\(f[i][j]\)</span> 表示集合为：所有由 <span class="math inline">\(a[1\sim i]\)</span> 和 <span class="math inline">\(b[1\sim j]\)</span> 构成，以 <span class="math inline">\(b[j]\)</span>
-为结尾的最长公共上升子序列，属性为长度的最大值</p>
-<p>（这里既可以以 <span class="math inline">\(b[j]\)</span>
-结尾，也可以以 <span class="math inline">\(a[i]\)</span>
-结尾，前者更为方便）</p>
-<p>考虑与 <code>LCS</code> 相似的做法：<span class="math inline">\(a[i]\)</span> 是否在最长公共子序列中</p>
+<p>$f[i][j]$ 表示集合为：所有由 $a[1\sim i]$ 和 $b[1\sim j]$ 构成，以 $b[j]$ 为结尾的最长公共上升子序列，属性为长度的最大值</p>
+<p>（这里既可以以 $b[j]$ 结尾，也可以以 $a[i]$ 结尾，前者更为方便）</p>
+<p>考虑与 <code>LCS</code> 相似的做法：$a[i]$ 是否在最长公共子序列中</p>
 <ul>
-<li><p><span class="math inline">\(a[i]\)</span>
-不在最长公共子序列中，有 <span class="math inline">\(f[i][j]=f[i-1][j]\)</span></p></li>
-<li><p><span class="math inline">\(a[i]\)</span>
-在最长公共子序列中（首先长度最小为 <span class="math inline">\(1\)</span>），此时必然有：<span class="math inline">\(a[i]=b[j]\)</span> ，并且该条件<strong>为 <span class="math inline">\(a[i]\)</span>
-在最长公共子序列中的充要条件</strong></p></li>
+<li><p>$a[i]$ 不在最长公共子序列中，有 $f[i][j]&#x3D;f[i-1][j]$</p>
+</li>
+<li><p>$a[i]$ 在最长公共子序列中（首先长度最小为 $1$），此时必然有：$a[i]&#x3D;b[j]$ ，并且该条件<strong>为 $a[i]$ 在最长公共子序列中的充要条件</strong></p>
+</li>
 </ul>
-<p>此时，我们考虑该公共子序列的前一个数的可能情况，设前一个数下标为
-<span class="math inline">\(k\)</span> ，可以进一步将集合划分成：</p>
-<p><span class="math display">\[
-f[i][j]=max(f[i][j], f[i-1][k]+1)
-\]</span></p>
-<p>需要说明的是，后者必须为 <span class="math inline">\(i-1\)</span>
-，因为子状态是不包含 <span class="math inline">\(a[i]\)</span> 与 <span class="math inline">\(b[j]\)</span></p>
-<p>最后我们取 <span class="math inline">\(f[n][i]\)</span>
-的最大值即可</p>
+<p>此时，我们考虑该公共子序列的前一个数的可能情况，设前一个数下标为 $k$ ，可以进一步将集合划分成：</p>
+<p>$$<br>f[i][j]&#x3D;max(f[i][j], f[i-1][k]+1)<br>$$</p>
+<p>需要说明的是，后者必须为 $i-1$ ，因为子状态是不包含 $a[i]$ 与 $b[j]$ </p>
+<p>最后我们取 $f[n][i]$ 的最大值即可</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3010</span>;<br><span class="hljs-type">int</span> a[N], b[N];<br><span class="hljs-type">int</span> f[N][N];<span class="hljs-comment">//表示集合: 由a[0~i], b[0~j]组成，以b[j]为结尾的公共上升子序列, 属性为长度最大值</span><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; b[i];<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<br>        &#123;<br>            f[i][j] = f[i - <span class="hljs-number">1</span>][j];<span class="hljs-comment">//a[i]不在公共上升子序列中</span><br>            <span class="hljs-keyword">if</span>(a[i] == b[j])<span class="hljs-comment">//a[i]在子序列中</span><br>            &#123;<br>                f[i][j] = <span class="hljs-built_in">max</span>(f[i][j], <span class="hljs-number">1</span>);<span class="hljs-comment">//上升子序列的长度最小值为1</span><br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt; j; k++)<br>                    <span class="hljs-keyword">if</span>(b[k] &lt; b[j])<br>                        f[i][j] = <span class="hljs-built_in">max</span>(f[i][j], f[i - <span class="hljs-number">1</span>][k] + <span class="hljs-number">1</span>);<span class="hljs-comment">//我们从同时去掉a[i]和b[j]的状态转移过来</span><br>            &#125;                                                   <span class="hljs-comment">//不能写成f[i][j] = max(f[i][j], f[i][k] + 1)</span><br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) ans = <span class="hljs-built_in">max</span>(ans, f[n][i]);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>需要说明的是，这个代码会超时，我们需要着手进行优化</p>
 <p>我们注意到一下几点：</p>
 <ul>
-<li><span class="math inline">\(f[i][j]\)</span> 的赋值只会发生在 <span class="math inline">\(a[i]=b[j]\)</span> 时</li>
-<li>第二重循环会将 <span class="math inline">\(j\)</span>
-从小到大枚举一遍，第三重循环又会枚举一遍，属于重复枚举</li>
-<li>第三重循环的主要目的是在所有满足 <span class="math inline">\(b[k]\lt
-b[j],\ k\le j\)</span> 的数中找一个最大值（<span class="math inline">\(f[i-1][k]+1\)</span>），这相当于是在求 <span class="math inline">\(j\)</span> 的某个前缀（<span class="math inline">\(i-1\)</span> 是固定的）的最大值</li>
+<li>$f[i][j]$ 的赋值只会发生在 $a[i]&#x3D;b[j]$ 时</li>
+<li>第二重循环会将 $j$ 从小到大枚举一遍，第三重循环又会枚举一遍，属于重复枚举</li>
+<li>第三重循环的主要目的是在所有满足 $b[k]\lt b[j],\ k\le j$ 的数中找一个最大值（$f[i-1][k]+1$），这相当于是在求 $j$ 的某个前缀（$i-1$ 是固定的）的最大值</li>
 </ul>
-<p>关于求某个数前缀的最大值，我们可以用一个变量 <code>maxv</code>
-来记录当前的最大值</p>
-<p>每次先比较当前遍历到的值与 <code>maxv</code>
-来得到当前值的前缀最大值，之后我们在用当前值来更新 <code>maxv</code>
-，具体代码如下：</p>
-<p><span class="math inline">\(w[i]\)</span> 为具体序列，<span class="math inline">\(q[i]\)</span> 表示前缀 <span class="math inline">\(1\sim i\)</span> 中的最大值</p>
+<p>关于求某个数前缀的最大值，我们可以用一个变量 <code>maxv</code> 来记录当前的最大值</p>
+<p>每次先比较当前遍历到的值与 <code>maxv</code> 来得到当前值的前缀最大值，之后我们在用当前值来更新 <code>maxv</code> ，具体代码如下：</p>
+<p>$w[i]$ 为具体序列，$q[i]$ 表示前缀 $1\sim i$ 中的最大值</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> maxv = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>&#123;<br>    q[i] = <span class="hljs-built_in">max</span>(w[i], maxv);<br>    <span class="hljs-keyword">if</span>(w[i] &gt; maxv) maxv = w[i];<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>本题考虑一样的思路，<strong>由于 <span class="math inline">\(a[i]\)</span> 与 <span class="math inline">\(b[j]\)</span>
-是等价的</strong>，因此在内层循环时，只要 <span class="math inline">\(b[j]\lt a[i]\)</span> 满足，我们便可以更新 <span class="math inline">\(maxv\)</span></p>
-<p><span class="math inline">\(maxv\)</span>
-当中所记录的是前缀的最大值</p>
+
+<p>本题考虑一样的思路，<strong>由于 $a[i]$ 与 $b[j]$ 是等价的</strong>，因此在内层循环时，只要 $b[j]\lt a[i]$ 满足，我们便可以更新 $maxv$</p>
+<p>$maxv$ 当中所记录的是前缀的最大值</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3010</span>;<br><br><span class="hljs-type">int</span> n;<br><span class="hljs-type">int</span> a[N], b[N], f[N][N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; b[i];<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> maxv = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++)<br>        &#123;<br>            f[i][j] = f[i - <span class="hljs-number">1</span>][j];<br>            <span class="hljs-keyword">if</span>(a[i] == b[j])<br>                f[i][j] = <span class="hljs-built_in">max</span>(f[i][j], maxv);<br>            <span class="hljs-keyword">if</span>(b[j] &lt; a[i])<br>                maxv = <span class="hljs-built_in">max</span>(maxv, f[i - <span class="hljs-number">1</span>][j] + <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        ans = <span class="hljs-built_in">max</span>(ans, f[n][i]);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>由于这里只用到了 <span class="math inline">\(i\)</span> 与 <span class="math inline">\(i-1\)</span> 的状态，我们考虑空间优化</p>
+
+<p>由于这里只用到了 $i$ 与 $i-1$ 的状态，我们考虑空间优化</p>
 <p>直接将二维变为一维需要考虑两个问题：</p>
 <ul>
-<li><p>当前值的更新是否依据来自上一层的状态（即对应值是否有被覆盖过）</p></li>
-<li><p>当前值更新后，是否会对其他值造成影响</p></li>
+<li><p>当前值的更新是否依据来自上一层的状态（即对应值是否有被覆盖过）</p>
+</li>
+<li><p>当前值更新后，是否会对其他值造成影响</p>
+</li>
 </ul>
-<p><span class="math inline">\(f[j]\)</span> 的更新来自于 <span class="math inline">\(f[j]\)</span> 本身与 <span class="math inline">\(maxv\)</span></p>
-<p>不难发现，<span class="math inline">\(f[j]\)</span>
-所需的更新值不会被任何数所覆盖，我们接着考虑 <span class="math inline">\(f[j]\)</span> 的更新对其他值的影响</p>
-<p><span class="math inline">\(maxv\)</span> 的更新来源于 <span class="math inline">\(f[j]\)</span> 那么当 <span class="math inline">\(f[j]\)</span> 更新时是否会影响到 <span class="math inline">\(maxv\)</span> 呢？</p>
-<p>这里有一重保障是，<span class="math inline">\(f[j]\)</span>
-的更新条件与 <span class="math inline">\(maxv\)</span>
-的更新条件是<strong>互斥</strong>的，二者不会同时发生，自然也谈不上什么影响</p>
+<p>$f[j]$ 的更新来自于 $f[j]$ 本身与 $maxv$</p>
+<p>不难发现，$f[j]$ 所需的更新值不会被任何数所覆盖，我们接着考虑 $f[j]$ 的更新对其他值的影响</p>
+<p>$maxv$ 的更新来源于 $f[j]$ 那么当 $f[j]$ 更新时是否会影响到 $maxv$ 呢？</p>
+<p>这里有一重保障是，$f[j]$ 的更新条件与 $maxv$ 的更新条件是<strong>互斥</strong>的，二者不会同时发生，自然也谈不上什么影响</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3010</span>;<br><br><span class="hljs-type">int</span> n;<br><span class="hljs-type">int</span> a[N], b[N], f[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; b[i];<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> maxv = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(a[i] == b[j])<br>                f[j] = <span class="hljs-built_in">max</span>(f[j], maxv);<br>            <span class="hljs-keyword">if</span>(b[j] &lt; a[i])<br>                maxv = <span class="hljs-built_in">max</span>(maxv, f[j] + <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        ans = <span class="hljs-built_in">max</span>(ans, f[i]);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>最后说明一点：在 <span class="math inline">\(f[i][j]\)</span>
-的定义中，我们可以以 <span class="math inline">\(a[i]\)</span>
-作为结尾来定义，这样我们就需要将 <span class="math inline">\(i\)</span>
-写为内层循环，<span class="math inline">\(j\)</span>
-写为外层循环，同样是可以的，但看起来很难受，所以不推荐</p>
+
+<p>最后说明一点：在 $f[i][j]$ 的定义中，我们可以以 $a[i]$ 作为结尾来定义，这样我们就需要将 $i$ 写为内层循环，$j$ 写为外层循环，同样是可以的，但看起来很难受，所以不推荐</p>
 <hr>
-<h3 id="用多少个最长上升子序列可以覆盖一个给定的序列">用多少个最长上升子序列可以覆盖一个给定的序列</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1012/">AcWing
-1010. 拦截导弹</a></p>
+<h3 id="用多少个最长上升子序列可以覆盖一个给定的序列"><a href="#用多少个最长上升子序列可以覆盖一个给定的序列" class="headerlink" title="用多少个最长上升子序列可以覆盖一个给定的序列"></a>用多少个最长上升子序列可以覆盖一个给定的序列</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1012/">AcWing 1010. 拦截导弹</a></p>
 <p>我们需要求的是，对于给定的序列，<strong>最少</strong>需要用多少递减子序列才能将其覆盖</p>
 <p>由于我们期望用<strong>最少</strong>的子序列个数来覆盖整个序列，也就是要求每个子序列都<strong>尽可能长</strong></p>
-<p>采取贪心的角度考虑，假设我们当前遍历到的数为 <span class="math inline">\(x\)</span>
-，对于前面的数我们已经构成了不同的递减子序列，我们当前考虑的是 <span class="math inline">\(x\)</span> 应该如何处理</p>
-<p>直观上来讲，子序列下降速度越慢，那么它就可能越长。也就是每次将 <span class="math inline">\(x\)</span>
-接到<strong>所有比其大的数中最小的那个的后面</strong>，这样可以保证子序列下降的速度最慢</p>
-<p>如果实在找不到，那么只能令开一条以 <span class="math inline">\(x\)</span> 为结尾的子序列</p>
+<p>采取贪心的角度考虑，假设我们当前遍历到的数为 $x$ ，对于前面的数我们已经构成了不同的递减子序列，我们当前考虑的是 $x$ 应该如何处理</p>
+<p>直观上来讲，子序列下降速度越慢，那么它就可能越长。也就是每次将 $x$ 接到<strong>所有比其大的数中最小的那个的后面</strong>，这样可以保证子序列下降的速度最慢</p>
+<p>如果实在找不到，那么只能令开一条以 $x$ 为结尾的子序列</p>
 <p>以上便是贪心思路，下面我们给出证明：</p>
-<p>假设贪心解对应子序列个数为 <span class="math inline">\(A\)</span>，最优解对应子序列个数为 <span class="math inline">\(B\)</span> ，只需证明 <span class="math inline">\(A=B\)</span> 即可</p>
-<p>由于 <span class="math inline">\(B\)</span> 是最优解，因此 <span class="math inline">\(B\le A\)</span></p>
-<p>不失一般性地，设最优解与贪心解所构成的子序列集合中，子序列 <span class="math inline">\(S\)</span> <strong>第一个不同的数</strong>为 <span class="math inline">\(x\)</span> ，<span class="math inline">\(x\)</span> 前面的数二者均相同</p>
-<p>设最优解中 <span class="math inline">\(x\)</span> 前面的数为 <span class="math inline">\(a_m\)</span> ，贪心解中 <span class="math inline">\(x\)</span> 前面的数为 <span class="math inline">\(a_t\)</span> ，由于贪心做法总是将 <span class="math inline">\(x\)</span>
-接在所有比其大的数中最小的数的后面，因此有：<span class="math inline">\(a_t\ge a_m\)</span></p>
-<p>因此，将贪心解中 <span class="math inline">\(x\)</span>
-及其之后的所有数均可以接在 <span class="math inline">\(a_m\)</span>
-的后面而总子序列个数不发生改变</p>
-<p>所有对应任意一个 <span class="math inline">\(x\)</span>
-，贪心解总能够转化为最优解，即 <span class="math inline">\(A\le
-B\)</span></p>
-<p>所以有：<span class="math inline">\(A=B\)</span></p>
-<p>在代码的实现上，我们用 <span class="math inline">\(g[i]\)</span>
-表示编号为 <span class="math inline">\(i(i\ge 1)\)</span>
-的递减子序列的结尾的数</p>
-<p>我们每次找到第一个比 <span class="math inline">\(w[i]\)</span>
-大的数，并将其替换掉（相当于接在该序列的后面，并不会新增子序列个数），这一步可以直接枚举，也可以用二分</p>
-<p>由于子序列单调不增，因此 <span class="math inline">\(g[i]\)</span>
-数组一定单调上升（这一点很好证明，<span class="math inline">\(g[i]\)</span>
-数组如果要新增元素一定是没有比该元素更大的数，因此 <span class="math inline">\(g[i]\)</span> 必然单调上升）</p>
+<p>假设贪心解对应子序列个数为 $A$，最优解对应子序列个数为 $B$ ，只需证明 $A&#x3D;B$ 即可</p>
+<p>由于 $B$ 是最优解，因此 $B\le A$</p>
+<p>不失一般性地，设最优解与贪心解所构成的子序列集合中，子序列 $S$ <strong>第一个不同的数</strong>为 $x$ ，$x$ 前面的数二者均相同</p>
+<p>设最优解中 $x$ 前面的数为 $a_m$ ，贪心解中 $x$ 前面的数为 $a_t$ ，由于贪心做法总是将 $x$ 接在所有比其大的数中最小的数的后面，因此有：$a_t\ge a_m$ </p>
+<p>因此，将贪心解中 $x$ 及其之后的所有数均可以接在 $a_m$ 的后面而总子序列个数不发生改变</p>
+<p>所有对应任意一个 $x$ ，贪心解总能够转化为最优解，即 $A\le B$ </p>
+<p>所以有：$A&#x3D;B$ </p>
+<p>在代码的实现上，我们用 $g[i]$ 表示编号为 $i(i\ge 1)$ 的递减子序列的结尾的数</p>
+<p>我们每次找到第一个比 $w[i]$ 大的数，并将其替换掉（相当于接在该序列的后面，并不会新增子序列个数），这一步可以直接枚举，也可以用二分</p>
+<p>由于子序列单调不增，因此 $g[i]$ 数组一定单调上升（这一点很好证明，$g[i]$ 数组如果要新增元素一定是没有比该元素更大的数，因此 $g[i]$ 必然单调上升）</p>
 <p>完整代码：</p>
 <p>枚举做法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> w[N], f[N], g[N];<span class="hljs-comment">//g数组从左往右一定单调上升，表示编号为i的子序列结尾的数</span><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(cin &gt;&gt; w[n]) n++;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>    &#123;<br>        f[i] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j ++)<br>            <span class="hljs-keyword">if</span>(w[j] &gt;= w[i]) f[i] = <span class="hljs-built_in">max</span>(f[i], f[j] + <span class="hljs-number">1</span>);<br>        ans = <span class="hljs-built_in">max</span>(ans, f[i]);<br>    &#125;<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <br>    <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<span class="hljs-comment">//子序列的个数</span><br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(idx &lt; cnt &amp;&amp; g[idx] &lt; w[i]) idx++;<span class="hljs-comment">//找到第一个比w[i]大的数，并将其替换掉</span><br>        g[idx] = w[i];<br>        <span class="hljs-keyword">if</span>(idx &gt;= cnt) cnt++;<br>    &#125;<br>    cout &lt;&lt; cnt &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>二分做法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> w[N], f[N], g[N];<span class="hljs-comment">//g数组从左往右一定单调上升，表示编号为i的子序列结尾的数</span><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(cin &gt;&gt; w[n]) n++;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>    &#123;<br>        f[i] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j ++)<br>            <span class="hljs-keyword">if</span>(w[j] &gt;= w[i]) f[i] = <span class="hljs-built_in">max</span>(f[i], f[j] + <span class="hljs-number">1</span>);<br>        ans = <span class="hljs-built_in">max</span>(ans, f[i]);<br>    &#125;<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <br>    <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<span class="hljs-comment">//子序列的个数</span><br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> l = <span class="hljs-number">0</span>, r = cnt;<br>        <span class="hljs-keyword">while</span>(l &lt; r)<br>        &#123;<br>            <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span>(g[mid] &gt;= w[i]) r = mid;<br>            <span class="hljs-keyword">else</span> l = mid + <span class="hljs-number">1</span>;<br>        &#125;<br>        g[l] = w[i];<br>        <span class="hljs-keyword">if</span>(l &gt;= cnt) cnt++;<span class="hljs-comment">//如果当前位置已经超过子序列个数，那么直接新开一个</span><br>    &#125;<br>    cout &lt;&lt; cnt &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160652/">AcWing 187.
-导弹防御系统</a></p>
+
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160652/">AcWing 187. 导弹防御系统</a>  </p>
 <p>这道题是上面那道题的变式</p>
-<p>对于每个元素，我们既可以将其加入到上升子序列 <code>up</code>
-所对应的集合内，也可以将其加入到下降子序列 <code>down</code>
-所对应的集合内</p>
+<p>对于每个元素，我们既可以将其加入到上升子序列 <code>up</code> 所对应的集合内，也可以将其加入到下降子序列 <code>down</code> 所对应的集合内</p>
 <p>如果将当前状态看作一个点的话，那么我们每次可以从当前状态转移到另外的两个状态</p>
 <p>我们需要求的是，在所有的状态中，子序列长度的最小值</p>
-<p>这里便可以考虑用 <span class="math inline">\(\rm DFS\)</span>
-来做了，因为对于每个状态，我们都需要暴力枚举其对应的两个子状态</p>
+<p>这里便可以考虑用 $\rm DFS$ 来做了，因为对于每个状态，我们都需要暴力枚举其对应的两个子状态</p>
 <p>我们设计如下的函数接口：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> cu, <span class="hljs-type">int</span> cd)</span></span>;<br><span class="hljs-comment">//u表示当前递归的位置，从1开始，到n结束，因此出口为n+1（我们需要将n递归完毕）</span><br><span class="hljs-comment">//cu表示上升子序列的个数</span><br><span class="hljs-comment">//cd表示下降子序列的个数</span><br></code></pre></td></tr></table></figure>
-<p>在每次递归遍历中，我们分别将当前递归得到的数 <code>w[u]</code> 加入
-<code>up</code> 或 <code>down</code> 中，最后取 <code>cu + cd</code>
-的最小值即可</p>
+
+<p>在每次递归遍历中，我们分别将当前递归得到的数 <code>w[u]</code> 加入 <code>up</code> 或 <code>down</code> 中，最后取 <code>cu + cd</code> 的最小值即可</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">55</span>;<br><br><span class="hljs-type">int</span> n, cnt;<span class="hljs-comment">//cnt表示最少需要的子序列个数，初始最大值可以给n</span><br><span class="hljs-type">int</span> w[N], up[N], down[N];<span class="hljs-comment">//up表示第i个上升子序列结尾的数，down表示第i个下降子序列结尾的数</span><br>                         <span class="hljs-comment">//up单调递减，down单调递增</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> cu, <span class="hljs-type">int</span> cd)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(cu + cd &gt;= cnt) <span class="hljs-keyword">return</span>;<span class="hljs-comment">//当cu+cd大于等于cnt的时候就需要返回了，因为这种情况一定不合法</span><br>    <span class="hljs-keyword">if</span>(u == n + <span class="hljs-number">1</span>)<span class="hljs-comment">//这里不能写n，因为我们需要递归到n+1，这才表示我们对第n个位置已经遍历完了</span><br>    &#123;<br>        cnt = <span class="hljs-built_in">min</span>(cnt, cu + cd);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <br>    <span class="hljs-comment">//放到递增子序列当中</span><br>    <br>    <span class="hljs-type">int</span> idx = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(idx &lt; cu &amp;&amp; up[idx] &gt;= w[u]) idx++;<br>    <span class="hljs-type">int</span> back = up[idx];<br>    up[idx] = w[u];<br>    <br>    <span class="hljs-keyword">if</span>(idx &gt;= cu) <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, cu + <span class="hljs-number">1</span>, cd);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, cu, cd);<br>    <br>    up[idx] = back;<br>    <br>    idx = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(idx &lt; cd &amp;&amp; down[idx] &lt;= w[u]) idx++;<br>    back = down[idx];<br>    down[idx] = w[u];<br>    <br>    <span class="hljs-keyword">if</span>(idx &gt;= cd) <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, cu, cd + <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, cu, cd);<br>    <br>    down[idx] = back;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(cin &gt;&gt; n, n)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; w[i];<br>        <br>        cnt = n;<br>        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>        cout &lt;&lt; cnt &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h3 id="求可变序列与给定数同余的方案数">求可变序列与给定数同余的方案数</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1216/">AcWing
-1214. 波动数列</a></p>
-<p>我们设数列第一项为 <span class="math inline">\(x\)</span> ，第二项为
-<span class="math inline">\(x+d_1\)</span> ，第 <span class="math inline">\(i\)</span> 项为 <span class="math inline">\(x+d_1+d_2+\cdots +d_{i-1}\)</span>
-，那么对于长度为 <span class="math inline">\(n\)</span> 的序列和为 <span class="math inline">\(s=x+(x+d_1)+(x+d_1+d_2)+\cdots +(x+d_1+d_2+\cdots
-+d_{i-1})\)</span> ，即：</p>
-<p><span class="math display">\[
-s=nx+(n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1},\ \ d_i \in
-\\{a,-b\\}
-\]</span></p>
-<p>此时问题转变成：对于给定的每个 <span class="math inline">\(s\)</span>
-与 <span class="math inline">\(n\)</span> ，在 <span class="math inline">\(d_i\)</span> 任意取值的情况下，等式成立的个数</p>
-<p>由于 <span class="math inline">\(x\in Z\)</span> ，并且当 <span class="math inline">\(d_i\)</span> 全部唯一确定时， <span class="math inline">\(x\)</span> 也会唯一确定。此时我们需要确定的是，当
-<span class="math inline">\(d_i\)</span> 取哪些值时 <span class="math inline">\(x\)</span>
-是合法的（处于整数范围内），因此有如下等式：</p>
-<p><span class="math display">\[
-x=\frac{s-[(n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1}]}{n}
-\]</span></p>
-<p>如果 <span class="math inline">\(x\)</span> 要落在整数范围内，那么
-<span class="math inline">\(s\)</span> 与 <span class="math inline">\((x-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots
-+d_{n-1}\)</span> 必须<strong>模 <span class="math inline">\(n\)</span>
-同余</strong></p>
-<p>此时问题转换成：对于序列 <span class="math inline">\((n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots
-+d_{n-1}\)</span> 与 <span class="math inline">\(s\)</span> 模 <span class="math inline">\(n\)</span> 同余的个数</p>
-<p>考虑动态规划，<span class="math inline">\(f[i][j]\)</span> 表示对第
-<span class="math inline">\(i\)</span> 个数选择，模 <span class="math inline">\(n\)</span> 余 <span class="math inline">\(j\)</span> 的方案数</p>
-<p>第 <span class="math inline">\(i\)</span> 个数对应 <span class="math inline">\(d_i\)</span> ，系数为 <span class="math inline">\((n-i)\)</span> ，因此：</p>
+<h3 id="求可变序列与给定数同余的方案数"><a href="#求可变序列与给定数同余的方案数" class="headerlink" title="求可变序列与给定数同余的方案数"></a>求可变序列与给定数同余的方案数</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1216/">AcWing 1214. 波动数列</a></p>
+<p>我们设数列第一项为 $x$ ，第二项为 $x+d_1$ ，第 $i$ 项为 $x+d_1+d_2+\cdots +d_{i-1}$ ，那么对于长度为 $n$ 的序列和为 $s&#x3D;x+(x+d_1)+(x+d_1+d_2)+\cdots +(x+d_1+d_2+\cdots +d_{i-1})$ ，即：</p>
+<p>$$<br>s&#x3D;nx+(n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1},\ \ d_i \in \{a,-b\}<br>$$</p>
+<p>此时问题转变成：对于给定的每个 $s$ 与 $n$ ，在 $d_i$ 任意取值的情况下，等式成立的个数</p>
+<p>由于 $x\in Z$ ，并且当 $d_i$ 全部唯一确定时， $x$ 也会唯一确定。此时我们需要确定的是，当 $d_i$ 取哪些值时 $x$ 是合法的（处于整数范围内），因此有如下等式：</p>
+<p>$$<br>x&#x3D;\frac{s-[(n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1}]}{n}<br>$$</p>
+<p>如果 $x$ 要落在整数范围内，那么 $s$ 与 $(x-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1}$ 必须<strong>模 $n$ 同余</strong></p>
+<p>此时问题转换成：对于序列 $(n-1)d_1+(n-2)d_2+\cdots +(n-i)d_i+\cdots +d_{n-1}$ 与 $s$ 模 $n$ 同余的个数</p>
+<p>考虑动态规划，$f[i][j]$ 表示对第 $i$ 个数选择，模 $n$ 余 $j$ 的方案数</p>
+<p>第 $i$ 个数对应 $d_i$ ，系数为 $(n-i)$ ，因此：</p>
 <ul>
-<li><p>若第 <span class="math inline">\(i\)</span> 个数为 <span class="math inline">\(a\)</span> ，即 <span class="math inline">\(d_i=a\)</span> ，有 <span class="math inline">\((n-1)d_1+(n-2)d_2+\cdots +(n-i)a\)</span> ，即
-<span class="math inline">\(f[i-1][\mod((j-(n-i)*a), \
-n)]\)</span></p></li>
-<li><p>同理，若第 <span class="math inline">\(i\)</span> 个数为 <span class="math inline">\(-b\)</span> ，有 <span class="math inline">\(f[i-1][\mod((j+(n-i)*b),\ n)]\)</span></p></li>
+<li><p>若第 $i$ 个数为 $a$ ，即 $d_i&#x3D;a$ ，有 $(n-1)d_1+(n-2)d_2+\cdots +(n-i)a$ ，即 $f[i-1][\mod((j-(n-i)*a), \ n)]$</p>
+</li>
+<li><p>同理，若第 $i$ 个数为 $-b$ ，有 $f[i-1][\mod((j+(n-i)*b),\ n)]$</p>
+</li>
 </ul>
-<p>最终结果为 <span class="math inline">\(f[n-1][\mod(s,\  n)]\)</span></p>
+<p>最终结果为 $f[n-1][\mod(s,\  n)]$</p>
 <p>完整代码如下：</p>
-<h2 id="section"><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">10</span>, mod = <span class="hljs-number">1e8</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get_mod</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> (a % n + n) % n;<br>&#125;<br><br><span class="hljs-type">int</span> f[N][N];<br><br><span class="hljs-type">int</span> n, s, a, b;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; s &gt;&gt; a &gt;&gt; b;<br>    f[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - <span class="hljs-number">1</span>; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>        &#123;<br>            f[i][j] = <span class="hljs-built_in">get_mod</span>(f[i][j] + f[i - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(j - (n - i) * a, n)], mod);<br>            f[i][j] = <span class="hljs-built_in">get_mod</span>(f[i][j] + f[i - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(j + (n - i) * b, n)], mod);<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[n - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(s, n)] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></h2>
-<h3 id="将给定序列分段保证每段和不超过给定数情况下求每段中所有数的最大值之和的最小值">将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/301/">AcWing 299.
-裁剪序列</a></p>
-<p>直观考虑，一共 <span class="math inline">\(N\)</span>
-个数，之间的空位有 <span class="math inline">\(N-1\)</span>
-个，因此可以分段的选择一共有 <span class="math inline">\(2^{n-1}\)</span> ，考虑动态规划进行优化</p>
-<p>设 <span class="math inline">\(f[i]\)</span>
-所表示的集合为：<strong>所有将前 <span class="math inline">\(i\)</span>
-个数划分方案的集合</strong>，集合的属性为价值的最小值，因此 <span class="math inline">\(f[n]\)</span> 为最终答案</p>
-<p>以<strong>最后一段的长度</strong>对整个集合进行划分。对序列 <span class="math inline">\(f[i]\)</span> 而言，设最后一段的长度为 <span class="math inline">\(k(0\le k\le i)\)</span>，此时有：</p>
-<p><span class="math display">\[
-f[i]=\min_{0\le k\le i}\{f[i-k]+ \max_{i-k+1\le j\le i}\{ A_j\}\}
-\]</span></p>
-<p>设 <span class="math inline">\(j=i-k\)</span> ，上式转换为：</p>
-<p><span class="math display">\[
-f[i]=\min_{0\le j\le i}\{f[j]+\max_{j+1\le k\le i}\{A_k\}\}
-\]</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">10</span>, mod = <span class="hljs-number">1e8</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get_mod</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> (a % n + n) % n;<br>&#125;<br><br><span class="hljs-type">int</span> f[N][N];<br><br><span class="hljs-type">int</span> n, s, a, b;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; s &gt;&gt; a &gt;&gt; b;<br>    f[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - <span class="hljs-number">1</span>; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>        &#123;<br>            f[i][j] = <span class="hljs-built_in">get_mod</span>(f[i][j] + f[i - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(j - (n - i) * a, n)], mod);<br>            f[i][j] = <span class="hljs-built_in">get_mod</span>(f[i][j] + f[i - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(j + (n - i) * b, n)], mod);<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[n - <span class="hljs-number">1</span>][<span class="hljs-built_in">get_mod</span>(s, n)] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值"><a href="#将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值" class="headerlink" title="将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值"></a>将给定序列分段，保证每段和不超过给定数情况下，求每段中「所有数的最大值」之和的最小值</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/301/">AcWing 299. 裁剪序列</a></p>
+<p>直观考虑，一共 $N$ 个数，之间的空位有 $N-1$ 个，因此可以分段的选择一共有 $2^{n-1}$ ，考虑动态规划进行优化</p>
+<p>设 $f[i]$ 所表示的集合为：<strong>所有将前 $i$ 个数划分方案的集合</strong>，集合的属性为价值的最小值，因此 $f[n]$ 为最终答案</p>
+<p>以<strong>最后一段的长度</strong>对整个集合进行划分。对序列 $f[i]$ 而言，设最后一段的长度为 $k(0\le k\le i)$，此时有：</p>
+<p>$$<br>f[i]&#x3D;\min_{0\le k\le i}{f[i-k]+ \max_{i-k+1\le j\le i}{ A_j}}<br>$$</p>
+<p>设 $j&#x3D;i-k$ ，上式转换为：</p>
+<p>$$<br>f[i]&#x3D;\min_{0\le j\le i}{f[j]+\max_{j+1\le k\le i}{A_k}}<br>$$</p>
 <p>容易注意到以下性质：</p>
 <ul>
-<li><span class="math inline">\(f[i]\)</span> 随着 <span class="math inline">\(i\)</span> 的增大而单调不减</li>
+<li>$f[i]$ 随着 $i$ 的增大而单调不减</li>
 </ul>
 <p>证明：</p>
-<p>假定存在两个序列 <span class="math inline">\(k_1,\ k_2\)</span>
-，长度分别为 <span class="math inline">\(L_1,\ L_2\)</span> ，有 <span class="math inline">\(L_2\gt L_1\)</span></p>
-<p>我们将 <span class="math inline">\(k_2\)</span> 的划分方案平移到
-<span class="math inline">\(k_1\)</span> 上，设划分段数为 <span class="math inline">\(len\)</span> ，有: <span class="math inline">\(len_2 \ge len_1\)</span> ，因此对于 <span class="math inline">\(k_2\)</span> 而言，必然有 <span class="math inline">\(f[k_2]\ge f[k_1]\)</span> ，即 <span class="math inline">\(f[i]\le f[i+1]\)</span></p>
-<p>其次，局部最优值 <span class="math inline">\(f[j]+A_k\)</span>
-合法的充要条件为：</p>
+<p>假定存在两个序列 $k_1,\ k_2$ ，长度分别为 $L_1,\ L_2$ ，有 $L_2\gt L_1$</p>
+<p>我们将 $k_2$ 的划分方案平移到 $k_1$ 上，设划分段数为 $len$ ，有: $len_2 \ge len_1$ ，因此对于 $k_2$ 而言，必然有 $f[k_2]\ge f[k_1]$ ，即 $f[i]\le f[i+1]$</p>
+<p>其次，局部最优值 $f[j]+A_k$ 合法的充要条件为：</p>
 <ul>
-<li><p><span class="math inline">\(\sum_{k=j+1}^{i}A_k\le
-m\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{k=j}^{i}A_k \ge
-m\)</span></p></li>
-<li><p><span class="math inline">\(A_k=max_{j+1\le l \le
-i}{A_l}\)</span></p></li>
+<li><p>$\sum_{k&#x3D;j+1}^{i}A_k\le m$ </p>
+</li>
+<li><p>$\sum_{k&#x3D;j}^{i}A_k \ge m$</p>
+</li>
+<li><p>$A_k&#x3D;max_{j+1\le l \le i}{A_l}$</p>
+</li>
 </ul>
-<p>第一条保证从 <span class="math inline">\(j+1\)</span> 到 <span class="math inline">\(i\)</span> 的和全部小于 <span class="math inline">\(m\)</span></p>
-<p>第二条保证 <span class="math inline">\(j\)</span> 总会取到总和小于
-<span class="math inline">\(m\)</span> 的边界</p>
-<p>第三条保证 <span class="math inline">\(A_k\)</span> 为 <span class="math inline">\(j+1\)</span> 到 <span class="math inline">\(i\)</span> 中所有数的最大值</p>
+<p>第一条保证从 $j+1$ 到 $i$ 的和全部小于 $m$</p>
+<p>第二条保证 $j$ 总会取到总和小于 $m$ 的边界</p>
+<p>第三条保证 $A_k$ 为 $j+1$ 到 $i$ 中所有数的最大值</p>
 <p>下面我们给出第二条的证明（第一和第三可以直接从题目推出来）：</p>
-<p>考虑反证法，设存在 <span class="math inline">\(j&#39;\lt j\)</span>
-此时有：<span class="math inline">\(f[j&#39;]+\max_{j&#39;\lt k\le
-i}\{A_k\}\le f[j]+\max_{j\lt k\le i}\{A_k\}\)</span></p>
-<p>由于 <span class="math inline">\(f[i]\)</span> 随 <span class="math inline">\(i\)</span> 增大而单调不减，即 <span class="math inline">\(f[j&#39;]\ge f[j]\)</span></p>
-<p>且 <span class="math inline">\(\max_{j&#39;\lt k\le i}\{A_k\}\ge
-\max_{j\lt k\le i}\{A_k\}\)</span> ，因此上述假设不成立</p>
-<p>因此若 <span class="math inline">\(j&#39;\lt j\)</span> ，并且 <span class="math inline">\(A_{j&#39;}\lt A_j\)</span> ，那么 <span class="math inline">\(j&#39;\)</span> 就是需要淘汰的策略</p>
-<p>此时对于区间 <span class="math inline">\([j,i]\)</span>
-而言，内部元素<strong>单调不减</strong>且 <span class="math inline">\(i,j\)</span> 均具有单调性 (<span class="math inline">\(i,j\)</span>会同步增大)
-也就是「双指针」与「单调队列」</p>
+<p>考虑反证法，设存在 $j’\lt j$ 此时有：$f[j’]+\max_{j’\lt k\le i}{A_k}\le f[j]+\max_{j\lt k\le i}{A_k}$</p>
+<p>由于 $f[i]$ 随 $i$ 增大而单调不减，即 $f[j’]\ge f[j]$</p>
+<p>且 $\max_{j’\lt k\le i}{A_k}\ge \max_{j\lt k\le i}{A_k}$ ，因此上述假设不成立</p>
+<p>因此若 $j’\lt j$ ，并且 $A_{j’}\lt A_j$ ，那么 $j’$ 就是需要淘汰的策略</p>
+<p>此时对于区间 $[j,i]$ 而言，内部元素<strong>单调不减</strong>且 $i,j$ 均具有单调性 ($i,j$会同步增大) 也就是「双指针」与「单调队列」</p>
 <p>其次，由于单调队列中的<strong>所有</strong>值均是局部最优解，<strong>需要全部考虑在内再取最小值</strong>，因此我们需要额外维护一个<strong>允许出现重复元素</strong>的「平衡树」用于存储每个元素所对应的函数值，每次取出最小值即可</p>
-<p>在这里我们需要注意一个边界问题，那就是只要当队列中至少存在一个元素时，才能够开始往
-<code>multiset</code> 中插入元素</p>
-<p>这是因为单调队列中单调不增的元素实际上表示的是<strong>边界</strong>，也就是
-<span class="math inline">\(f[i]\)</span>
-在此处的取值，而对与第二项的最大值而言，需要至少存在两个元素才合法，因此
-<code>multiset</code> 中的元素个数总会比单调队列中少一个</p>
+<p>在这里我们需要注意一个边界问题，那就是只要当队列中至少存在一个元素时，才能够开始往 <code>multiset</code> 中插入元素</p>
+<p>这是因为单调队列中单调不增的元素实际上表示的是<strong>边界</strong>，也就是 $f[i]$ 在此处的取值，而对与第二项的最大值而言，需要至少存在两个元素才合法，因此 <code>multiset</code> 中的元素个数总会比单调队列中少一个</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;set&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> w[N], q[N];<br>LL f[N];<br>multiset&lt;LL&gt;S;<br>LL n, m;<br><br><span class="hljs-comment">//multiset会直接将所有相同的元素全部删除，因此需要迭代器</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> it = S.<span class="hljs-built_in">find</span>(x);<br>    S.<span class="hljs-built_in">erase</span>(it);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) <br>    &#123;<br>        cin &gt;&gt; w[i];<br>        <span class="hljs-keyword">if</span>(w[i] &gt; m)<br>        &#123;<br>            cout &lt;&lt; <span class="hljs-string">&quot;-1&quot;</span> &lt;&lt; endl;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-type">int</span> hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    LL sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>, j = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        sum += w[i];<br>        <span class="hljs-keyword">while</span>(sum &gt; m)<br>        &#123;<br>            sum -= w[j++];<br>            <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; q[hh] &lt; j)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(hh &lt; tt) <span class="hljs-comment">//保证队列中至少一个元素之后再去删除set中的元素</span><br>                    <span class="hljs-built_in">remove</span>(f[q[hh]] + w[q[hh + <span class="hljs-number">1</span>]]);<span class="hljs-comment">//此时q[hh]为边界，区间最大值需要取后一个元素</span><br>                hh++;<br>            &#125;<br>        &#125;<br>        <br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; w[q[tt]] &lt;= w[i])<br>        &#123;<br>            <span class="hljs-keyword">if</span>(hh &lt; tt)<br>                <span class="hljs-built_in">remove</span>(f[q[tt - <span class="hljs-number">1</span>]] + w[q[tt]]);<span class="hljs-comment">//此时队尾元素表示局部最大值，边界需要取前一个元素</span><br>            tt--;<br>        &#125;<br>        <br>        q[++tt] = i;<span class="hljs-comment">//先将元素插入到队列中，再输出队列中的元素</span><br>        <span class="hljs-keyword">if</span>(hh &lt; tt) <span class="hljs-comment">//以当前队头前一个元素为边界，当前队头认为是整个区间的最大值</span><br>          S.<span class="hljs-built_in">insert</span>(f[q[tt - <span class="hljs-number">1</span>]] + w[q[tt]]);<br><br>        f[i] = f[j - <span class="hljs-number">1</span>] + w[q[hh]];<br>        <span class="hljs-keyword">if</span>(S.<span class="hljs-built_in">size</span>()) <span class="hljs-comment">//当平衡树中不空时，我们取整个的最小值</span><br>          f[i] = <span class="hljs-built_in">min</span>(f[i], *S.<span class="hljs-built_in">begin</span>());<br>    &#125;<br>    cout &lt;&lt; f[n] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="背包">背包</h2>
-<h3 id="基础-2">基础</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/2/">AcWing 2.
-01背包问题</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160731/">AcWing 2.
-01背包问题</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/3/">AcWing 3.
-完全背包问题</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160739/">AcWing 3.
-完全背包问题</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/4/">AcWing 4.
-多重背包问题 I</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161548/">AcWing 4.
-多重背包问题 I</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/5/">AcWing 5.
-多重背包问题 II</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161550/">AcWing 5.
-多重背包问题 II</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/9/">AcWing 9.
-分组背包问题</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161675/">AcWing 9.
-分组背包问题</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/7/">AcWing 7.
-混合背包问题</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162133/">AcWing 7.
-混合背包问题</a></p>
-<h3 id="变式-2">变式</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/425/">AcWing
-423. 采药</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161034/">AcWing 423.
-采药</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1026/">AcWing
-1024. 装箱问题</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161044/">AcWing 1024.
-装箱问题</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1026/">AcWing
-278. 数字组合</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161112/">AcWing 278.
-数字组合</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1021/">AcWing
-1019. 庆功会</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161601/">AcWing 1019.
-庆功会</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1025/">AcWing
-1023. 买书</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161607/">AcWing 1023.
-买书</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/428/">AcWing
-426. 开心的金明</a> 题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161888/">AcWing 426.
-开心的金明</a></p>
+<h2 id="背包"><a href="#背包" class="headerlink" title="背包"></a>背包</h2><h3 id="基础-2"><a href="#基础-2" class="headerlink" title="基础"></a>基础</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/2/">AcWing 2. 01背包问题</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160731/">AcWing 2. 01背包问题</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/3/">AcWing 3. 完全背包问题</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/160739/">AcWing 3. 完全背包问题</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/4/">AcWing 4. 多重背包问题 I</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161548/">AcWing 4. 多重背包问题 I</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/5/">AcWing 5. 多重背包问题 II</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161550/">AcWing 5. 多重背包问题 II</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/9/">AcWing 9. 分组背包问题</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161675/">AcWing 9. 分组背包问题</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/7/">AcWing 7. 混合背包问题</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162133/">AcWing 7. 混合背包问题</a></p>
+<h3 id="变式-2"><a href="#变式-2" class="headerlink" title="变式"></a>变式</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/425/">AcWing 423. 采药</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161034/">AcWing 423. 采药</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1026/">AcWing 1024. 装箱问题</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161044/">AcWing 1024. 装箱问题</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1026/">AcWing 278. 数字组合</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161112/">AcWing 278. 数字组合</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1021/">AcWing 1019. 庆功会</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161601/">AcWing 1019. 庆功会</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1025/">AcWing 1023. 买书</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161607/">AcWing 1023. 买书</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/428/">AcWing 426. 开心的金明</a><br>题解链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161888/">AcWing 426. 开心的金明</a></p>
 <hr>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1015/">AcWing
-1013. 机器分配</a></p>
-<p>这道题其实是<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/9/">[AcWing 9.
-分组背包问题]</a>和<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/12/">[AcWing
-12. 背包问题求具体方案]</a>的结合体（这两题在本文均有题解）</p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1015/">AcWing 1013. 机器分配</a></p>
+<p>这道题其实是<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/9/">[AcWing 9. 分组背包问题]</a>和<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/12/">[AcWing 12. 背包问题求具体方案]</a>的结合体（这两题在本文均有题解）</p>
 <p>对于分组背包，我们需要枚举<strong>物品组内的选择</strong>，也就是需要三重循环来进行解决</p>
-<p>对于本题，可能会出现选 <span class="math inline">\(0\)</span>
-个的情况，因此在枚举选择组内物品编号的时候，需要将 <span class="math inline">\(0\)</span> 这个特殊情况加以考虑</p>
+<p>对于本题，可能会出现选 $0$ 个的情况，因此在枚举选择组内物品编号的时候，需要将 $0$ 这个特殊情况加以考虑</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">20</span>;<br><br><span class="hljs-type">int</span> f[N][N], w[N][N];<br><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++)<br>            cin &gt;&gt; w[i][j];<br>            <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n; i &gt;= <span class="hljs-number">1</span>; i --)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= m; k ++)<span class="hljs-comment">//这里从0开始可以少写一行</span><br>                <span class="hljs-keyword">if</span>(j &gt;= k)<br>                    f[i][j] = <span class="hljs-built_in">max</span>(f[i][j], f[i + <span class="hljs-number">1</span>][j - k] + w[i][k]);<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[<span class="hljs-number">1</span>][m] &lt;&lt; endl;<br>    <span class="hljs-type">int</span> k = m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= m; j ++)<span class="hljs-comment">//需要考虑不分配的情况</span><br>            <span class="hljs-keyword">if</span>(k &gt;= j &amp;&amp; f[i][k] == f[i + <span class="hljs-number">1</span>][k - j] + w[i][j])<br>            &#123;<br>                cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; j &lt;&lt; endl;<br>                k -= j;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>以前的题解：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161865/">AcWing 1013.
-机器分配</a></p>
+
+<p>以前的题解：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161865/">AcWing 1013. 机器分配</a></p>
 <hr>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161900/">AcWing
-1021. 货币系统</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161915/">AcWing 532.
-货币系统</a></p>
-<h4 id="体积定义为至少">体积定义为「至少」</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161636/">AcWing
-1020. 潜水员</a></p>
-<h4 id="特殊化的有依赖背包问题">特殊化的「有依赖」背包问题</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161890/">AcWing 487.
-金明的预算方案</a></p>
-<h4 id="一般化的有依赖背包背包问题">一般化的「有依赖」背包背包问题</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162165/">AcWing 10.
-有依赖的背包问题</a></p>
-<h4 id="求方案数与具体方案">求方案数与具体方案</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162227/">AcWing 11.
-背包问题求方案数</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/12/">AcWing 12.
-背包问题求具体方案</a></p>
-<p>显然这是 <span class="math inline">\(01\)</span>
-背包，不同的是我们需要输出<strong>字典序最小</strong>的方案</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161900/">AcWing 1021. 货币系统</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161915/">AcWing 532. 货币系统</a></p>
+<h4 id="体积定义为「至少」"><a href="#体积定义为「至少」" class="headerlink" title="体积定义为「至少」"></a>体积定义为「至少」</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161636/">AcWing 1020. 潜水员</a></p>
+<h4 id="特殊化的「有依赖」背包问题"><a href="#特殊化的「有依赖」背包问题" class="headerlink" title="特殊化的「有依赖」背包问题"></a>特殊化的「有依赖」背包问题</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161890/">AcWing 487. 金明的预算方案</a></p>
+<h4 id="一般化的「有依赖」背包背包问题"><a href="#一般化的「有依赖」背包背包问题" class="headerlink" title="一般化的「有依赖」背包背包问题"></a>一般化的「有依赖」背包背包问题</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162165/">AcWing 10. 有依赖的背包问题</a></p>
+<h4 id="求方案数与具体方案"><a href="#求方案数与具体方案" class="headerlink" title="求方案数与具体方案"></a>求方案数与具体方案</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162227/">AcWing 11. 背包问题求方案数</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/12/">AcWing 12. 背包问题求具体方案</a></p>
+<p>显然这是 $01$ 背包，不同的是我们需要输出<strong>字典序最小</strong>的方案</p>
 <p>考虑状态转移方程：</p>
-<p><span class="math display">\[
-f[i][j]=\max(f[i][j],f[i-1][j-kv]+kw),\quad k=0,1
-\]</span></p>
+<p>$$<br>f[i][j]&#x3D;\max(f[i][j],f[i-1][j-kv]+kw),\quad k&#x3D;0,1<br>$$</p>
 <p>这里会出现三种情况：</p>
 <ul>
-<li><p><span class="math inline">\(f[i][j]=f[i-1][j]\ 且\ f[i][j]\ne
-f[i-1][j-v]+w\)</span> ，此时说明 <span class="math inline">\(f[i][j]\)</span> 这个状态是通过<strong>不选第
-<span class="math inline">\(i\)</span>
-个物品这个动作转移过来的</strong></p></li>
-<li><p><span class="math inline">\(f[i][j]=f[i-1][j-v]+w\ 且\ f[i][j]\ne
-f[i-1][j]\)</span> ，此时说明 <span class="math inline">\(f[i][j]\)</span> 这个状态是通过<strong>选择第
-<span class="math inline">\(i\)</span>
-个物品这个动作转移过来的</strong></p></li>
-<li><p><span class="math inline">\(f[i][j]=f[i-1][j]=f[i-1][j-v]+w\)</span>
-，此时说明 <span class="math inline">\(f[i][j]\)</span>
-可以从任意两个状态转移过来</p></li>
+<li><p>$f[i][j]&#x3D;f[i-1][j]\ 且\ f[i][j]\ne f[i-1][j-v]+w$ ，此时说明 $f[i][j]$ 这个状态是通过<strong>不选第 $i$ 个物品这个动作转移过来的</strong></p>
+</li>
+<li><p>$f[i][j]&#x3D;f[i-1][j-v]+w\ 且\ f[i][j]\ne f[i-1][j]$ ，此时说明 $f[i][j]$ 这个状态是通过<strong>选择第 $i$ 个物品这个动作转移过来的</strong></p>
+</li>
+<li><p>$f[i][j]&#x3D;f[i-1][j]&#x3D;f[i-1][j-v]+w$ ，此时说明 $f[i][j]$ 可以从任意两个状态转移过来</p>
+</li>
 </ul>
 <p>由于我们需要输出具体方案，因此对于每个状态而言，我们需要知道它是从哪个状态转移过来的</p>
-<p>因此对于第一种情况而言，由于不选物品 <span class="math inline">\(i\)</span>
-，因此我们<strong>不能输出该物品的编号</strong>；对于第二种情况而言，由于选择了物品
-<span class="math inline">\(i\)</span>
-，因此我们<strong>需要输出该物品编号</strong>，重点在于第三种</p>
+<p>因此对于第一种情况而言，由于不选物品 $i$ ，因此我们<strong>不能输出该物品的编号</strong>；对于第二种情况而言，由于选择了物品 $i$ ，因此我们<strong>需要输出该物品编号</strong>，重点在于第三种</p>
 <p>由于此时我们的讨论是从后往前输出，也就是<strong>倒序</strong>，由于我们需要保证最终的答案<strong>字典序最小</strong>，因此我们<strong>需要将该编号输出</strong>（如果没有字典序最小的限制，那么是否输出都不影响）</p>
 <p>这其实很容易理解，我们当前是倒序输出，因此<strong>先输出的编号一定大于后输出的编号</strong>，如果我们从后往前读（也就是正序方向），输出该编号后的字典序一定小于不输出该编号的字典序</p>
-<p>当然在代码实现上，我们在 <span class="math inline">\(01\)</span>
-背包的处理可以从后往前处理，这样 <code>f[1][m]</code>
-将变为最终答案，然后在具体方案的输出上，我们从前往后遍历</p>
-<p>具体地，我们遍历每个节点 <span class="math inline">\(i\)</span>
-，考虑节点 <span class="math inline">\(i\)</span> 由 <span class="math inline">\(i+1\)</span>
-的哪个状态转移过来，如果满足条件则输出，否则跳过</p>
+<p>当然在代码实现上，我们在 $01$ 背包的处理可以从后往前处理，这样 <code>f[1][m]</code> 将变为最终答案，然后在具体方案的输出上，我们从前往后遍历</p>
+<p>具体地，我们遍历每个节点 $i$ ，考虑节点 $i$ 由 $i+1$ 的哪个状态转移过来，如果满足条件则输出，否则跳过</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1010</span>;<br><br><span class="hljs-type">int</span> f[N][N], v[N], w[N];<br><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; v[i] &gt;&gt; w[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n; i &gt;= <span class="hljs-number">1</span>; i --)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++)<br>        &#123;<br>            f[i][j] = f[i + <span class="hljs-number">1</span>][j];<br>            <span class="hljs-keyword">if</span>(j &gt;= v[i]) f[i][j] = <span class="hljs-built_in">max</span>(f[i][j], f[i + <span class="hljs-number">1</span>][j - v[i]] + w[i]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> k = m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        <span class="hljs-keyword">if</span>(k &gt;= v[i] &amp;&amp; f[i][k] == f[i + <span class="hljs-number">1</span>][k - v[i]] + w[i])<br>        &#123;<br>            cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>            k -= v[i];<span class="hljs-comment">//需要将k进行移动</span><br>        &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>以前的题解：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161862/">AcWing 12.
-背包问题求具体方案</a></p>
+
+<p>以前的题解：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161862/">AcWing 12. 背包问题求具体方案</a></p>
 <hr>
-<h4 id="贪心将无限集缩小为有限集">「贪心」将无限集缩小为有限集</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162238/">AcWing 734.
-能量石</a></p>
-<h4 id="单调队列优化多重背包">单调队列优化多重背包</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161559/">AcWing 6.
-多重背包问题 III</a></p>
-<h4 id="二维费用背包问题">二维费用背包问题</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1024/">AcWing
-1022. 宠物小精灵之收服</a></p>
-<p>这道题本质上是 <span class="math inline">\(01\)</span>
-背包问题，只不过费用是二维的</p>
-<p>一般这种二维费用问题，为了避免字母的混乱，我们统一用 <span class="math inline">\(v_i\)</span> 来表示各个维度的花费</p>
-<p>这里我们先套用 <span class="math inline">\(01\)</span>
-背包的定义：<span class="math inline">\(f(i,j,k)\)</span>
-表示集合为所有考虑前 <span class="math inline">\(i\)</span>
-个小精灵，消耗精灵球数量 <span class="math inline">\(\le j\)</span>
-，消耗体力 <span class="math inline">\(\le k\)</span>
-的方案数，属性为所有方案当中精灵的最大数量</p>
-<p>我们不难写出如下方程（设总精灵球数量为 <span class="math inline">\(V_1\)</span> ，总体力为 <span class="math inline">\(V_2\)</span>）：</p>
-<p><span class="math display">\[
-f(i,j,k)=\max(f(i-1,j,k),f(i-1,j-v_1,k-v_2)+1)
-\]</span></p>
-<p>最终的结果需要我们输出最大的精灵数量，即 <span class="math inline">\(f(n,V_1,V_2)\)</span>
-，除此以外我们还需要输出剩余体力的最大值</p>
-<p>注意到，我们的状态定义是消耗体力的值，因此剩余体力需要用 <span class="math inline">\(V_2\)</span> 减去消耗体力才行</p>
-<p>对于这一部分的求法，我们从 <span class="math inline">\(V_2-1\)</span>
-（下面会解释）开始从大到小枚举，只要下一个的函数值是满足条件的，我们便往下走，最后便可以找到消耗体力的最小值</p>
-<p>由于受到的伤害使得体力小于等于零时的小精灵是不能收服的，因此最大的体力需要从
-<span class="math inline">\(V_2-1\)</span> 开始枚举</p>
+<h4 id="「贪心」将无限集缩小为有限集"><a href="#「贪心」将无限集缩小为有限集" class="headerlink" title="「贪心」将无限集缩小为有限集"></a>「贪心」将无限集缩小为有限集</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162238/">AcWing 734. 能量石</a></p>
+<h4 id="单调队列优化多重背包"><a href="#单调队列优化多重背包" class="headerlink" title="单调队列优化多重背包"></a>单调队列优化多重背包</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161559/">AcWing 6. 多重背包问题 III</a></p>
+<h4 id="二维费用背包问题"><a href="#二维费用背包问题" class="headerlink" title="二维费用背包问题"></a>二维费用背包问题</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1024/">AcWing 1022. 宠物小精灵之收服</a></p>
+<p>这道题本质上是 $01$ 背包问题，只不过费用是二维的</p>
+<p>一般这种二维费用问题，为了避免字母的混乱，我们统一用 $v_i$ 来表示各个维度的花费</p>
+<p>这里我们先套用 $01$ 背包的定义：$f(i,j,k)$ 表示集合为所有考虑前 $i$ 个小精灵，消耗精灵球数量 $\le j$ ，消耗体力 $\le k$ 的方案数，属性为所有方案当中精灵的最大数量</p>
+<p>我们不难写出如下方程（设总精灵球数量为 $V_1$ ，总体力为 $V_2$）：</p>
+<p>$$<br>f(i,j,k)&#x3D;\max(f(i-1,j,k),f(i-1,j-v_1,k-v_2)+1)<br>$$</p>
+<p>最终的结果需要我们输出最大的精灵数量，即 $f(n,V_1,V_2)$ ，除此以外我们还需要输出剩余体力的最大值</p>
+<p>注意到，我们的状态定义是消耗体力的值，因此剩余体力需要用 $V_2$ 减去消耗体力才行</p>
+<p>对于这一部分的求法，我们从 $V_2-1$ （下面会解释）开始从大到小枚举，只要下一个的函数值是满足条件的，我们便往下走，最后便可以找到消耗体力的最小值</p>
+<p>由于受到的伤害使得体力小于等于零时的小精灵是不能收服的，因此最大的体力需要从 $V_2-1$ 开始枚举</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1010</span>, M = <span class="hljs-number">510</span>;<br><br><span class="hljs-type">int</span> f[N][M];<br><br><span class="hljs-type">int</span> n, V1, V2;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; V1 &gt;&gt; V2 &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> v1, v2;<br>        cin &gt;&gt; v1 &gt;&gt; v2;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = V1; j &gt;= v1; j --)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = V2 - <span class="hljs-number">1</span>; k &gt;= v2; k --)<br>            &#123;<br>                f[j][k] = <span class="hljs-built_in">max</span>(f[j][k], f[j - v1][k - v2] + <span class="hljs-number">1</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; f[V1][V2 - <span class="hljs-number">1</span>] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    <span class="hljs-type">int</span> k = V2 - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span>(k &gt; <span class="hljs-number">0</span> &amp;&amp; f[V1][k - <span class="hljs-number">1</span>] == f[V1][V2 - <span class="hljs-number">1</span>]) k--;<span class="hljs-comment">//下一个k满足条件我们才往下走</span><br>    cout &lt;&lt; V2 - k &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161568/">AcWing 8.
-二维费用的背包问题</a></p>
+
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/161568/">AcWing 8. 二维费用的背包问题</a></p>
 <hr>
-<h2 id="状态机-dp">状态机 DP</h2>
-<h3 id="基础-3">基础</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162297/">AcWing
-1049. 大盗阿福</a></p>
-<h3 id="变式-3">变式</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162504/">AcWing
-1057. 股票买卖 IV</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162508/">AcWing
-1058. 股票买卖 V</a></p>
-<h2 id="状态压缩-dp">状态压缩 DP</h2>
-<h3 id="基础-4">基础</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163151/">AcWing
-1064. 小国王</a></p>
-<h3 id="变式-4">变式</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163158/">AcWing 327.
-玉米田</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163166/">AcWing 292.
-炮兵阵地</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163228/">AcWing 524.
-愤怒的小鸟</a></p>
+<h2 id="状态机-DP"><a href="#状态机-DP" class="headerlink" title="状态机 DP"></a>状态机 DP</h2><h3 id="基础-3"><a href="#基础-3" class="headerlink" title="基础"></a>基础</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162297/">AcWing 1049. 大盗阿福</a></p>
+<h3 id="变式-3"><a href="#变式-3" class="headerlink" title="变式"></a>变式</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162504/">AcWing 1057. 股票买卖 IV</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162508/">AcWing 1058. 股票买卖 V</a></p>
+<h2 id="状态压缩-DP"><a href="#状态压缩-DP" class="headerlink" title="状态压缩 DP"></a>状态压缩 DP</h2><h3 id="基础-4"><a href="#基础-4" class="headerlink" title="基础"></a>基础</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163151/">AcWing 1064. 小国王</a></p>
+<h3 id="变式-4"><a href="#变式-4" class="headerlink" title="变式"></a>变式</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163158/">AcWing 327. 玉米田</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163166/">AcWing 292. 炮兵阵地</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163228/">AcWing 524. 愤怒的小鸟</a></p>
 <hr>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-sufficient-team/">LeetCode
-1125. 最小的必要团队</a></p>
-<h2 id="区间-dp">区间 DP</h2>
-<h3 id="基础-5">基础</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163255/">AcWing 282.
-石子合并</a></p>
-<h3 id="变式-5">变式</h3>
-<h4 id="环形问题的一般化处理思路">环形问题的一般化处理思路</h4>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163270/">AcWing
-1068. 环形石子合并</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165951/">AcWing 320.
-能量项链</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165959/">AcWing
-1069. 凸多边形的划分</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165967/">AcWing 479.
-加分二叉树</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165998/">AcWing 321.
-棋盘分割</a></p>
-<h2 id="树形-dp">树形 DP</h2>
-<h3 id="基础-6">基础</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162141/">AcWing 285.
-没有上司的舞会</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166013/">AcWing
-1072. 树的最长路径</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166199/">AcWing
-1073. 树的中心</a></p>
-<h3 id="变式-6">变式</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166203/">AcWing
-1075. 数字转换</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166236/">AcWing
-1074. 二叉苹果树</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166250/">AcWing 323.
-战略游戏</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166277/">AcWing
-1077. 皇宫看守</a></p>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-subtrees-with-max-distance-between-cities/">LeetCode
-1617. 统计子树中城市之间最大距离</a></p>
-<p>本题需要我们求的是，子树内最大距离为 <span class="math inline">\(d\)</span> 的所有不同子树数量</p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-sufficient-team/">LeetCode 1125. 最小的必要团队</a></p>
+<h2 id="区间-DP"><a href="#区间-DP" class="headerlink" title="区间 DP"></a>区间 DP</h2><h3 id="基础-5"><a href="#基础-5" class="headerlink" title="基础"></a>基础</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163255/">AcWing 282. 石子合并</a></p>
+<h3 id="变式-5"><a href="#变式-5" class="headerlink" title="变式"></a>变式</h3><h4 id="环形问题的一般化处理思路"><a href="#环形问题的一般化处理思路" class="headerlink" title="环形问题的一般化处理思路"></a>环形问题的一般化处理思路</h4><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/163270/">AcWing 1068. 环形石子合并</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165951/">AcWing 320. 能量项链</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165959/">AcWing 1069. 凸多边形的划分</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165967/">AcWing 479. 加分二叉树</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/165998/">AcWing 321. 棋盘分割</a></p>
+<h2 id="树形-DP"><a href="#树形-DP" class="headerlink" title="树形 DP"></a>树形 DP</h2><h3 id="基础-6"><a href="#基础-6" class="headerlink" title="基础"></a>基础</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/162141/">AcWing 285. 没有上司的舞会</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166013/">AcWing 1072. 树的最长路径</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166199/">AcWing 1073. 树的中心</a></p>
+<h3 id="变式-6"><a href="#变式-6" class="headerlink" title="变式"></a>变式</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166203/">AcWing 1075. 数字转换</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166236/">AcWing 1074. 二叉苹果树</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166250/">AcWing 323. 战略游戏</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166277/">AcWing 1077. 皇宫看守</a></p>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-subtrees-with-max-distance-between-cities/">LeetCode 1617. 统计子树中城市之间最大距离</a></p>
+<p>本题需要我们求的是，子树内最大距离为 $d$ 的所有不同子树数量</p>
 <p>子树内的最大距离定义为：子树内所有点的最大距离（也就是这棵树的直径）</p>
 <p>考虑一个问题：假设我们当前有一棵子树，我们应该如果求这棵子树的直径</p>
-<p>由于这里边的权值均相同，设最终的直径长度为 <span class="math inline">\(d\)</span> ，在这里我们对每个节点进行如下操作</p>
+<p>由于这里边的权值均相同，设最终的直径长度为 $d$ ，在这里我们对每个节点进行如下操作</p>
 <ul>
-<li>用 <span class="math inline">\(maxlen\)</span>
-表示<strong>当前</strong>已记录的最大长度，遍历该节点的所有子节点，得到以子节点为根的最长路径
-<span class="math inline">\(res\)</span></li>
-<li>用 <span class="math inline">\(maxlen + res\)</span> 来更新 <span class="math inline">\(d\)</span></li>
-<li>用 <span class="math inline">\(res\)</span> 更新 <span class="math inline">\(maxlen\)</span></li>
-<li>遍历完所有子节点后返回 <span class="math inline">\(maxlen\)</span></li>
+<li>用 $maxlen$ 表示<strong>当前</strong>已记录的最大长度，遍历该节点的所有子节点，得到以子节点为根的最长路径 $res$</li>
+<li>用 $maxlen + res$ 来更新 $d$</li>
+<li>用 $res$ 更新 $maxlen$</li>
+<li>遍历完所有子节点后返回 $maxlen$</li>
 </ul>
 <p>注意，中间两步不能调换顺序。由于我们要求经过该点的最长路径，因此局部最优解为<strong>当前</strong>经过该点的最长路径与<strong>次长</strong>路径之和</p>
 <p>这是基于子树已经存在的讨论，现在的问题是该如何枚举所有的子树</p>
-<p>注意到，一共只有 <span class="math inline">\(15\)</span>
-个节点，因此直接用<strong>排列的方式</strong>递归枚举所有子集，然后对集合内的所有节点求一次直径即可</p>
+<p>注意到，一共只有 $15$ 个节点，因此直接用<strong>排列的方式</strong>递归枚举所有子集，然后对集合内的所有节点求一次直径即可</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">countSubgraphsForEachDiameter</span><span class="hljs-params">(<span class="hljs-type">int</span> n, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; edges)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">h</span>(n);        <br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it : edges)<br>        &#123;<br>            <span class="hljs-type">int</span> x = it[<span class="hljs-number">0</span>] - <span class="hljs-number">1</span>, y = it[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span>;<br>            h[x].<span class="hljs-built_in">push_back</span>(y);<span class="hljs-comment">//无向图</span><br>            h[y].<span class="hljs-built_in">push_back</span>(x);<br>        &#125;<br>        <span class="hljs-comment">//tree_set表示目前枚举的集合，st表示在此次枚举中，哪些城市是访问过的</span><br>        vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">ans</span>(n - <span class="hljs-number">1</span>);<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">tree_set</span><span class="hljs-params">(n)</span>, <span class="hljs-title">st</span><span class="hljs-params">(n)</span></span>;<br>        <span class="hljs-type">int</span> d = <span class="hljs-number">0</span>;<span class="hljs-comment">//表示当前集合的最大距离</span><br>        function&lt;<span class="hljs-type">int</span>(<span class="hljs-type">int</span>)&gt; dfs = [&amp;](<span class="hljs-type">int</span> u) -&gt; <span class="hljs-type">int</span><br>        &#123;<br>            st[u] = <span class="hljs-literal">true</span>;<br>            <span class="hljs-type">int</span> maxlen = <span class="hljs-number">0</span>;<span class="hljs-comment">//当前已记录的最大长度</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x : h[u])<br>            &#123;<br>                <span class="hljs-comment">//遍历u的临边，如果在当前选定的集合并且没有遍历过的话，dfs一次</span><br>                <span class="hljs-keyword">if</span>(tree_set[x] &amp;&amp; !st[x])   <br>                &#123;<br>                    <span class="hljs-type">int</span> res = <span class="hljs-built_in">dfs</span>(x) + <span class="hljs-number">1</span>;<br>                    d = <span class="hljs-built_in">max</span>(d, maxlen + res);<br>                    maxlen = <span class="hljs-built_in">max</span>(maxlen, res);<span class="hljs-comment">//这个一定要放在后面</span><br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> maxlen;<br>        &#125;;<br><br>        function&lt;<span class="hljs-type">void</span>(<span class="hljs-type">int</span>)&gt; f = [&amp;](<span class="hljs-type">int</span> u)<span class="hljs-comment">//u表示当前遍历到的位置</span><br>        &#123;<br>            <span class="hljs-keyword">if</span>(u == n)<br>            &#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>                &#123;<br>                    <span class="hljs-keyword">if</span>(tree_set[i])<span class="hljs-comment">//遍历子集内每一个节点，求出该子集的最大直径</span><br>                    &#123;<br>                        <span class="hljs-built_in">fill</span>(st.<span class="hljs-built_in">begin</span>(), st.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>                        d = <span class="hljs-number">0</span>;<br>                        <span class="hljs-built_in">dfs</span>(i);<br>                        <span class="hljs-keyword">break</span>;<br>                    &#125;<br>                &#125;<br>                <span class="hljs-comment">//如果当前集合的最大距离不为零并且把当前集合全部遍历完毕</span><br>                <span class="hljs-keyword">if</span>(d &amp;&amp; tree_set == st)<br>                    ans[d - <span class="hljs-number">1</span>]++;<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>            <span class="hljs-comment">//不选当前城市</span><br>            <span class="hljs-built_in">f</span>(u + <span class="hljs-number">1</span>);<br><br>            <span class="hljs-comment">//选当前城市</span><br>            tree_set[u] = <span class="hljs-literal">true</span>;<br>            <span class="hljs-built_in">f</span>(u + <span class="hljs-number">1</span>);<br>            tree_set[u] = <span class="hljs-literal">false</span>;<br>        &#125;;<br><br>        <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>);<span class="hljs-comment">//从0开始遍历所有集合</span><br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="数位-dp">数位 DP</h2>
-<h3 id="基础-7">基础</h3>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166312/">AcWing
-1081. 度的数量</a></p>
-<h2 id="单调队列优化">单调队列优化</h2>
-<h3 id="基础-8">基础</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/137/">AcWing 135.
-最大子序和</a></p>
+<h2 id="数位-DP"><a href="#数位-DP" class="headerlink" title="数位 DP"></a>数位 DP</h2><h3 id="基础-7"><a href="#基础-7" class="headerlink" title="基础"></a>基础</h3><p><a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/166312/">AcWing 1081. 度的数量</a></p>
+<h2 id="单调队列优化"><a href="#单调队列优化" class="headerlink" title="单调队列优化"></a>单调队列优化</h2><h3 id="基础-8"><a href="#基础-8" class="headerlink" title="基础"></a>基础</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/137/">AcWing 135. 最大子序和</a></p>
 <p>由于我们需要求一段<strong>连续</strong>的子序列的和，考虑用前缀和</p>
-<p>定义 <span class="math inline">\(s[i]=w[1]+w[2]+\cdots +w[i]\)</span>
-。假设所求区间为 <span class="math inline">\([l,r]\)</span>
-，那么区间和为 <span class="math inline">\(s[r]-s[l-1]\)</span></p>
-<p>由于区间长度不超过 <span class="math inline">\(m\)</span>
-，因此实际区间为 <span class="math inline">\([i-m+1,i]\)</span>，区间和为 <span class="math inline">\(s[i]-s[i-m]\)</span></p>
-<p>当我们枚举 <span class="math inline">\(i\)</span> 时，我们期望 <span class="math inline">\(s[i]-s[i-m]\)</span> 最大，由于 <span class="math inline">\(s[i]\)</span> 固定，因此我们需要让 <span class="math inline">\(s[i-m]\)</span> 最小，即所有局部最优解 <span class="math inline">\(ans\)</span> 为：</p>
-<p><span class="math display">\[
-tmp=s[i]-\min_{0\le k\le m}\{s[i-k]\}
-\]</span></p>
+<p>定义 $s[i]&#x3D;w[1]+w[2]+\cdots +w[i]$ 。假设所求区间为 $[l,r]$ ，那么区间和为 $s[r]-s[l-1]$ </p>
+<p>由于区间长度不超过 $m$ ，因此实际区间为 $[i-m+1,i]$，区间和为 $s[i]-s[i-m]$</p>
+<p>当我们枚举 $i$ 时，我们期望 $s[i]-s[i-m]$ 最大，由于 $s[i]$ 固定，因此我们需要让 $s[i-m]$ 最小，即所有局部最优解 $ans$ 为：</p>
+<p>$$<br>tmp&#x3D;s[i]-\min_{0\le k\le m}{s[i-k]}<br>$$</p>
 <p>全局最优解为：</p>
-<p><span class="math display">\[
-ans=\max_{n-m+1\le i\le n}\{ans_i\}
-\]</span></p>
-<p>由于我们需要求一段区间内的最小值，因此后者可以用单调队列优化，时间复杂度变为
-<span class="math inline">\(O(n)\)</span></p>
-<p><strong>单调队列内部维护元素个数为 <span class="math inline">\(m+1\)</span></strong>，所维护元素为前缀和 <span class="math inline">\(s[i]\)</span> ，因此需要预先将 <span class="math inline">\(s[0]\)</span> 插入进队列中</p>
-<p>我们在对最终结果赋值时需要保证队列不空，由于我们预先给了队列一个初值，因此需要在调整队列前对
-<span class="math inline">\(ans\)</span> 赋值</p>
+<p>$$<br>ans&#x3D;\max_{n-m+1\le i\le n}{ans_i}<br>$$</p>
+<p>由于我们需要求一段区间内的最小值，因此后者可以用单调队列优化，时间复杂度变为 $O(n)$</p>
+<p>**单调队列内部维护元素个数为 $m+1$**，所维护元素为前缀和 $s[i]$ ，因此需要预先将 $s[0]$ 插入进队列中</p>
+<p>我们在对最终结果赋值时需要保证队列不空，由于我们预先给了队列一个初值，因此需要在调整队列前对 $ans$ 赋值</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">3e5</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> n, m;<br>LL s[N], q[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; s[i], s[i] += s[i - <span class="hljs-number">1</span>];<br>    <span class="hljs-type">int</span> hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">0</span>;<span class="hljs-comment">//预先将0插入进队列，因为前缀和</span><br>    LL ans = <span class="hljs-number">-1e18</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; q[hh] &lt; i - m) hh++;<span class="hljs-comment">//最后一个元素为 i - m</span><br>        ans = <span class="hljs-built_in">max</span>(ans, s[i] - s[q[hh]]);        <br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; s[q[tt]] &gt;= s[i]) tt--;<br>        q[++tt] = i;<br>    &#125;<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="变式-7">变式</h3>
 
+<h3 id="变式-7"><a href="#变式-7" class="headerlink" title="变式"></a>变式</h3>
                 
               </div>
             
@@ -1106,9 +851,9 @@ ans=\max_{n-m+1\le i\le n}\{ans_i\}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/15/Algorithm_Archiv/LeetCode/" title="LeetCode">
+                      <a href="/2023/04/15/Algorithm_Archiv/%E5%9B%BE%E8%AE%BA/" title="图论">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LeetCode</span>
+                        <span class="hidden-mobile">图论</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -1116,8 +861,8 @@ ans=\max_{n-m+1\le i\le n}\{ans_i\}
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/15/CSAPP/%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/" title="CSAPP 第二章 信息的表示和处理">
-                        <span class="hidden-mobile">CSAPP 第二章 信息的表示和处理</span>
+                      <a href="/2023/04/15/Algorithm_Archiv/LeetCode/" title="LeetCode">
+                        <span class="hidden-mobile">LeetCode</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

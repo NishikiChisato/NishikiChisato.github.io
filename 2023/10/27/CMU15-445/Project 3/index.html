@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Project 3  Project 3  Architecture Layout  Catalog Layout Schema Layout Query Execution Tree Expression Tree SQL EXPLAIN  Task 1  SeqScan Insert Update &amp;&amp; Delete  Task 2  A">
+    <meta name="description" content="Project 3 Project 3 Architecture Layout Catalog Layout Schema Layout Query Execution Tree Expression Tree SQL EXPLAIN   Task 1 SeqScan Insert Update &amp;&amp; Delete   Task 2 Aggregate Aggregate Func">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU15-445 Project 3">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/10/27/CMU15-445/Project%203/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Project 3  Project 3  Architecture Layout  Catalog Layout Schema Layout Query Execution Tree Expression Tree SQL EXPLAIN  Task 1  SeqScan Insert Update &amp;&amp; Delete  Task 2  A">
+<meta property="og:description" content="Project 3 Project 3 Architecture Layout Catalog Layout Schema Layout Query Execution Tree Expression Tree SQL EXPLAIN   Task 1 SeqScan Insert Update &amp;&amp; Delete   Task 2 Aggregate Aggregate Func">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(4).jpg">
 <meta property="article:published_time" content="2023-10-27T08:31:16.253Z">
@@ -274,7 +274,7 @@
         
         
         
-          86 mins
+          87 mins
         
       </span>
     
@@ -338,7 +338,7 @@
               <p class="note note-info">
                 
                   
-                    Last updated on 2 minutes ago
+                    Last updated on 5 days ago
                   
                 
               </p>
@@ -346,487 +346,209 @@
             
               <div class="markdown-body">
                 
-                <h1 id="project-3">Project 3</h1>
-<ul>
-<li><a href="#project-3">Project 3</a>
-<ul>
-<li><a href="#architecture-layout">Architecture Layout</a>
-<ul>
+                <h1 id="Project-3"><a href="#Project-3" class="headerlink" title="Project 3"></a>Project 3</h1><ul>
+<li><a href="#project-3">Project 3</a><ul>
+<li><a href="#architecture-layout">Architecture Layout</a><ul>
 <li><a href="#catalog-layout">Catalog Layout</a></li>
 <li><a href="#schema-layout">Schema Layout</a></li>
 <li><a href="#query-execution-tree">Query Execution Tree</a></li>
 <li><a href="#expression-tree">Expression Tree</a></li>
 <li><a href="#sql-explain">SQL EXPLAIN</a></li>
-</ul></li>
-<li><a href="#task-1">Task 1</a>
-<ul>
+</ul>
+</li>
+<li><a href="#task-1">Task 1</a><ul>
 <li><a href="#seqscan">SeqScan</a></li>
 <li><a href="#insert">Insert</a></li>
 <li><a href="#update--delete">Update &amp;&amp; Delete</a></li>
-</ul></li>
-<li><a href="#task-2">Task 2</a>
-<ul>
-<li><a href="#aggregate">Aggregate</a>
-<ul>
+</ul>
+</li>
+<li><a href="#task-2">Task 2</a><ul>
+<li><a href="#aggregate">Aggregate</a><ul>
 <li><a href="#aggregate-function">Aggregate Function</a></li>
-<li><a href="#aggregate-semantic">Aggregate Semantic</a>
-<ul>
+<li><a href="#aggregate-semantic">Aggregate Semantic</a><ul>
 <li><a href="#aggregate-schema">Aggregate Schema</a></li>
 <li><a href="#group-by-issue">Group by Issue</a></li>
-</ul></li>
-<li><a href="#aggregate-implementation">Aggregate
-Implementation</a></li>
-</ul></li>
+</ul>
+</li>
+<li><a href="#aggregate-implementation">Aggregate Implementation</a></li>
+</ul>
+</li>
 <li><a href="#nested-loop-join">Nested Loop Join</a></li>
-<li><a href="#hash-join">Hash Join</a>
-<ul>
-<li><a href="#inner-join--outer-join">Inner Join &amp; Outer
-Join</a></li>
+<li><a href="#hash-join">Hash Join</a><ul>
+<li><a href="#inner-join--outer-join">Inner Join &amp; Outer Join</a></li>
 <li><a href="#predicate">Predicate</a></li>
 <li><a href="#implementation">Implementation</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#nlj-as-hash-join">NLJ As Hash Join</a></li>
-</ul></li>
-<li><a href="#task-3">Task 3</a>
-<ul>
+</ul>
+</li>
+<li><a href="#task-3">Task 3</a><ul>
 <li><a href="#sort--limit">Sort &amp; Limit</a></li>
 <li><a href="#topn">TopN</a></li>
 <li><a href="#sort-limit-as-topn">Sort Limit As TopN</a></li>
-</ul></li>
-<li><a href="#harvest">Harvest</a></li>
-</ul></li>
 </ul>
-<h2 id="architecture-layout">Architecture Layout</h2>
-<h3 id="catalog-layout">Catalog Layout</h3>
-<p><code>DBMS</code> 的 <code>catalog</code> 用于存储所有
-<code>table</code> 和 <code>index</code>
-的读取和写入，因此每当我们需要对 <code>table</code> 或
-<code>index</code> 进行读取或更新时，我们都需要与 <code>catalog</code>
-进行交互</p>
-<p>我们以 <code>table</code> 为例，来说明整个 <code>catalog</code>
-的结构</p>
-<p><code>catalog</code> 中用于<strong>存储</strong> <code>table</code>
-数据的结构为 <code>TableInfo</code>，我们可以使用 <code>table_id</code>
-来索引 <code>TableInfo</code></p>
-<p><code>TableInfo</code> 中用于记录 <code>table</code> 相关的
-<code>metadata</code>，实际<strong>存储</strong> <code>table</code>
-的结构为 <code>TableHeap</code></p>
-<p><code>TableHeap</code> 实际上是一系列的
-<code>page</code>，我们需要将每个 <code>page</code> 以
-<code>TablePage</code> 的形式进行读取，这样才能够正确读取到这个
-<code>page</code> 内部的 <code>tuple</code></p>
+</li>
+<li><a href="#harvest">Harvest</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Architecture-Layout"><a href="#Architecture-Layout" class="headerlink" title="Architecture Layout"></a>Architecture Layout</h2><h3 id="Catalog-Layout"><a href="#Catalog-Layout" class="headerlink" title="Catalog Layout"></a>Catalog Layout</h3><p><code>DBMS</code> 的 <code>catalog</code> 用于存储所有 <code>table</code> 和 <code>index</code> 的读取和写入，因此每当我们需要对 <code>table</code> 或 <code>index</code> 进行读取或更新时，我们都需要与 <code>catalog</code> 进行交互</p>
+<p>我们以 <code>table</code> 为例，来说明整个 <code>catalog</code> 的结构</p>
+<p><code>catalog</code> 中用于<strong>存储</strong> <code>table</code> 数据的结构为 <code>TableInfo</code>，我们可以使用 <code>table_id</code> 来索引 <code>TableInfo</code></p>
+<p><code>TableInfo</code> 中用于记录 <code>table</code> 相关的 <code>metadata</code>，实际<strong>存储</strong> <code>table</code> 的结构为 <code>TableHeap</code></p>
+<p><code>TableHeap</code> 实际上是一系列的 <code>page</code>，我们需要将每个 <code>page</code> 以 <code>TablePage</code> 的形式进行读取，这样才能够正确读取到这个 <code>page</code> 内部的 <code>tuple</code></p>
 <p>对于一个 <code>TablePage</code> 而言，其基本属性如下：</p>
 <ul>
 <li><code>num_tuples_</code>：<code>tuple</code> 的数量</li>
-<li><code>num_deleted_tuple_</code>：以删除的 <code>tuple</code>
-的数量。我们对一个 <code>page</code> 当中 <code>tuple</code>
-的删除是将其 <code>metadata</code> 中的标志位进行修改，也就是对其进行
-<code>logical delete</code>，在我们对 <code>transaction</code>
-提交后，再执行 <code>physical delete</code></li>
-<li><code>tuple_info_</code>：每个 <code>tuple</code> 的元数据，也就是
-<code>slotted array</code>。我们只记录每个 <code>tuple</code> 的偏移量
-<code>offset</code>、长度 <code>length</code>和元数据
-<code>metadata</code></li>
+<li><code>num_deleted_tuple_</code>：以删除的 <code>tuple</code> 的数量。我们对一个 <code>page</code> 当中 <code>tuple</code> 的删除是将其 <code>metadata</code> 中的标志位进行修改，也就是对其进行 <code>logical delete</code>，在我们对 <code>transaction</code> 提交后，再执行 <code>physical delete</code></li>
+<li><code>tuple_info_</code>：每个 <code>tuple</code> 的元数据，也就是 <code>slotted array</code>。我们只记录每个 <code>tuple</code> 的偏移量 <code>offset</code>、长度 <code>length</code>和元数据 <code>metadata</code></li>
 </ul>
-<p><code>table</code> 中的每个 <code>page</code> 都是以
-<code>slotted array</code> 的形式存储 <code>tuple</code>
-的。换句话说，从 <code>slotted array</code> 开始，到第一个
-<code>tuple</code> 为止的这段空间，都是 <code>free space</code></p>
+<p><code>table</code> 中的每个 <code>page</code> 都是以 <code>slotted array</code> 的形式存储 <code>tuple</code> 的。换句话说，从 <code>slotted array</code> 开始，到第一个 <code>tuple</code> 为止的这段空间，都是 <code>free space</code></p>
 <p>整体的结构如下图所示：</p>
-<figure>
-<img src="Catalog.png" srcset="/img/loading.gif" lazyload alt="Catalog">
-<figcaption aria-hidden="true">Catalog</figcaption>
-</figure>
-<h3 id="schema-layout">Schema Layout</h3>
-<p>由于每个 <code>tuple</code> 当中，只有 <code>RID</code> 和一个
-<code>vector&lt;char&gt;</code>，也就是实际存储数据的是一个字符数组，换句话说，所有的
-<code>attribute</code> 都是存在一起的（每一个 <code>attribute</code>
-就是一个列 <code>column</code>）。因此如果我们想要从 <code>tuple</code>
-中提取出某些 <code>attribute</code>，我们需要在此之上加一个
-<code>schema</code>，通过 <code>schema</code>，我们可以从该
-<code>tuple</code> 中读取出某些特定的 <code>attribute</code></p>
-<p>每一个 <code>tuple</code> 都有一个固定的 <code>schema</code>
-与其对应，因此我们对 <code>tuple</code> 进行初始化时，除了需要提供
-<code>Value</code> 数组以外，还需要提供 <code>schema</code></p>
+<p>![Catalog](.&#x2F;Project 3&#x2F;Catalog.png)</p>
+<h3 id="Schema-Layout"><a href="#Schema-Layout" class="headerlink" title="Schema Layout"></a>Schema Layout</h3><p>由于每个 <code>tuple</code> 当中，只有 <code>RID</code> 和一个 <code>vector&lt;char&gt;</code>，也就是实际存储数据的是一个字符数组，换句话说，所有的 <code>attribute</code> 都是存在一起的（每一个 <code>attribute</code> 就是一个列 <code>column</code>）。因此如果我们想要从 <code>tuple</code> 中提取出某些 <code>attribute</code>，我们需要在此之上加一个 <code>schema</code>，通过 <code>schema</code>，我们可以从该 <code>tuple</code> 中读取出某些特定的 <code>attribute</code></p>
+<p>每一个 <code>tuple</code> 都有一个固定的 <code>schema</code> 与其对应，因此我们对 <code>tuple</code> 进行初始化时，除了需要提供 <code>Value</code> 数组以外，还需要提供 <code>schema</code></p>
 <blockquote>
-<p><code>Value calss</code>
-内部封装了各种不同的数据类型，我们可以直接使用 <code>Value class</code>
-来表示不同的数据</p>
+<p><code>Value calss</code> 内部封装了各种不同的数据类型，我们可以直接使用 <code>Value class</code> 来表示不同的数据</p>
 </blockquote>
-<p><code>Schema</code> 由多个 <code>Column</code> 组成，每个
-<code>Column</code> 都由一个名字 <code>column_name_</code>、类型
-<code>column_type_</code>、该 <code>column</code> 在 <code>tuple</code>
-中的偏移量 <code>column_offset_</code></p>
-<p>因此，如果需要创建一个 <code>Schema</code>，我们实际上是新建了多个
-<code>Column</code>，而每个 <code>Column</code> 都对应于
-<code>tuple</code> 中的一个 <code>attribute</code></p>
-<h3 id="query-execution-tree">Query Execution Tree</h3>
-<p>对于一条 <code>SQL</code> 语句，它所经历的过程如下：</p>
-<figure>
-<img src="Query_Execution.png" srcset="/img/loading.gif" lazyload alt="Query_Execution">
-<figcaption aria-hidden="true">Query_Execution</figcaption>
-</figure>
+<p><code>Schema</code> 由多个 <code>Column</code> 组成，每个 <code>Column</code> 都由一个名字 <code>column_name_</code>、类型 <code>column_type_</code>、该 <code>column</code> 在 <code>tuple</code> 中的偏移量 <code>column_offset_</code></p>
+<p>因此，如果需要创建一个 <code>Schema</code>，我们实际上是新建了多个 <code>Column</code>，而每个 <code>Column</code> 都对应于 <code>tuple</code> 中的一个 <code>attribute</code></p>
+<h3 id="Query-Execution-Tree"><a href="#Query-Execution-Tree" class="headerlink" title="Query Execution Tree"></a>Query Execution Tree</h3><p>对于一条 <code>SQL</code> 语句，它所经历的过程如下：</p>
+<p>![Query_Execution](.&#x2F;Project 3&#x2F;Query_Execution.png)</p>
 <blockquote>
-<p>可以参考这一篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/570917775">BusTub
-养成记：从课程项目到 SQL 数据库</a></p>
+<p>可以参考这一篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/570917775">BusTub 养成记：从课程项目到 SQL 数据库</a></p>
 </blockquote>
 <ul>
-<li><code>Parser</code> 会将一条 <code>SQL</code> 语句解析为
-<code>Abstract Syntax Tree (AST)</code>，在 <code>bustub</code>
-中这里采用系统库</li>
-<li><code>Binder</code> 会将 <code>AST</code> 中的每个符号绑定到
-<code>BDMS</code> 内部每个对象的标识符 <code>identifier</code></li>
-<li><code>Planner</code> 会将 <code>AST</code> 输出为查询计划
-<code>Query Plan</code></li>
-<li><code>Optimizer</code> 会对 <code>Query Plan</code>
-进行优化，然后交由 <code>operators</code> 进行执行</li>
+<li><code>Parser</code> 会将一条 <code>SQL</code> 语句解析为 <code>Abstract Syntax Tree (AST)</code>，在 <code>bustub</code> 中这里采用系统库</li>
+<li><code>Binder</code> 会将 <code>AST</code> 中的每个符号绑定到 <code>BDMS</code> 内部每个对象的标识符 <code>identifier</code></li>
+<li><code>Planner</code> 会将 <code>AST</code> 输出为查询计划 <code>Query Plan</code></li>
+<li><code>Optimizer</code> 会对 <code>Query Plan</code> 进行优化，然后交由 <code>operators</code> 进行执行</li>
 </ul>
-<p>在这里，对于 <code>Optimizer</code> 生成的
-<code>Query Plan</code>，实际上是一棵树结构（也就是图中的
-<code>Abstract Plan Tree</code>），每一个节点都是
-<code>AbstractPlanNode</code>，我们会在<strong>实际执行的时候将该抽象类绑定到具体的
-<code>PlanNode</code> 上面</strong>。用 <code>AbstractPlanNode</code>
-的好处在于我们可以将任意的子节点赋值给 <code>AbstractPlanNode</code>
-类型的指针或引用</p>
-<p><code>Operators</code> 内部的每个 <code>executor</code>
-会具体执行不同算子的行为，每一个 <code>Plan Node</code> 都对应一个
-<code>executor</code>。同样，所有的 <code>executor node</code> 都继承自
-<code>AbstractExecutor</code>，<strong>在实际执行不同算子的行为时再进行绑定</strong>（也就是图中的
-<code>Physical Executor Tree</code>）</p>
-<p>如果我们需要对 <code>AST</code> 进行修改，修改方式类似于
-<code>Project 0</code> 中对 <code>Trie</code> 树的修改，就是
-<code>Copy On Write</code>。我们会先递归当前节点的子节点，然后用新得到的子节点来复制一份当前节点，然后我们用子节点复制一份当前节点，得到
-<code>optimize_plan</code>。如果 <code>optimize_plan</code>
-满足我们的优化要求，则对其进行优化，否则直接返回
-<code>optimize_plan</code></p>
-<p><code>Project 3</code> 中对 <code>AST</code> 的修改与
-<code>Project 0</code> 中对 <code>Trie</code>
-树的修改如出一辙。说实话，这种优雅的设计让作为学生进行这个实验的我会心一笑</p>
-<h3 id="expression-tree">Expression Tree</h3>
-<p>有些 <code>plan node</code>
-会携带一个表达式，表达式本身被解析为一棵<strong>表达式树
-<code>expression tree</code></strong>，每个节点都为
-<code>AbstractExpression</code>，<strong>在实际执行的时候，会将各个节点绑定到具体的类上</strong></p>
-<p>每个 <code>AbstractExpression</code> 中都有一个 <code>Evaluate</code>
-函数，用于计算在给定 <code>tuple</code> 与 <code>schema</code>
-的情况下，当前 <code>expression</code> 下的值</p>
-<p><code>Expression</code> 相关的类放在
-<code>/src/include/execution/expression</code>
-中，我们举个具体的例子</p>
+<p>在这里，对于 <code>Optimizer</code> 生成的 <code>Query Plan</code>，实际上是一棵树结构（也就是图中的 <code>Abstract Plan Tree</code>），每一个节点都是 <code>AbstractPlanNode</code>，我们会在<strong>实际执行的时候将该抽象类绑定到具体的 <code>PlanNode</code> 上面</strong>。用 <code>AbstractPlanNode</code> 的好处在于我们可以将任意的子节点赋值给 <code>AbstractPlanNode</code> 类型的指针或引用</p>
+<p><code>Operators</code> 内部的每个 <code>executor</code> 会具体执行不同算子的行为，每一个 <code>Plan Node</code> 都对应一个 <code>executor</code>。同样，所有的 <code>executor node</code> 都继承自 <code>AbstractExecutor</code>，<strong>在实际执行不同算子的行为时再进行绑定</strong>（也就是图中的 <code>Physical Executor Tree</code>）</p>
+<p>如果我们需要对 <code>AST</code> 进行修改，修改方式类似于 <code>Project 0</code> 中对 <code>Trie</code> 树的修改，就是 <code>Copy On Write</code>。我们会先递归当前节点的子节点，然后用新得到的子节点来复制一份当前节点，然后我们用子节点复制一份当前节点，得到 <code>optimize_plan</code>。如果 <code>optimize_plan</code> 满足我们的优化要求，则对其进行优化，否则直接返回 <code>optimize_plan</code></p>
+<p><code>Project 3</code> 中对 <code>AST</code> 的修改与 <code>Project 0</code> 中对 <code>Trie</code> 树的修改如出一辙。说实话，这种优雅的设计让作为学生进行这个实验的我会心一笑</p>
+<h3 id="Expression-Tree"><a href="#Expression-Tree" class="headerlink" title="Expression Tree"></a>Expression Tree</h3><p>有些 <code>plan node</code> 会携带一个表达式，表达式本身被解析为一棵<strong>表达式树 <code>expression tree</code><strong>，每个节点都为 <code>AbstractExpression</code>，</strong>在实际执行的时候，会将各个节点绑定到具体的类上</strong></p>
+<p>每个 <code>AbstractExpression</code> 中都有一个 <code>Evaluate</code> 函数，用于计算在给定 <code>tuple</code> 与 <code>schema</code> 的情况下，当前 <code>expression</code> 下的值</p>
+<p><code>Expression</code> 相关的类放在 <code>/src/include/execution/expression</code> 中，我们举个具体的例子</p>
 <p>考虑如下 <code>SQL</code> 语句：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs SQL">bustub<span class="hljs-operator">&gt;</span> EXPLAIN <span class="hljs-keyword">UPDATE</span> test_1 <span class="hljs-keyword">set</span> colB <span class="hljs-operator">=</span> <span class="hljs-number">15445</span>;<br><span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> BINDER <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span><br>BoundUpdate &#123;<br>  <span class="hljs-keyword">table</span><span class="hljs-operator">=</span>BoundBaseTableRef &#123; <span class="hljs-keyword">table</span><span class="hljs-operator">=</span>test_1, oid<span class="hljs-operator">=</span><span class="hljs-number">20</span> &#125;,<br>  filter_expr<span class="hljs-operator">=</span><span class="hljs-literal">true</span>,<br>  target_expr<span class="hljs-operator">=</span>[(test_1.colB, <span class="hljs-number">15445</span>)],<br>&#125;<br><span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> PLANNER <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span><br><span class="hljs-keyword">Update</span> &#123; table_oid<span class="hljs-operator">=</span><span class="hljs-number">20</span>, target_exprs<span class="hljs-operator">=</span>[#<span class="hljs-number">0.0</span>, <span class="hljs-number">15445</span>, #<span class="hljs-number">0.2</span>, #<span class="hljs-number">0.3</span>] &#125; <span class="hljs-operator">|</span> (__bustub_internal.update_rows:<span class="hljs-type">INTEGER</span>)<br>  <span class="hljs-keyword">Filter</span> &#123; predicate<span class="hljs-operator">=</span><span class="hljs-literal">true</span> &#125; <span class="hljs-operator">|</span> (test_1.colA:<span class="hljs-type">INTEGER</span>, test_1.colB:<span class="hljs-type">INTEGER</span>, test_1.colC:<span class="hljs-type">INTEGER</span>, test_1.colD:<span class="hljs-type">INTEGER</span>)<br>    SeqScan &#123; <span class="hljs-keyword">table</span><span class="hljs-operator">=</span>test_1 &#125; <span class="hljs-operator">|</span> (test_1.colA:<span class="hljs-type">INTEGER</span>, test_1.colB:<span class="hljs-type">INTEGER</span>, test_1.colC:<span class="hljs-type">INTEGER</span>, test_1.colD:<span class="hljs-type">INTEGER</span>)<br><span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> OPTIMIZER <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span><br><span class="hljs-keyword">Update</span> &#123; table_oid<span class="hljs-operator">=</span><span class="hljs-number">20</span>, target_exprs<span class="hljs-operator">=</span>[#<span class="hljs-number">0.0</span>, <span class="hljs-number">15445</span>, #<span class="hljs-number">0.2</span>, #<span class="hljs-number">0.3</span>] &#125; <span class="hljs-operator">|</span> (__bustub_internal.update_rows:<span class="hljs-type">INTEGER</span>)<br>  SeqScan &#123; <span class="hljs-keyword">table</span><span class="hljs-operator">=</span>test_1 &#125; <span class="hljs-operator">|</span> (test_1.colA:<span class="hljs-type">INTEGER</span>, test_1.colB:<span class="hljs-type">INTEGER</span>, test_1.colC:<span class="hljs-type">INTEGER</span>, test_1.colD:<span class="hljs-type">INTEGER</span>)bustub<span class="hljs-operator">&gt;</span> EXPLAIN <span class="hljs-keyword">UPDATE</span> test_1 <span class="hljs-keyword">set</span> colB <span class="hljs-operator">=</span> <span class="hljs-number">15445</span>;<br></code></pre></td></tr></table></figure>
-<p>我们重点看 <code>optimizer</code> 得到的结果。可以看到在
-<code>target_exprs</code> 中，与两种类型的数据：</p>
+
+<p>我们重点看 <code>optimizer</code> 得到的结果。可以看到在 <code>target_exprs</code> 中，与两种类型的数据：</p>
 <ul>
-<li><code>[#0.0, #0.2, #0.3]</code>：这对应表达式
-<code>column_value_expression</code>，其 <code>Evaluate</code>
-可以直接求出该 <code>tuple</code> 对应列的数据。形式 <code>x.y</code>
-的含义为：
-<ul>
-<li><code>x</code> 表示在 <code>join</code>
-的是处于左边还是处于右边，左边 <code>left side (x == 0)</code> 或者右边
-<code>right side (x == 1)</code></li>
+<li><code>[#0.0, #0.2, #0.3]</code>：这对应表达式 <code>column_value_expression</code>，其 <code>Evaluate</code> 可以直接求出该 <code>tuple</code> 对应列的数据。形式 <code>x.y</code> 的含义为：<ul>
+<li><code>x</code> 表示在 <code>join</code> 的是处于左边还是处于右边，左边 <code>left side (x == 0)</code> 或者右边 <code>right side (x == 1)</code></li>
 <li><code>y</code> 表示第几列数据，这里分别为第零列、第二列、第三列</li>
-</ul></li>
-<li><code>15445</code>：这对应表达式
-<code>constant_calue_expression</code>，我们对其调用
-<code>Evaluate</code>
-可以直接得到具体的值，该表达式也用于存储具体的数值</li>
 </ul>
-<h3 id="sql-explain">SQL EXPLAIN</h3>
-<p>我们需要解释一下 <code>EXPLAIN</code>
-的语句该如何解读，<code>SQL</code> 语句的执行可以参考官方提供的
-<code>Shell</code>: <a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/spring2023/bustub/">Live Database
-Shell</a></p>
-<p>还是看上面的那个例子，我们主要看 <code>PLANNER</code> 阶段。每一个
-<code>operator</code> 的形式类似于：<code>Operator &#123; &#125; | &#123; &#125;</code></p>
-<p>第一个大括号中用于表示该 <code>operator</code>
-的相关属性，这主要对应与每个 <code>executor</code> 中对应的那个
-<code>plan node</code>。例如，在 <code>UpdateExecutor</code> 类中，含有
-<code>UpdatePlanNode</code>，而 <code>UpdatePlanNode</code>
-中的相关属性则正好对应于这里所显示的内容</p>
-<p>第二个大括号用于表示该 <code>operator</code> 的
-<code>output schema</code>。由于每个 <code>executor</code> 都继承自
-<code>AbstractPlanNode</code>，也就是每个 <code>executor</code> 中都含有
-<code>output_schema_</code> 属性，第二个大括号中的内容便是这里的
-<code>output_schema_</code></p>
-<h2 id="task-1">Task 1</h2>
-<p>在 <code>Iterator Model</code> 中，我们每一个 <code>operator</code>
-都可以对其调用 <code>Next</code> 函数，<code>Next</code>
-函数语义为：</p>
+</li>
+<li><code>15445</code>：这对应表达式 <code>constant_calue_expression</code>，我们对其调用 <code>Evaluate</code> 可以直接得到具体的值，该表达式也用于存储具体的数值</li>
+</ul>
+<h3 id="SQL-EXPLAIN"><a href="#SQL-EXPLAIN" class="headerlink" title="SQL EXPLAIN"></a>SQL EXPLAIN</h3><p>我们需要解释一下 <code>EXPLAIN</code> 的语句该如何解读，<code>SQL</code> 语句的执行可以参考官方提供的 <code>Shell</code>: <a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/spring2023/bustub/">Live Database Shell</a></p>
+<p>还是看上面的那个例子，我们主要看 <code>PLANNER</code> 阶段。每一个 <code>operator</code> 的形式类似于：<code>Operator &#123; &#125; | &#123; &#125;</code></p>
+<p>第一个大括号中用于表示该 <code>operator</code> 的相关属性，这主要对应与每个 <code>executor</code> 中对应的那个 <code>plan node</code>。例如，在 <code>UpdateExecutor</code> 类中，含有 <code>UpdatePlanNode</code>，而 <code>UpdatePlanNode</code> 中的相关属性则正好对应于这里所显示的内容</p>
+<p>第二个大括号用于表示该 <code>operator</code> 的 <code>output schema</code>。由于每个 <code>executor</code> 都继承自 <code>AbstractPlanNode</code>，也就是每个 <code>executor</code> 中都含有 <code>output_schema_</code> 属性，第二个大括号中的内容便是这里的 <code>output_schema_</code></p>
+<h2 id="Task-1"><a href="#Task-1" class="headerlink" title="Task 1"></a>Task 1</h2><p>在 <code>Iterator Model</code> 中，我们每一个 <code>operator</code> 都可以对其调用 <code>Next</code> 函数，<code>Next</code> 函数语义为：</p>
 <ul>
-<li>若返回 <code>true</code>，则表示可以从当前 <code>operator</code>
-读取 <code>tuple</code> 和 <code>rid</code></li>
-<li>若返回 <code>false</code>，则表明当前 <code>operator</code>
-已执行完毕，<strong>无返回的 <code>tuple</code></strong></li>
+<li>若返回 <code>true</code>，则表示可以从当前 <code>operator</code> 读取 <code>tuple</code> 和 <code>rid</code></li>
+<li>若返回 <code>false</code>，则表明当前 <code>operator</code> 已执行完毕，<strong>无返回的 <code>tuple</code></strong></li>
 </ul>
-<p><code>Next</code> 函数的语义对于每一个 <code>operator</code>
-都想同，因此如果<strong>某个 <code>operator</code> 没有输出的话，那么其
-<code>Next</code> 函数需要返回 <code>false</code></strong></p>
-<p><code>Init</code> 函数用于初始化
-<code>operator</code>，我们在每次调用 <code>Next</code> 之前都会调用一次
-<code>Init</code></p>
-<p><code>Task 1</code>
-的四个函数较为简单，这里只将每个函数的关键点写一下：</p>
-<h3 id="seqscan">SeqScan</h3>
-<p><code>Next</code> 函数中，由于上层节点会对 <code>Next</code>
-函数调用多次，因此如果 <code>table</code>
-中有数据的话，我们每次都需要返回一个 <code>tuple</code> 以及
-<code>true</code></p>
-<p>由于 <code>tuple</code> 是逻辑删除
-<code>logical delete</code>，因此会有一些 <code>tuple</code>
-会被标记为已删除，那么只要当前 <code>table</code> 中有值，那么
-<code>next</code> 就必须返回一个 <code>tuple</code>，不能返回
-<code>false</code>（有一些被删除的 <code>tuple</code> 会混在没有被删除的
-<code>tuple</code> 中间）</p>
-<h3 id="insert">Insert</h3>
-<p><code>Insert operator</code> 会将下层子节点传上来的
-<code>tuple</code> <strong>全部</strong>插入 <code>table</code> 和
-<code>index</code> 中</p>
-<p><code>InsertTuple</code> 函数会返回该 <code>tuple</code> 在
-<code>table</code> 中新的
-<code>RID</code>，因此我们再对索引进行插入时，需要使用新的
-<code>RID</code> 进行插入</p>
-<p><code>Insert operator</code> 的 <code>Next</code> 函数返回的
-<code>tuple</code> 中只有一个
-<code>integer</code>，用于表示当前已经插入了多少行，因此如果我们插入了
-<span class="math inline">\(0\)</span> 个数据，我们也需要返回一个
-<code>tuple</code> 以及 <code>true</code>。如果后面继续调用
-<code>Next</code>，则返回 <code>false</code>，表面当前
-<code>operator</code> 已执行完对应的操作</p>
-<h3 id="update-delete">Update &amp;&amp; Delete</h3>
-<p>在我们用<strong>新的 <code>tuple</code></strong> 对
-<code>index</code> 进行更新时，会需要从 <code>tuple</code> 中将
-<code>key</code> 提取出来。我采用的方法是直接对 <code>index</code>
-里面的 <code>key_schema_</code>
-的列进行枚举，如果某一列的<strong>名字</strong>与
-<code>table_info_</code> 相同，那么我们便将该列记录下来</p>
+<p><code>Next</code> 函数的语义对于每一个 <code>operator</code> 都想同，因此如果<strong>某个 <code>operator</code> 没有输出的话，那么其 <code>Next</code> 函数需要返回 <code>false</code></strong></p>
+<p><code>Init</code> 函数用于初始化 <code>operator</code>，我们在每次调用 <code>Next</code> 之前都会调用一次 <code>Init</code></p>
+<p><code>Task 1</code> 的四个函数较为简单，这里只将每个函数的关键点写一下：</p>
+<h3 id="SeqScan"><a href="#SeqScan" class="headerlink" title="SeqScan"></a>SeqScan</h3><p><code>Next</code> 函数中，由于上层节点会对 <code>Next</code> 函数调用多次，因此如果 <code>table</code> 中有数据的话，我们每次都需要返回一个 <code>tuple</code> 以及 <code>true</code></p>
+<p>由于 <code>tuple</code> 是逻辑删除 <code>logical delete</code>，因此会有一些 <code>tuple</code> 会被标记为已删除，那么只要当前 <code>table</code> 中有值，那么 <code>next</code> 就必须返回一个 <code>tuple</code>，不能返回 <code>false</code>（有一些被删除的 <code>tuple</code> 会混在没有被删除的 <code>tuple</code> 中间）</p>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><p><code>Insert operator</code> 会将下层子节点传上来的 <code>tuple</code> <strong>全部</strong>插入 <code>table</code> 和 <code>index</code> 中</p>
+<p><code>InsertTuple</code> 函数会返回该 <code>tuple</code> 在 <code>table</code> 中新的 <code>RID</code>，因此我们再对索引进行插入时，需要使用新的 <code>RID</code> 进行插入</p>
+<p><code>Insert operator</code> 的 <code>Next</code> 函数返回的 <code>tuple</code> 中只有一个 <code>integer</code>，用于表示当前已经插入了多少行，因此如果我们插入了 $0$ 个数据，我们也需要返回一个 <code>tuple</code> 以及 <code>true</code>。如果后面继续调用 <code>Next</code>，则返回 <code>false</code>，表面当前 <code>operator</code> 已执行完对应的操作</p>
+<h3 id="Update-amp-amp-Delete"><a href="#Update-amp-amp-Delete" class="headerlink" title="Update &amp;&amp; Delete"></a>Update &amp;&amp; Delete</h3><p>在我们用<strong>新的 <code>tuple</code></strong> 对 <code>index</code> 进行更新时，会需要从 <code>tuple</code> 中将 <code>key</code> 提取出来。我采用的方法是直接对 <code>index</code> 里面的 <code>key_schema_</code> 的列进行枚举，如果某一列的<strong>名字</strong>与 <code>table_info_</code> 相同，那么我们便将该列记录下来</p>
 <p><code>delete</code> 操作感觉上是最简单的。。。。。。</p>
-<h2 id="task-2">Task 2</h2>
-<h3 id="aggregate">Aggregate</h3>
-<h4 id="aggregate-function">Aggregate Function</h4>
-<p>我们首先需要对不同的 <code>aggregate</code> 函数的行为进行确定</p>
+<h2 id="Task-2"><a href="#Task-2" class="headerlink" title="Task 2"></a>Task 2</h2><h3 id="Aggregate"><a href="#Aggregate" class="headerlink" title="Aggregate"></a>Aggregate</h3><h4 id="Aggregate-Function"><a href="#Aggregate-Function" class="headerlink" title="Aggregate Function"></a>Aggregate Function</h4><p>我们首先需要对不同的 <code>aggregate</code> 函数的行为进行确定</p>
 <ul>
-<li>对于 <code>count(*)</code> 而言，<code>null</code>
-值无所谓，但如果本身为空的话需要<strong>初始化为 <span class="math inline">\(0\)</span></strong>（这是因为
-<code>CountStarAggregate expression</code> 的 <code>evaluate</code>
-函数会自动返回 <span class="math inline">\(1\)</span>）；更新时每次加
-<span class="math inline">\(1\)</span></li>
-<li>对于 <code>cound(col)</code> 而言，不能加入 <code>null</code>
-值，但如果本身为空需要<strong>初始化为 <span class="math inline">\(1\)</span></strong>；更新时每次加 <span class="math inline">\(1\)</span></li>
-<li>对于 <code>min(), max(), sum()</code> 而言，不能加入
-<code>null</code>
-值，但初始化时需要用输入值对其赋值；更新时按照对应的函数对
-<code>Value</code> 进行操作</li>
+<li>对于 <code>count(*)</code> 而言，<code>null</code> 值无所谓，但如果本身为空的话需要**初始化为 $0$**（这是因为 <code>CountStarAggregate expression</code> 的 <code>evaluate</code> 函数会自动返回 $1$）；更新时每次加 $1$</li>
+<li>对于 <code>cound(col)</code> 而言，不能加入 <code>null</code> 值，但如果本身为空需要**初始化为 $1$**；更新时每次加 $1$</li>
+<li>对于 <code>min(), max(), sum()</code> 而言，不能加入 <code>null</code> 值，但初始化时需要用输入值对其赋值；更新时按照对应的函数对 <code>Value</code> 进行操作</li>
 </ul>
-<h4 id="aggregate-semantic">Aggregate Semantic</h4>
-<p>分别运行以下语句，观察其结果</p>
+<h4 id="Aggregate-Semantic"><a href="#Aggregate-Semantic" class="headerlink" title="Aggregate Semantic"></a>Aggregate Semantic</h4><p>分别运行以下语句，观察其结果</p>
 <blockquote>
-<p>为了完善我对 <code>aggregate</code>
-函数的理解，光是构造这些例子就把我头给搞秃了（小声</p>
+<p>为了完善我对 <code>aggregate</code> 函数的理解，光是构造这些例子就把我头给搞秃了（小声</p>
 </blockquote>
-<h5 id="aggregate-schema">Aggregate Schema</h5>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(colB), <span class="hljs-built_in">max</span>(colA) <span class="hljs-keyword">FROM</span> __mock_table_1;          <span class="hljs-comment">-- ok</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colA, <span class="hljs-built_in">min</span>(colB) <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> colA; <span class="hljs-comment">--ok</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colB, <span class="hljs-built_in">max</span>(colA) <span class="hljs-keyword">FROM</span> __mock_table_1;               <span class="hljs-comment">-- error</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colA, <span class="hljs-built_in">min</span>(colB) <span class="hljs-keyword">FROM</span> __mock_table_1;               <span class="hljs-comment">-- error</span><br></code></pre></td></tr></table></figure>
-<p><strong><code>aggregate operator</code> 的输出，也就是
-<code>output schema</code> 必须为 <code>group bys</code> 和
-<code>aggreagtes</code></strong></p>
+<h5 id="Aggregate-Schema"><a href="#Aggregate-Schema" class="headerlink" title="Aggregate Schema"></a>Aggregate Schema</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(colB), <span class="hljs-built_in">max</span>(colA) <span class="hljs-keyword">FROM</span> __mock_table_1;          <span class="hljs-comment">-- ok</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colA, <span class="hljs-built_in">min</span>(colB) <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> colA; <span class="hljs-comment">--ok</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colB, <span class="hljs-built_in">max</span>(colA) <span class="hljs-keyword">FROM</span> __mock_table_1;               <span class="hljs-comment">-- error</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> colA, <span class="hljs-built_in">min</span>(colB) <span class="hljs-keyword">FROM</span> __mock_table_1;               <span class="hljs-comment">-- error</span><br></code></pre></td></tr></table></figure>
+
+<p><strong><code>aggregate operator</code> 的输出，也就是 <code>output schema</code> 必须为 <code>group bys</code> 和 <code>aggreagtes</code></strong></p>
 <hr>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(colB), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> colA;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(colB), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> __mock_table_1;<br></code></pre></td></tr></table></figure>
-<p>无论 <code>group bys</code> 是否为空，<code>agg operator</code>
-的输出 <code>output schema</code> 均不会发生改变，始终为
-<code>group bys</code> 和 <code>aggregates</code></p>
-<h5 id="group-by-issue">Group by Issue</h5>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> t1(v1 <span class="hljs-type">int</span>, v2 <span class="hljs-type">int</span>, v3 <span class="hljs-type">int</span>);<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> v1;           <span class="hljs-comment">--ok, output is empty</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1;                       <span class="hljs-comment">--ok, output is null value</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> v1, <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1;                   <span class="hljs-comment">--error</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> v1, <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> t1;       <span class="hljs-comment">-- ok </span><br></code></pre></td></tr></table></figure>
-<p>对于空表而言，如果存在 <code>group bys</code>，那么无输出；如果不存在
-<code>group bys</code>，那么输出均为 <code>null value</code></p>
-<p>并且，对于后一种情况，其 <code>output schema</code> 一定与
-<code>aggregates</code> 相同，否则无法通过</p>
-<h4 id="aggregate-implementation">Aggregate Implementation</h4>
-<p>实际上实现是非常简单的，我们只需要按照 <code>ppt</code>
-上讲的做即可：</p>
+
+<p>无论 <code>group bys</code> 是否为空，<code>agg operator</code> 的输出 <code>output schema</code> 均不会发生改变，始终为 <code>group bys</code> 和 <code>aggregates</code></p>
+<h5 id="Group-by-Issue"><a href="#Group-by-Issue" class="headerlink" title="Group by Issue"></a>Group by Issue</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> t1(v1 <span class="hljs-type">int</span>, v2 <span class="hljs-type">int</span>, v3 <span class="hljs-type">int</span>);<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> v1;           <span class="hljs-comment">--ok, output is empty</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1;                       <span class="hljs-comment">--ok, output is null value</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> v1, <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1;                   <span class="hljs-comment">--error</span><br>EXPLAIN <span class="hljs-keyword">SELECT</span> v1, <span class="hljs-built_in">min</span>(v1), <span class="hljs-built_in">sum</span>(v2), <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>), <span class="hljs-built_in">count</span>(v1) <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> t1;       <span class="hljs-comment">-- ok </span><br></code></pre></td></tr></table></figure>
+
+<p>对于空表而言，如果存在 <code>group bys</code>，那么无输出；如果不存在 <code>group bys</code>，那么输出均为 <code>null value</code></p>
+<p>并且，对于后一种情况，其 <code>output schema</code> 一定与 <code>aggregates</code> 相同，否则无法通过</p>
+<h4 id="Aggregate-Implementation"><a href="#Aggregate-Implementation" class="headerlink" title="Aggregate Implementation"></a>Aggregate Implementation</h4><p>实际上实现是非常简单的，我们只需要按照 <code>ppt</code> 上讲的做即可：</p>
 <ul>
 <li><code>Init</code> 阶段</li>
 </ul>
-<p>在构建 <code>hash table</code> 时，我们会对<strong>每个</strong>
-<code>tuple</code> 中，将所有满足 <code>group_bys</code>
-的属性给取出来，作为 <code>hash table</code> 的 <code>key</code>。而
-<code>hash table</code> 的 <code>value</code>
-则是将<strong>每个</strong> <code>tuple</code>
-中，<strong>所有</strong>满足 <code>aggregates</code>
-的属性（换句话说，有多少个不同的 <code>agg</code>
-函数，<code>value</code> 中就有多少个值）</p>
-<p>注意到 <code>hash table</code> 中的 <code>key</code> 和
-<code>value</code> 均为数组
-<code>vector&lt;Value&gt;</code>。实际上，我们以所有满足
-<code>group_bys_</code> 的属性作为 <code>key</code>，有可能
-<code>group_bys_</code> 会有多个，因此需要数组来进行存储；而我们输出的
-<code>aggregate</code> 也有可能有多个，我们也使用数组来进行存储</p>
-<p>换句话说，<code>key</code> 中的数组表示的是对所有的
-<code>group_bys_</code> 进行枚举，<code>value</code>
-中的数组则是每个确切的 <code>group_bys_</code> 所对应的多个
-<code>aggregate</code> 函数</p>
+<p>在构建 <code>hash table</code> 时，我们会对<strong>每个</strong> <code>tuple</code> 中，将所有满足 <code>group_bys</code> 的属性给取出来，作为 <code>hash table</code> 的 <code>key</code>。而 <code>hash table</code> 的 <code>value</code> 则是将<strong>每个</strong> <code>tuple</code> 中，<strong>所有</strong>满足 <code>aggregates</code> 的属性（换句话说，有多少个不同的 <code>agg</code> 函数，<code>value</code> 中就有多少个值）</p>
+<p>注意到 <code>hash table</code> 中的 <code>key</code> 和 <code>value</code> 均为数组 <code>vector&lt;Value&gt;</code>。实际上，我们以所有满足 <code>group_bys_</code> 的属性作为 <code>key</code>，有可能 <code>group_bys_</code> 会有多个，因此需要数组来进行存储；而我们输出的 <code>aggregate</code> 也有可能有多个，我们也使用数组来进行存储</p>
+<p>换句话说，<code>key</code> 中的数组表示的是对所有的 <code>group_bys_</code> 进行枚举，<code>value</code> 中的数组则是每个确切的 <code>group_bys_</code> 所对应的多个 <code>aggregate</code> 函数</p>
 <p>对于 <code>group_bys_</code> 为空的情况，做一次特殊判断即可</p>
-<p>我们每次往 <code>hash table</code> 中加入一个新的
-<code>key-value pair</code>，如果该 <code>key</code>
-不存在，那么则新建一个；如果已存在，那么更新对应的
-<code>value</code></p>
+<p>我们每次往 <code>hash table</code> 中加入一个新的 <code>key-value pair</code>，如果该 <code>key</code> 不存在，那么则新建一个；如果已存在，那么更新对应的 <code>value</code></p>
 <ul>
 <li><code>Next</code> 阶段</li>
 </ul>
-<p>我们每次调用 <code>Next</code> 函数时，都从 <code>hash table</code>
-中<strong>取出一个元素</strong>，我们用 <code>hash table</code> 的
-<code>key</code> 和 <code>value</code> 作为最终的输出
-<code>tuple</code>（这样得到的 <code>tuple</code> 的 <code>schema</code>
-一定满足 <code>aggregate operator</code> 的
-<code>output schema</code>）</p>
-<p>我们说 <code>Aggregate</code> 操作是 <code>pipeline breaker</code>
-的原因在于，在我们执行 <code>init</code> 函数的时候，处理对子节点调用
-<code>init</code> 函数外，我们需要构建
-<code>hash table</code>，这时会导致整条流水线全部停止（可以理解为，为了让
-<code>init</code>
-函数执行完毕，我们不得不往整条流水线中插入气泡，因此此时流水线中只有
-<code>init</code> 函数在执行）</p>
-<h3 id="nested-loop-join">Nested Loop Join</h3>
-<p>对于 <code>inner join</code> 而言，只匹配列中具有相同的值，不会产生
-<code>null</code> 在最终结果里面；<code>left join</code> 在
-<code>inner join</code> 的基础上，对于那些列中没有匹配的值，会产生
-<code>null</code> 值在最终结果里面</p>
+<p>我们每次调用 <code>Next</code> 函数时，都从 <code>hash table</code> 中<strong>取出一个元素</strong>，我们用 <code>hash table</code> 的 <code>key</code> 和 <code>value</code> 作为最终的输出 <code>tuple</code>（这样得到的 <code>tuple</code> 的 <code>schema</code> 一定满足 <code>aggregate operator</code> 的 <code>output schema</code>）</p>
+<p>我们说 <code>Aggregate</code> 操作是 <code>pipeline breaker</code> 的原因在于，在我们执行 <code>init</code> 函数的时候，处理对子节点调用 <code>init</code> 函数外，我们需要构建 <code>hash table</code>，这时会导致整条流水线全部停止（可以理解为，为了让 <code>init</code> 函数执行完毕，我们不得不往整条流水线中插入气泡，因此此时流水线中只有 <code>init</code> 函数在执行）</p>
+<h3 id="Nested-Loop-Join"><a href="#Nested-Loop-Join" class="headerlink" title="Nested Loop Join"></a>Nested Loop Join</h3><p>对于 <code>inner join</code> 而言，只匹配列中具有相同的值，不会产生 <code>null</code> 在最终结果里面；<code>left join</code> 在 <code>inner join</code> 的基础上，对于那些列中没有匹配的值，会产生 <code>null</code> 值在最终结果里面</p>
 <p>举个例子就是：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">bustub<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> test_simple_seq_1 s1 <span class="hljs-keyword">inner</span> <span class="hljs-keyword">join</span> test_simple_seq_2 s2 <span class="hljs-keyword">on</span> s1.col1 <span class="hljs-operator">+</span> <span class="hljs-number">5</span> <span class="hljs-operator">=</span> s2.col1;<br><span class="hljs-comment">---</span><br>bustub<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> test_simple_seq_1 s1 <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> test_simple_seq_2 s2 <span class="hljs-keyword">on</span> s1.col1 <span class="hljs-operator">+</span> <span class="hljs-number">5</span> <span class="hljs-operator">=</span> s2.col1;<br></code></pre></td></tr></table></figure>
+
 <p>后者的结果里面会有一些 <code>null</code> 值</p>
-<p>对于 <code>expression</code> 的 <code>evaluate</code> 和
-<code>evaluatejoin</code> 函数</p>
-<p>前者用于计算该 <code>expression</code> 在单个 <code>tuple</code>
-上的结果，对象是单个 <code>tuple</code>。后者用于计算将两个
-<code>tuple</code> 合并起来之后，在其基础上该 <code>expression</code>
-的结果，对象是两个 <code>tuple</code> 在执行 <code>join</code> 之后的
-<code>tuple</code></p>
-<h3 id="hash-join">Hash Join</h3>
-<p>运行以下 <code>SQL</code> 语句，观察结果：</p>
-<h4 id="inner-join-outer-join">Inner Join &amp; Outer Join</h4>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> __mock_table_3 <span class="hljs-keyword">ON</span> colA <span class="hljs-operator">=</span> colE;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">JOIN</span> __mock_table_3 <span class="hljs-keyword">ON</span> colA <span class="hljs-operator">=</span> colE;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1, __mock_table_3 <span class="hljs-keyword">WHERE</span> colA <span class="hljs-operator">=</span> colE;<br></code></pre></td></tr></table></figure>
-<p><code>left join</code> 本质上是
-<code>left outer join</code>。<code>inner join</code> 与
-<code>outer join</code> 的区别在于，对于 <code>inner join</code>
-而言，对于那些规定的列，我们是忽略 <code>null</code> 值的，也就是
-<code>null</code> 值一定不匹配；对于 <code>outer join</code>
-而言，我们会对 <code>null</code> 值进行匹配，因此这边衍生出了
-<code>left outer join</code> 和 <code>right outer join</code></p>
-<h4 id="predicate">Predicate</h4>
-<p>当使用 <code>where</code> 时，<code>NLJ</code> 中的
-<code>predicate</code> 始终为 <code>true</code>；当使用 <code>on</code>
-时，<code>NLJ</code> 中的 <code>predicate</code> 为具体的表达式。对于
-<code>predicate</code> 始终为 <code>true</code> 的情况，我们可以将
-<code>filter</code> 中的 <code>predicate</code> 认为是
-<code>hash join</code> 中的 <code>predicate</code>，因为在
-<code>optimize</code> 中会对 <code>filter</code> 和 <code>NLJ</code>
-进行合并</p>
+<p>对于 <code>expression</code> 的 <code>evaluate</code> 和 <code>evaluatejoin</code> 函数</p>
+<p>前者用于计算该 <code>expression</code> 在单个 <code>tuple</code> 上的结果，对象是单个 <code>tuple</code>。后者用于计算将两个 <code>tuple</code> 合并起来之后，在其基础上该 <code>expression</code> 的结果，对象是两个 <code>tuple</code> 在执行 <code>join</code> 之后的 <code>tuple</code></p>
+<h3 id="Hash-Join"><a href="#Hash-Join" class="headerlink" title="Hash Join"></a>Hash Join</h3><p>运行以下 <code>SQL</code> 语句，观察结果：</p>
+<h4 id="Inner-Join-amp-Outer-Join"><a href="#Inner-Join-amp-Outer-Join" class="headerlink" title="Inner Join &amp; Outer Join"></a>Inner Join &amp; Outer Join</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> __mock_table_3 <span class="hljs-keyword">ON</span> colA <span class="hljs-operator">=</span> colE;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1 <span class="hljs-keyword">JOIN</span> __mock_table_3 <span class="hljs-keyword">ON</span> colA <span class="hljs-operator">=</span> colE;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> __mock_table_1, __mock_table_3 <span class="hljs-keyword">WHERE</span> colA <span class="hljs-operator">=</span> colE;<br></code></pre></td></tr></table></figure>
+
+<p><code>left join</code> 本质上是 <code>left outer join</code>。<code>inner join</code> 与 <code>outer join</code> 的区别在于，对于 <code>inner join</code> 而言，对于那些规定的列，我们是忽略 <code>null</code> 值的，也就是 <code>null</code> 值一定不匹配；对于 <code>outer join</code> 而言，我们会对 <code>null</code> 值进行匹配，因此这边衍生出了 <code>left outer join</code> 和 <code>right outer join</code></p>
+<h4 id="Predicate"><a href="#Predicate" class="headerlink" title="Predicate"></a>Predicate</h4><p>当使用 <code>where</code> 时，<code>NLJ</code> 中的 <code>predicate</code> 始终为 <code>true</code>；当使用 <code>on</code> 时，<code>NLJ</code> 中的 <code>predicate</code> 为具体的表达式。对于 <code>predicate</code> 始终为 <code>true</code> 的情况，我们可以将 <code>filter</code> 中的 <code>predicate</code> 认为是 <code>hash join</code> 中的 <code>predicate</code>，因为在 <code>optimize</code> 中会对 <code>filter</code> 和 <code>NLJ</code> 进行合并</p>
 <p>运行以下 <code>SQL</code> 语句，观察结果：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs SQL">EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> test_1 t1 <span class="hljs-keyword">JOIN</span> test_2 t2 <span class="hljs-keyword">ON</span> t2.colA <span class="hljs-operator">=</span> t1.colB <span class="hljs-keyword">AND</span> t2.colA <span class="hljs-operator">=</span> t1.colC;<br>EXPLAIN <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> test_1 t1 <span class="hljs-keyword">JOIN</span> test_2 t2 <span class="hljs-keyword">ON</span> t1.colA <span class="hljs-operator">=</span> t2.colB <span class="hljs-keyword">AND</span> t1.colA <span class="hljs-operator">=</span> t2.colC;<br></code></pre></td></tr></table></figure>
-<p><code>NLJ</code> 的 <code>predicate</code> 中，不管
-<code>column_value_expression</code> 的位置如何，只要
-<code>tuple idx</code>（也就是 <code>#0.0</code> 的第一个数）为
-<code>0</code>，那么就是 <code>left key</code>；只要为
-<code>1</code>，那么就是 <code>right key</code></p>
-<h4 id="implementation">Implementation</h4>
-<p><code>ppt</code> 中的思路实际上是 <code>inner join</code>，而对于
-<code>left join</code>，则需要一些修改</p>
-<p>我们对 <code>outer table</code> 构建
-<code>hash table</code>，然后每次从子节点中取一个
-<code>tuple</code>，<code>hash table</code> 中的 <code>key</code> 是
-<code>tuple</code> 中满足条件的 <code>value</code> 的集合，而
-<code>hash table</code> 的 <code>value</code> 为一个数组（或者称为一个
-<code>bucket</code>），用于记录满足当前 <code>key</code> 的所有
-<code>tuple</code></p>
+
+<p><code>NLJ</code> 的 <code>predicate</code> 中，不管 <code>column_value_expression</code> 的位置如何，只要 <code>tuple idx</code>（也就是 <code>#0.0</code> 的第一个数）为 <code>0</code>，那么就是 <code>left key</code>；只要为 <code>1</code>，那么就是 <code>right key</code></p>
+<h4 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h4><p><code>ppt</code> 中的思路实际上是 <code>inner join</code>，而对于 <code>left join</code>，则需要一些修改</p>
+<p>我们对 <code>outer table</code> 构建 <code>hash table</code>，然后每次从子节点中取一个 <code>tuple</code>，<code>hash table</code> 中的 <code>key</code> 是 <code>tuple</code> 中满足条件的 <code>value</code> 的集合，而 <code>hash table</code> 的 <code>value</code> 为一个数组（或者称为一个 <code>bucket</code>），用于记录满足当前 <code>key</code> 的所有 <code>tuple</code></p>
 <p>假设当前执行的是 <code>inner join</code>，那么：</p>
 <ul>
-<li>如果子节点的 <code>tuple</code> 的 <code>key</code>
-匹配，我们需要依次遍历 <code>hash table</code> 中这个 <code>key</code>
-所对应的所有 <code>tuple</code>，只要找到一个 <code>key</code>
-是匹配的，那么就可以直接返回。这么做是为了避免 <code>collision</code>
-所造成的影响</li>
-<li>由于我们每次只能返回一个 <code>tuple</code>，因此如果这个
-<code>key</code> 所对应的数组内有多个 <code>tuple</code>
-都满足条件，我们需要依次返回，因此我们还需要一个 <code>idx</code>
-去标记当前在这个数组中遍历到了哪里</li>
+<li>如果子节点的 <code>tuple</code> 的 <code>key</code> 匹配，我们需要依次遍历 <code>hash table</code> 中这个 <code>key</code> 所对应的所有 <code>tuple</code>，只要找到一个 <code>key</code> 是匹配的，那么就可以直接返回。这么做是为了避免 <code>collision</code> 所造成的影响</li>
+<li>由于我们每次只能返回一个 <code>tuple</code>，因此如果这个 <code>key</code> 所对应的数组内有多个 <code>tuple</code> 都满足条件，我们需要依次返回，因此我们还需要一个 <code>idx</code> 去标记当前在这个数组中遍历到了哪里</li>
 </ul>
-<p><code>left join</code> 是在 <code>inner join</code>
-之上再多加一层逻辑，因此需要在 <code>inner join</code> 执行失败后执行
-<code>left join</code> 的逻辑</p>
-<p>找到 <code>hash table</code> 中<strong>所有</strong>还没有进行匹配的
-<code>tuple</code>（）由于 <code>right tuple</code> 始终为
-<code>null</code>，因此 <code>left tuple</code>
-可以是哈希表中任意没有匹配的 <code>tuple</code> ），然后依次输出即可</p>
-<h3 id="nlj-as-hash-join">NLJ As Hash Join</h3>
-<p>需要注意的点在于该如何构建
-<code>hash key</code>，其实我们上面也已经解释了。将 <code>nlj</code> 中
-<code>predicate</code> 以 <code>left</code> 和 <code>right</code>
-进行分组即可</p>
+<p><code>left join</code> 是在 <code>inner join</code> 之上再多加一层逻辑，因此需要在 <code>inner join</code> 执行失败后执行 <code>left join</code> 的逻辑</p>
+<p>找到 <code>hash table</code> 中<strong>所有</strong>还没有进行匹配的 <code>tuple</code>（）由于 <code>right tuple</code> 始终为 <code>null</code>，因此 <code>left tuple</code> 可以是哈希表中任意没有匹配的 <code>tuple</code> ），然后依次输出即可</p>
+<h3 id="NLJ-As-Hash-Join"><a href="#NLJ-As-Hash-Join" class="headerlink" title="NLJ As Hash Join"></a>NLJ As Hash Join</h3><p>需要注意的点在于该如何构建 <code>hash key</code>，其实我们上面也已经解释了。将 <code>nlj</code> 中 <code>predicate</code> 以 <code>left</code> 和 <code>right</code> 进行分组即可</p>
 <ul>
-<li>对于
-<code>&lt;column expr&gt; = &lt;column expr&gt;</code>，那么一共就只有两种可能</li>
-<li>对于
-<code>&lt;column expr&gt; = &lt;column expr&gt; AND &lt;column expr&gt; = &lt;column expr&gt;</code>，那么会有四种可能</li>
+<li>对于 <code>&lt;column expr&gt; = &lt;column expr&gt;</code>，那么一共就只有两种可能</li>
+<li>对于 <code>&lt;column expr&gt; = &lt;column expr&gt; AND &lt;column expr&gt; = &lt;column expr&gt;</code>，那么会有四种可能</li>
 </ul>
 <p>这些依次枚举即可</p>
-<h2 id="task-3">Task 3</h2>
-<h3 id="sort-limit">Sort &amp; Limit</h3>
-<p><code>sort</code> 我们可以直接通过调用标准库 <code>std::sort</code>
-来进行排序，这里的问题在于比较函数该如何设计的问题</p>
-<p>通过查阅 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/sort">cpp
-reference</a> 我们可以得知，<code>comp</code>
-的要求为第一个参数<strong>小于</strong>第二个参数返回
-<code>true</code>，那么 <code>std::sort</code>
-函数便可以将给定范围以<strong>非递减</strong>顺序进行排序</p>
-<p>因此我们可以直接从小到大遍历
-<code>order_bys_</code>，对于升序要求而言，返回
-<code>lval &lt; rval</code>；对于降序要求而言，返回
-<code>lval &gt;= rval</code></p>
-<p>在我的实现里面，我使用了 <code>vector</code> 来存储
-<code>tuple</code>，在每次初始化时都需要对 <code>vector</code>
-进行清空，不然前一次的结果会保留到下一次的运算中</p>
+<h2 id="Task-3"><a href="#Task-3" class="headerlink" title="Task 3"></a>Task 3</h2><h3 id="Sort-amp-Limit"><a href="#Sort-amp-Limit" class="headerlink" title="Sort &amp; Limit"></a>Sort &amp; Limit</h3><p><code>sort</code> 我们可以直接通过调用标准库 <code>std::sort</code> 来进行排序，这里的问题在于比较函数该如何设计的问题</p>
+<p>通过查阅 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/sort">cpp reference</a> 我们可以得知，<code>comp</code> 的要求为第一个参数<strong>小于</strong>第二个参数返回 <code>true</code>，那么 <code>std::sort</code> 函数便可以将给定范围以<strong>非递减</strong>顺序进行排序</p>
+<p>因此我们可以直接从小到大遍历 <code>order_bys_</code>，对于升序要求而言，返回 <code>lval &lt; rval</code>；对于降序要求而言，返回 <code>lval &gt;= rval</code></p>
+<p>在我的实现里面，我使用了 <code>vector</code> 来存储 <code>tuple</code>，在每次初始化时都需要对 <code>vector</code> 进行清空，不然前一次的结果会保留到下一次的运算中</p>
 <p><code>Limit</code> 的实现非常简单，这里不过多赘述</p>
-<h3 id="topn">TopN</h3>
-<p>如果我们只是想知道最大或者最小的几个元素，那么我们没必要对所有的元素进行排序，我们只对部分进行排序便可以完成要求。我们可以直接调用
-<code>C++</code> 的标准库 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a>
-来实现该功能</p>
+<h3 id="TopN"><a href="#TopN" class="headerlink" title="TopN"></a>TopN</h3><p>如果我们只是想知道最大或者最小的几个元素，那么我们没必要对所有的元素进行排序，我们只对部分进行排序便可以完成要求。我们可以直接调用 <code>C++</code> 的标准库 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/partial_sort"><code>std::partial_sort</code></a> 来实现该功能</p>
 <blockquote>
-<p>这里提一嘴，<code>std::sort</code>
-使用快速排序来对给定范围进行排序，对于相同的元素<strong>不保证排序前后的顺序相同</strong>；<code>std::stable_sort</code>
-使用归并排序对给定范围进行排序，对于相同的元素<strong>保证排序前后的顺序相同</strong>；<code>std::partical_sort</code>
-只是对部分元素进行排序，对于相同元素<strong>不保证排序前后的顺序相同</strong></p>
+<p>这里提一嘴，<code>std::sort</code> 使用快速排序来对给定范围进行排序，对于相同的元素<strong>不保证排序前后的顺序相同</strong>；<code>std::stable_sort</code> 使用归并排序对给定范围进行排序，对于相同的元素<strong>保证排序前后的顺序相同</strong>；<code>std::partical_sort</code> 只是对部分元素进行排序，对于相同元素<strong>不保证排序前后的顺序相同</strong></p>
 </blockquote>
-<p>需要说明的是，如果数组本身的元素个数要小于
-<code>limit</code>，那么我们的 <code>limit</code>
-就需要修改为数组本身的大小，也就是实际的 <code>limit</code>
-需要去数组大小以及 <code>limit plan</code> 中的 <code>limit</code>
-的较小值</p>
-<h3 id="sort-limit-as-topn">Sort Limit As TopN</h3>
-<p>对于<strong>同时</strong>出现 <code>limit</code> 和 <code>sort</code>
-的情况，<code>limit</code> 一定在 <code>sort</code>
-的上面，因此我们将<code>limit</code> 和 <code>sort</code>
-合并为一个节点，再加上原先 <code>sort</code>
-的子节点，这两个一起新建一个节点返回即可</p>
-<p>为了保证 <code>limit</code> 的子节点一定为
-<code>sort</code>，我们做一层额外的判断即可</p>
-<h2 id="harvest">Harvest</h2>
-<p>这个实验给我的感觉比 <code>Project 2</code>
-要难一点，<code>Project 2</code>
-的难点在于代码量比较大，以及在多线程场景下 <code>crabbing lock</code>
-的实现问题。而 <code>Project 3</code> 则是需要我对整个
-<code>bustub</code> 系统有一个理解：</p>
+<p>需要说明的是，如果数组本身的元素个数要小于 <code>limit</code>，那么我们的 <code>limit</code> 就需要修改为数组本身的大小，也就是实际的 <code>limit</code> 需要去数组大小以及 <code>limit plan</code> 中的 <code>limit</code> 的较小值</p>
+<h3 id="Sort-Limit-As-TopN"><a href="#Sort-Limit-As-TopN" class="headerlink" title="Sort Limit As TopN"></a>Sort Limit As TopN</h3><p>对于<strong>同时</strong>出现 <code>limit</code> 和 <code>sort</code> 的情况，<code>limit</code> 一定在 <code>sort</code> 的上面，因此我们将<code>limit</code> 和 <code>sort</code> 合并为一个节点，再加上原先 <code>sort</code> 的子节点，这两个一起新建一个节点返回即可</p>
+<p>为了保证 <code>limit</code> 的子节点一定为 <code>sort</code>，我们做一层额外的判断即可</p>
+<h2 id="Harvest"><a href="#Harvest" class="headerlink" title="Harvest"></a>Harvest</h2><p>这个实验给我的感觉比 <code>Project 2</code> 要难一点，<code>Project 2</code> 的难点在于代码量比较大，以及在多线程场景下 <code>crabbing lock</code> 的实现问题。而 <code>Project 3</code> 则是需要我对整个 <code>bustub</code> 系统有一个理解：</p>
 <ul>
-<li><code>Iterator(Volcano) Model</code> 是如何运行的，<code>next</code>
-函数的语义 <code>semantic</code> 是如何定义的</li>
-<li><code>AST</code> 中的各个 <code>operator</code> 的
-<code>schema, predicate</code> 该如何理解</li>
+<li><code>Iterator(Volcano) Model</code> 是如何运行的，<code>next</code> 函数的语义 <code>semantic</code> 是如何定义的</li>
+<li><code>AST</code> 中的各个 <code>operator</code> 的 <code>schema, predicate</code> 该如何理解</li>
 <li><code>expression</code> 该如何解析</li>
-<li><code>optimizer</code> 是如何对 <code>AST</code> 中的
-<code>oprtator</code> 进行优化的</li>
+<li><code>optimizer</code> 是如何对 <code>AST</code> 中的 <code>oprtator</code> 进行优化的</li>
 </ul>
-<p>这个实验做完，我算是理解了一条 <code>SQL</code> 语句解析完生成
-<code>AST</code>
-之后的执行过程是怎样的了。这种实际上手敲一遍代码所学到的知识，是单纯靠看书所无法相比的</p>
+<p>这个实验做完，我算是理解了一条 <code>SQL</code> 语句解析完生成 <code>AST</code> 之后的执行过程是怎样的了。这种实际上手敲一遍代码所学到的知识，是单纯靠看书所无法相比的</p>
 
                 
               </div>
