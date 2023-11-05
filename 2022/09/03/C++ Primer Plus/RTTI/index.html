@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="概述RTTI 是运行阶段类型识别（Runtime Type Identification）的简称，其目的是为程序在运行阶段确定对象的类型提供一种标准 也就是说，RTTI 的用途就是为了在程序运行期间确定对象的类型 RTTI 只能用于包含虚函数的类层次结构，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指针真的好蠢啊，">
+    <meta name="description" content="概述 RTTI 是运行阶段类型识别（Runtime Type Identification）的简称，其目的是为程序在运行阶段确定对象的类型提供一种标准 也就是说，RTTI 的用途就是为了在程序运行期间确定对象的类型 RTTI 只能用于包含虚函数的类层次结构，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RTTI">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/09/03/C++%20Primer%20Plus/RTTI/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="概述RTTI 是运行阶段类型识别（Runtime Type Identification）的简称，其目的是为程序在运行阶段确定对象的类型提供一种标准 也就是说，RTTI 的用途就是为了在程序运行期间确定对象的类型 RTTI 只能用于包含虚函数的类层次结构，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指针真的好蠢啊，">
+<meta property="og:description" content="概述 RTTI 是运行阶段类型识别（Runtime Type Identification）的简称，其目的是为程序在运行阶段确定对象的类型提供一种标准 也就是说，RTTI 的用途就是为了在程序运行期间确定对象的类型 RTTI 只能用于包含虚函数的类层次结构，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/C++%20Primer%20Plus/C++%20Primer%20Plus%20(4).jpg">
 <meta property="article:published_time" content="2022-09-03T03:12:56.395Z">
@@ -338,7 +338,7 @@
               <p class="note note-info">
                 
                   
-                    Last updated on 6 months ago
+                    Last updated on 7 months ago
                   
                 
               </p>
@@ -346,57 +346,80 @@
             
               <div class="markdown-body">
                 
-                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>RTTI 是运行阶段类型识别（Runtime Type Identification）的简称，其目的是为程序<strong>在运行阶段确定对象的类型</strong>提供一种标准</p>
-<p>也就是说，RTTI 的用途就是为了<strong>在程序运行期间确定对象的类型</strong></p>
-<p><strong>RTTI 只能用于包含虚函数的类层次结构</strong>，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指针真的好蠢啊，怎么会有人写出这种代码的）</p>
-<h3 id="RTTI-工作原理"><a href="#RTTI-工作原理" class="headerlink" title="RTTI 工作原理"></a>RTTI 工作原理</h3><p>C++ 有 3 个支持 RTTI 的元素</p>
+                <h3 id="概述">概述</h3>
+<p>RTTI 是运行阶段类型识别（Runtime Type
+Identification）的简称，其目的是为程序<strong>在运行阶段确定对象的类型</strong>提供一种标准</p>
+<p>也就是说，RTTI
+的用途就是为了<strong>在程序运行期间确定对象的类型</strong></p>
+<p><strong>RTTI
+只能用于包含虚函数的类层次结构</strong>，原因在于只有一个继承体系当中含义虚函数，将派生类对象赋值给基类指针这件事才有意义（话说回来，没有虚函数直接把派生类对象赋值给基类指针真的好蠢啊，怎么会有人写出这种代码的）</p>
+<h3 id="rtti-工作原理">RTTI 工作原理</h3>
+<p>C++ 有 3 个支持 RTTI 的元素</p>
 <ul>
-<li><code>dynamic_cast</code> 运算符，用于确定两个指针之间的转型是否正确。正确的话返回指针地址，否则返回空指针</li>
+<li><code>dynamic_cast</code>
+运算符，用于确定两个指针之间的转型是否正确。正确的话返回指针地址，否则返回空指针</li>
 <li><code>typeid</code> 运算符返回一个指出对象的类型的值</li>
 <li><code>type_info</code> 结构存储了有关特定类型的信息</li>
 </ul>
-<h4 id="dynamic-cast-运算符"><a href="#dynamic-cast-运算符" class="headerlink" title="dynamic_cast 运算符"></a>dynamic_cast 运算符</h4><p>考虑下面这样一个类层次结构</p>
+<h4 id="dynamic_cast-运算符">dynamic_cast 运算符</h4>
+<p>考虑下面这样一个类层次结构</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">base</span> &#123;&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">derived</span> : <span class="hljs-keyword">public</span> base &#123;&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">last</span> : <span class="hljs-keyword">public</span> derived &#123;&#125;<br></code></pre></td></tr></table></figure>
-
 <p>然后，我们创建三个指针</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">base* pb = <span class="hljs-keyword">new</span> base;<br>base* pd = <span class="hljs-keyword">new</span> derived;<br>base* pl = <span class="hljs-keyword">new</span> last;<br></code></pre></td></tr></table></figure>
-
 <p>基类指针指向派生类对象，这很合理</p>
 <p>接着，我们来看转型</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">last* p1 = (last*)pl;    <span class="hljs-comment">//1</span><br>last* p2 = (last*)pb;    <span class="hljs-comment">//2</span><br>derived* p3 = (last*)p1; <span class="hljs-comment">//3</span><br></code></pre></td></tr></table></figure>
-
 <p>在讨论之前，我们需要明确一点：与讨论「指针指向的对象的类型」相比，讨论「指针转型是否安全」更有意义。</p>
 <p>需要额外说明的是，只有那些<strong>指针类型与对象类型（或者对象的直接或间接基类的类型）相同</strong>的类型转换才是安全的</p>
 <p>说人话就是，指针本身的类型要么与其指向对象的类型一致，要么其对象的类型是指针本身类型的派生类。除这两种情况以外的所有，转型都不安全</p>
 <p>对于上面这个问题我们一个一个看</p>
-<p>对于第一个，先将 <code>pl</code> 指针的类型从 <code>base*</code> 转成 <code>last*</code> ，然后再对 <code>p1</code> 进行赋值，而 <code>p1</code> 所指的对象就是原先 <code>pl</code> 所指的对象，即 <code>last</code> 类型，这与 <code>p1</code> 的类型相一致，这么做是安全的</p>
-<p>对于第二个，同样是先将指针的类型进行转换，最后是 <code>last*</code> 类型的 <code>p2</code> 指针指向 <code>derived</code> 对象，出现了派生类指针指向基类对象，这么做是错误的</p>
-<p>对于第三个，是先将 <code>pl</code> 指针转成 <code>last*</code> 类型，然后再对 <code>derived*</code> 类型的指针进行赋值。这么做并没有问题，因为派生类指针给基类指针赋值是正确的。最终的结果是 <code>derived*</code> 类型的指针指向一个 <code>last</code> 对象，这么做也是安全的</p>
-<p>确认一个转型是否安全可以用 <code>dynamic_cast</code> 关键字，不过这东西速度很慢，最好不要用</p>
+<p>对于第一个，先将 <code>pl</code> 指针的类型从 <code>base*</code> 转成
+<code>last*</code> ，然后再对 <code>p1</code> 进行赋值，而
+<code>p1</code> 所指的对象就是原先 <code>pl</code> 所指的对象，即
+<code>last</code> 类型，这与 <code>p1</code>
+的类型相一致，这么做是安全的</p>
+<p>对于第二个，同样是先将指针的类型进行转换，最后是 <code>last*</code>
+类型的 <code>p2</code> 指针指向 <code>derived</code>
+对象，出现了派生类指针指向基类对象，这么做是错误的</p>
+<p>对于第三个，是先将 <code>pl</code> 指针转成 <code>last*</code>
+类型，然后再对 <code>derived*</code>
+类型的指针进行赋值。这么做并没有问题，因为派生类指针给基类指针赋值是正确的。最终的结果是
+<code>derived*</code> 类型的指针指向一个 <code>last</code>
+对象，这么做也是安全的</p>
+<p>确认一个转型是否安全可以用 <code>dynamic_cast</code>
+关键字，不过这东西速度很慢，最好不要用</p>
 <p>这个关键字的语法是：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">dynamic_cast</span>&lt;Type*&gt;(pr);<span class="hljs-comment">//这里的 pr 是指针</span><br></code></pre></td></tr></table></figure>
-
-<p>如果对象 <code>*pr</code> 的类型是 <code>Type</code> 或者从 <code>Type</code> 直接或间接派生过来，那么上面的语句将会把 <code>pr</code> 转成 <code>Type*</code> 类型，否则将会返回 <code>nullptr</code> </p>
+<p>如果对象 <code>*pr</code> 的类型是 <code>Type</code> 或者从
+<code>Type</code> 直接或间接派生过来，那么上面的语句将会把
+<code>pr</code> 转成 <code>Type*</code> 类型，否则将会返回
+<code>nullptr</code></p>
 <p>额外说明一点，这个语句是将指针的类型转换成某个特定的类型，往后的下一步往往是对指针进行赋值，所以应该这么写：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Type* pt = <span class="hljs-built_in">dynamic_cast</span>&lt;Type*&gt;(pr);<br></code></pre></td></tr></table></figure>
-
-<p>除了指针，这个关键字还可以对引用使用，不过在引用里面没有类似于空指针的引用值，所以在转型失败的时候会抛出一个 <code>bad_cast</code> 异常。这个异常由 <code>expression</code> 类派生而来，它在头文件 <code>typeinfo</code> 当中定义</p>
+<p>除了指针，这个关键字还可以对引用使用，不过在引用里面没有类似于空指针的引用值，所以在转型失败的时候会抛出一个
+<code>bad_cast</code> 异常。这个异常由 <code>expression</code>
+类派生而来，它在头文件 <code>typeinfo</code> 当中定义</p>
 <p>具体用法如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">try</span><br>&#123;<br>	Type&amp; pt = <span class="hljs-built_in">dynamic_cast</span>&lt;Type&amp;&gt;(pr);<br>&#125;<br><span class="hljs-built_in">catch</span> (bad_cast&amp;)<br>&#123;<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="typeid-运算符和-type-info-类"><a href="#typeid-运算符和-type-info-类" class="headerlink" title="typeid 运算符和 type_info 类"></a>typeid 运算符和 type_info 类</h4><p><code>typeid</code> 运算符可以确定两个<strong>对象</strong>（不是指针）是否为同一种类型，它接收两种类型的参数：</p>
+<h4 id="typeid-运算符和-type_info-类">typeid 运算符和 type_info 类</h4>
+<p><code>typeid</code>
+运算符可以确定两个<strong>对象</strong>（不是指针）是否为同一种类型，它接收两种类型的参数：</p>
 <ul>
 <li>类名</li>
 <li>运算结果为对象的表达式</li>
 </ul>
-<p><code>typeid</code> 运算符会返回一个对 <code>type_info</code> 对象的引用，这个对象重载了 <code>==</code> 和 <code>!=</code> ，使得可以直接作比较，即</p>
+<p><code>typeid</code> 运算符会返回一个对 <code>type_info</code>
+对象的引用，这个对象重载了 <code>==</code> 和 <code>!=</code>
+，使得可以直接作比较，即</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(<span class="hljs-built_in">typeid</span>(Type) == <span class="hljs-built_in">typeid</span>(*pt))<br>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>如果 <code>pt</code> 是一个空指针，那么会引发 <code>bad_typeid</code> 异常，用 <code>catch</code>  捕获就行</p>
-<p><code>typeid</code> 当中还有一个方法 <code>name</code> ，可以用字符串来显示类型</p>
-<p>RTTI 确实会有一些效率方面的问题，但如果用同类型的多个 <code>if else</code> 和 <code>typeid</code> 来进行替代的话，效率会更低，所以还是建议使用 <code>dynamic_cast</code> </p>
+<p>如果 <code>pt</code> 是一个空指针，那么会引发 <code>bad_typeid</code>
+异常，用 <code>catch</code> 捕获就行</p>
+<p><code>typeid</code> 当中还有一个方法 <code>name</code>
+，可以用字符串来显示类型</p>
+<p>RTTI 确实会有一些效率方面的问题，但如果用同类型的多个
+<code>if else</code> 和 <code>typeid</code>
+来进行替代的话，效率会更低，所以还是建议使用
+<code>dynamic_cast</code></p>
 
                 
               </div>

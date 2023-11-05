@@ -1,0 +1,1445 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="B+ Tree Index  B+ Tree Index  Storage Models &amp; Compression  Database Workload Database Storage Models Tuple Extract Compression  Run-Length Compression Bit-Packing Compression Mostly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU15-445 B+Tree Index">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/11/05/CMU15-445%20Notes/B+Tree%20Index/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="B+ Tree Index  B+ Tree Index  Storage Models &amp; Compression  Database Workload Database Storage Models Tuple Extract Compression  Run-Length Compression Bit-Packing Compression Mostly">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445%20Notes/CMU15-445%20Notes%20(2).jpg">
+<meta property="article:published_time" content="2023-11-05T14:28:38.590Z">
+<meta property="article:modified_time" content="2023-11-05T14:33:35.097Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CMU15-445 Notes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CMU15-445%20Notes/CMU15-445%20Notes%20(2).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CMU15-445 B+Tree Index - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CMU15-445 B+Tree Index"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-05 22:28" pubdate>
+          November 5, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          99 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CMU15-445 B+Tree Index</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 2 minutes ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="b-tree-index">B+ Tree Index</h1>
+<ul>
+<li><a href="#b-tree-index">B+ Tree Index</a>
+<ul>
+<li><a href="#storage-models--compression">Storage Models &amp;
+Compression</a>
+<ul>
+<li><a href="#database-workload">Database Workload</a></li>
+<li><a href="#database-storage-models">Database Storage Models</a></li>
+<li><a href="#tuple-extract">Tuple Extract</a></li>
+<li><a href="#compression">Compression</a>
+<ul>
+<li><a href="#run-length-compression">Run-Length Compression</a></li>
+<li><a href="#bit-packing-compression">Bit-Packing Compression</a></li>
+<li><a href="#mostly-compression">Mostly Compression</a></li>
+<li><a href="#bitmap-compression">Bitmap Compression</a></li>
+<li><a href="#delta-compression">Delta Compression</a></li>
+<li><a href="#incremental-compression">Incremental Compression</a></li>
+<li><a href="#dirtionary-compression">Dirtionary Compression</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#memory-management">Memory Management</a>
+<ul>
+<li><a href="#buffer-pool-manager">Buffer Pool Manager</a></li>
+<li><a href="#buffer-pool-optimizations">Buffer Pool Optimizations</a>
+<ul>
+<li><a href="#multiple-buffer-pools">Multiple Buffer Pools</a></li>
+<li><a href="#pre-fetching">Pre-fetching</a></li>
+<li><a href="#scan-sharing">Scan sharing</a></li>
+<li><a href="#page-cache">Page Cache</a></li>
+</ul></li>
+<li><a href="#buffer-replacement-policy">Buffer Replacement Policy</a>
+<ul>
+<li><a href="#laest-recently-used">Laest Recently Used</a></li>
+<li><a href="#clock">Clock</a></li>
+<li><a href="#lru-k">LRU-K</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#hash-tables">Hash Tables</a>
+<ul>
+<li><a href="#static-hash-scheme">Static Hash Scheme</a>
+<ul>
+<li><a href="#linear-probe-hashing">Linear Probe Hashing</a></li>
+<li><a href="#robin-hood-hashing">Robin Hood Hashing</a></li>
+<li><a href="#cuckoo-hashing">Cuckoo Hashing</a></li>
+</ul></li>
+<li><a href="#dynamic-hashing-scheme">Dynamic Hashing Scheme</a>
+<ul>
+<li><a href="#chained-hashing">Chained Hashing</a></li>
+<li><a href="#extendible-hashing">Extendible Hashing</a></li>
+<li><a href="#linear-hashing">Linear Hashing</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#index">Index</a>
+<ul>
+<li><a href="#clustering-index--non-clustering-index">Clustering index
+&amp; Non-clustering index</a></li>
+<li><a href="#dense-index--sparse-index">Dense index &amp; Sparse
+index</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="storage-models-compression">Storage Models &amp;
+Compression</h2>
+<h3 id="database-workload">Database Workload</h3>
+<ul>
+<li>On-line Transaction Processing: Simple queries that only read/modify
+a small part of database, sometimes alse needing to read a entire tuple
+from database</li>
+<li>On-line Analytical Processing: Complex queries that read/modify a
+large portion of the database, usually needing to scan multiple
+tuple</li>
+<li>Hybird Transaction + Analytical Processing: The combination of OLTP
+and OLAP</li>
+</ul>
+<figure>
+<img src="OLTP_OLAP.png" srcset="/img/loading.gif" lazyload alt="OLTP_OLAP">
+<figcaption aria-hidden="true">OLTP_OLAP</figcaption>
+</figure>
+<h3 id="database-storage-models">Database Storage Models</h3>
+<p>DBMS store tuple in different ways that is batter for eithor OLTP or
+OLAP. The basic storage models are as follow:</p>
+<ul>
+<li>row storage(n-ary storage model, NSM): Simply store tuple with the
+entire attribute one after the other, which is ideal for OLTP.</li>
+<li>colume storage(decomposition storage model, DSM): DBMS contiguously
+store a single attribute(column) for all tuple, which is ideal for
+OLAP.</li>
+</ul>
+<figure>
+<img src="NSM.png" srcset="/img/loading.gif" lazyload alt="NSM">
+<figcaption aria-hidden="true">NSM</figcaption>
+</figure>
+<p>Since OLTP tends to read entry tuple and do a lot of inserts, NSM is
+ideal. On the other hand, let's say we want to extract some attribute
+from multiple tuple to analysis, NSM would cause expensive overhead.</p>
+<figure>
+<img src="NSM_Downside.png" srcset="/img/loading.gif" lazyload alt="NSM_Downside">
+<figcaption aria-hidden="true">NSM_Downside</figcaption>
+</figure>
+<p>So in this scenario, DBMS must use DSM to store tuple.</p>
+<figure>
+<img src="DMS1.png" srcset="/img/loading.gif" lazyload alt="DSM1">
+<figcaption aria-hidden="true">DSM1</figcaption>
+</figure>
+<figure>
+<img src="DSM2.png" srcset="/img/loading.gif" lazyload alt="DSM2">
+<figcaption aria-hidden="true">DSM2</figcaption>
+</figure>
+<p>Therefore, we can extract some useful attribute of the tuple instead
+read all attribute of the tuple.</p>
+<figure>
+<img src="DSM3.png" srcset="/img/loading.gif" lazyload alt="DSM3">
+<figcaption aria-hidden="true">DSM3</figcaption>
+</figure>
+<h3 id="tuple-extract">Tuple Extract</h3>
+<p>In cloumn storage, how can we extract a tuple from table. We have two
+approachs to handle it:</p>
+<figure>
+<img src="TupleExtract.png" srcset="/img/loading.gif" lazyload alt="TupleExtract">
+<figcaption aria-hidden="true">TupleExtract</figcaption>
+</figure>
+<p>First, we can simply use offset to extract tuple. We can store same
+tuples' attributes in same offset. When we want to extract specific
+tuple, we can simply use offset to extract it.</p>
+<p>Second, we can additional store tuple id to tuple attribute in
+cloumn. When extract one tuple, we can scan each column and match
+specific tuple id.</p>
+<h3 id="compression">Compression</h3>
+<p>As an example of musql innoDB compression, which shown in the
+following figure.</p>
+<figure>
+<img src="Compression1.png" srcset="/img/loading.gif" lazyload alt="Compression1">
+<figcaption aria-hidden="true">Compression1</figcaption>
+</figure>
+<p>Mysql default page size is 16KB, so we compress it and round to the
+power of 2. In the front of the compressed page , called mod log, is
+used to store update log. Let's say we want to update some tuple in
+compressed page, instead of decompressing it, we can add update log into
+mod log. When we want to evict certain compressed page, we would evict
+this page as well as mod log.</p>
+<p>Let's say we want to read certain tuple without decompressing it
+first, this is ideal.</p>
+<figure>
+<img src="Compression2.png" srcset="/img/loading.gif" lazyload alt="Compression2">
+<figcaption aria-hidden="true">Compression2</figcaption>
+</figure>
+<p>As the shown of the firgre, when we want to specify where clause, in
+this example, is 'andy', if we can replace 'andy' to another something,
+in this scenario, we can select in compressed data without decompress
+it.</p>
+<p>The rest of this chapter, we would introduce some compression
+algorithm.</p>
+<h4 id="run-length-compression">Run-Length Compression</h4>
+<figure>
+<img src="Compression3.png" srcset="/img/loading.gif" lazyload alt="Compression3">
+<figcaption aria-hidden="true">Compression3</figcaption>
+</figure>
+<p>We can compress data as a sequence of triplets, all of which contain
+the value of this triplet, the offset of this triplet and the number of
+value which triplet represents.</p>
+<p>Further, if we can sort the original data before compression, we can
+get higher compression ratio.</p>
+<figure>
+<img src="Compression4.png" srcset="/img/loading.gif" lazyload alt="Compression4">
+<figcaption aria-hidden="true">Compression4</figcaption>
+</figure>
+<h4 id="bit-packing-compression">Bit-Packing Compression</h4>
+<figure>
+<img src="Compression5.png" srcset="/img/loading.gif" lazyload alt="Compression5">
+<figcaption aria-hidden="true">Compression5</figcaption>
+</figure>
+<p>Bit-Packing is very intuitive, we can store the useful data instead
+of storing entire data.</p>
+<h4 id="mostly-compression">Mostly Compression</h4>
+<figure>
+<img src="Compression6.png" srcset="/img/loading.gif" lazyload alt="Compression6">
+<figcaption aria-hidden="true">Compression6</figcaption>
+</figure>
+<p>This is varient of the bit-packing compression. In original data, if
+exist a specail data, which is large than any other, we can replace this
+value with a specail marker. If we scan for this marker, we would find
+this value in another table.</p>
+<h4 id="bitmap-compression">Bitmap Compression</h4>
+<p>We can store a separate bitmap for special attribute, where its
+offset is corresponding to the tuple.</p>
+<figure>
+<img src="Compression7.png" srcset="/img/loading.gif" lazyload alt="Compression7">
+<figcaption aria-hidden="true">Compression7</figcaption>
+</figure>
+<p>It looks like this compression has high comression retio, but, to
+make matter worse, let's say we have 1e5 tuple, and we use this encoding
+for <code>int32</code>, the comparition as following:</p>
+<ul>
+<li>Decompression: <span class="math inline">\(32\ bits\times
+10^5\)</span></li>
+<li>Compression: <span class="math inline">\(INT32_{MAX}\ bits\times
+10^5\)</span></li>
+</ul>
+<h4 id="delta-compression">Delta Compression</h4>
+<p>For time data or another with same attribute, for each value, we can
+store its difference with the first value, as the following figure
+show:</p>
+<figure>
+<img src="Compression8.png" srcset="/img/loading.gif" lazyload alt="Compression8">
+<figcaption aria-hidden="true">Compression8</figcaption>
+</figure>
+<h4 id="incremental-compression">Incremental Compression</h4>
+<figure>
+<img src="Compression9.png" srcset="/img/loading.gif" lazyload alt="Compression9">
+<figcaption aria-hidden="true">Compression9</figcaption>
+</figure>
+<p>In common prefix table, the first entry is null, for every another
+enrties, we consider what frefix portion of the front string I have. As
+an example, <code>robbed</code> has the prefix <code>rob</code> in the
+front string <code>rob</code>, <code>robbing</code> has the frefix
+<code>robb</code> in the front string <code>robbed</code>, the rest of
+string follow this patten.</p>
+<h4 id="dirtionary-compression">Dirtionary Compression</h4>
+<figure>
+<img src="Compression10.png" srcset="/img/loading.gif" lazyload alt="Compression10">
+<figcaption aria-hidden="true">Compression10</figcaption>
+</figure>
+<p>This compression method is suitable for our ideal compression, we can
+read compressed data without compress it. As an example of the follow
+figure show, we replace 'andy' with integer number <code>30</code></p>
+<figure>
+<img src="Compression11.png" srcset="/img/loading.gif" lazyload alt="Compression11">
+<figcaption aria-hidden="true">Compression11</figcaption>
+</figure>
+<p>This compression is also supprot range query, as the shown of
+following figure:</p>
+<figure>
+<img src="Compression12.png" srcset="/img/loading.gif" lazyload alt="Compression12">
+<figcaption aria-hidden="true">Compression12</figcaption>
+</figure>
+<hr>
+<h2 id="memory-management">Memory Management</h2>
+<p><em>Storage model and Compression</em> answer the question about how
+DBMS represent database <strong>in file</strong> on disk, and <em>memory
+management</em> answer the question about how DBMS move and memory data
+front and back from disk.</p>
+<figure>
+<img src="MemoryManagement1.png" srcset="/img/loading.gif" lazyload alt="MemoryManagement1">
+<figcaption aria-hidden="true">MemoryManagement1</figcaption>
+</figure>
+<p>Initially, buffer pool is empty. If the above application, as the
+figure shown, is <em>execution engine</em>, wants to fetch
+<code>page 2</code>. Buffer pool first need to read <em>directory
+page</em> from disk, then read the required page.</p>
+<h3 id="buffer-pool-manager">Buffer Pool Manager</h3>
+<figure>
+<img src="BufferPool1.png" srcset="/img/loading.gif" lazyload alt="BufferPool1">
+<figcaption aria-hidden="true">BufferPool1</figcaption>
+</figure>
+<p>Page table maps <code>page id</code> to <code>frame id</code> as well
+as tracks each <code>page id</code> corresponding the
+<code>frame id</code>(maybe this <code>page</code> would not store in
+physical memory).</p>
+<figure>
+<img src="BufferPool2.png" srcset="/img/loading.gif" lazyload alt="BufferPool2">
+<figcaption aria-hidden="true">BufferPool2</figcaption>
+</figure>
+<p>Because of the page table is shared resource, so we need to use
+<code>latch</code> to protect it from accessing other thread when
+certain thread is accessing.</p>
+<blockquote>
+<p>In database, <code>lock</code> used to pretect the content of
+database(e.g. tuple, table), <code>latch</code> used to pretect the
+interal data structure(e.g. hashtable, regions of memory).</p>
+</blockquote>
+<p>At this points, we need to clarify two concepts:
+<code>page table</code> and <code>page directory</code>.</p>
+<ul>
+<li><code>page table</code>: used to map <code>page id</code> to
+<code>frame id</code>. It would be stored in memory without storing in
+disk</li>
+<li><code>page directory</code>: used to track the location of every
+pages <strong>in database file</strong>. It must be record in disk,
+which allows DBMS can find certain page when restarts</li>
+</ul>
+<h3 id="buffer-pool-optimizations">Buffer Pool Optimizations</h3>
+<h4 id="multiple-buffer-pools">Multiple Buffer Pools</h4>
+<p>DBMS can maintain mulitple buffer pools in each scenario:
+per-database buffer pool and per-page type buffer pool(page size vary
+from <code>1K</code> to <code>16K</code>).</p>
+<p>Partitioning memory across multiple pool can reduse latch contention
+and improve locality. We have two approach to implement it.</p>
+<p>Every record ID has extending attribute, called <em>object ID</em>,
+and a mapping from object id to specific buffer pool can be maintainded.
+Another approach is <em>hashing</em>, which hashs page id to select a
+buffer pool.</p>
+<figure>
+<img src="MultipleBufferPool1.png" srcset="/img/loading.gif" lazyload alt="MultipleBufferPool1">
+<figcaption aria-hidden="true">MultipleBufferPool1</figcaption>
+</figure>
+<figure>
+<img src="MultipleBufferPool2.png" srcset="/img/loading.gif" lazyload alt="MultipleBufferPool2">
+<figcaption aria-hidden="true">MultipleBufferPool2</figcaption>
+</figure>
+<h4 id="pre-fetching">Pre-fetching</h4>
+<figure>
+<img src="Prefetching1.png" srcset="/img/loading.gif" lazyload alt="Prefetching1">
+<figcaption aria-hidden="true">Prefetching1</figcaption>
+</figure>
+<p>At first, BPM would fetch <code>page 0</code>, then when the query
+cursor points to <code>page 1</code>, BPM would fetch
+<code>page 1</code>. The query cursor may continue downword, so the BPM
+would prefetching <code>page 2</code> and <code>page 3</code>, as the
+following shown:</p>
+<figure>
+<img src="Prefetching2.png" srcset="/img/loading.gif" lazyload alt="Prefetching2">
+<figcaption aria-hidden="true">Prefetching2</figcaption>
+</figure>
+<p>Therefore, when query cursor move to <code>page 2</code>, BPM would
+not fetch this page</p>
+<h4 id="scan-sharing">Scan sharing</h4>
+<figure>
+<img src="ScanShared1.png" srcset="/img/loading.gif" lazyload alt="ScanSharing1">
+<figcaption aria-hidden="true">ScanSharing1</figcaption>
+</figure>
+<p>When <code>Q1</code> cursor points to <code>page 3</code>, the
+content of buffer pool is <code>page 3, 1, 2</code> and <code>Q2</code>
+comes</p>
+<figure>
+<img src="ScanShared2.png" srcset="/img/loading.gif" lazyload alt="ScanSharing2">
+<figcaption aria-hidden="true">ScanSharing2</figcaption>
+</figure>
+<p>In scan sharing, cursor of <code>Q2</code> would jump to cursor of
+<code>Q1</code> instead of scanning from the beginning. Then,
+<code>Q1</code> and <code>Q2</code> would scan downword together.</p>
+<figure>
+<img src="ScanShared3.png" srcset="/img/loading.gif" lazyload alt="ScanSharing3">
+<figcaption aria-hidden="true">ScanSharing3</figcaption>
+</figure>
+<figure>
+<img src="ScanShared4.png" srcset="/img/loading.gif" lazyload alt="ScanSharing4">
+<figcaption aria-hidden="true">ScanSharing4</figcaption>
+</figure>
+<p>When the part of query of <code>Q2</code> finished, the cursor of
+<code>Q2</code> would jump to the beginning and scan those page that
+have not scanned.</p>
+<figure>
+<img src="ScanShared5.png" srcset="/img/loading.gif" lazyload alt="ScanSharing5">
+<figcaption aria-hidden="true">ScanSharing5</figcaption>
+</figure>
+<h4 id="page-cache">Page Cache</h4>
+<figure>
+<img src="PageCache.png" srcset="/img/loading.gif" lazyload alt="PageCache">
+<figcaption aria-hidden="true">PageCache</figcaption>
+</figure>
+<p>DBMS can fetch certain page from <code>file system</code>, at the
+between of <code>file system</code> and <code>disk</code>, OS would
+support a cache for those page, which can reduce the I/O form disk. But,
+because of redundent copys of page, different eviction policies, DBMS
+can bypass this cache layer by using <code>O_DIRECT</code>.</p>
+<h3 id="buffer-replacement-policy">Buffer Replacement Policy</h3>
+<h4 id="laest-recently-used">Laest Recently Used</h4>
+<p>LRU would maintain a timestamp of each access page, and it would
+evict the oldest timestamp.</p>
+<h4 id="clock">Clock</h4>
+<p>The Clock policy is approximation of LRU without timestamp. This
+policy would organize page as circle buffer with 'clock hand'. Upon
+swapping, clock hand would chick the <code>page bit</code> is set to
+'1'. If this bit is '1', then set to '0'; otherwise, evict this page.
+The detail process is as follow:</p>
+<figure>
+<img src="CLOCK.png" srcset="/img/loading.gif" lazyload alt="CLOCK">
+<figcaption aria-hidden="true">CLOCK</figcaption>
+</figure>
+<p>If the ref bit is zero, which suggest that this page has not been
+accessed before clock hand pointed to it this time.</p>
+<h4 id="lru-k">LRU-K</h4>
+<p>The porblem of this two approachs is that, the cacahe would
+susceptible for <em>sequential flood</em>. Let's say a scenario, BPM has
+record thress pages, then a flood of page fetched by using BPM, those
+flood page would <strong>only read once</strong>. After the flood, we
+want to read the three pages from last time, but now, those three pages
+no longer in BPM. The sequential flood would pollute the cache in
+BPM.</p>
+<p>The varient of LRU policy, called LRU-K, can handle this situation.
+LRU-K would track the number of access time is greater and equal than K,
+for those access times less than K, they would be evicted firstly.</p>
+<hr>
+<h2 id="hash-tables">Hash Tables</h2>
+<p>Hash table implement an unordered associative array that maps keys to
+value. It used hash function to compute an offset into this array for a
+given key.</p>
+<p>Space complexity: <span class="math inline">\(O(n)\)</span></p>
+<p>time complexity: * Average: <span class="math inline">\(O(1)\)</span>
+* Worse: <span class="math inline">\(O(n)\)</span></p>
+<p>Designing a hash table requires consider two factor:</p>
+<ul>
+<li>Hash Function: how to map a large key space to smaller value
+domain</li>
+<li>Hashing Scheme: how to handle collision after Hashing</li>
+</ul>
+<p>The basic design of hash table is as shown in the following
+figure:</p>
+<figure>
+<img src="StaticHash.png" srcset="/img/loading.gif" lazyload alt="StaticHash">
+<figcaption aria-hidden="true">StaticHash</figcaption>
+</figure>
+<h3 id="static-hash-scheme">Static Hash Scheme</h3>
+<h4 id="linear-probe-hashing">Linear Probe Hashing</h4>
+<figure>
+<img src="Hashing1.png" srcset="/img/loading.gif" lazyload alt="Hashing1">
+<figcaption aria-hidden="true">Hashing1</figcaption>
+</figure>
+<p>It uses a circular buffer of array slots and hash function maps keys
+to slot. For insert, firstly hashing a given key to a slot, if the slot
+is free, then the key-value pair is insertted into it; otherwise,
+adjacent slot are searched until a free slot is found. For lookup,
+firstly hashing a given key to slot, and linear search adjacent slot, if
+encounters an free slot, it means this value is not present in hash
+table.</p>
+<p>The question of this approach is when search encounters a null slot
+which is deleted previously, it would not find the specific value that
+is mapped to the given key.</p>
+<figure>
+<img src="Hashing2.png" srcset="/img/loading.gif" lazyload alt="Hashing2">
+<figcaption aria-hidden="true">Hashing2</figcaption>
+</figure>
+<p>Two solutions is shownd as the following figure:</p>
+<figure>
+<img src="Hashing3.png" srcset="/img/loading.gif" lazyload alt="Hashing3">
+<figcaption aria-hidden="true">Hashing3</figcaption>
+</figure>
+<p>This approach would result in expensive cost, so it's not common
+used.</p>
+<figure>
+<img src="Hashing4.png" srcset="/img/loading.gif" lazyload alt="Hashing4">
+<figcaption aria-hidden="true">Hashing4</figcaption>
+</figure>
+<figure>
+<img src="Hashing5.png" srcset="/img/loading.gif" lazyload alt="Hashing5">
+<figcaption aria-hidden="true">Hashing5</figcaption>
+</figure>
+<figure>
+<img src="Hashing6.png" srcset="/img/loading.gif" lazyload alt="Hashing6">
+<figcaption aria-hidden="true">Hashing6</figcaption>
+</figure>
+<p>If the key is not unique, there are two approachs to handle it:</p>
+<figure>
+<img src="Hashing7.png" srcset="/img/loading.gif" lazyload alt="Hashing7">
+<figcaption aria-hidden="true">Hashing7</figcaption>
+</figure>
+<h4 id="robin-hood-hashing">Robin Hood Hashing</h4>
+<p>This is varient of Linear Probe Hashing, it records the distence
+between current position and optimal position. Everytime we insert a
+key-value into it, it seeks to reduce the distence of each key from
+their optimal position.</p>
+<figure>
+<img src="RobinHash1.png" srcset="/img/loading.gif" lazyload alt="RobinHash">
+<figcaption aria-hidden="true">RobinHash</figcaption>
+</figure>
+<figure>
+<img src="RobinHash2.png" srcset="/img/loading.gif" lazyload alt="RobinHash">
+<figcaption aria-hidden="true">RobinHash</figcaption>
+</figure>
+<figure>
+<img src="RobinHash3.png" srcset="/img/loading.gif" lazyload alt="RobinHash">
+<figcaption aria-hidden="true">RobinHash</figcaption>
+</figure>
+<figure>
+<img src="RobinHash4.png" srcset="/img/loading.gif" lazyload alt="RobinHash">
+<figcaption aria-hidden="true">RobinHash</figcaption>
+</figure>
+<figure>
+<img src="RobinHash5.png" srcset="/img/loading.gif" lazyload alt="RobinHash">
+<figcaption aria-hidden="true">RobinHash</figcaption>
+</figure>
+<h4 id="cuckoo-hashing">Cuckoo Hashing</h4>
+<p>This approach maintain multiple hash table with different hash
+function. When we insert, it check computes hash function to check every
+table for finding a free slot. If no table has a free slot, it would
+randomly chose old enrty to evict and rehash the old entry. In the rare
+cases, we may trap into dead loop, we can rebuild the hash table by
+using larger table.</p>
+<h3 id="dynamic-hashing-scheme">Dynamic Hashing Scheme</h3>
+<h4 id="chained-hashing">Chained Hashing</h4>
+<p>We can maintain a list of bucket for each slot in hash table. The
+concept of bucket is a container that can store one or more key-value
+pair.</p>
+<p>When the bucket is full, we can allocate a new bucket to store new
+key-value pair, and add it into the tail of the slot of corresponding
+key.</p>
+<figure>
+<img src="ChainHash1.png" srcset="/img/loading.gif" lazyload alt="ChainHash">
+<figcaption aria-hidden="true">ChainHash</figcaption>
+</figure>
+<figure>
+<img src="ChainHash2.png" srcset="/img/loading.gif" lazyload alt="ChainHash">
+<figcaption aria-hidden="true">ChainHash</figcaption>
+</figure>
+<figure>
+<img src="ChainHash3.png" srcset="/img/loading.gif" lazyload alt="ChainHash">
+<figcaption aria-hidden="true">ChainHash</figcaption>
+</figure>
+<p>If the new bucket is full again, this operation would perform over
+and over again. Obviously, if buckets gorw infinitely, this approach
+would degenrate into link list.</p>
+<h4 id="extendible-hashing">Extendible Hashing</h4>
+<p>Because of the result of hash function is an interge number, so in
+<em>bucket Pointers</em>, we can chose specific bits to map to one or
+more buckets. If the bucket is full and can not insert a new key-value
+pair, we can double the <em>bucket pointer</em> and reshuffle the
+content of all buckets.</p>
+<p>In order to implement the map of <em>bucket pointer</em> and
+<em>bucket</em>, we set <em>global bit</em> and <em>local bit</em>. The
+former is used to detemine which slots in <em>bucket pointe</em>
+correspond to which <em>bucket</em>, as the shown of the following
+figure:</p>
+<figure>
+<img src="ExtendibleHash1.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<figure>
+<img src="ExtendibleHash2.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<figure>
+<img src="ExtendibleHash3.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<p>At this time, the bucket is full, so we need to double the <em>bucket
+pointer</em>. Then rehash the content of the all buckets</p>
+<figure>
+<img src="ExtendibleHash4.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<figure>
+<img src="ExtendibleHash5.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<figure>
+<img src="ExtendibleHash6.png" srcset="/img/loading.gif" lazyload alt="ExtendibleHash">
+<figcaption aria-hidden="true">ExtendibleHash</figcaption>
+</figure>
+<h4 id="linear-hashing">Linear Hashing</h4>
+<p>Instead of imediately double bucket pointer, Linear Hashing would
+increase bucket pointer gradually. At some time, if bucket is full, it
+would add a new bucket into the tail of the corresponding key slot and
+<strong>add a new <em>bucket pointer</em></strong>. It would generate a
+new hash function and <em>split pointer</em> would downword. The new
+<em>bucket pointer</em> is the duplication of the old <em>bucket
+pointer</em>, so they would use different hash function.</p>
+<figure>
+<img src="LinearHash1.png" srcset="/img/loading.gif" lazyload alt="LinearHash">
+<figcaption aria-hidden="true">LinearHash</figcaption>
+</figure>
+<p>As the above figure shows, when we add <span class="math inline">\(17\)</span> into hash table, the bucket which
+<code>slot 1</code> maps is full, and the <em>split pointer</em> points
+to <code>slot 0</code>. So we would add a new bucket into
+<code>slot 1</code> and add a new <em>bucket pointer</em>. The old
+bucket use <code>hash function 1</code>, the new bucket use
+<code>hash function 2</code></p>
+<figure>
+<img src="LinearHash2.png" srcset="/img/loading.gif" lazyload alt="LinearHash">
+<figcaption aria-hidden="true">LinearHash</figcaption>
+</figure>
+<hr>
+<h2 id="index">Index</h2>
+<p>In order to gain faster random access, we can use an index structure.
+An <em>ordered index</em> stores the value of <em>search key</em> in
+sorted order and associates the record which search key corresponding
+to. Besides, index would store seperatedly in another file.</p>
+<h3 id="clustering-index-non-clustering-index">Clustering index &amp;
+Non-clustering index</h3>
+<p>Clustering index would <strong>change the physical order</strong> and
+when I create it, the contain of this relation would be sorted in
+specific cloumn. Clustering index can create only one.</p>
+<p>Non-clustering index would not <strong>change the order of original
+relation</strong>. It is created one or more cloumn to enhance the
+retrieval speed of specific queries.</p>
+<h3 id="dense-index-sparse-index">Dense index &amp; Sparse index</h3>
+<p>Dense index would creates index entries for <strong>every search key
+value</strong>, sparse key would creates index entries for <strong>some
+of the search key value</strong>, the details of them as the following
+figure shows:</p>
+<figure>
+<img src="DenseIndex.png" srcset="/img/loading.gif" lazyload alt="DenseIndex">
+<figcaption aria-hidden="true">DenseIndex</figcaption>
+</figure>
+<figure>
+<img src="SparseIndex.png" srcset="/img/loading.gif" lazyload alt="SparseIndex">
+<figcaption aria-hidden="true">SparseIndex</figcaption>
+</figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CMU15-445-Notes/" class="category-chain-item">CMU15-445 Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CMU15-445-Notes/">#CMU15-445 Notes</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CMU15-445 B+Tree Index</div>
+      <div>https://nishikichisato.github.io/2023/11/05/CMU15-445 Notes/B+Tree Index/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 5, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 5, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/05/CMU15-445%20Notes/Buffer%20Pool%20Manager/" title="CMU15-445 Buffer Pool Manager">
+                        <span class="hidden-mobile">CMU15-445 Buffer Pool Manager</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CMU15-445 Notes"
+        id="heading-6f8bafdec08ad4ee7ed339415b64f9f6" role="tab" data-toggle="collapse" href="#collapse-6f8bafdec08ad4ee7ed339415b64f9f6"
+        aria-expanded="true"
+      >
+        CMU15-445 Notes
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-6f8bafdec08ad4ee7ed339415b64f9f6"
+           role="tabpanel" aria-labelledby="heading-6f8bafdec08ad4ee7ed339415b64f9f6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/B+Tree%20Index/" title="CMU15-445 B+Tree Index"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CMU15-445 B+Tree Index</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/Buffer%20Pool%20Manager/" title="CMU15-445 Buffer Pool Manager"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 Buffer Pool Manager</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/Concurrency/" title="CMU15-445 Concurrency"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 Concurrency</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

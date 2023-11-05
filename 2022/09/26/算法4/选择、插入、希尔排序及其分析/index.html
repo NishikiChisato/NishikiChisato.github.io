@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="说明 本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数  我们所有的算法的讨论基础为升序排列  在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数   ​	  选择排序选择排序可以说是排序里面最朴素的一种想法了，它的基">
+    <meta name="description" content="说明  本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数 我们所有的算法的讨论基础为升序排列 在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数  ​ 选择排序 选择排序可以说是排序里面最朴素的一种">
 <meta property="og:type" content="article">
 <meta property="og:title" content="选择、插入、希尔排序及其分析">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/09/26/%E7%AE%97%E6%B3%954/%E9%80%89%E6%8B%A9%E3%80%81%E6%8F%92%E5%85%A5%E3%80%81%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="说明 本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数  我们所有的算法的讨论基础为升序排列  在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数   ​	  选择排序选择排序可以说是排序里面最朴素的一种想法了，它的基">
+<meta property="og:description" content="说明  本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 less 和 exch ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数 我们所有的算法的讨论基础为升序排列 在研究排序算法的成本时，对于会交换元素的算法，我们关注的是比较次数和交换次数，对于不交换元素的算法，我们关注的是数组的访问次数  ​ 选择排序 选择排序可以说是排序里面最朴素的一种">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%204/Algorithm%204%20(3).jpg">
 <meta property="article:published_time" content="2022-09-26T15:35:12.897Z">
@@ -274,7 +274,7 @@
         
         
         
-          24 mins
+          25 mins
         
       </span>
     
@@ -338,7 +338,7 @@
               <p class="note note-info">
                 
                   
-                    Last updated on 6 months ago
+                    Last updated on 7 months ago
                   
                 
               </p>
@@ -346,48 +346,78 @@
             
               <div class="markdown-body">
                 
-                <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li><p>本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数 <code>less</code> 和 <code>exch</code> ，前者用于判断两个数是否满足小于的关系，后者用于交换两个数</p>
-</li>
-<li><p>我们所有的算法的讨论基础为升序排列</p>
-</li>
-<li><p>在研究排序算法的成本时，对于会交换元素的算法，我们关注的是<strong>比较次数</strong>和<strong>交换次数</strong>，对于不交换元素的算法，我们关注的是<strong>数组的访问次数</strong></p>
-</li>
+                <h3 id="说明">说明</h3>
+<ul>
+<li><p>本文当中的所有排序算法均以类的形式给出，这个类当中还定义了两个基础函数
+<code>less</code> 和 <code>exch</code>
+，前者用于判断两个数是否满足小于的关系，后者用于交换两个数</p></li>
+<li><p>我们所有的算法的讨论基础为升序排列</p></li>
+<li><p>在研究排序算法的成本时，对于会交换元素的算法，我们关注的是<strong>比较次数</strong>和<strong>交换次数</strong>，对于不交换元素的算法，我们关注的是<strong>数组的访问次数</strong></p></li>
 </ul>
-<p>​	 </p>
-<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序可以说是排序里面最朴素的一种想法了，它的基本思想如下：</p>
+<p>​</p>
+<h3 id="选择排序">选择排序</h3>
+<p>选择排序可以说是排序里面最朴素的一种想法了，它的基本思想如下：</p>
 <p>选择数组当中最小的元素，将它与第一个元素交换。然后，在剩下的元素当中找到最小的，将它与第二个元素进行交换。如此这般，我们便可以将整个数组进行排序</p>
 <p>代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Selection</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++)<br>		&#123;<br>			<span class="hljs-type">int</span> min = i;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; N; j++)<br>				<span class="hljs-keyword">if</span> (<span class="hljs-built_in">less</span>(a[j], a[min]))<br>					min = j;<br>			<span class="hljs-built_in">exch</span>(a, i, min);<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>​	 </p>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>数组一共有 $N$ 个元素，对于第 $i$ 个元素而言，它需要<strong>一次交换</strong>和 $N-1-i$ 次比较（内层循环从 $i+1$ 开始遍历并且一共有 $N$ 个数）</p>
-<p>因此对于长度为 $N$ 的数组，会有 $N$ 次交换和 $(N-1)+(N-2)+\cdots+1&#x3D;N(N-1)&#x2F;2\ \sim\ N^2&#x2F;2$ 次比较</p>
-<p>​	 </p>
-<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>对于数组当中的任意一个元素 <code>i</code> ，它<strong>前面的元素是有序的</strong>。如果我需要让有序的范围扩大到 <code>i</code> ，那么我们需要将元素 <code>i</code> 插入到前面的 <code>i-1</code> 个元素中的适当位置。为了实现这种插入，我们需要将部分元素向右移动一位（准确来说是比 <code>i</code> 大的元素全部移动一位）</p>
+<p>​</p>
+<h4 id="分析">分析</h4>
+<p>数组一共有 <span class="math inline">\(N\)</span> 个元素，对于第
+<span class="math inline">\(i\)</span>
+个元素而言，它需要<strong>一次交换</strong>和 <span class="math inline">\(N-1-i\)</span> 次比较（内层循环从 <span class="math inline">\(i+1\)</span> 开始遍历并且一共有 <span class="math inline">\(N\)</span> 个数）</p>
+<p>因此对于长度为 <span class="math inline">\(N\)</span> 的数组，会有
+<span class="math inline">\(N\)</span> 次交换和 <span class="math inline">\((N-1)+(N-2)+\cdots+1=N(N-1)/2\ \sim\
+N^2/2\)</span> 次比较</p>
+<p>​</p>
+<h3 id="插入排序">插入排序</h3>
+<p>对于数组当中的任意一个元素 <code>i</code>
+，它<strong>前面的元素是有序的</strong>。如果我需要让有序的范围扩大到
+<code>i</code> ，那么我们需要将元素 <code>i</code> 插入到前面的
+<code>i-1</code>
+个元素中的适当位置。为了实现这种插入，我们需要将部分元素向右移动一位（准确来说是比
+<code>i</code> 大的元素全部移动一位）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Insertion</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++)<span class="hljs-comment">//一开始从 1 开始</span><br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &gt;= <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">less</span>(a[j], a[j - <span class="hljs-number">1</span>]); j--)<br>				<span class="hljs-built_in">exch</span>(a, j, j - <span class="hljs-number">1</span>);<br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>​	 </p>
-<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>由于比较是放在了 <code>for</code> 循环的判断部分，因此在<strong>最好</strong>的情况下，只需要 $N-1$ 次比较和 $0$ 次交换</p>
-<p>由于每一次移动都会对应一次比较（反过来不行，后面会说明），因此在最坏的情况下需要 $\sim N^2&#x2F;2$ 次比较和 $\sim N^2&#x2F;2$ 次交换（这里的推导和上面一样，只不过对象是交换的次数，然后再从移动次数得出比较次数）</p>
-<p>对于 $N$ 个元素的数组，比较的总次数是交换次数加上一个额外的项，该项为 $N$ 减去待插入元素正好是<strong>「当前已知最小元素的次数」</strong>。在最坏情况下（完全逆序），这一项为 0 ；在最好情况下（数组本身排好序），这一项为 $N-1$ </p>
+<p>​</p>
+<h4 id="分析-1">分析</h4>
+<p>由于比较是放在了 <code>for</code>
+循环的判断部分，因此在<strong>最好</strong>的情况下，只需要 <span class="math inline">\(N-1\)</span> 次比较和 <span class="math inline">\(0\)</span> 次交换</p>
+<p>由于每一次移动都会对应一次比较（反过来不行，后面会说明），因此在最坏的情况下需要
+<span class="math inline">\(\sim N^2/2\)</span> 次比较和 <span class="math inline">\(\sim N^2/2\)</span>
+次交换（这里的推导和上面一样，只不过对象是交换的次数，然后再从移动次数得出比较次数）</p>
+<p>对于 <span class="math inline">\(N\)</span>
+个元素的数组，比较的总次数是交换次数加上一个额外的项，该项为 <span class="math inline">\(N\)</span>
+减去待插入元素正好是<strong>「当前已知最小元素的次数」</strong>。在最坏情况下（完全逆序），这一项为
+0 ；在最好情况下（数组本身排好序），这一项为 <span class="math inline">\(N-1\)</span></p>
 <p>我们解释一下什么叫「当前已知最小元素的次数」</p>
 <p>我们知道一次交换必然对应一次比较，这里很容易理解</p>
 <p>那我们思考一个问题，对于那些只需要比较而不需要交换的项，是什么情况</p>
-<p>通过观察可以发现，如果想要进入内层循环，那么<strong>当前元素一定要小于前一个元素</strong>。反过来说，如果当前元素<strong>不是目前已知的最小元素</strong>，那么就只有比较的成本而没有交换的成本。那么，我们通过用 $N$ 减去「待插入元素为当前已知最小元素的次数」，得到的就是所有<strong>只需要比较而不需要交换的成本</strong></p>
+<p>通过观察可以发现，如果想要进入内层循环，那么<strong>当前元素一定要小于前一个元素</strong>。反过来说，如果当前元素<strong>不是目前已知的最小元素</strong>，那么就只有比较的成本而没有交换的成本。那么，我们通过用
+<span class="math inline">\(N\)</span>
+减去「待插入元素为当前已知最小元素的次数」，得到的就是所有<strong>只需要比较而不需要交换的成本</strong></p>
 <p>我们还有另外一种描述插入排序成本的方法</p>
-<p>我们定义<em>倒置</em>指的是数组当中<strong>两个</strong>顺序颠倒的元素。那么插入排序的<strong>交换次数跟倒置的个数相同</strong>，比较次数大于等于倒置的数量，小于等于倒置的数量加上数组大小再减去 1 （这里的推导与上面的一致，不过多说明）</p>
-<p>​	 </p>
-<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><p>我们看到，在插入排序中，它只会比较<strong>相邻元素</strong>，因此元素只能一点点地移动，这种速度非常慢，那么有没有一种可以让元素可以快速移动的办法呢？</p>
+<p>我们定义<em>倒置</em>指的是数组当中<strong>两个</strong>顺序颠倒的元素。那么插入排序的<strong>交换次数跟倒置的个数相同</strong>，比较次数大于等于倒置的数量，小于等于倒置的数量加上数组大小再减去
+1 （这里的推导与上面的一致，不过多说明）</p>
+<p>​</p>
+<h3 id="希尔排序">希尔排序</h3>
+<p>我们看到，在插入排序中，它只会比较<strong>相邻元素</strong>，因此元素只能一点点地移动，这种速度非常慢，那么有没有一种可以让元素可以快速移动的办法呢？</p>
 <p>这便有了希尔排序</p>
-<p>该算法的思想是使数组当中<strong>任意</strong>间隔为 $h$ 的元素都是有序的，这样的数组被称为 $h$ 有序数组。当 $h$ 很大的时候，便可以实现将一个数快速移动使得它接近最终应该在的位置</p>
-<p>我们通过不断减小 $h$ 的大小，便可以使得数组逐渐变为有序</p>
-<p>具体的，对于一个 $N$ 个元素的数组，我们让 $h$ 的大小从 $N&#x2F;3$ 不断减小到 1 （当然也可以用别的）</p>
+<p>该算法的思想是使数组当中<strong>任意</strong>间隔为 <span class="math inline">\(h\)</span> 的元素都是有序的，这样的数组被称为
+<span class="math inline">\(h\)</span> 有序数组。当 <span class="math inline">\(h\)</span>
+很大的时候，便可以实现将一个数快速移动使得它接近最终应该在的位置</p>
+<p>我们通过不断减小 <span class="math inline">\(h\)</span>
+的大小，便可以使得数组逐渐变为有序</p>
+<p>具体的，对于一个 <span class="math inline">\(N\)</span>
+个元素的数组，我们让 <span class="math inline">\(h\)</span> 的大小从
+<span class="math inline">\(N/3\)</span> 不断减小到 1
+（当然也可以用别的）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Insertion</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-type">int</span> h = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">while</span> (h &lt; N / <span class="hljs-number">3</span>)<br>			h = <span class="hljs-number">3</span> * h + <span class="hljs-number">1</span>;<span class="hljs-comment">//1, 4, 13, 40, 121, 364, 1093</span><br>		<span class="hljs-keyword">while</span> (h &gt;= <span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++)<br>			&#123;<br>				<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &gt;= h &amp;&amp; <span class="hljs-built_in">less</span>(a[j], a[j - h]); j -= h)<br>					<span class="hljs-built_in">exch</span>(a, j, j - h);<span class="hljs-comment">//j必须大于等于h，不然会数组越界</span><br>			&#125;<br>			h = h / <span class="hljs-number">3</span>;<span class="hljs-comment">//h不断减小</span><br>		&#125;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>​	 </p>
-<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>关于该算法的分析，目前并无法准确的给出其时间复杂度的数值，但可以确定的是一定比 $N^2$ 小</p>
-<p>其实对于中等大小的数组，希尔排序的时间是可以接受的，它还不需要额外的运行空间而且代码量很小。其实还有很多比希尔排序更快的算法，在 $N$ 很大的时候，它们的速度也只可能会比希尔排序快两倍（有时还不一定能达到），并且那些算法还更复杂</p>
+<p>​</p>
+<h4 id="分析-2">分析</h4>
+<p>关于该算法的分析，目前并无法准确的给出其时间复杂度的数值，但可以确定的是一定比
+<span class="math inline">\(N^2\)</span> 小</p>
+<p>其实对于中等大小的数组，希尔排序的时间是可以接受的，它还不需要额外的运行空间而且代码量很小。其实还有很多比希尔排序更快的算法，在
+<span class="math inline">\(N\)</span>
+很大的时候，它们的速度也只可能会比希尔排序快两倍（有时还不一定能达到），并且那些算法还更复杂</p>
 <p>总的来说，它的时间是可以接受的并且代码量也小，所有可以使用</p>
 
                 

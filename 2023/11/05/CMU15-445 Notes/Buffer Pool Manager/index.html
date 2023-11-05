@@ -1,0 +1,1227 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Buffer Pool Manager  Buffer Pool Manager  Relational Model  Database &amp; DBMS &amp; Data model Relational Model  SQL  Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU15-445 Buffer Pool Manager">
+<meta property="og:url" content="https://nishikichisato.github.io/2023/11/05/CMU15-445%20Notes/Buffer%20Pool%20Manager/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="Buffer Pool Manager  Buffer Pool Manager  Relational Model  Database &amp; DBMS &amp; Data model Relational Model  SQL  Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445%20Notes/CMU15-445%20Notes%20(1).jpg">
+<meta property="article:published_time" content="2023-11-05T14:27:59.571Z">
+<meta property="article:modified_time" content="2023-11-05T14:33:44.843Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="CMU15-445 Notes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/CMU15-445%20Notes/CMU15-445%20Notes%20(1).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CMU15-445 Buffer Pool Manager - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CMU15-445 Buffer Pool Manager"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-05 22:27" pubdate>
+          November 5, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          88 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CMU15-445 Buffer Pool Manager</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on 2 minutes ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="buffer-pool-manager">Buffer Pool Manager</h1>
+<ul>
+<li><a href="#buffer-pool-manager">Buffer Pool Manager</a>
+<ul>
+<li><a href="#relational-model">Relational Model</a>
+<ul>
+<li><a href="#database--dbms--data-model">Database &amp; DBMS &amp; Data
+model</a></li>
+<li><a href="#relational-model-1">Relational Model</a></li>
+</ul></li>
+<li><a href="#sql">SQL</a>
+<ul>
+<li><a href="#relation--tuple">Relation &amp; tuple</a></li>
+<li><a href="#schema--instance--domain">Schema &amp; Instance &amp;
+Domain</a></li>
+<li><a href="#superkey--candicate-key">Superkey &amp; Candicate
+Key</a></li>
+<li><a href="#referential-integrity-constrain--foreign-key-constrain">Referential
+integrity constrain &amp; foreign-key constrain</a></li>
+<li><a href="#session">Session</a></li>
+<li><a href="#natural-join--outer-join">natural join &amp; outer
+join</a></li>
+<li><a href="#common-table-expressioncte">Common Table
+Expression(CTE)</a></li>
+<li><a href="#recursive-cte">Recursive CTE</a></li>
+</ul></li>
+<li><a href="#database-storage">Database Storage</a>
+<ul>
+<li><a href="#os-vs-buffer-pool-manager">OS vs. Buffer Pool
+Manager</a></li>
+<li><a href="#file-storage">File Storage</a>
+<ul>
+<li><a href="#heap-file-organization">Heap File Organization</a></li>
+</ul></li>
+<li><a href="#page-layout">Page Layout</a>
+<ul>
+<li><a href="#slotted-page">Slotted-Page</a></li>
+<li><a href="#log-structured-storage">Log-Structured storage</a></li>
+</ul></li>
+<li><a href="#tuple-layout">Tuple Layout</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="relational-model">Relational Model</h2>
+<h3 id="database-dbms-data-model">Database &amp; DBMS &amp; Data
+model</h3>
+<p><em>Database</em> is a organized collection of inter-related data
+that modles the aspect of the real world, and the <em>database
+management system</em>(DBMS) is a software to management database.
+Therefore, database is a set of data, and DBMS can be thought of a
+interface to control the database.</p>
+<p>Database is stored as comma-seperqted value(CSV) file that DBMS
+manages, every entity well be stored in its own file, and application
+has to prase the CSV file to read or write recoed. Each entity has its
+own set of attributes, so <strong>defferent record</strong> are
+delimited by new line, while each of corresponding attributes
+<strong>within a record</strong> are delimited by comma</p>
+<p>From this perspective, database can be thought of as a collection of
+multiple files</p>
+<p>Consider a database models a digital music store, the two basic
+entities aes artist and album, so we need two CSV file to store every
+record in entities</p>
+<p><em>Data model</em> is a collection of concept for describing the
+data in database. <em>Relational model</em> is one of the <em>data
+model</em></p>
+<h3 id="relational-model-1">Relational Model</h3>
+<p>Early database application were diffcult to build and maintain
+because there was a tight copluing between logical layers and physical
+layers, therefore the <em>relational model</em> was gradually
+proposed.</p>
+<p><em>Relational model</em> define database abstraction <strong>based
+on relations</strong> to avoid maintainance overhead.</p>
+<p>It has three key points:</p>
+<ul>
+<li>Store database in simple structure(relations)</li>
+<li>Access data through high-level language, DBMS just figure out best
+execution strategy</li>
+<li>Physical store(how to store data in physical layers) left up to DBMS
+implementation</li>
+</ul>
+<p>Relation data model defines three concepts:</p>
+<ul>
+<li>Structure: The definition of <em>relations</em> and their content.,
+what attributes <em>relations</em> contain and what value attributes can
+hold</li>
+<li>Integrity: Ensure the database's contents satisfy constrains(for
+example the value of attribute has to number or string)</li>
+<li>Manipulation: How to access and modify the database's content</li>
+</ul>
+<h2 id="sql">SQL</h2>
+<h3 id="relation-tuple">Relation &amp; tuple</h3>
+<p><em>Relation</em> is an unordered set that contain the relationship
+of attributes that represent <em>entities</em>. Therefore,
+<em>relation</em> simplely a unordered set, and it contain a series of
+attrbutes, all of which have corresponding value.</p>
+<p><em>Tuple</em> is a set of attributes values in <em>relation</em>,
+value can be atomic(i.e. number, string, bool), scalar, lists and other
+nested data structure.</p>
+<p>A <em>relations</em> has two <em>key</em>, which is <em>primary
+key</em> which <strong>uniquely</strong> identifies a single
+<em>tuple</em> and <em>foreign key</em> which specifies an attribute
+from one <em>relation</em> has map to a <em>tuple</em> in another
+<em>relation</em></p>
+<ul>
+<li><em>Relation</em> has a lot of pairs which contain <em>key</em> and
+<em>tuple</em></li>
+<li><em>tuple</em> simplely a set of value, each of which corresponding
+to single attribute</li>
+</ul>
+<h3 id="schema-instance-domain">Schema &amp; Instance &amp; Domain</h3>
+<p><em>Schema</em> is a description of a particular collection of data
+based on <em>data model</em>.</p>
+<p><em>Instance</em> is a state which database stores the informance at
+a particular moment</p>
+<p>If we abstract <em>relation</em> into a table, the <em>attribute</em>
+is the meaning of column, and the <em>tuple</em> is the value of
+attribute/element in the row</p>
+<p>That's to say, in the <em>relational model</em>, data are represented
+in the form of table(<em>relation</em> also refers ot table). Each table
+have multi column, each column has a unique name(<em>attribute</em>
+refers to the name of colume). Each row of the table represents the
+value of each attribute(<em>tuple</em> refers to row). The permitted
+value of the attribute in table is <em>domain</em>(the <em>domain</em>
+of all attribute is <strong>atomic</strong>, namely, its element are
+considered to be indivisible units)</p>
+<p>Schema and instance can be understood by analogy to programming
+language. The <em>database scaema</em> is corresponding to the variable
+declarations, and the value of the variable at a point in time
+corresponding to the <em>database instance</em></p>
+<h3 id="superkey-candicate-key">Superkey &amp; Candicate Key</h3>
+<p>We require that no two tuple in relation have exactly the same value
+for each attribute, Therefore we need a way to distinguish two tuple. We
+use the concept of <em>superkey</em> to solve it, <em>superkey</em> is a
+set of <strong>one or more attribute</strong> that can specify uniquely
+a tuple in relation</p>
+<p>Formally, Let <span class="math inline">\(R\)</span> denote the set
+of attributes in relation <span class="math inline">\(r\)</span>, if we
+say subset <span class="math inline">\(K\)</span> of set <span class="math inline">\(R\)</span> is a <em>superkey</em>, that is, <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are both in <span class="math inline">\(R\)</span> and <span class="math inline">\(t_1
+\neq t_2\)</span>, then <span class="math inline">\(t_1.K \neq
+t_2.K\)</span></p>
+<p>A superkey can contain extraneous attribute, so if a set is a
+superkey, then so is any <strong>superset</strong> for it</p>
+<p>Formally, Let <span class="math inline">\(R\)</span> denote the set
+of attributes in relation <span class="math inline">\(r\)</span>, if we
+say subset <span class="math inline">\(K\)</span> of set <span class="math inline">\(R\)</span> is a <em>superkey</em>, then any
+<strong>superset</strong> of set <span class="math inline">\(K\)</span>
+also is superkey</p>
+<p>If a superkey has no porper subset, such minimal superkey are called
+<em>candidate key</em></p>
+<p>We shall use the term <em>primary key</em> to denote <em>candidate
+key</em>, and to be clear, the meaning of these two concept are exactly
+the same</p>
+<h3 id="referential-integrity-constrain-foreign-key-constrain">Referential
+integrity constrain &amp; foreign-key constrain</h3>
+<blockquote>
+<p>Page: 46</p>
+</blockquote>
+<p>The <em>foreign-key constrain</em> requires that attribute(s) of
+referencing relation must be the <strong>primary key</strong> of the
+referenced relation. the <em>referential integrity constrain</em>, on
+the other hand, simply requires that the value appearing in referencing
+relation <strong>must</strong> appears in referenced relation</p>
+<h3 id="session">Session</h3>
+<p>The session, in database, refers to a connection established between
+a user and a database system for a special period of time. During the
+session, database system would keep track of session-special
+informance(e.g. identity, privilege), user can also perform multi
+operation. The session remains active until user log out, disconnect, or
+set timeout period is reached.</p>
+<h3 id="natural-join-outer-join">natural join &amp; outer join</h3>
+<p>Suppose we have two relation called <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> respectively, and only attribute they
+shared. <em>Natural join</em> operation will list the collection of
+tuple that have the same value of this attribute in both realtions. The
+tuple which don't appear in the result relation have two main reason,
+one is corresponding attribute value are not same; the other is this
+tuple of this attribute in first relation don't appear in the second
+relation</p>
+<p>Therefore, <em>outer join</em> is a workaround, which will list those
+tuple don't appear in second relation</p>
+<h3 id="common-table-expressioncte">Common Table Expression(CTE)</h3>
+<p>The common table expression(CTE) allows you to create a
+<em>temporar</em>y* named result set that aviable temporarily to
+<code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code> clause</p>
+<h3 id="recursive-cte">Recursive CTE</h3>
+<p>A recursive common table expression (CTE) is a CTE that references
+itself. By doing so, the CTE repeatedly executes, returns subsets of
+data, until it returns the complete result set.</p>
+<p>The execution order of a recursive CTE is as follows:</p>
+<ul>
+<li>First, execute the anchor member to form the base result set (R0),
+<strong>use this result for the next iteration</strong>.</li>
+<li>Second, execute the recursive member <strong>with the input result
+set from the previous iteration</strong> (Ri-1) and return a sub-result
+set (Ri) until the termination condition is met.</li>
+<li>Third, combine all result sets R0, R1, … Rn using UNION ALL operator
+to produce the final result set.</li>
+</ul>
+<h2 id="database-storage">Database Storage</h2>
+<h3 id="os-vs.-buffer-pool-manager">OS vs. Buffer Pool Manager</h3>
+<blockquote>
+<p>GPT answer</p>
+</blockquote>
+<ul>
+<li>Problem #1: Transaction Safety</li>
+</ul>
+<p>When using memory-mapped I/O, the operating system can flush dirty
+pages at any time, which can cause problems for transactional
+consistency. If a transaction modifies a page in memory and the OS
+flushes that page to disk before the transaction commits, the database
+can become inconsistent. To address this problem, the database system
+must use techniques such as write-ahead logging to ensure that all
+changes to the database are recorded before they are flushed to
+disk.</p>
+<ul>
+<li>Problem #2: I/O Stalls</li>
+</ul>
+<p>When using memory-mapped I/O, the database system doesn't know which
+pages are in memory and which are not. If a thread tries to access a
+page that is not in memory, the OS will stall the thread while it reads
+the page from disk. This can cause significant performance problems,
+especially if many threads are accessing the database concurrently.</p>
+<ul>
+<li>Problem #3: Error Handling</li>
+</ul>
+<p>When using memory-mapped I/O, it can be difficult to validate pages
+and handle errors. Any access to a page that is not in memory can cause
+a SIGBUS signal, which the database system must handle. This can be
+challenging, especially if the database system is running in a
+multi-threaded environment.</p>
+<ul>
+<li>Problem #4: Performance Issues</li>
+</ul>
+<p>When using memory-mapped I/O, the database system can experience
+performance issues due to OS data structure contention and TLB
+shootdowns. OS data structures such as the page table can become a
+bottleneck if many threads are accessing the database concurrently.
+Additionally, TLB shootdowns can occur when the OS needs to invalidate
+TLB entries for a page that has been modified, which can cause
+significant performance overhead.</p>
+<p>To address these problems, some database systems use alternative I/O
+mechanisms such as direct I/O or asynchronous I/O. These mechanisms can
+provide better control over I/O operations and reduce the impact of
+OS-level issues on database performance and consistency.</p>
+<h3 id="file-storage">File Storage</h3>
+<p>DBMS store database as one or more <strong>file</strong> in disk, and
+this file is seprated by several partition called <em>block(page)</em>.
+Different DBMS manage page in file in different way:</p>
+<ul>
+<li>Heap File Organization</li>
+<li>Tree File Organization</li>
+</ul>
+<p>Hardware page usually <em>4K</em>, OS page usually <em>4K</em>, and
+database page vary from <em>1K</em> to <em>16K</em>. The read and write
+operation in Hardware page is <em>atomic</em></p>
+<h4 id="heap-file-organization">Heap File Organization</h4>
+<p>The <em>heap file</em> is an unordered collection of pages with tuple
+that store in random order. Therefore, in single file, we can easily
+find a specific page by adding the <em>begin address</em> and
+<em>offset</em>. On the other hand, in multiple file, we need meta-data
+to track which page store in which file and which file has free
+space</p>
+<figure>
+<img src="HeapFile.png" srcset="/img/loading.gif" lazyload alt="HeapFile">
+<figcaption aria-hidden="true">HeapFile</figcaption>
+</figure>
+<p>DBMS also maintain some special page called <em>directory</em>, which
+store the location of the page in which we store data <strong>in
+database file</strong>. Intuitively, the role of directory is similar to
+index</p>
+<figure>
+<img src="Directory.png" srcset="/img/loading.gif" lazyload alt="Directory">
+<figcaption aria-hidden="true">Directory</figcaption>
+</figure>
+<p>We must make sure that the content of directory is in sync with data
+page, both of which are simultaneously update</p>
+<h3 id="page-layout">Page Layout</h3>
+<p>Every page include header which contain <em>metadata</em>:</p>
+<ul>
+<li>Page size</li>
+<li>CheckSum</li>
+<li>Self-containment(This page contain all informance regarding to read
+and write this page)</li>
+</ul>
+<p>In a database file, every page(block) are organized into certain
+structure, There are two commonly used ones: Slotted page and log
+structured</p>
+<h4 id="slotted-page">Slotted-Page</h4>
+<p>The header contain the number of slot and slot array</p>
+<ul>
+<li>When insertint a tuple, the slot array grows from the front to the
+back and the data grow from the back to the front</li>
+<li>When deleteint a tuple, the tuples before deleted tuple will be
+moved backword</li>
+</ul>
+<p>With this structure, we can easily <strong>store variable-length
+tuple</strong></p>
+<p>The change process is shown the following figure below</p>
+<figure>
+<img src="Slotted_Page1.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page1">
+<figcaption aria-hidden="true">Slotted_Page1</figcaption>
+</figure>
+<p>If we add a new tuple into this page, the length of <em>slotted
+array</em> would grow from the front to the back, the length of data
+tuple would grow in the opposite direction</p>
+<figure>
+<img src="Slotted_Page2.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page2">
+<figcaption aria-hidden="true">Slotted_Page2</figcaption>
+</figure>
+<p>When we delete tuple 3, as the following figure shown, we should move
+the tuple at the right position of the deleted tuple to left</p>
+<figure>
+<img src="Slotted_Page3.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page3">
+<figcaption aria-hidden="true">Slotted_Page3</figcaption>
+</figure>
+<figure>
+<img src="Slotted_Page4.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page4">
+<figcaption aria-hidden="true">Slotted_Page4</figcaption>
+</figure>
+<h4 id="log-structured-storage">Log-Structured storage</h4>
+<p>Instead of storing the content of tuple in file, <em>log-structured
+storage</em> simply sotre the change informantion in file</p>
+<figure>
+<img src="Log_Structured1.png" srcset="/img/loading.gif" lazyload alt="Log_Structured1">
+<figcaption aria-hidden="true">Log_Structured1</figcaption>
+</figure>
+<p>When the page get full, we should immediately write out to disk</p>
+<figure>
+<img src="Log_Structured2.png" srcset="/img/loading.gif" lazyload alt="Log_Structured2">
+<figcaption aria-hidden="true">Log_Structured2</figcaption>
+</figure>
+<p>If we intend to read specific tuple, with a given <em>tuple id</em>,
+DBMS would fild the newest log record corresponding to that id. Also, we
+can maintain several index which map <em>tuple id</em> to newest
+record</p>
+<figure>
+<img src="Log_Structured3.png" srcset="/img/loading.gif" lazyload alt="Log_Structured3">
+<figcaption aria-hidden="true">Log_Structured3</figcaption>
+</figure>
+<p>Due to the log would gorw forever, DBMS needs to compact this log
+periodically</p>
+<figure>
+<img src="Log_Structured4.png" srcset="/img/loading.gif" lazyload alt="Log_Structured4">
+<figcaption aria-hidden="true">Log_Structured4</figcaption>
+</figure>
+<p>After that, DBMS needs to sort this log in page, which would mitigate
+retireve pressure</p>
+<figure>
+<img src="Log_Structured5.png" srcset="/img/loading.gif" lazyload alt="Log_Structured5">
+<figcaption aria-hidden="true">Log_Structured5</figcaption>
+</figure>
+<p>The downside of this approach are twofold. First, it would result in
+<em>Write-Amplification</em>, suppoes that I insert a tuple and never
+update it again, when we perform compaction, this tuple would
+<strong>REPEATEDLY</strong> read into memory and written to disk.
+Second, the cost of compaction is much too expensive</p>
+<h3 id="tuple-layout">Tuple Layout</h3>
+<p>Every tuple contain a header, which include the metadata of this
+tuple</p>
+<p>The <em>bitmap</em> stored in header used to represent whether
+certain attribute is <em>NULL</em></p>
+<p>The tuple data typically store in the order specified when create
+this relation</p>
+<p>Each tuple have a <em>unique identifier</em>(i.e. <em>page, slot
+id/offset</em>)</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CMU15-445-Notes/" class="category-chain-item">CMU15-445 Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CMU15-445-Notes/">#CMU15-445 Notes</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CMU15-445 Buffer Pool Manager</div>
+      <div>https://nishikichisato.github.io/2023/11/05/CMU15-445 Notes/Buffer Pool Manager/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 5, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 5, 2023</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/05/CMU15-445%20Notes/B+Tree%20Index/" title="CMU15-445 B+Tree Index">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CMU15-445 B+Tree Index</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/05/CMU15-445%20Notes/Concurrency/" title="CMU15-445 Concurrency">
+                        <span class="hidden-mobile">CMU15-445 Concurrency</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CMU15-445 Notes"
+        id="heading-6f8bafdec08ad4ee7ed339415b64f9f6" role="tab" data-toggle="collapse" href="#collapse-6f8bafdec08ad4ee7ed339415b64f9f6"
+        aria-expanded="true"
+      >
+        CMU15-445 Notes
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-6f8bafdec08ad4ee7ed339415b64f9f6"
+           role="tabpanel" aria-labelledby="heading-6f8bafdec08ad4ee7ed339415b64f9f6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/B+Tree%20Index/" title="CMU15-445 B+Tree Index"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 B+Tree Index</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/Buffer%20Pool%20Manager/" title="CMU15-445 Buffer Pool Manager"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CMU15-445 Buffer Pool Manager</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/11/05/CMU15-445%20Notes/Concurrency/" title="CMU15-445 Concurrency"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMU15-445 Concurrency</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
