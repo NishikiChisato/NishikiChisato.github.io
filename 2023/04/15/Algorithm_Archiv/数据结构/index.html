@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="数据结构  数据结构  线段树  线段树的引入 线段树的定义 数据结构定义与实现  单调队列  模板  KMP  模板 变式  KMP 与最小循环节的关系   Trie 树  通用模板 多叉树实现 二维数组实现(LeetCode)  二维数组（时间优化）  变式  Trie 树在求解异或的应用 异或运算的前缀和优化以及动态维护 T">
+    <meta name="description" content="数据结构 数据结构 线段树 线段树的引入 线段树的定义 数据结构定义与实现   单调队列 模板   KMP 模板 变式 KMP 与最小循环节的关系     Trie 树 通用模板 多叉树实现 二维数组实现(LeetCode) 二维数组（时间优化）   变式 Trie 树在求解异或的应用 异或运算的前缀和优化以及动态维护 Trie 树大小（不需要将所有元素全部存入树中） 检查字符流的某个后缀是否在出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/Algorithm_Archiv/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="数据结构  数据结构  线段树  线段树的引入 线段树的定义 数据结构定义与实现  单调队列  模板  KMP  模板 变式  KMP 与最小循环节的关系   Trie 树  通用模板 多叉树实现 二维数组实现(LeetCode)  二维数组（时间优化）  变式  Trie 树在求解异或的应用 异或运算的前缀和优化以及动态维护 T">
+<meta property="og:description" content="数据结构 数据结构 线段树 线段树的引入 线段树的定义 数据结构定义与实现   单调队列 模板   KMP 模板 变式 KMP 与最小循环节的关系     Trie 树 通用模板 多叉树实现 二维数组实现(LeetCode) 二维数组（时间优化）   变式 Trie 树在求解异或的应用 异或运算的前缀和优化以及动态维护 Trie 树大小（不需要将所有元素全部存入树中） 检查字符流的某个后缀是否在出">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%20Archiv/Algorithm%20Archiv%20(3).jpg">
 <meta property="article:published_time" content="2023-04-15T02:45:28.362Z">
@@ -274,7 +274,7 @@
         
         
         
-          243 mins
+          240 mins
         
       </span>
     
@@ -346,317 +346,245 @@
             
               <div class="markdown-body">
                 
-                <h1 id="数据结构">数据结构</h1>
-<ul>
-<li><a href="#数据结构">数据结构</a>
-<ul>
-<li><a href="#线段树">线段树</a>
-<ul>
-<li><a href="#线段树的引入">线段树的引入</a></li>
-<li><a href="#线段树的定义">线段树的定义</a></li>
-<li><a href="#数据结构定义与实现">数据结构定义与实现</a></li>
-</ul></li>
-<li><a href="#单调队列">单调队列</a>
-<ul>
-<li><a href="#模板">模板</a></li>
-</ul></li>
-<li><a href="#kmp">KMP</a>
-<ul>
-<li><a href="#模板-1">模板</a></li>
-<li><a href="#变式">变式</a>
-<ul>
-<li><a href="#kmp-与最小循环节的关系">KMP 与最小循环节的关系</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#trie-树">Trie 树</a>
-<ul>
-<li><a href="#通用模板">通用模板</a></li>
-<li><a href="#多叉树实现">多叉树实现</a></li>
-<li><a href="#二维数组实现leetcode">二维数组实现(LeetCode)</a>
-<ul>
-<li><a href="#二维数组时间优化">二维数组（时间优化）</a></li>
-</ul></li>
-<li><a href="#变式-1">变式</a>
-<ul>
-<li><a href="#trie-树在求解异或的应用">Trie 树在求解异或的应用</a></li>
-<li><a href="#异或运算的前缀和优化以及动态维护-trie-树大小不需要将所有元素全部存入树中">异或运算的前缀和优化以及动态维护
-Trie 树大小（不需要将所有元素全部存入树中）</a></li>
-<li><a href="#检查字符流的某个后缀是否在出现过重点">检查字符流的某个后缀是否在出现过（重点）</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#并查集">并查集</a>
-<ul>
-<li><a href="#模板-2">模板</a></li>
-<li><a href="#变式-2">变式</a>
-<ul>
-<li><a href="#并查集维护连通块大小">并查集维护连通块大小</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#哈希表">哈希表</a>
-<ul>
-<li><a href="#模板-3">模板</a></li>
-<li><a href="#变式-3">变式</a></li>
-</ul></li>
-<li><a href="#树状数组">树状数组</a>
-<ul>
-<li><a href="#朴素写法区间求和--单点修改">朴素写法（区间求和 +
-单点修改）</a>
-<ul>
-<li><a href="#推导">推导</a></li>
-<li><a href="#on-初始化">O(n) 初始化</a></li>
-<li><a href="#注意事项">注意事项</a></li>
-</ul></li>
-<li><a href="#拓展一单点求值--区间修改">拓展一（单点求值 +
-区间修改）</a></li>
-<li><a href="#拓展二区间求和--区间修改">拓展二（区间求和 +
-区间修改）</a></li>
-</ul></li>
-</ul></li>
+                <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a><ul>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a><ul>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9A%84%E5%BC%95%E5%85%A5">线段树的引入</a></li>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89">线段树的定义</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%9E%E7%8E%B0">数据结构定义与实现</a></li>
 </ul>
-<h2 id="线段树">线段树</h2>
-<h3 id="线段树的引入">线段树的引入</h3>
-<p>假如我们有两个需求：</p>
+</li>
+<li><a href="#%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97">单调队列</a><ul>
+<li><a href="#%E6%A8%A1%E6%9D%BF">模板</a></li>
+</ul>
+</li>
+<li><a href="#kmp">KMP</a><ul>
+<li><a href="#%E6%A8%A1%E6%9D%BF-1">模板</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F">变式</a><ul>
+<li><a href="#kmp-%E4%B8%8E%E6%9C%80%E5%B0%8F%E5%BE%AA%E7%8E%AF%E8%8A%82%E7%9A%84%E5%85%B3%E7%B3%BB">KMP 与最小循环节的关系</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#trie-%E6%A0%91">Trie 树</a><ul>
+<li><a href="#%E9%80%9A%E7%94%A8%E6%A8%A1%E6%9D%BF">通用模板</a></li>
+<li><a href="#%E5%A4%9A%E5%8F%89%E6%A0%91%E5%AE%9E%E7%8E%B0">多叉树实现</a></li>
+<li><a href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0leetcode">二维数组实现(LeetCode)</a><ul>
+<li><a href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E6%97%B6%E9%97%B4%E4%BC%98%E5%8C%96">二维数组（时间优化）</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%98%E5%BC%8F-1">变式</a><ul>
+<li><a href="#trie-%E6%A0%91%E5%9C%A8%E6%B1%82%E8%A7%A3%E5%BC%82%E6%88%96%E7%9A%84%E5%BA%94%E7%94%A8">Trie 树在求解异或的应用</a></li>
+<li><a href="#%E5%BC%82%E6%88%96%E8%BF%90%E7%AE%97%E7%9A%84%E5%89%8D%E7%BC%80%E5%92%8C%E4%BC%98%E5%8C%96%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E7%BB%B4%E6%8A%A4-trie-%E6%A0%91%E5%A4%A7%E5%B0%8F%E4%B8%8D%E9%9C%80%E8%A6%81%E5%B0%86%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0%E5%85%A8%E9%83%A8%E5%AD%98%E5%85%A5%E6%A0%91%E4%B8%AD">异或运算的前缀和优化以及动态维护 Trie 树大小（不需要将所有元素全部存入树中）</a></li>
+<li><a href="#%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E6%B5%81%E7%9A%84%E6%9F%90%E4%B8%AA%E5%90%8E%E7%BC%80%E6%98%AF%E5%90%A6%E5%9C%A8%E5%87%BA%E7%8E%B0%E8%BF%87%E9%87%8D%E7%82%B9">检查字符流的某个后缀是否在出现过（重点）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%B9%B6%E6%9F%A5%E9%9B%86">并查集</a><ul>
+<li><a href="#%E6%A8%A1%E6%9D%BF-2">模板</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-2">变式</a><ul>
+<li><a href="#%E5%B9%B6%E6%9F%A5%E9%9B%86%E7%BB%B4%E6%8A%A4%E8%BF%9E%E9%80%9A%E5%9D%97%E5%A4%A7%E5%B0%8F">并查集维护连通块大小</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a><ul>
+<li><a href="#%E6%A8%A1%E6%9D%BF-3">模板</a></li>
+<li><a href="#%E5%8F%98%E5%BC%8F-3">变式</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84">树状数组</a><ul>
+<li><a href="#%E6%9C%B4%E7%B4%A0%E5%86%99%E6%B3%95%E5%8C%BA%E9%97%B4%E6%B1%82%E5%92%8C--%E5%8D%95%E7%82%B9%E4%BF%AE%E6%94%B9">朴素写法（区间求和 + 单点修改）</a><ul>
+<li><a href="#%E6%8E%A8%E5%AF%BC">推导</a></li>
+<li><a href="#on-%E5%88%9D%E5%A7%8B%E5%8C%96">O(n) 初始化</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8B%93%E5%B1%95%E4%B8%80%E5%8D%95%E7%82%B9%E6%B1%82%E5%80%BC--%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">拓展一（单点求值 + 区间修改）</a></li>
+<li><a href="#%E6%8B%93%E5%B1%95%E4%BA%8C%E5%8C%BA%E9%97%B4%E6%B1%82%E5%92%8C--%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">拓展二（区间求和 + 区间修改）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h2><h3 id="线段树的引入"><a href="#线段树的引入" class="headerlink" title="线段树的引入"></a>线段树的引入</h3><p>假如我们有两个需求：</p>
 <ul>
 <li>对数组当中任意区间的元素进行求和</li>
 <li>对数组当中任意区间的元素进行增加</li>
 </ul>
-<p>最朴素的想法，我们采取维护一个 <code>n</code>
-个元素的数组这种思路</p>
-<p>我们所需的空间复杂度为：<span class="math inline">\(O(n)\)</span></p>
-<p>对于需求一，时间复杂度为：<span class="math inline">\(O(n)\)</span></p>
-<p>对于需求二，时间复杂度为：<span class="math inline">\(O(n)\)</span></p>
+<p>最朴素的想法，我们采取维护一个 <code>n</code> 个元素的数组这种思路</p>
+<p>我们所需的空间复杂度为：$O(n)$ </p>
+<p>对于需求一，时间复杂度为：$O(n)$ </p>
+<p>对于需求二，时间复杂度为：$O(n)$ </p>
 <p>为了便于讨论，下面我们统一用区间查询来代替这两个需求</p>
 <p>如果我们从区间的角度来看待这个问题</p>
-<p>上面这种思路，就相当于是维护了 <span class="math inline">\(n\)</span>
-个区间，每个区间<strong>只有一个元素</strong></p>
+<p>上面这种思路，就相当于是维护了 $n$ 个区间，每个区间<strong>只有一个元素</strong></p>
 <p>如果，我们在上面的基础上，每一次都维护一个更大的区间，也就是每个区间<strong>只有两个元素</strong></p>
-<p>那么总的区间个数就是 <span class="math inline">\(n+n/2\)</span>
-，而我们对区间查询操作的时间复杂度是不是也可以相应的减小一半？也就是
-<span class="math inline">\(O(n/2)\)</span></p>
+<p>那么总的区间个数就是 $n+n&#x2F;2$ ，而我们对区间查询操作的时间复杂度是不是也可以相应的减小一半？也就是 $O(n&#x2F;2)$ </p>
 <p>为什么？因为大体上，原先需要遍历两次才能解决的情况现在只需要遍历一次就能解决，因此总体的时间复杂度能降一半</p>
-<p>我们继续这个思路，再上面的基础上维护一个更大的区间，每个区间有 4
-个、8 个元素等等，我们逐渐添加</p>
-<p>最终，我们所维护的区间个数为：<span class="math inline">\(n+n/2+n/4+n/8+\cdots +2+1=2n-1\)</span></p>
-<p>区间总个数为 <span class="math inline">\(2n-1\)</span>
-。如果抽象成满二叉树的话，总的节点个数为 <span class="math inline">\(2n-1\)</span> ，高度为 <span class="math inline">\(log_2n\)</span>
-，其中<strong>二叉树的每个节点都表示一段区间</strong></p>
-<p>如果不是满二叉树，我们取最极限的情况，也就是节点数为 <span class="math inline">\(n\)</span> 的那一层下面还有一层，这一层最大数量为
-<span class="math inline">\(2n\)</span>
-，这个数是取不到的。也就是说，最极限的情况是，需要的空间为 <span class="math inline">\(O(4n-1)\)</span></p>
-<p>因此，我们只需要开 <span class="math inline">\(4n\)</span>
-大小的空间就足够存储这棵二叉树了</p>
+<p>我们继续这个思路，再上面的基础上维护一个更大的区间，每个区间有 4 个、8 个元素等等，我们逐渐添加</p>
+<p>最终，我们所维护的区间个数为：$n+n&#x2F;2+n&#x2F;4+n&#x2F;8+\cdots +2+1&#x3D;2n-1$ </p>
+<p>区间总个数为 $2n-1$ 。如果抽象成满二叉树的话，总的节点个数为 $2n-1$ ，高度为 $log_2n$ ，其中<strong>二叉树的每个节点都表示一段区间</strong> </p>
+<p>如果不是满二叉树，我们取最极限的情况，也就是节点数为 $n$ 的那一层下面还有一层，这一层最大数量为 $2n$ ，这个数是取不到的。也就是说，最极限的情况是，需要的空间为 $O(4n-1)$ </p>
+<p>因此，我们只需要开 $4n$ 大小的空间就足够存储这棵二叉树了</p>
 <p>我们再来看查询的时间复杂度。显然，每次都降一半，但具体会降多少次我们很难确定。我们可以从二叉树的角度来看待这个问题</p>
-<p>对于任意长度的区间查询，我们最坏的情况是二叉树的每一层都需要选择一个区间来拼成最终的区间，而二叉树有
-<span class="math inline">\(logn\)</span>
-层，因此我们可以得出查询的时间复杂度为 <span class="math inline">\(logn\)</span> 级别</p>
-<p>​</p>
-<h3 id="线段树的定义">线段树的定义</h3>
-<p>上面我们说到，我们用<strong>二叉树的每个节点来表示一个区间</strong>，这句话的意思是<strong>节点所在的位置不同表示的区间也不同</strong>。但我们到此为止并没有给出节点数值的具体含义</p>
+<p>对于任意长度的区间查询，我们最坏的情况是二叉树的每一层都需要选择一个区间来拼成最终的区间，而二叉树有 $logn$ 层，因此我们可以得出查询的时间复杂度为 $logn$ 级别</p>
+<p>​	 </p>
+<h3 id="线段树的定义"><a href="#线段树的定义" class="headerlink" title="线段树的定义"></a>线段树的定义</h3><p>上面我们说到，我们用<strong>二叉树的每个节点来表示一个区间</strong>，这句话的意思是<strong>节点所在的位置不同表示的区间也不同</strong>。但我们到此为止并没有给出节点数值的具体含义</p>
 <p>实际上，节点数值的含义可以根据需要自行调整，只不过需要满足<strong>该节点的值可以由两个子节点求出</strong>，也就是节点数值的意义需要能够满足「区间加法」</p>
 <p>满足区间加法的有：</p>
 <ul>
 <li>区间数字和 「总数字和等于两个子区间的数字和」</li>
-<li>最大公因数（GCD） 「总 GCD = GCD（左子树 GCD，右子树 GCD ）」</li>
+<li>最大公因数（GCD） 「总 GCD &#x3D; GCD（左子树 GCD，右子树 GCD ）」</li>
 <li>最大值 「总最大值等于左子树最大值与右子树最大值的较大值」</li>
 </ul>
 <p>不满足区间加法的有：</p>
 <ul>
 <li>众数 「知道两个子区间的众数没办法求整个区间的众数」</li>
 </ul>
-<p>​</p>
-<h3 id="数据结构定义与实现">数据结构定义与实现</h3>
-<p>这里我们采取链式存储的形式，因为后面涉及到动态开点，链式的方便一点</p>
+<p>​	 </p>
+<h3 id="数据结构定义与实现"><a href="#数据结构定义与实现" class="headerlink" title="数据结构定义与实现"></a>数据结构定义与实现</h3><p>这里我们采取链式存储的形式，因为后面涉及到动态开点，链式的方便一点</p>
 <p>不过论书写速度的话还是数组形式的更快</p>
 <p>我们给出这棵二叉树的节点定义：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-keyword">public</span>:<br>    Node* left,* right;<br>    <span class="hljs-type">int</span> val;<br>    <span class="hljs-built_in">Node</span>() : <span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">val</span>(<span class="hljs-number">0</span>)<br>    &#123;  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>节点值 <code>val</code>
-的意义根据需求来确定。再次强调，这个<strong>节点所表示的区间由这个节点所在的位置决定</strong>，这个区间是可以不用写在节点内部的（当然写也没关系）</p>
-<p>前面我们说到，二叉树的节点更新是需要通过两个子节点来实现的，这种更新是自下而上的，因此我们需要一个
-<code>pushUp</code>
-函数来实现对<strong>当前</strong>节点的更新操作（更新的值直接由两个子节点取得）</p>
+
+<p>节点值 <code>val</code> 的意义根据需求来确定。再次强调，这个<strong>节点所表示的区间由这个节点所在的位置决定</strong>，这个区间是可以不用写在节点内部的（当然写也没关系）</p>
+<p>前面我们说到，二叉树的节点更新是需要通过两个子节点来实现的，这种更新是自下而上的，因此我们需要一个 <code>pushUp</code> 函数来实现对<strong>当前</strong>节点的更新操作（更新的值直接由两个子节点取得）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pushUp</span><span class="hljs-params">(Node* root)</span></span><br><span class="hljs-function"></span>&#123;<br>    root-&gt;val = root-&gt;left-&gt;val + root-&gt;right-&gt;val;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>当我们需要对某一个区间进行更新时，最朴素的做法是直接将这个区间的每一个元素增加一个值，放在二叉树里面就是将对应叶子节点增加一个数值</p>
-<p>但是，如果我们每次都需要遍历到叶子节点的话，这个时间复杂度是非常大的，这个时候我们可以给每个节点打上一个
-<code>lazy tag</code>
-，来表示<strong>当前节点以下的所有节点的变化量</strong>，那么这样的话我们便不用访问所有的叶子节点就也能实现对数组当中每个元素的修改了</p>
+<p>但是，如果我们每次都需要遍历到叶子节点的话，这个时间复杂度是非常大的，这个时候我们可以给每个节点打上一个 <code>lazy tag</code> ，来表示<strong>当前节点以下的所有节点的变化量</strong>，那么这样的话我们便不用访问所有的叶子节点就也能实现对数组当中每个元素的修改了</p>
 <p>这里实际上就是一个懒惰思想的应用：如果不需要使用后面的元素，那么我们就不修改它们，只修改当前元素</p>
 <p>加上 <code>lazy tag</code> 之后的节点定义：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-keyword">public</span>:<br>    Node* left,* right;<br>    <span class="hljs-type">int</span> val, lazy;<br>    <span class="hljs-built_in">Node</span>() : <span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">val</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">lazy</span>(<span class="hljs-number">0</span>)<br>    &#123;  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>我们需要一个能够将 <code>lazy</code>
-标记向下传递的函数，每次只需要传递一层即可</p>
+
+<p>我们需要一个能够将 <code>lazy</code> 标记向下传递的函数，每次只需要传递一层即可</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pushDown</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> leftnum, <span class="hljs-type">int</span> rightnum)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span>) root-&gt;left = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>();<br>    <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) root-&gt;right = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>();<br>    <span class="hljs-keyword">if</span> (root-&gt;lazy == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br>    root-&gt;left-&gt;val += root-&gt;lazy * leftnum;<br>    root-&gt;right-&gt;val += root-&gt;lazy * rightnum;<br>    root-&gt;left-&gt;lazy += root-&gt;lazy;<br>    root-&gt;right-&gt;lazy += root-&gt;lazy;<br>    root-&gt;lazy = <span class="hljs-number">0</span>;<span class="hljs-comment">//对当前节点的标记进行清除</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>需要进行说明的是，由于我们每个节点都表示一个区间的和，因此对区间内每个数增加一个值
-<code>val</code> 的时候，上层节点所增加的数组是 <code>val</code>
-乘上它所对应的元素数量，这条规则对于左右节点同理，因此我们需要两个参数来表示左右节点的元素数量</p>
+
+<p>需要进行说明的是，由于我们每个节点都表示一个区间的和，因此对区间内每个数增加一个值 <code>val</code> 的时候，上层节点所增加的数组是 <code>val</code> 乘上它所对应的元素数量，这条规则对于左右节点同理，因此我们需要两个参数来表示左右节点的元素数量</p>
 <p>接下来便是 <code>update</code> 函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R, <span class="hljs-type">int</span> val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)<br>    &#123;<br>        root-&gt;val += (r - l + <span class="hljs-number">1</span>) * val;<br>        root-&gt;lazy += val;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-type">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;<br>    <span class="hljs-built_in">pushDown</span>(root, mid - l + <span class="hljs-number">1</span>, r - mid);<br>    <span class="hljs-keyword">if</span> (L &lt;= mid) <span class="hljs-built_in">update</span>(root-&gt;left, l, mid, L, R, val);<br>    <span class="hljs-keyword">if</span> (mid &lt; R) <span class="hljs-built_in">update</span>(root-&gt;right, mid + <span class="hljs-number">1</span>, r, L, R, val);<br>    <span class="hljs-built_in">pushUp</span>(root);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>其中 <code>l</code> 与 <code>r</code>
-表示当前节点所表示的区间，<code>L</code> 与 <code>R</code>
-表示待更新的区间</p>
+
+<p>其中 <code>l</code> 与 <code>r</code> 表示当前节点所表示的区间，<code>L</code> 与 <code>R</code> 表示待更新的区间</p>
 <p>如果当前区间完全被待更新区间所包含，那么直接修改当前区间的值并<strong>返回</strong></p>
 <p>如果当前区间的左区间在待修改区间内，那么递归左区间</p>
 <p>右区间同理，最后我们更新当前节点的值即可</p>
-<p>这里需要说明的是，在分割区间的时候，我们是将区间分为
-<code>[l, mid]</code> 和 <code>[mid + 1, r]</code></p>
-<p>由于<strong>两个区间并没有交集</strong>，因此如果左区间在查询区间内的话，必然有
-<code>L &lt;= mid</code> ，即 <code>L</code> 在左半区间内部</p>
-<p>同理，如果要查询右区间的话，必然有 <code>R &gt;= mid + 1</code> ，即
-<code>mid &lt; R</code> ，也就是 <code>R</code> 在右半区间内部</p>
+<p>这里需要说明的是，在分割区间的时候，我们是将区间分为 <code>[l, mid]</code> 和 <code>[mid + 1, r]</code> </p>
+<p>由于<strong>两个区间并没有交集</strong>，因此如果左区间在查询区间内的话，必然有 <code>L &lt;= mid</code> ，即 <code>L</code> 在左半区间内部</p>
+<p>同理，如果要查询右区间的话，必然有 <code>R &gt;= mid + 1</code> ，即 <code>mid &lt; R</code> ，也就是 <code>R</code> 在右半区间内部</p>
 <p>对于查询操作也是同理，理解上面那个这个也就不难了</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)<br>        <span class="hljs-keyword">return</span> root-&gt;val;<br>    <span class="hljs-type">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>, ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">pushDown</span>(root, mid - l + <span class="hljs-number">1</span>, r - mid);<br>    <span class="hljs-keyword">if</span> (L &lt;= mid) ans += <span class="hljs-built_in">query</span>(root-&gt;left, l, mid, L, R);<br>    <span class="hljs-keyword">if</span> (mid &lt; R) ans += <span class="hljs-built_in">query</span>(root-&gt;right, mid + <span class="hljs-number">1</span>, r, L, R);<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>最后我们给出整个二叉树的代码实现，现在这棵二叉树正式更名为线段树</p>
 <p>这里我们给出的是动态开点的写法</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SegmentTreeDynamic</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span><br>	&#123;<br>	<span class="hljs-keyword">public</span>:<br>		Node* left,* right;<br>		<span class="hljs-type">int</span> val, lazy;<br>		<span class="hljs-built_in">Node</span>() : <span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>), <span class="hljs-built_in">val</span>(<span class="hljs-number">0</span>), <span class="hljs-built_in">lazy</span>(<span class="hljs-number">0</span>)<br>		&#123;  &#125;<br>	&#125;;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pushUp</span><span class="hljs-params">(Node* root)</span></span><br><span class="hljs-function">	</span>&#123;<br>		root-&gt;val = root-&gt;left-&gt;val + root-&gt;right-&gt;val;<br>	&#125;<br><br>	<span class="hljs-comment">//leftnum represents the number of the left sub-interval</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">pushDown</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> leftnum, <span class="hljs-type">int</span> rightnum)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span>) root-&gt;left = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>();<br>		<span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) root-&gt;right = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>();<br>		<span class="hljs-keyword">if</span> (root-&gt;lazy == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br>		root-&gt;left-&gt;val += root-&gt;lazy * leftnum;<br>		root-&gt;right-&gt;val += root-&gt;lazy * rightnum;<br>		root-&gt;left-&gt;lazy += root-&gt;lazy;<br>		root-&gt;right-&gt;lazy += root-&gt;lazy;<br>		root-&gt;lazy = <span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	* root is currently traversed interval, and interval [l, r] is the intervals represented by current node</span><br><span class="hljs-comment">	* interval [L, R] is interval ready to be upddate</span><br><span class="hljs-comment">	* each element will increase val</span><br><span class="hljs-comment">	* </span><br><span class="hljs-comment">	* This function should be called like this: update(root, 0, n, L, R, val);</span><br><span class="hljs-comment">	* interval [0, n] could be used without an interval [1, n]</span><br><span class="hljs-comment">	*/</span><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R, <span class="hljs-type">int</span> val)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)<br>		&#123;<br>			root-&gt;val += (r - l + <span class="hljs-number">1</span>) * val;<br>			root-&gt;lazy += val;<br>			<span class="hljs-keyword">return</span>;<br>		&#125;<br>		<span class="hljs-type">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;<br>		<span class="hljs-built_in">pushDown</span>(root, mid - l + <span class="hljs-number">1</span>, r - mid);<br>		<span class="hljs-keyword">if</span> (L &lt;= mid) <span class="hljs-built_in">update</span>(root-&gt;left, l, mid, L, R, val);<br>		<span class="hljs-keyword">if</span> (mid &lt; R) <span class="hljs-built_in">update</span>(root-&gt;right, mid + <span class="hljs-number">1</span>, r, L, R, val);<br>		<span class="hljs-built_in">pushUp</span>(root);<br>	&#125;<br><br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	* l r L R meaning ibid</span><br><span class="hljs-comment">	*/</span><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(Node* root, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R)<br>			<span class="hljs-keyword">return</span> root-&gt;val;<br>		<span class="hljs-type">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>, ans = <span class="hljs-number">0</span>;<br>		<span class="hljs-built_in">pushDown</span>(root, mid - l + <span class="hljs-number">1</span>, r - mid);<br>		<span class="hljs-keyword">if</span> (L &lt;= mid) ans += <span class="hljs-built_in">query</span>(root-&gt;left, l, mid, L, R);<br>		<span class="hljs-keyword">if</span> (mid &lt; R) ans += <span class="hljs-built_in">query</span>(root-&gt;right, mid + <span class="hljs-number">1</span>, r, L, R);<br>		<span class="hljs-keyword">return</span> ans;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>实际上，线段树还有数组的写法</p>
 <p>我们以下标 1 作为整棵树的根节点，由此我们有：</p>
 <p>对于编号为 <code>i</code> 的节点</p>
 <ul>
-<li>其左孩子的编号为 <code>2 * i</code> ，用位运算就是
-<code>i &lt;&lt; 1</code></li>
-<li>其右孩子的编号为 <code>2 * i + 1</code> ，用位运算就是
-<code>i &lt;&lt; 1 | 1</code></li>
+<li>其左孩子的编号为 <code>2 * i</code> ，用位运算就是 <code>i &lt;&lt; 1</code> </li>
+<li>其右孩子的编号为 <code>2 * i + 1</code> ，用位运算就是 <code>i &lt;&lt; 1 | 1</code></li>
 </ul>
 <p>写法非常的简单，我们就不过多赘述了</p>
 <hr>
-<h2 id="单调队列">单调队列</h2>
-<h3 id="模板">模板</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/156/">AcWing
-154. 滑动窗口</a></p>
+<h2 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h2><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/156/">AcWing 154. 滑动窗口</a></p>
 <p>滑动窗口求最值的问题都是用单调队列来解决的</p>
 <p>单调队列的元素从队尾<strong>插入</strong>，从队头<strong>取出</strong>，为保证整个队列的单调性，元素在队尾进行<strong>调整</strong></p>
 <p>也就是每次从对头取出的元素一定是整个单调队列当中的最值，而每次都会从队尾插入元素，与此同时也会在队尾调整元素</p>
 <p>用代码描述这一整个过程（先后顺序不能乱）就是：</p>
 <ul>
-<li><p>在队尾删除元素以保证整个队列的单调性</p></li>
-<li><p>在队尾插入一个新的元素</p></li>
-<li><p>在对头取出元素，此元素便是整个单调队列的最值</p></li>
+<li><p>在队尾删除元素以保证整个队列的单调性</p>
+</li>
+<li><p>在队尾插入一个新的元素</p>
+</li>
+<li><p>在对头取出元素，此元素便是整个单调队列的最值</p>
+</li>
 </ul>
 <p>在滑动窗口求最值的问题中，需要在最前面加上队头元素是否会离开滑动窗口，但不管怎么样，上面的三个顺序不能变</p>
 <p>关于单调队列的代码实现：</p>
-<p>我们定义 <span class="math inline">\(hh\)</span> 表示队头指针，<span class="math inline">\(tt\)</span> 表示队尾指针，初始时 <span class="math inline">\(hh=0,\ tt=-1\)</span>
-，队列当中存储的是各个元素的下标</p>
-<p>判断队列是否为空：<span class="math inline">\(hh\le tt\)</span></p>
-<p>队尾插入：<span class="math inline">\(h[++tt]=k\)</span></p>
-<p>队头删去：<span class="math inline">\(h++\)</span></p>
-<p>在保证队列单调性的部分，我们需要考虑的是删掉的元素与<strong>当前遍历到的元素</strong>
-<span class="math inline">\(a[i]\)</span> 之间的大小关系</p>
-<p>如果我们期望队列严格单调递增，那么我们需要删去所有小于等于 <span class="math inline">\(a[i]\)</span> 的的元素</p>
-<p>如果我们期望队列单调递增，那么需要删去所有小于 <span class="math inline">\(a[i]\)</span> 的元素，即队列当中允许存在等于 <span class="math inline">\(a[i]\)</span> 的元素</p>
+<p>我们定义 $hh$ 表示队头指针，$tt$ 表示队尾指针，初始时 $hh&#x3D;0,\ tt&#x3D;-1$ ，队列当中存储的是各个元素的下标</p>
+<p>判断队列是否为空：$hh\le tt$</p>
+<p>队尾插入：$h[++tt]&#x3D;k$</p>
+<p>队头删去：$h++$</p>
+<p>在保证队列单调性的部分，我们需要考虑的是删掉的元素与<strong>当前遍历到的元素</strong> $a[i]$ 之间的大小关系</p>
+<p>如果我们期望队列严格单调递增，那么我们需要删去所有小于等于 $a[i]$ 的的元素</p>
+<p>如果我们期望队列单调递增，那么需要删去所有小于 $a[i]$ 的元素，即队列当中允许存在等于 $a[i]$ 的元素</p>
 <p>就本题而已，由于需要求的只是最大和最小值，因此有没有等号都可以</p>
 <p>关于队头元素何时出队的问题，我们需要明确<strong>单调队列中元素个数是多少</strong>，即<strong>单调队列最左边的数的下标是什么</strong></p>
-<p>就本题来说，单调队列中只有 <span class="math inline">\(k\)</span>
-个数，因此最远的合法下标为 <span class="math inline">\(i-k+1\)</span>
-，当 <span class="math inline">\(q[hh]&lt;i-k+1\)</span>
-时表示队头元素已经出队</p>
-<p>完整代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> a[N], q[N];<br><span class="hljs-type">int</span> n, k;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; k;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; a[i];<br>    <span class="hljs-type">int</span> hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; i - q[hh] &gt; k - <span class="hljs-number">1</span>) hh++;<span class="hljs-comment">//判断队头元素是否离开窗口内</span><br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; a[q[tt]] &gt;= a[i]) tt--;<span class="hljs-comment">//保证队列内元素严格递减，因此需要将所以大于等于a[i]全部删去</span><br>        q[++tt] = i;<span class="hljs-comment">//先将元素插入到队列中，之后才能从队头取数</span><br>        <span class="hljs-keyword">if</span>(i &gt;= k) cout &lt;&lt; a[q[hh]] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<span class="hljs-comment">//只有遍历到的数大于窗口长度，就可以输出</span><br>    &#125;<br>    cout &lt;&lt; endl;<br>    hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; i - q[hh] &gt; k - <span class="hljs-number">1</span>) hh++;<br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; a[q[tt]] &lt;= a[i]) tt--;<br>        q[++tt] = i;<br>        <span class="hljs-keyword">if</span>(i &gt;= k) cout &lt;&lt; a[q[hh]] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>就本题来说，单调队列中只有 $k$ 个数，因此最远的合法下标为 $i-k+1$ ，当 $q[hh]&lt;i-k+1$ 时表示队头元素已经出队</p>
+<p>完整代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> a[N], q[N];<br><span class="hljs-type">int</span> n, k;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; k;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; a[i];<br>    <span class="hljs-type">int</span> hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; i - q[hh] &gt; k - <span class="hljs-number">1</span>) hh++;<span class="hljs-comment">//判断队头元素是否离开窗口内</span><br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; a[q[tt]] &gt;= a[i]) tt--;<span class="hljs-comment">//保证队列内元素严格递减，因此需要将所以大于等于a[i]全部删去</span><br>        q[++tt] = i;<span class="hljs-comment">//先将元素插入到队列中，之后才能从队头取数</span><br>        <span class="hljs-keyword">if</span>(i &gt;= k) cout &lt;&lt; a[q[hh]] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<span class="hljs-comment">//只有遍历到的数大于窗口长度，就可以输出</span><br>    &#125;<br>    cout &lt;&lt; endl;<br>    hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(hh &lt;= tt &amp;&amp; i - q[hh] &gt; k - <span class="hljs-number">1</span>) hh++;<br>        <span class="hljs-keyword">while</span>(hh &lt;= tt &amp;&amp; a[q[tt]] &lt;= a[i]) tt--;<br>        q[++tt] = i;<br>        <span class="hljs-keyword">if</span>(i &gt;= k) cout &lt;&lt; a[q[hh]] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="kmp">KMP</h2>
-<h3 id="模板-1">模板</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/833/">AcWing 831.
-KMP字符串</a></p>
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/833/">AcWing 831. KMP字符串</a></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">char</span> p[N], s[N];<br><span class="hljs-type">int</span> ne[N];<br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; p + <span class="hljs-number">1</span> &gt;&gt; m &gt;&gt; s + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>, j = <span class="hljs-number">0</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="hljs-number">1</span>]) j = ne[j];<br>        <span class="hljs-keyword">if</span>(p[i] == p[j + <span class="hljs-number">1</span>]) j++;<br>        ne[i] = j;<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>, j = <span class="hljs-number">0</span>; i &lt;= m; i ++)<br>    &#123;<br>        <span class="hljs-keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="hljs-number">1</span>]) j = ne[j];<br>        <span class="hljs-keyword">if</span>(s[i] == p[j + <span class="hljs-number">1</span>]) j++;<br>        <span class="hljs-keyword">if</span>(j == n)<br>        &#123;<br>            cout &lt;&lt; i - n &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>            j = ne[j];<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h3 id="变式">变式</h3>
-<h4 id="kmp-与最小循环节的关系">KMP 与最小循环节的关系</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/143/">AcWing 141.
-周期</a></p>
+<h3 id="变式"><a href="#变式" class="headerlink" title="变式"></a>变式</h3><h4 id="KMP-与最小循环节的关系"><a href="#KMP-与最小循环节的关系" class="headerlink" title="KMP 与最小循环节的关系"></a>KMP 与最小循环节的关系</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/143/">AcWing 141. 周期</a></p>
 <p>本题实际上是结论题：</p>
 <ul>
-<li>对于长度为 <span class="math inline">\(i\)</span>
-的字符串而言，如果满足 <span class="math inline">\(i\%
-(i-next[i])==0\)</span>
-那么该字符串存在<strong>最小循环节</strong>，最小循环节长度为 <span class="math inline">\(i-next[i]\)</span> ，循环次数 <span class="math inline">\(K=i/next[i]\)</span></li>
+<li>对于长度为 $i$ 的字符串而言，如果满足 $i% (i-next[i])&#x3D;&#x3D;0$ 那么该字符串存在<strong>最小循环节</strong>，最小循环节长度为 $i-next[i]$ ，循环次数 $K&#x3D;i&#x2F;next[i]$</li>
 <li>任意一个循环节的长度都是最小循环节长度的整数倍</li>
-<li>如果 <span class="math inline">\(i\)</span> 不能整除 <span class="math inline">\(i-next[i]\)</span>
-那么该字符串<strong>没有最小循环节</strong></li>
+<li>如果 $i$ 不能整除 $i-next[i]$ 那么该字符串<strong>没有最小循环节</strong></li>
 </ul>
 <p>下面一一证明这些结论：</p>
-<p><span class="math inline">\(next[i]\)</span> 表示长度为 <span class="math inline">\(i\)</span>
-字符串的<strong>最长相等前后缀</strong>，设 <span class="math inline">\(T=i-next[i]\)</span> ，我们保证 <span class="math inline">\(T\)</span> 始终大于 <span class="math inline">\(0\)</span> ，即 <span class="math inline">\(i\gt
-next[i]\)</span></p>
-<p>对于字符串 <span class="math inline">\(S\)</span> 而言，有：<span class="math inline">\(S[1\sim next[i]]=S[T+1\sim i]\)</span> ，即 <span class="math inline">\(S\)</span> 中<strong>后 <span class="math inline">\(next[i]\)</span> 个字符</strong>与将 <span class="math inline">\(S\)</span> 向右偏移 <span class="math inline">\(T\)</span> 个单位后的<strong>前 <span class="math inline">\(next[i]\)</span> 个字符相同</strong></p>
-<p>因此有 <span class="math inline">\(S[1\sim T]=S[T + 1\sim
-2T]\)</span></p>
-<p>如此这般，我们有 <span class="math inline">\(S[1\sim T]=S[T + 1\sim
-2T]=S[2T + 1\sim 3T]=\cdots = S[i-T+1,i]\)</span></p>
-<p>上述等式<strong>成立的条件为 <span class="math inline">\(i\)</span>
-能够整除 <span class="math inline">\(T\)</span></strong></p>
-<p>下面我们证明 <span class="math inline">\(T\)</span>
-为最小循环节：</p>
-<p>假设存在另一循环节 <span class="math inline">\(T&#39;\)</span> ，满足
-<span class="math inline">\(T&#39;\lt T\)</span></p>
-<p>在 <span class="math inline">\(S\)</span>
-中除第一个循环节外剩余长度为 <span class="math inline">\(i-T\)</span>
-，并且有 <span class="math inline">\(next[i]=i-I\)</span></p>
-<p>由于 <span class="math inline">\(T&#39;\lt T\)</span> ，因此 <span class="math inline">\(i-T&#39;\gt i-T\)</span> ，即 <span class="math inline">\(next[i]&#39;\gt next[i]\)</span></p>
-<p>由于 <span class="math inline">\(next[i]\)</span>
-为最长相等前后缀，即不存在另一个相等前后缀比 <span class="math inline">\(next[i]\)</span> 更大，因此假设矛盾</p>
-<p>到此为止，我们证明了 <span class="math inline">\(T=i-next[i]\)</span>
-为最小循环节。现在有一个问题是，如果 <span class="math inline">\(T\)</span> 不能整除 <span class="math inline">\(i\)</span> ，是否存在一个循环节 <span class="math inline">\(T&#39;\)</span> ，且 <span class="math inline">\(T&#39;\gt T\)</span> ，满足 <span class="math inline">\(i\)</span> 能够整除 <span class="math inline">\(T&#39;\)</span> 成立</p>
-<p>也就是最小循环节 <span class="math inline">\(T\)</span> 不能成为
-<span class="math inline">\(S\)</span>
-的一个循环节，但是否存在另一个循环节 <span class="math inline">\(T&#39;\)</span> 是 <span class="math inline">\(S\)</span> 的一个循环节？</p>
-<p>假定 <span class="math inline">\(T\)</span> 为最小循环节，<span class="math inline">\(T&#39;\)</span> 为另一循环节，且 <span class="math inline">\(T&#39;\gt T,T\nmid T&#39;\)</span></p>
-<p>设 <span class="math inline">\(d=gcd(T,T&#39;)\)</span> ，由于 <span class="math inline">\(T\nmid T&#39;\)</span> 且 <span class="math inline">\(T\lt T&#39;\)</span> 因此 <span class="math inline">\(d\lt T\)</span></p>
-<p>由裴蜀定理，一定存在一对整数 <span class="math inline">\(x,y\)</span>
-使得 <span class="math inline">\(d=xT+yT&#39;\)</span>，不妨设 <span class="math inline">\(x\gt 0\)</span></p>
-<p>由于 <span class="math inline">\(T\)</span> 与 <span class="math inline">\(T&#39;\)</span> 均为循环节，因此 <span class="math inline">\(S_{i}=S_{i+T}=S_{i+2T}=\cdots =
-S_{i+xT}=S_{i+xT+T&#39;}=S_{i+xT+2T&#39;}=\cdots
-=S_{i+xT+yT&#39;}=S_{d}\)</span></p>
-<p>因此 <span class="math inline">\(d\)</span> 也是 <span class="math inline">\(S\)</span> 的一个循环节，由于 <span class="math inline">\(d\lt T\)</span> ，而 <span class="math inline">\(T\)</span> 为 <span class="math inline">\(S\)</span> 的最小循环节，因此产生矛盾</p>
-<p>所以 <span class="math inline">\(S\)</span>
-的<strong>任意循环节均是最小循环节的整数倍</strong></p>
+<p>$next[i]$ 表示长度为 $i$ 字符串的<strong>最长相等前后缀</strong>，设 $T&#x3D;i-next[i]$ ，我们保证 $T$ 始终大于 $0$ ，即 $i\gt next[i]$</p>
+<p>对于字符串 $S$ 而言，有：$S[1\sim next[i]]&#x3D;S[T+1\sim i]$ ，即 $S$ 中<strong>后 $next[i]$ 个字符</strong>与将 $S$ 向右偏移 $T$ 个单位后的<strong>前 $next[i]$ 个字符相同</strong></p>
+<p>因此有 $S[1\sim T]&#x3D;S[T + 1\sim 2T]$ </p>
+<p>如此这般，我们有 $S[1\sim T]&#x3D;S[T + 1\sim 2T]&#x3D;S[2T + 1\sim 3T]&#x3D;\cdots &#x3D; S[i-T+1,i]$</p>
+<p>上述等式<strong>成立的条件为 $i$ 能够整除 $T$</strong> </p>
+<p>下面我们证明 $T$ 为最小循环节：</p>
+<p>假设存在另一循环节 $T’$ ，满足 $T’\lt T$ </p>
+<p>在 $S$ 中除第一个循环节外剩余长度为 $i-T$ ，并且有 $next[i]&#x3D;i-I$</p>
+<p>由于 $T’\lt T$ ，因此 $i-T’\gt i-T$ ，即 $next[i]’\gt next[i]$</p>
+<p>由于 $next[i]$ 为最长相等前后缀，即不存在另一个相等前后缀比 $next[i]$ 更大，因此假设矛盾</p>
+<p>到此为止，我们证明了 $T&#x3D;i-next[i]$ 为最小循环节。现在有一个问题是，如果 $T$ 不能整除 $i$ ，是否存在一个循环节 $T’$ ，且 $T’\gt T$ ，满足 $i$ 能够整除 $T’$ 成立</p>
+<p>也就是最小循环节 $T$ 不能成为 $S$ 的一个循环节，但是否存在另一个循环节 $T’$ 是 $S$ 的一个循环节？</p>
+<p>假定 $T$ 为最小循环节，$T’$ 为另一循环节，且 $T’\gt T,T\nmid T’$</p>
+<p>设 $d&#x3D;gcd(T,T’)$ ，由于 $T\nmid T’$ 且 $T\lt T’$ 因此 $d\lt T$</p>
+<p>由裴蜀定理，一定存在一对整数 $x,y$ 使得 $d&#x3D;xT+yT’$，不妨设 $x\gt 0$</p>
+<p>由于 $T$ 与 $T’$ 均为循环节，因此 $S_{i}&#x3D;S_{i+T}&#x3D;S_{i+2T}&#x3D;\cdots &#x3D; S_{i+xT}&#x3D;S_{i+xT+T’}&#x3D;S_{i+xT+2T’}&#x3D;\cdots &#x3D;S_{i+xT+yT’}&#x3D;S_{d}$</p>
+<p>因此 $d$ 也是 $S$ 的一个循环节，由于 $d\lt T$ ，而 $T$ 为 $S$ 的最小循环节，因此产生矛盾</p>
+<p>所以 $S$ 的<strong>任意循环节均是最小循环节的整数倍</strong></p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> ne[N];<br><span class="hljs-type">char</span> str[N];<br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> T = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span>(cin &gt;&gt; n, n)<br>    &#123;<br>        cin &gt;&gt; str + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>, j = <span class="hljs-number">0</span>; i &lt;= n; i ++)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(j &amp;&amp; str[i] != str[j + <span class="hljs-number">1</span>]) j = ne[j];<br>            <span class="hljs-keyword">if</span>(str[i] == str[j + <span class="hljs-number">1</span>]) j++;<br>            ne[i] = j;<br>        &#125;<br>        <br>        cout &lt;&lt; <span class="hljs-string">&quot;Test case #&quot;</span> &lt;&lt; T++ &lt;&lt; endl;<br>        <br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= n; i ++)<br>        &#123;<br>            <span class="hljs-type">int</span> t = i - ne[i];<br>            <span class="hljs-keyword">if</span>(i % t == <span class="hljs-number">0</span> &amp;&amp; i / t &gt; <span class="hljs-number">1</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d\n&quot;</span>, i, i / t);<br>        &#125;<br>        cout &lt;&lt; endl;    <br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="trie-树">Trie 树</h2>
-<h3 id="通用模板">通用模板</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/837/">AcWing 835.
-Trie字符串统计</a></p>
+
+<h2 id="Trie-树"><a href="#Trie-树" class="headerlink" title="Trie 树"></a>Trie 树</h2><h3 id="通用模板"><a href="#通用模板" class="headerlink" title="通用模板"></a>通用模板</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/837/">AcWing 835. Trie字符串统计</a></p>
 <ul>
-<li><code>son[N][26]</code> 表示一共有 <span class="math inline">\(N\)</span> 个节点，每个节点都可能存在 <span class="math inline">\(26\)</span> 个字母，因此每个节点都带有 <span class="math inline">\(26\)</span> 个「子节点」</li>
-<li><code>cnt[i]</code> 表示以 <span class="math inline">\(i\)</span>
-节点为终点的字符串数量</li>
-<li><code>idx</code> 表示当前使用的节点编号，编号为 <span class="math inline">\(0\)</span> 的点为根节点，数值为 <span class="math inline">\(0\)</span> 的点表示空</li>
+<li><code>son[N][26]</code> 表示一共有 $N$ 个节点，每个节点都可能存在 $26$ 个字母，因此每个节点都带有 $26$ 个「子节点」</li>
+<li><code>cnt[i]</code> 表示以 $i$ 节点为终点的字符串数量</li>
+<li><code>idx</code> 表示当前使用的节点编号，编号为 $0$ 的点为根节点，数值为 $0$ 的点表示空</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> son[N][<span class="hljs-number">26</span>], cnt[N], idx;<br><span class="hljs-type">char</span> s[N];<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">char</span> s[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; s[i]; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(!son[p][u]) son[p][u] = ++idx;<span class="hljs-comment">//如果当前节点没有以该字符为结尾的节点，那么创建新节点</span><br>        p = son[p][u];<span class="hljs-comment">//p进入下一个节点</span><br>    &#125;<br>    cnt[p] ++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">char</span> s[])</span><span class="hljs-comment">//查询字符串s的出现次数</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; s[i]; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>        <span class="hljs-keyword">if</span>(!son[p][u]) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        p = son[p][u];<br>    &#125;<br>    <span class="hljs-keyword">return</span> cnt[p];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">while</span>(n--)<br>    &#123;<br>        string op;<br>        cin &gt;&gt; op &gt;&gt; s;<br>        <span class="hljs-keyword">if</span>(op == <span class="hljs-string">&quot;I&quot;</span>) <span class="hljs-built_in">insert</span>(s);<br>        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-built_in">query</span>(s) &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/">208.
-实现 Trie (前缀树)</a></p>
-<p><strong><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/字典树/9825209?fr=aladdin">Trie</a></strong>（发音类似
-"try"）或者说 <strong>前缀树</strong>
-是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。</p>
+
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/">208. 实现 Trie (前缀树)</a></p>
+<p>**<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AD%97%E5%85%B8%E6%A0%91/9825209?fr=aladdin">Trie</a>**（发音类似 “try”）或者说 <strong>前缀树</strong> 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。</p>
 <p>请你实现 Trie 类：</p>
 <ul>
 <li><code>Trie()</code> 初始化前缀树对象。</li>
-<li><code>void insert(String word)</code> 向前缀树中插入字符串
-<code>word</code> 。</li>
-<li><code>boolean search(String word)</code> 如果字符串
-<code>word</code> 在前缀树中，返回
-<code>true</code>（即，在检索之前已经插入）；否则，返回
-<code>false</code> 。</li>
-<li><code>boolean startsWith(String prefix)</code>
-如果之前已经插入的字符串 <code>word</code> 的前缀之一为
-<code>prefix</code> ，返回 <code>true</code> ；否则，返回
-<code>false</code> 。</li>
+<li><code>void insert(String word)</code> 向前缀树中插入字符串 <code>word</code> 。</li>
+<li><code>boolean search(String word)</code> 如果字符串 <code>word</code> 在前缀树中，返回 <code>true</code>（即，在检索之前已经插入）；否则，返回 <code>false</code> 。</li>
+<li><code>boolean startsWith(String prefix)</code> 如果之前已经插入的字符串 <code>word</code> 的前缀之一为 <code>prefix</code> ，返回 <code>true</code> ；否则，返回 <code>false</code> 。</li>
 </ul>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">输入<br>[&quot;Trie&quot;, &quot;insert&quot;, &quot;search&quot;, &quot;search&quot;, &quot;startsWith&quot;, &quot;insert&quot;, &quot;search&quot;]<br>[[], [&quot;apple&quot;], [&quot;apple&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;], [&quot;app&quot;]]<br>输出<br>[<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">true</span>]<br><br>解释<br>Trie trie = <span class="hljs-built_in">new</span> Trie();<br>trie.<span class="hljs-keyword">insert</span>(&quot;apple&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;apple&quot;);   // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">False</span><br>trie.startsWith(&quot;app&quot;); // 返回 <span class="hljs-keyword">True</span><br>trie.<span class="hljs-keyword">insert</span>(&quot;app&quot;);<br>trie.<span class="hljs-keyword">search</span>(&quot;app&quot;);     // 返回 <span class="hljs-keyword">True</span><br></code></pre></td></tr></table></figure>
-<h3 id="多叉树实现">多叉树实现</h3>
-<p><span class="math inline">\(Trie\)</span>
-树，也称为字典树或前缀树，是一种用于快速查询「某个字符串、字符前缀」是否存在的数据结构</p>
+
+<h3 id="多叉树实现"><a href="#多叉树实现" class="headerlink" title="多叉树实现"></a>多叉树实现</h3><p>$Trie$ 树，也称为字典树或前缀树，是一种用于快速查询「某个字符串、字符前缀」是否存在的数据结构</p>
 <p>既然是树，我们先来看看它的节点构成</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span><br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>可以看到，不同于典型树的结构——每个节点存储数值</p>
-<p>Trie 树的<strong>节点</strong>存储的是一个 <code>bool</code>
-值，表示该节点<strong>是否为某个单词的结尾</strong></p>
-<p>Trie
-树的边表示的是<strong>一个字符是否存在</strong>，这一部分是采取数组来存储的</p>
+<p>Trie 树的<strong>节点</strong>存储的是一个 <code>bool</code> 值，表示该节点<strong>是否为某个单词的结尾</strong></p>
+<p>Trie 树的边表示的是<strong>一个字符是否存在</strong>，这一部分是采取数组来存储的</p>
 <p>如果该字符存在，那么指针指向下一个节点，如果不存在，那么该指针为空</p>
 <p>这个东西的实现，其实不难，难的是具体应用，我们直接给出代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span> &#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">bool</span> isEnd;<br>	vector&lt;Trie*&gt;next;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Trie</span>()<br>		:<span class="hljs-built_in">isEnd</span>(<span class="hljs-literal">false</span>), <span class="hljs-built_in">next</span>(<span class="hljs-number">26</span>)<br>	&#123;  &#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Trie</span>();<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		node-&gt;isEnd = <span class="hljs-literal">true</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> node-&gt;isEnd;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span></span><br><span class="hljs-function">	</span>&#123;<br>		Trie* node = <span class="hljs-keyword">this</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : prefix)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-literal">nullptr</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			node = node-&gt;next[c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(len)\)</span> ，<span class="math inline">\(len\)</span> 为字符串长度</p>
-<p>空间复杂度：<span class="math inline">\(O(n*len)\)</span> ，<span class="math inline">\(n\)</span> 为节点个数，<span class="math inline">\(len\)</span> 为字符集大小</p>
-<p>​</p>
-<h3 id="二维数组实现leetcode">二维数组实现(LeetCode)</h3>
-<p>需要注意的是，这个代码在力扣上面无法通过！！！</p>
+
+<p>时间复杂度：$O(len)$ ，$len$ 为字符串长度</p>
+<p>空间复杂度：$O(n*len)$ ，$n$ 为节点个数，$len$ 为字符集大小</p>
+<p>​	 </p>
+<h3 id="二维数组实现-LeetCode"><a href="#二维数组实现-LeetCode" class="headerlink" title="二维数组实现(LeetCode)"></a>二维数组实现(LeetCode)</h3><p>需要注意的是，这个代码在力扣上面无法通过！！！</p>
 <p>我们可以用一种简单的方式来解决这个问题</p>
 <ul>
 <li>我们用二维数组 <code>trie</code> 来存储各个节点</li>
@@ -664,332 +592,222 @@ Trie字符串统计</a></p>
 <li>用 <code>count</code> 来记录当前节点作为「单词结尾」的次数</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span> <br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span>;<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;trie;<span class="hljs-comment">//数组，用于存储各个节点</span><br>	vector&lt;<span class="hljs-type">int</span>&gt;count;<span class="hljs-comment">//记录某个节点被标记为「某个单词的终点」的次数</span><br>	<span class="hljs-type">int</span> index;<span class="hljs-comment">//记录目前使用的节点数</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Trie</span>() <br>	&#123;<br>		trie.<span class="hljs-built_in">assign</span>(N, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">26</span>, <span class="hljs-number">0</span>));<br>		count.<span class="hljs-built_in">assign</span>(N, <span class="hljs-number">0</span>);<br>		<span class="hljs-type">int</span> index = <span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] = ++index;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		count[pos]++;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> count[pos] != <span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : prefix)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>​</p>
-<h4 id="二维数组时间优化">二维数组（时间优化）</h4>
-<p>显然，如果我们每定义一个 Trie
-对象，都需要一个很大的二维数组的开销</p>
+
+<p>​	 </p>
+<h4 id="二维数组（时间优化）"><a href="#二维数组（时间优化）" class="headerlink" title="二维数组（时间优化）"></a>二维数组（时间优化）</h4><p>显然，如果我们每定义一个 Trie 对象，都需要一个很大的二维数组的开销</p>
 <p>我们可以将这个二维数组转为静态，在每次执行构造函数的时候对以往的二维数组进行一次清理，这样便可以减小开销</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Trie</span> <br>&#123;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100009</span>;<br>	<span class="hljs-type">static</span> vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;<span class="hljs-built_in">trie</span>(N, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">26</span>, <span class="hljs-number">0</span>));<span class="hljs-comment">//数组，用于存储各个节点</span><br>	<span class="hljs-type">static</span> vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">count</span>(N, <span class="hljs-number">0</span>);<span class="hljs-comment">//记录某个节点被标记为「某个单词的终点」的次数</span><br>	<span class="hljs-type">static</span> <span class="hljs-type">int</span> index = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录目前使用的节点数</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Trie</span>() <br>	&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = index; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            trie[i].<span class="hljs-built_in">assign</span>(<span class="hljs-number">26</span>, <span class="hljs-number">0</span>);<br>        &#125;<br>        count.<span class="hljs-built_in">assign</span>(N, <span class="hljs-number">0</span>);<br>        index = <span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(string word)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] = ++index;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		count[pos]++;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(string word)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : word)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> count[pos] != <span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(string prefix)</span> </span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> pos = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">char</span> c : prefix)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>] == <span class="hljs-number">0</span>)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>			pos = trie[pos][c - <span class="hljs-string">&#x27;a&#x27;</span>];<br>		&#125;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h3 id="变式-1">变式</h3>
-<h4 id="trie-树在求解异或的应用">Trie 树在求解异或的应用</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/145/">AcWing 143.
-最大异或对</a></p>
-<p><span class="math inline">\(Trie\)</span>
-树既可以用于存字符串，也可以用于存数字，数字以二进制的形式存储</p>
-<p>对于 <code>int</code> 类型的数据，需要额外在个数的基础上乘上 <span class="math inline">\(30\)</span> ，这表示一个数有 <span class="math inline">\(32\)</span> 位</p>
-<p>我们用 <span class="math inline">\(Trie\)</span> 来存储 <span class="math inline">\(x\)</span> ，当 <span class="math inline">\(query\)</span> 时，我们查找与 <span class="math inline">\(x\)</span> 异或尽可能大的数（我们期望各个位都与
-<span class="math inline">\(x\)</span> 相反）</p>
+<h3 id="变式-1"><a href="#变式-1" class="headerlink" title="变式"></a>变式</h3><h4 id="Trie-树在求解异或的应用"><a href="#Trie-树在求解异或的应用" class="headerlink" title="Trie 树在求解异或的应用"></a>Trie 树在求解异或的应用</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/145/">AcWing 143. 最大异或对</a></p>
+<p>$Trie$ 树既可以用于存字符串，也可以用于存数字，数字以二进制的形式存储</p>
+<p>对于 <code>int</code> 类型的数据，需要额外在个数的基础上乘上 $30$ ，这表示一个数有 $32$ 位</p>
+<p>我们用 $Trie$ 来存储 $x$ ，当 $query$ 时，我们查找与 $x$ 异或尽可能大的数（我们期望各个位都与 $x$ 相反）</p>
 <p>这里便产生了两种存储方式：从高往低和从低往高</p>
 <p>在考虑让对应位相反时，我们应当优先保证<strong>高位相反</strong>，这样二者的异或结果才更大，因此应当从高往低存储</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> son[N * <span class="hljs-number">32</span>][<span class="hljs-number">2</span>], idx;<span class="hljs-comment">//一共1e5个数，每个数32位</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i --)<span class="hljs-comment">//如果期望对应数最大，那么我们应当优先保证高位相反，而不是先保证低位相反</span><br>    &#123;<br>        <span class="hljs-type">int</span> u = x &gt;&gt; i &amp; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(!son[p][u]) son[p][u] = ++idx;<br>        p = son[p][u];<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span><span class="hljs-comment">//尽可能找到一个与 x 异或较大的数（想要异或达到最大，只需要对应位全部相反即可）</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i --)<br>    &#123;<br>        <span class="hljs-type">int</span> u = x &gt;&gt; i &amp; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(son[p][!u]) ans = <span class="hljs-number">2</span> * ans + !u, p = son[p][!u];<br>        <span class="hljs-keyword">else</span> ans = <span class="hljs-number">2</span> * ans + u, p = son[p][u];<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> x;<br>        cin &gt;&gt; x;<br>        <span class="hljs-built_in">insert</span>(x);<br>        ans = <span class="hljs-built_in">max</span>(ans, <span class="hljs-built_in">query</span>(x) ^ x);<br>    &#125;<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="异或运算的前缀和优化以及动态维护-trie-树大小不需要将所有元素全部存入树中">异或运算的前缀和优化以及动态维护
-Trie 树大小（不需要将所有元素全部存入树中）</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/3488/">AcWing 3485.
-最大异或和</a></p>
-<p><strong>异或运算是可以采用前缀和优化的</strong>，定义 <span class="math inline">\(s[i]=a[1] \oplus a[2] \oplus a[3]\cdots \oplus
-a[i]\)</span> ，有：</p>
-<p><span class="math display">\[
-s[l,r]=s[r]-s[l-1]
-\]</span></p>
-<p>当我们固定区间右端点时，题目转换成，求 <span class="math inline">\(s[r] \oplus s[l-1]\)</span> 的最大值，其中 <span class="math inline">\(i-m+1\le l\le
-r\)</span>，也就是求在<strong>指定区间内</strong>与 <span class="math inline">\(s[i]\)</span> 异或最大的数</p>
-<p>对于求一对最大异或对，很自然会想到 <span class="math inline">\(Trie\)</span>
-，并且由于是求指定区间内的数，因此我们不需要将所有数都用 <span class="math inline">\(Trie\)</span>
-来维护，<strong>只需要维护区间内的数即可</strong>，即 <span class="math inline">\(Trie\)</span> 需要支持插入与删除</p>
-<p>我们修改上述 <span class="math inline">\(Trie\)</span> 树中 <span class="math inline">\(cnt[i]\)</span> 的定义：以节点 <span class="math inline">\(i\)</span>
-为根的子树的个数，对于插入与删除，我们统一成一个函数
-<code>void insert(int x, int v)</code></p>
-<p>用 <span class="math inline">\(Trie\)</span> 树存储字符串，<span class="math inline">\(cnt[i]\)</span> 的定义为：以节点 <span class="math inline">\(i\)</span> 为结尾的字符串个数</p>
-<p>用 <span class="math inline">\(Trie\)</span> 树存储数字，<span class="math inline">\(cnt[i]\)</span> 的定义为：以节点 <span class="math inline">\(i\)</span> 为根的子树的个数</p>
+
+<h4 id="异或运算的前缀和优化以及动态维护-Trie-树大小（不需要将所有元素全部存入树中）"><a href="#异或运算的前缀和优化以及动态维护-Trie-树大小（不需要将所有元素全部存入树中）" class="headerlink" title="异或运算的前缀和优化以及动态维护 Trie 树大小（不需要将所有元素全部存入树中）"></a>异或运算的前缀和优化以及动态维护 Trie 树大小（不需要将所有元素全部存入树中）</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/3488/">AcWing 3485. 最大异或和</a></p>
+<p><strong>异或运算是可以采用前缀和优化的</strong>，定义 $s[i]&#x3D;a[1] \oplus a[2] \oplus a[3]\cdots \oplus a[i]$ ，有：</p>
+<p>$$<br>s[l,r]&#x3D;s[r]-s[l-1]<br>$$</p>
+<p>当我们固定区间右端点时，题目转换成，求 $s[r] \oplus s[l-1]$ 的最大值，其中 $i-m+1\le l\le r$，也就是求在<strong>指定区间内</strong>与 $s[i]$ 异或最大的数</p>
+<p>对于求一对最大异或对，很自然会想到 $Trie$ ，并且由于是求指定区间内的数，因此我们不需要将所有数都用 $Trie$ 来维护，<strong>只需要维护区间内的数即可</strong>，即 $Trie$ 需要支持插入与删除</p>
+<p>我们修改上述 $Trie$ 树中 $cnt[i]$ 的定义：以节点 $i$ 为根的子树的个数，对于插入与删除，我们统一成一个函数 <code>void insert(int x, int v)</code> </p>
+<p>用 $Trie$ 树存储字符串，$cnt[i]$ 的定义为：以节点 $i$ 为结尾的字符串个数</p>
+<p>用 $Trie$ 树存储数字，$cnt[i]$ 的定义为：以节点 $i$ 为根的子树的个数</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> tr[N * <span class="hljs-number">32</span>][<span class="hljs-number">2</span>], cnt[N * <span class="hljs-number">32</span>], idx;<span class="hljs-comment">//cnt表示以当前节点为根的子树的个数</span><br><span class="hljs-type">int</span> s[N];<br><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> v)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i --)<br>    &#123;<br>        <span class="hljs-type">int</span> u = x &gt;&gt; i &amp; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(!tr[p][u]) tr[p][u] = ++idx;<br>        p = tr[p][u];<br>        cnt[p] += v;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>, ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i --)<br>    &#123;<br>        <span class="hljs-type">int</span> u = x &gt;&gt; i &amp; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(cnt[tr[p][!u]]) ans = <span class="hljs-number">2</span> * ans + !u, p = tr[p][!u];<br>        <span class="hljs-keyword">else</span> ans = <span class="hljs-number">2</span> * ans + u, p = tr[p][u];<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        cin &gt;&gt; s[i];<br>        s[i] ^= s[i - <span class="hljs-number">1</span>];<br>    &#125;<br>    <span class="hljs-built_in">insert</span>(s[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>);<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(i - m - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span>) <span class="hljs-built_in">insert</span>(s[i - m - <span class="hljs-number">1</span>], <span class="hljs-number">-1</span>);<span class="hljs-comment">//所需区间为[r - m, r - 1]</span><br>        ans = <span class="hljs-built_in">max</span>(ans, s[i] ^ <span class="hljs-built_in">query</span>(s[i]));<br>        <span class="hljs-built_in">insert</span>(s[i], <span class="hljs-number">1</span>);<span class="hljs-comment">//由于需要取s[i]对应的值，因此插入需要在对ans赋值之后进行</span><br>    &#125;<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="检查字符流的某个后缀是否在出现过重点">检查字符流的某个后缀是否在出现过（重点）</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/stream-of-characters/">LeetCode 1032.
-字符流</a></p>
-<p>观察数据量级我们发现，如果我们将所有字符都插入 <span class="math inline">\(Trie\)</span> 树中，计算量为 <span class="math inline">\(2000\times 200\)</span> ，其中 <span class="math inline">\(200\)</span> 为字符串长度</p>
-<p>对于字符流所产生所有后缀，我们暴力枚举其所有可能，考虑最坏的可能，计算量为
-<span class="math inline">\(2000\times 200\times 200\times 200\)</span>
-，（字符串的最大长度为 <span class="math inline">\(200\)</span>
-，每次遍历 <span class="math inline">\(Trie\)</span>
-树都会再次遍历一次该字符串）这个计算量是过不了的，但这个思路能帮助我们更好地去思考优化做法该如何做</p>
-<p>由于字符串的最大长度为 <span class="math inline">\(200\)</span>
-，因此枚举时我们枚举的子串范围从 <span class="math inline">\(n-1\)</span> 到 <span class="math inline">\(\max(0,n-200)\)</span>（其中 <span class="math inline">\(n\)</span> 为字符串长度），当然，这里枚举到 <span class="math inline">\(0\)</span> 也是可以的</p>
+
+<h4 id="检查字符流的某个后缀是否在出现过（重点）"><a href="#检查字符流的某个后缀是否在出现过（重点）" class="headerlink" title="检查字符流的某个后缀是否在出现过（重点）"></a>检查字符流的某个后缀是否在出现过（重点）</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/stream-of-characters/">LeetCode 1032. 字符流</a></p>
+<p>观察数据量级我们发现，如果我们将所有字符都插入 $Trie$ 树中，计算量为 $2000\times 200$ ，其中 $200$ 为字符串长度</p>
+<p>对于字符流所产生所有后缀，我们暴力枚举其所有可能，考虑最坏的可能，计算量为 $2000\times 200\times 200\times 200$ ，（字符串的最大长度为 $200$ ，每次遍历 $Trie$ 树都会再次遍历一次该字符串）这个计算量是过不了的，但这个思路能帮助我们更好地去思考优化做法该如何做</p>
+<p>由于字符串的最大长度为 $200$ ，因此枚举时我们枚举的子串范围从 $n-1$ 到 $\max(0,n-200)$（其中 $n$ 为字符串长度），当然，这里枚举到 $0$ 也是可以的</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">StreamChecker</span> &#123;<br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-type">const</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2010</span> * <span class="hljs-number">210</span>;<br>    <span class="hljs-type">int</span> tr[N][<span class="hljs-number">26</span>];<br>    <span class="hljs-type">bool</span> isEnd[N];<br>    <span class="hljs-type">int</span> idx;<br>    string str;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> c : s)<br>        &#123;<br>            <span class="hljs-type">int</span> u = c - <span class="hljs-string">&#x27;a&#x27;</span>;<br>            <span class="hljs-keyword">if</span>(tr[p][u] == <span class="hljs-number">0</span>) tr[p][u] = ++idx;<br>            p = tr[p][u];<br>        &#125;<br>        isEnd[p] = <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">query</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> st, <span class="hljs-type">int</span> ed)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = st; i &lt;= ed; i ++)<br>        &#123;<br>            <span class="hljs-type">char</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>            <span class="hljs-keyword">if</span>(tr[p][u] == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            p = tr[p][u];<br>        &#125;<br>        <span class="hljs-keyword">return</span> isEnd[p];<br>    &#125;<br><br>    <span class="hljs-built_in">StreamChecker</span>(vector&lt;string&gt;&amp; words) <br>    &#123;<br>        <span class="hljs-built_in">memset</span>(tr, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> tr);<br>        <span class="hljs-built_in">memset</span>(isEnd, <span class="hljs-literal">false</span>, <span class="hljs-keyword">sizeof</span> isEnd);<br>        idx = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> s : words)<br>            <span class="hljs-built_in">add</span>(s);<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">char</span> letter)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        str += letter;<br>        <span class="hljs-type">int</span> n = str.<span class="hljs-built_in">length</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i&gt;= <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, n - <span class="hljs-number">200</span>); i --)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">query</span>(str, i, n - <span class="hljs-number">1</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your StreamChecker object will be instantiated and called as such:</span><br><span class="hljs-comment"> * StreamChecker* obj = new StreamChecker(words);</span><br><span class="hljs-comment"> * bool param_1 = obj-&gt;query(letter);</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
-<p>但这个代码在 <code>LeetCode</code>
-上过不了，我们需要考虑一个优化的做法</p>
+
+<p>但这个代码在 <code>LeetCode</code> 上过不了，我们需要考虑一个优化的做法</p>
 <p>首先插入的计算量是无法降低的，我们考虑查询时能否降低计算量</p>
-<p>原先的做法是先枚举当前字符流的所有的后缀，然后再去 <span class="math inline">\(Trie\)</span> 树中查询该子串是否存在</p>
-<p>如果我们能改变做法，在枚举当前字符流的时候就能判断<strong>以当前位置为结尾的后缀是否在
-<span class="math inline">\(Trie\)</span>
-树中出现过</strong>，不就可以省去多一次遍历 <span class="math inline">\(Trie\)</span> 树了吗</p>
-<p>由于我们是从后往前枚举，因此在插入 <span class="math inline">\(Trie\)</span>
-树的时候，也需要<strong>从后往前插入</strong>，因此经过优化后的计算量为
-<span class="math inline">\(2000\times 200\times 200\)</span></p>
+<p>原先的做法是先枚举当前字符流的所有的后缀，然后再去 $Trie$ 树中查询该子串是否存在</p>
+<p>如果我们能改变做法，在枚举当前字符流的时候就能判断<strong>以当前位置为结尾的后缀是否在 $Trie$ 树中出现过</strong>，不就可以省去多一次遍历 $Trie$ 树了吗</p>
+<p>由于我们是从后往前枚举，因此在插入 $Trie$ 树的时候，也需要<strong>从后往前插入</strong>，因此经过优化后的计算量为 $2000\times 200\times 200$ </p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">StreamChecker</span> &#123;<br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-type">const</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2010</span> * <span class="hljs-number">210</span>;<br>    <span class="hljs-type">int</span> tr[N][<span class="hljs-number">26</span>];<br>    <span class="hljs-type">bool</span> isEnd[N];<br>    <span class="hljs-type">int</span> idx;<br>    string str;<br><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(string s)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = s.<span class="hljs-built_in">length</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i --)<br>        &#123;<br>            <span class="hljs-type">int</span> u = s[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>            <span class="hljs-keyword">if</span>(tr[p][u] == <span class="hljs-number">0</span>) tr[p][u] = ++idx;<br>            p = tr[p][u];<br>        &#125;<br>        isEnd[p] = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-built_in">StreamChecker</span>(vector&lt;string&gt;&amp; words) <br>    &#123;<br>        <span class="hljs-built_in">memset</span>(tr, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> tr);<br>        <span class="hljs-built_in">memset</span>(isEnd, <span class="hljs-literal">false</span>, <span class="hljs-keyword">sizeof</span> isEnd);<br>        idx = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> s : words)<br>            <span class="hljs-built_in">add</span>(s);<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">char</span> letter)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        str += letter;<br>        <span class="hljs-type">int</span> n = str.<span class="hljs-built_in">length</span>();<br>        <span class="hljs-type">int</span> p = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, n - <span class="hljs-number">200</span>); i --)<br>        &#123;<br>            <span class="hljs-type">int</span> u = str[i] - <span class="hljs-string">&#x27;a&#x27;</span>;<br>            <span class="hljs-keyword">if</span>(isEnd[p]) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">if</span>(tr[p][u] == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            p = tr[p][u];<br>        &#125;<br>        <span class="hljs-keyword">return</span> isEnd[p];<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Your StreamChecker object will be instantiated and called as such:</span><br><span class="hljs-comment"> * StreamChecker* obj = new StreamChecker(words);</span><br><span class="hljs-comment"> * bool param_1 = obj-&gt;query(letter);</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
-<h2 id="并查集">并查集</h2>
-<h3 id="模板-2">模板</h3>
-<p>一种用于快速<strong>合并</strong>两个连通块的数据结构</p>
-<p>假设现在有 <span class="math inline">\(N\)</span> 个点，编号为 <span class="math inline">\(1\)</span> 到 <span class="math inline">\(N\)</span> ，<span class="math inline">\(p[i]\)</span> 为编号为 <span class="math inline">\(i\)</span>
-的节点的父节点，初始时每个节点的父节点都是其自身</p>
+
+
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><h3 id="模板-2"><a href="#模板-2" class="headerlink" title="模板"></a>模板</h3><p>一种用于快速<strong>合并</strong>两个连通块的数据结构</p>
+<p>假设现在有 $N$ 个点，编号为 $1$ 到 $N$ ，$p[i]$ 为编号为 $i$ 的节点的父节点，初始时每个节点的父节点都是其自身</p>
 <p>每次合并的时候，在同一个连通块内的节点的父节点均相同</p>
 <p>初始化：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    p[i] = i;<br></code></pre></td></tr></table></figure>
+
 <p><code>int find(int x)</code> 函数（带路径压缩）写法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(x != p[x]) p[x] = <span class="hljs-built_in">find</span>(p[x]);<br>    <span class="hljs-keyword">return</span> p[x];<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>合并操作：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> x, y;<br>cin &gt;&gt; x &gt;&gt; y;<br><span class="hljs-type">int</span> px = <span class="hljs-built_in">find</span>(x), py = <span class="hljs-built_in">find</span>(y);<br><span class="hljs-keyword">if</span>(px != py) p[px] = p[py];<span class="hljs-comment">//将x所在连通块的根节点指向y所在连通块的根节点</span><br></code></pre></td></tr></table></figure>
-<h3 id="变式-2">变式</h3>
-<h4 id="并查集维护连通块大小">并查集维护连通块大小</h4>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/4869/">AcWing 4866.
-最大数量</a></p>
-<p>对于第 <span class="math inline">\(i\)</span>
-个问题，需要在图中<strong>任意</strong>添加 <span class="math inline">\(i\)</span> 条无向边，使得：</p>
+
+<h3 id="变式-2"><a href="#变式-2" class="headerlink" title="变式"></a>变式</h3><h4 id="并查集维护连通块大小"><a href="#并查集维护连通块大小" class="headerlink" title="并查集维护连通块大小"></a>并查集维护连通块大小</h4><p>原题链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/4869/">AcWing 4866. 最大数量</a></p>
+<p>对于第 $i$ 个问题，需要在图中<strong>任意</strong>添加 $i$ 条无向边，使得：</p>
 <ul>
-<li>前 <span class="math inline">\(i\)</span> 个需求能够满足</li>
+<li>前 $i$ 个需求能够满足</li>
 <li>度最大的点的度尽可能大</li>
 </ul>
-<p>假设当前已有 <span class="math inline">\(m\)</span>
-个不相交的连通块，其中点的个数分别为 <span class="math inline">\(k_1,k_2,\cdots k_m\)</span></p>
-<p>对于连通块 <span class="math inline">\(i\)</span>，由于不存在重边与自环，因此最大的度为
-<span class="math inline">\(k_i-1\)</span></p>
-<p>所以每次在循环的时候只需要统计出最大的 <span class="math inline">\(k_i-1\)</span> 输出即可</p>
+<p>假设当前已有 $m$ 个不相交的连通块，其中点的个数分别为 $k_1,k_2,\cdots k_m$</p>
+<p>对于连通块 $i$，由于不存在重边与自环，因此最大的度为 $k_i-1$</p>
+<p>所以每次在循环的时候只需要统计出最大的 $k_i-1$ 输出即可</p>
 <p>但有一个问题是，需求可能重复，也就是原本两个点已经处于同一个连通块中，如果再次出现，就相当于多出来一条边允许我们随意添加</p>
 <p>显然，这在集合内添加会造成重边，因此多出来的边应该用于连接两个不相交的连通块</p>
-<p>设一共多出来 <span class="math inline">\(cnt\)</span> 条边，<span class="math inline">\(cnt\)</span> 条边一共可以连接 <span class="math inline">\(cnt+1\)</span> 个不同的集合</p>
-<p>此时问题转化成，在 <span class="math inline">\(k_1,k_2,\cdots
-k_m\)</span> 中找 <span class="math inline">\(cnt+1\)</span>
-个数，使得加和最大</p>
-<p>直接将 <span class="math inline">\(k_i\)</span> 从大到小排序，取前面
-<span class="math inline">\(cnt+1\)</span> 个数</p>
+<p>设一共多出来 $cnt$ 条边，$cnt$ 条边一共可以连接 $cnt+1$ 个不同的集合</p>
+<p>此时问题转化成，在 $k_1,k_2,\cdots k_m$ 中找 $cnt+1$ 个数，使得加和最大</p>
+<p>直接将 $k_i$ 从大到小排序，取前面 $cnt+1$ 个数</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e3</span> + <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> p[N], sz[N];<br><span class="hljs-type">int</span> s[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(x != p[x]) p[x] = <span class="hljs-built_in">find</span>(p[x]);<br>    <span class="hljs-keyword">return</span> p[x];<br>&#125;<br><br><span class="hljs-type">int</span> n, d;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; d;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        p[i] = i;<br>        sz[i] = <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= d; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> x, y;<br>        cin &gt;&gt; x &gt;&gt; y;<br>        x = <span class="hljs-built_in">find</span>(x), y = <span class="hljs-built_in">find</span>(y);<br>        <span class="hljs-keyword">if</span>(x != y)<br>        &#123;<br>            p[x] = y;<br>            sz[y] += sz[x];<br>        &#125;<br>        <span class="hljs-keyword">else</span> cnt++;<br>        <br>        <span class="hljs-type">int</span> tot = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++)<span class="hljs-comment">//记录每个集合当中点的数量</span><br>        &#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">find</span>(j) == j) s[tot++] = sz[j];<br>        &#125;<br>        <span class="hljs-built_in">sort</span>(s, s + n, <span class="hljs-built_in">greater</span>&lt;<span class="hljs-type">int</span>&gt;());<br>        <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; tot &amp;&amp; k &lt; cnt + <span class="hljs-number">1</span>; k ++) sum += s[k];<br>        cout &lt;&lt; sum - <span class="hljs-number">1</span> &lt;&lt; endl;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="哈希表">哈希表</h2>
-<h3 id="模板-3">模板</h3>
-<p>我们给出两种用数组模拟实现的哈希表模板</p>
+
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><h3 id="模板-3"><a href="#模板-3" class="headerlink" title="模板"></a>模板</h3><p>我们给出两种用数组模拟实现的哈希表模板</p>
 <p>线性探测法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>, INF = <span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-type">int</span> h[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> k = (x % N + N) % N;<br>    <span class="hljs-keyword">while</span>(h[k] != INF &amp;&amp; h[k] != x)<br>    &#123;<br>        k++;<br>        <span class="hljs-keyword">if</span>(k == N) k = <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> k;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
 <p>初始化：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">memset</span>(f, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> f);<br></code></pre></td></tr></table></figure>
+
 <p>拉链法：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> h[N], e[N], ne[N], idx;<br><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> k = (x % N + N) % N;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = h[x]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        <span class="hljs-keyword">if</span>(e[i] == x) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> k = (x % N + N) % N;<br>    e[idx] = x, ne[idx] = h[k], h[k] = idx++;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
 <p>初始化：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br></code></pre></td></tr></table></figure>
-<h3 id="变式-3">变式</h3>
-<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/making-file-names-unique/">LeetCode
-1487. 保证文件名唯一</a></p>
-<p>对于每一个名字 <span class="math inline">\(name\)</span> ，我们用
-<span class="math inline">\(k\)</span>
-表示出现次数，我们采取如下策略：</p>
+
+<h3 id="变式-3"><a href="#变式-3" class="headerlink" title="变式"></a>变式</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/making-file-names-unique/">LeetCode 1487. 保证文件名唯一</a></p>
+<p>对于每一个名字 $name$ ，我们用 $k$ 表示出现次数，我们采取如下策略：</p>
 <ul>
-<li><p>如果其不在哈希表中，则将其加入到哈希表中，并将 <span class="math inline">\(k\)</span> 设成 <span class="math inline">\(1\)</span></p></li>
-<li><p>如果其在哈希表中，我们首先取出 <span class="math inline">\(name\)</span> 出现次数 <span class="math inline">\(k\)</span> ，随后遍历其所有后缀，并不断令 <span class="math inline">\(k\)</span> 增大，找到第一个不存在的后缀编号 <span class="math inline">\(k&#39;\)</span> 并将该编号加入到哈希表在</p></li>
-<li><p>最后还需要更新 <span class="math inline">\(name\)</span>
-的出现次数，将其变为 <span class="math inline">\(k+1\)</span></p></li>
+<li><p>如果其不在哈希表中，则将其加入到哈希表中，并将 $k$ 设成 $1$ </p>
+</li>
+<li><p>如果其在哈希表中，我们首先取出 $name$ 出现次数 $k$ ，随后遍历其所有后缀，并不断令 $k$ 增大，找到第一个不存在的后缀编号 $k’$ 并将该编号加入到哈希表在</p>
+</li>
+<li><p>最后还需要更新 $name$ 的出现次数，将其变为 $k+1$</p>
+</li>
 </ul>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-function">string <span class="hljs-title">add_something</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> s + <span class="hljs-string">&quot;(&quot;</span> + <span class="hljs-built_in">to_string</span>(k) + <span class="hljs-string">&quot;)&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">getFolderNames</span><span class="hljs-params">(vector&lt;string&gt;&amp; names)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        unordered_map&lt;string, <span class="hljs-type">int</span>&gt;Hash;<br>        vector&lt;string&gt;ans;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it : names)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(!Hash.<span class="hljs-built_in">count</span>(it))<br>            &#123;<br>                ans.<span class="hljs-built_in">push_back</span>(it);<br>                Hash[it]++;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                <span class="hljs-type">int</span> k = Hash[it];<br>                <span class="hljs-keyword">while</span>(Hash.<span class="hljs-built_in">count</span>(<span class="hljs-built_in">add_something</span>(it, k))) k++;<br>                ans.<span class="hljs-built_in">push_back</span>(<span class="hljs-built_in">add_something</span>(it, k));<br>                Hash[<span class="hljs-built_in">add_something</span>(it, k)]++;<br>                Hash[it] ++;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="树状数组">树状数组</h2>
-<h3 id="朴素写法区间求和-单点修改">朴素写法（区间求和 + 单点修改）</h3>
-<h4 id="推导">推导</h4>
-<p>考虑两个需求：</p>
+<h2 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h2><h3 id="朴素写法（区间求和-单点修改）"><a href="#朴素写法（区间求和-单点修改）" class="headerlink" title="朴素写法（区间求和 + 单点修改）"></a>朴素写法（区间求和 + 单点修改）</h3><h4 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h4><p>考虑两个需求：</p>
 <ul>
 <li>求<strong>前缀和</strong></li>
 <li>单点修改</li>
 </ul>
 <p>对于这两个需求，我们可以选择用数组或者前缀和来实现</p>
 <ul>
-<li><p>对于数组，求前缀和为 <span class="math inline">\(O(n)\)</span>
-，单点修改为 <span class="math inline">\(O(1)\)</span></p></li>
-<li><p>对于前缀和，求前缀和为 <span class="math inline">\(O(1)\)</span>
-，单点修改为 <span class="math inline">\(O(n)\)</span></p></li>
+<li><p>对于数组，求前缀和为 $O(n)$ ，单点修改为 $O(1)$</p>
+</li>
+<li><p>对于前缀和，求前缀和为 $O(1)$ ，单点修改为 $O(n)$</p>
+</li>
 </ul>
-<p>由于时间复杂度取二者较大的那个，因此在<strong>同时</strong>需要这两种操作的情况下，二者的时间复杂度均为
-<span class="math inline">\(O(n)\)</span></p>
-<p>而树状数组，可以做到<strong>求前缀和</strong>为 <span class="math inline">\(O(\log n)\)</span> ，单点修改为 <span class="math inline">\(O(\log n)\)</span>，总时间复杂度为 <span class="math inline">\(O(\log n)\)</span></p>
+<p>由于时间复杂度取二者较大的那个，因此在<strong>同时</strong>需要这两种操作的情况下，二者的时间复杂度均为 $O(n)$</p>
+<p>而树状数组，可以做到<strong>求前缀和</strong>为 $O(\log n)$ ，单点修改为 $O(\log n)$，总时间复杂度为 $O(\log n)$</p>
 <p>下面我们给出树状数组的推导：</p>
-<p>设需要<strong>求区间 <span class="math inline">\([1,x]\)</span>
-的前缀和</strong>，在前面两种选择中，我们都需要对<strong>这 <span class="math inline">\(x\)</span>
-个元素</strong>逐个枚举一次，我们考虑优化这个过程</p>
-<p>如果我们在求前缀和时只需要枚举 <span class="math inline">\(O(\log
-n)\)</span> 个区间，那么时间复杂度便可以大幅度缩短，因此考虑将区间 <span class="math inline">\([1,x]\)</span> 这 <span class="math inline">\(x\)</span> 个小区间（每个区间一个元素）划分为
-<span class="math inline">\(\log x\)</span>
-个区间（每个区间多个元素），<strong>此时求区间 <span class="math inline">\([1,x]\)</span> 的和可以转换为求这 <span class="math inline">\(\log x\)</span> 个区间的和</strong></p>
-<p>由于 <span class="math inline">\(x\)</span>
-必然可以由<strong>二进制表示</strong>，故 <span class="math inline">\(x\)</span> 可写为：</p>
-<p><span class="math display">\[
-x=2^{i_k}+2^{i_{k-1}}+2^{i_{k-2}}+\cdots+2^{i_1},\quad i_k \gt
-i_{k-1}\gt i_{k-2}\gt \cdots \gt i_1
-\]</span></p>
-<p>对于这里面的每个 <span class="math inline">\(2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}\)</span>
-我们都可以很快求出来（利用 <code>lowbit</code> 函数），因此考虑将区间
-<span class="math inline">\([1,x]\)</span>
-划分为<strong>长度</strong>分别为 <span class="math inline">\(2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}\)</span>
-的子区间</p>
+<p>设需要<strong>求区间 $[1,x]$ 的前缀和</strong>，在前面两种选择中，我们都需要对<strong>这 $x$ 个元素</strong>逐个枚举一次，我们考虑优化这个过程</p>
+<p>如果我们在求前缀和时只需要枚举 $O(\log n)$ 个区间，那么时间复杂度便可以大幅度缩短，因此考虑将区间 $[1,x]$ 这 $x$ 个小区间（每个区间一个元素）划分为 $\log x$ 个区间（每个区间多个元素），<strong>此时求区间 $[1,x]$ 的和可以转换为求这 $\log x$ 个区间的和</strong></p>
+<p>由于 $x$ 必然可以由<strong>二进制表示</strong>，故 $x$ 可写为：</p>
+<p>$$<br>x&#x3D;2^{i_k}+2^{i_{k-1}}+2^{i_{k-2}}+\cdots+2^{i_1},\quad i_k \gt i_{k-1}\gt i_{k-2}\gt \cdots \gt i_1<br>$$</p>
+<p>对于这里面的每个 $2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}$ 我们都可以很快求出来（利用 <code>lowbit</code> 函数），因此考虑将区间 $[1,x]$ 划分为<strong>长度</strong>分别为 $2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}$ 的子区间</p>
 <blockquote>
-<p>我们可以利用 <code>lowbit(x)</code> 快速求出 <span class="math inline">\(x\)</span> 二进制表示中最后一位 <span class="math inline">\(1\)</span> <code>lowbit</code> 函数定义如下：</p>
+<p>我们可以利用 <code>lowbit(x)</code> 快速求出 $x$ 二进制表示中最后一位 $1$<br><code>lowbit</code> 函数定义如下：</p>
 <p><code>int lowbit(x) &#123; return x &amp; -x; &#125;</code></p>
-<p>由于 <span class="math inline">\(-x\)</span> 会将 <span class="math inline">\(x\)</span> 从左往右数第一个 <span class="math inline">\(1\)</span> 左边的所有位均按位取反</p>
-<p>因此其结果与 <span class="math inline">\(x\)</span>
-本身按位与的结果就是 <span class="math inline">\(x\)</span>
-二进制表示的最后一位 <span class="math inline">\(1\)</span></p>
+<p>由于 $-x$ 会将 $x$ 从左往右数第一个 $1$ 左边的所有位均按位取反</p>
+<p>因此其结果与 $x$ 本身按位与的结果就是 $x$ 二进制表示的最后一位 $1$</p>
 <p>因此我们有：</p>
-<p><span class="math display">\[
-\begin{align*}
-2^{i_1}&amp;=lowbit(x)\\
-2^{i_2}&amp;=lowbit(x - 2^{i_1})\\
-2^{i_3}&amp;=lowbit(x - 2^{i_1}-2^{i_2})\\
-\cdots \\
-2^{i_k}&amp;=lowbit(x - 2^{i_1}-2^{i_2}-\cdots -2^{i_{k-1}})
-\end{align*}
-\]</span></p>
+<p>$$<br>\begin{align*}<br>2^{i_1}&amp;&#x3D;lowbit(x)\<br>2^{i_2}&amp;&#x3D;lowbit(x - 2^{i_1})\<br>2^{i_3}&amp;&#x3D;lowbit(x - 2^{i_1}-2^{i_2})\<br>\cdots \<br>2^{i_k}&amp;&#x3D;lowbit(x - 2^{i_1}-2^{i_2}-\cdots -2^{i_{k-1}})<br>\end{align*}<br>$$</p>
 </blockquote>
-<p>此时区间 <span class="math inline">\([1,x]\)</span> 可以划分为：</p>
+<p>此时区间 $[1,x]$ 可以划分为：</p>
 <ul>
-<li><span class="math inline">\((x-2^{i_1},x]\)</span> ，区间长度为
-<span class="math inline">\(2^{i_1}\)</span></li>
-<li><span class="math inline">\((x -
-2^{i_1}-2^{i_2},x-2^{i_1}]\)</span>，区间长度为 <span class="math inline">\(2^{i_2}\)</span></li>
-<li><span class="math inline">\(\cdots\)</span></li>
-<li><span class="math inline">\((0,x - 2^{i_1}-2^{i_2}-\cdots
--2^{i_{k-1}}]\)</span>，区间长度为 <span class="math inline">\(2^{i_k}\)</span></li>
+<li>$(x-2^{i_1},x]$ ，区间长度为 $2^{i_1}$</li>
+<li>$(x - 2^{i_1}-2^{i_2},x-2^{i_1}]$，区间长度为 $2^{i_2}$</li>
+<li>$\cdots$</li>
+<li>$(0,x - 2^{i_1}-2^{i_2}-\cdots -2^{i_{k-1}}]$，区间长度为 $2^{i_k}$</li>
 </ul>
-<p>此时 <span class="math inline">\(tr_x\)</span> 表示区间 <span class="math inline">\([x-lowbit(x)+1,x]\)</span>
-的<strong>区间和</strong>，下面我们开始讨论 <span class="math inline">\(tr_x\)</span> 的各个子区间之间的关系</p>
-<p>设数组 <span class="math inline">\(w\)</span>
-为所要求的前缀和数组，<span class="math inline">\(tr_x\)</span> 表示以
-<span class="math inline">\(x\)</span> 结尾，长度为 <span class="math inline">\(lowbit(x)\)</span> 的区间和，有：</p>
-<p><span class="math display">\[
-tr_x=\sum_{k=x-lowbit(x)+1}^{x}w_k
-\]</span></p>
-<p>我们需要求的是数组 <span class="math inline">\(w\)</span> 中区间
-<span class="math inline">\([1,x]\)</span> 的和</p>
-<p>由上面的推导我们得知，<span class="math inline">\(x\)</span> 可以由
-<span class="math inline">\(2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}\)</span>
-相加得到，我们考虑最右边的一个 <span class="math inline">\(1\)</span>
-，即 <span class="math inline">\(2^{i_1}=lowbit(x)\)</span></p>
-<p><span class="math inline">\(tr_x\)</span> 对应的左区间需要 <span class="math inline">\(tr_x\)</span> 减去<strong>最右边</strong>一个
-<span class="math inline">\(1\)</span> （这个 <span class="math inline">\(1\)</span> 右边全是 <span class="math inline">\(0\)</span>），也就是左端点为 <span class="math inline">\([\cdots 0_{i_1}0\cdots01]\)</span>，右端点为 <span class="math inline">\([\cdots 1_{i_1}0\cdots00]\)</span>，这便是 <span class="math inline">\(tr_x\)</span> 所表示的区间</p>
-<p>对于 <span class="math inline">\(tr_x\)</span>
-所对应的区间和，我们首先<strong>需要加上 <span class="math inline">\(w_x\)</span></strong>，接着我们考虑 <span class="math inline">\(tr_{x-1}\)</span> 可以由哪些子区间组成</p>
-<p>将 <span class="math inline">\(x\)</span> 减去 <span class="math inline">\(1\)</span> 所得的二进制位表示，必然为 <span class="math inline">\([\cdots 0_{i_1}1\cdots 11]\)</span> ，也就是 <span class="math inline">\(2^{i_1}\)</span> 这一位变为 <span class="math inline">\(0\)</span> ，右边全部变为 <span class="math inline">\(1\)</span></p>
-<p>此时 <span class="math inline">\(tr_{x-1}\)</span>
-所对应的区间和可以表示为以下子区间的和：</p>
-<p><span class="math display">\[
-tr_{x-1}=tr_{x-1}+tr_{(x-1)-lowbit(x-1)}+tr_{[(x-1)-lowbit(x-1)]-lowbit([(x-1)-lowbit(x-1)])}+\cdots
-\]</span></p>
-<p>因此，<span class="math inline">\(tr_x\)</span>
-可以表示为以下的和：</p>
-<p><span class="math display">\[
-tr_x=w_x+tr_{x-1}+tr_{(x-1)-lowbit(x-1)}+tr_{[(x-1)-lowbit(x-1)]-lowbit([(x-1)-lowbit(x-1)])}+\cdots
-\]</span></p>
+<p>此时 $tr_x$ 表示区间 $[x-lowbit(x)+1,x]$ 的<strong>区间和</strong>，下面我们开始讨论 $tr_x$ 的各个子区间之间的关系</p>
+<p>设数组 $w$ 为所要求的前缀和数组，$tr_x$ 表示以 $x$ 结尾，长度为 $lowbit(x)$ 的区间和，有：</p>
+<p>$$<br>tr_x&#x3D;\sum_{k&#x3D;x-lowbit(x)+1}^{x}w_k<br>$$</p>
+<p>我们需要求的是数组 $w$ 中区间 $[1,x]$ 的和</p>
+<p>由上面的推导我们得知，$x$ 可以由 $2^{i_k},2^{i_{k-1}},2^{i_{k-2}},\cdots,2^{i_1}$ 相加得到，我们考虑最右边的一个 $1$ ，即 $2^{i_1}&#x3D;lowbit(x)$</p>
+<p>$tr_x$ 对应的左区间需要 $tr_x$ 减去<strong>最右边</strong>一个 $1$ （这个 $1$ 右边全是 $0$），也就是左端点为 $[\cdots 0_{i_1}0\cdots01]$，右端点为 $[\cdots 1_{i_1}0\cdots00]$，这便是 $tr_x$ 所表示的区间</p>
+<p>对于 $tr_x$ 所对应的区间和，我们首先**需要加上 $w_x$**，接着我们考虑 $tr_{x-1}$ 可以由哪些子区间组成</p>
+<p>将 $x$ 减去 $1$ 所得的二进制位表示，必然为 $[\cdots 0_{i_1}1\cdots 11]$ ，也就是 $2^{i_1}$ 这一位变为 $0$ ，右边全部变为 $1$</p>
+<p>此时 $tr_{x-1}$ 所对应的区间和可以表示为以下子区间的和：</p>
+<p>$$<br>tr_{x-1}&#x3D;tr_{x-1}+tr_{(x-1)-lowbit(x-1)}+tr_{[(x-1)-lowbit(x-1)]-lowbit([(x-1)-lowbit(x-1)])}+\cdots<br>$$</p>
+<p>因此，$tr_x$ 可以表示为以下的和：</p>
+<p>$$<br>tr_x&#x3D;w_x+tr_{x-1}+tr_{(x-1)-lowbit(x-1)}+tr_{[(x-1)-lowbit(x-1)]-lowbit([(x-1)-lowbit(x-1)])}+\cdots<br>$$</p>
 <p>具体看下图：</p>
-<figure>
-<img src="树状数组.png" srcset="/img/loading.gif" lazyload alt="树状数组">
-<figcaption aria-hidden="true">树状数组</figcaption>
-</figure>
+<p><img src="%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84.png" srcset="/img/loading.gif" lazyload alt="树状数组"></p>
 <p>图中黄色线加上绿色节点正好可以组成一棵树，因此被称为树状数组</p>
-<p>树中节点个数为 <span class="math inline">\(n\)</span> ，边数为 <span class="math inline">\(n-1\)</span></p>
-<p>举例来说，设 <span class="math inline">\(x=8\)</span> ，其位表示为
-<span class="math inline">\([1000]\)</span>，<span class="math inline">\(tr_{8}\)</span> 所对应区间为 <span class="math inline">\([1，8]\)</span></p>
-<p>此时有：<span class="math inline">\(x-1=7\)</span> ，其位表示为 <span class="math inline">\([0111]\)</span> ，那么以 <span class="math inline">\([0111],[0110],[0100]\)</span> 为右端点的区间均为
-<span class="math inline">\(x=7\)</span> 的子区间</p>
-<p>因此 <span class="math inline">\(x=8\)</span> 需要加的数为：</p>
+<p>树中节点个数为 $n$ ，边数为 $n-1$</p>
+<p>举例来说，设 $x&#x3D;8$ ，其位表示为 $[1000]$，$tr_{8}$ 所对应区间为 $[1，8]$</p>
+<p>此时有：$x-1&#x3D;7$ ，其位表示为 $[0111]$ ，那么以 $[0111],[0110],[0100]$ 为右端点的区间均为 $x&#x3D;7$ 的子区间</p>
+<p>因此 $x&#x3D;8$ 需要加的数为：</p>
 <ul>
-<li><span class="math inline">\(w_8\)</span></li>
-<li>区间 <span class="math inline">\([0111\sim 0111]\)</span>，对应
-<span class="math inline">\([7,7]\)</span></li>
-<li>区间 <span class="math inline">\([0101\sim 0110]\)</span>，对应
-<span class="math inline">\([5,6]\)</span></li>
-<li>区间 <span class="math inline">\([0001\sim 0100]\)</span>，对应
-<span class="math inline">\([1,4]\)</span></li>
+<li>$w_8$</li>
+<li>区间 $[0111\sim 0111]$，对应 $[7,7]$</li>
+<li>区间 $[0101\sim 0110]$，对应 $[5,6]$</li>
+<li>区间 $[0001\sim 0100]$，对应 $[1,4]$</li>
 </ul>
-<p>至此，我们便得到了求区间 <span class="math inline">\([1,x]\)</span>
-的方法，写成代码为：</p>
+<p>至此，我们便得到了求区间 $[1,x]$ 的方法，写成代码为：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span><span class="hljs-comment">//求区间[1,x]的和</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i; i -= <span class="hljs-built_in">lowbit</span>(x))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>如果我们进行单点修改操作（将某个数增加），需要找到当前节点的<strong>所有</strong>父节点</p>
-<p>设对 <span class="math inline">\(tr_x\)</span>
-的值进行修改，我们需要找到 <span class="math inline">\(tr_x\)</span>
-的所有父节点</p>
-<p>因为 <span class="math inline">\(x\)</span>
-必然是某个节点的子节点，因此 <span class="math inline">\(x\)</span>
-的位表示一定可以写为 <span class="math inline">\([\cdots
-001111_{k}0\cdots0]\)</span> （这里的 <span class="math inline">\(k\)</span> 允许为 <span class="math inline">\(0\)</span>）</p>
-<p>只需要将 <span class="math inline">\(x\)</span> 加上 <span class="math inline">\(lowbit(x)\)</span>
-，造成<strong>进位</strong>，便可以得到其父节点，也就是刚刚的逆过程</p>
+<p>设对 $tr_x$ 的值进行修改，我们需要找到 $tr_x$ 的所有父节点</p>
+<p>因为 $x$ 必然是某个节点的子节点，因此 $x$ 的位表示一定可以写为 $[\cdots 001111_{k}0\cdots0]$ （这里的 $k$ 允许为 $0$）</p>
+<p>只需要将 $x$ 加上 $lowbit(x)$ ，造成<strong>进位</strong>，便可以得到其父节点，也就是刚刚的逆过程</p>
 <p>代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span><span class="hljs-comment">//在下标为 x 处加上 c</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i))<br>        tr[i] += c;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>总结：</p>
-<p>我们需要快速求出数组 <span class="math inline">\(w[i]\)</span>
-的前缀和并做单点修改，我们考虑用树状数组进行维护：</p>
-<p><span class="math inline">\(tr_i\)</span> 表示以 <span class="math inline">\(i\)</span> 为结尾，区间长度为 <span class="math inline">\(lowbit(i)\)</span>
-的区间和，求前缀和与单点修改分别对应函数 <code>query</code> 和
-<code>add</code> ，这两个操作时间复杂度均为 <span class="math inline">\(O(n\log n)\)</span></p>
+<p>我们需要快速求出数组 $w[i]$ 的前缀和并做单点修改，我们考虑用树状数组进行维护：</p>
+<p>$tr_i$ 表示以 $i$ 为结尾，区间长度为 $lowbit(i)$ 的区间和，求前缀和与单点修改分别对应函数 <code>query</code> 和 <code>add</code> ，这两个操作时间复杂度均为 $O(n\log n)$</p>
 <p>下面我们给出树状数组的初始化</p>
-<p><span class="math inline">\(O(n\log n)\)</span> 初始化</p>
+<p>$O(n\log n)$ 初始化</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    <span class="hljs-built_in">add</span>(i, w[i]);<br></code></pre></td></tr></table></figure>
-<h4 id="on-初始化">O(n) 初始化</h4>
-<p>对于每个节点，我们对其赋值后可以<strong>利用其所有子节点来更新当前节点</strong>，即遍历树中的每一条边，时间复杂度为
-<span class="math inline">\(O(n)\)</span></p>
+
+<h4 id="O-n-初始化"><a href="#O-n-初始化" class="headerlink" title="O(n) 初始化"></a>O(n) 初始化</h4><p>对于每个节点，我们对其赋值后可以<strong>利用其所有子节点来更新当前节点</strong>，即遍历树中的每一条边，时间复杂度为 $O(n)$</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>&#123;<br>    tr[i] = w[i];<span class="hljs-comment">//对tr[i]赋值，下面对tr[i]的子节点更新</span><br>    <span class="hljs-comment">//当前节点对应的区间范围为 [i - lowbit(i) + 1, i] ，因此只能取这个区间内的子区间</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>; j &gt;= i - <span class="hljs-built_in">lowbit</span>(i) + <span class="hljs-number">1</span>; j -= <span class="hljs-built_in">lowbit</span>(j))<br>        tr[i] += tr[j];<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="注意事项">注意事项</h4>
-<p>如果 <span class="math inline">\(w[i]\)</span> 全为 <span class="math inline">\(1\)</span> ,<strong><span class="math inline">\(tr[i]\)</span> 不能初始化为全 <span class="math inline">\(1\)</span></strong>，必须按照如下方式初始化：</p>
+
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>如果 $w[i]$ 全为 $1$ ,**$tr[i]$ 不能初始化为全 $1$**，必须按照如下方式初始化：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span> i &lt;= n; i ++)<br>    tr[i] = <span class="hljs-built_in">lowbit</span>(i);<br></code></pre></td></tr></table></figure>
-<p>因为 <span class="math inline">\(tr[i]\)</span>
-所对应的是一个区间长度为 <span class="math inline">\(lowbit(i)\)</span>
-的和</p>
+
+<p>因为 $tr[i]$ 所对应的是一个区间长度为 $lowbit(i)$ 的和</p>
 <p>相关例题：</p>
-<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/243/">AcWing 241.
-楼兰图腾</a></p>
-<p>对于 <code>V</code>
-，我们从左往右枚举中间的数，如果能求出*<strong>左边比其大的数的个数</strong>和<strong>右边比其大的数的个数</strong>，利用乘法原理便可以得到当前数满足条件的个数，然后累加即可</p>
+<p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/243/">AcWing 241. 楼兰图腾</a></p>
+<p>对于 <code>V</code> ，我们从左往右枚举中间的数，如果能求出<em><strong>左边比其大的数的个数</strong>和</em>*右边比其大的数的个数**，利用乘法原理便可以得到当前数满足条件的个数，然后累加即可</p>
 <p>我们可以用前缀和来求比某个数大的数的个数，具体地：</p>
-<p>定义数组 <span class="math inline">\(w[i]\)</span> 表示数 <span class="math inline">\(i\)</span> 出现的次数，那么 <span class="math inline">\(\sum_{i=1}^{k-1}w_i\)</span> 为所有比 <span class="math inline">\(k\)</span> 小的数的个数</p>
+<p>定义数组 $w[i]$ 表示数 $i$ 出现的次数，那么 $\sum_{i&#x3D;1}^{k-1}w_i$ 为所有比 $k$ 小的数的个数</p>
 <p>在这里我们用树状数组来快速求出前缀和</p>
 <p>回到本题，我们从左往右求一遍每个数<strong>左边</strong>比其大的数的个数，再从右往左求一遍<strong>右边</strong>比其大的数的个数，将二者相乘再求和即可</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL;<br><br><span class="hljs-type">int</span> a[N];<br><span class="hljs-comment">//用前缀和来表示元素出现的次数，前缀和数组中，下标为元素，值为该元素出现的次数</span><br><span class="hljs-type">int</span> tr[N];<span class="hljs-comment">//下标为i，区间长度为lowbit(i)的和</span><br><span class="hljs-type">int</span> Greater[N], Lower[N];<br><br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span><span class="hljs-comment">//将下标为x的位置加上c</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i))<br>        tr[i] += c;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span><span class="hljs-comment">//查询区间[1, x]的区间和</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &gt; <span class="hljs-number">0</span>; i -= <span class="hljs-built_in">lowbit</span>(i))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; a[i];<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> y = a[i];<br>        Greater[i] = <span class="hljs-built_in">query</span>(n) - <span class="hljs-built_in">query</span>(y);<span class="hljs-comment">//区间[y + 1, n]的和</span><br>        Lower[i] = <span class="hljs-built_in">query</span>(y - <span class="hljs-number">1</span>);<br>        <span class="hljs-built_in">add</span>(y, <span class="hljs-number">1</span>);<br>    &#125;<br>    <br>    <span class="hljs-built_in">memset</span>(tr, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> tr);<span class="hljs-comment">//记得全部清零</span><br>    <br>    LL ans1 = <span class="hljs-number">0</span>, ans2 = <span class="hljs-number">0</span>;;<br>    <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n; i &gt;= <span class="hljs-number">1</span>; i --)<br>    &#123;<br>        <span class="hljs-type">int</span> y = a[i];<br>        ans1 += Greater[i] * (LL)(<span class="hljs-built_in">query</span>(n) - <span class="hljs-built_in">query</span>(y));<br>        ans2 += Lower[i] * (LL)(<span class="hljs-built_in">query</span>(y - <span class="hljs-number">1</span>));<br>        <span class="hljs-built_in">add</span>(y, <span class="hljs-number">1</span>);<br>    &#125;<br>    cout &lt;&lt; ans1 &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; ans2 &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<hr>
-<h3 id="拓展一单点求值-区间修改">拓展一（单点求值 + 区间修改）</h3>
-<p>需支持的操作为：</p>
-<ul>
-<li>快速<strong>增加</strong>区间 <span class="math inline">\([l,r]\)</span> 的值</li>
-<li>快速求出下标为 <span class="math inline">\(x\)</span> 的值</li>
-</ul>
-<p>我们维护差分数组 <span class="math inline">\(b_i=a_i-a_{i-1}\)</span>
-，此时有：</p>
-<p>对于 <span class="math inline">\(a_i\)</span> 中区间 <span class="math inline">\([l,r]\)</span> 的修改变为对 <span class="math inline">\(b_l\)</span> 和 <span class="math inline">\(b_{r+1}\)</span> 的修改</p>
-<p>求 <span class="math inline">\(a_x\)</span> 的值变为求 <span class="math inline">\(\sum_{i=1}^{x}b_i\)</span> 的值</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-type">int</span> a[N];<br><span class="hljs-type">int</span> tr[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i)) <br>        tr[i] += c;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i; i -= <span class="hljs-built_in">lowbit</span>(i))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> v = a[i] - a[i - <span class="hljs-number">1</span>];<br>        tr[i] = v;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>; j &gt;= i - <span class="hljs-built_in">lowbit</span>(i) + <span class="hljs-number">1</span>; j -= <span class="hljs-built_in">lowbit</span>(j))<br>            tr[i] += tr[j];<br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(m--)<br>    &#123;<br>        string op;<br>        cin &gt;&gt; op;<br>        <span class="hljs-keyword">if</span>(op == <span class="hljs-string">&quot;C&quot;</span>)<br>        &#123;<br>            <span class="hljs-type">int</span> l, r, d;<br>            cin &gt;&gt; l &gt;&gt; r &gt;&gt; d;<br>            <span class="hljs-built_in">add</span>(l, d), <span class="hljs-built_in">add</span>(r + <span class="hljs-number">1</span>, -d);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-type">int</span> x;<br>            cin &gt;&gt; x;<br>            cout &lt;&lt; <span class="hljs-built_in">query</span>(x) &lt;&lt; endl;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<hr>
-<h3 id="拓展二区间求和-区间修改">拓展二（区间求和 + 区间修改）</h3>
-<p>需支持的操作为：</p>
-<ul>
-<li>快速<strong>增加</strong>区间 <span class="math inline">\([l,r]\)</span> 的值</li>
-<li>快速<strong>询问</strong>区间 <span class="math inline">\([l,r]\)</span> 的和</li>
-</ul>
-<p>同上，构造差分数组 <span class="math inline">\(b_i=a_i-a_{i-1}\)</span></p>
-<p>此时增加区间 <span class="math inline">\([l,r]\)</span> 的值变为修改
-<span class="math inline">\(b_{l}\)</span> 和 <span class="math inline">\(b_{r+1}\)</span> 的值</p>
-<p>区间 <span class="math inline">\([l,r]\)</span> 的和为：</p>
-<p><span class="math display">\[
-\sum_{i=l}^{r}a_i=\sum_{i=l}^{r}\sum_{k=1}^{i}b_k
-\]</span></p>
-<p>我们先考虑前缀和区间 <span class="math inline">\([1,x]\)</span>
-的和，设区间 <span class="math inline">\([1,x]\)</span> 的和为 <span class="math inline">\(s\)</span> ，有：</p>
-<p><span class="math display">\[
-\begin{align*}
-s&amp;=\sum_{i=1}^{x}\sum_{k=1}^{i}b_k\\
-&amp;=(b_1)+(b_1+b_2)+(b_1+b_2+b_3)+\cdots+(b_1+b_2+b_3+\cdots+b_x)\\
-&amp;=(x+1)(b_1+b_2+b_3+\cdots+b_x)-(b_1+2b_2+3b_3+\cdots+xb_x)\\
-&amp;=(x+1)\sum_{i=1}^{x}b_i-\sum_{i=1}^{x}ib_i
-\end{align*}
-\]</span></p>
-<p>也就是，我们需要用两个树状数组来分别维护 <span class="math inline">\(b_i=a_i-a_{i-1}\)</span> 和 <span class="math inline">\(c_i=ib_i\)</span> 的前缀和</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">int</span> a[N];<br>LL tr1[N], tr2[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span> <span class="hljs-params">(LL tr[], <span class="hljs-type">int</span> x, LL c)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i))<br>        tr[i] += c;<br>&#125;<br><br><span class="hljs-function">LL <span class="hljs-title">query</span><span class="hljs-params">(LL tr[], <span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    LL ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i; i -= <span class="hljs-built_in">lowbit</span>(i))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function">LL <span class="hljs-title">get_sum</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> (LL)(x + <span class="hljs-number">1</span>) * <span class="hljs-built_in">query</span>(tr1, x) - (LL)<span class="hljs-built_in">query</span>(tr2, x);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; a[i];<br>    <br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    O(nlogn) 建树</span><br><span class="hljs-comment">    for(int i = 1; i &lt;= n; i ++)</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        int t = a[i] - a[i - 1];</span><br><span class="hljs-comment">        add(tr1, i, t), add(tr2, i, (LL)i * t);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    */</span><br>    <br>    <span class="hljs-comment">//O(n) 建树</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> t = a[i] - a[i - <span class="hljs-number">1</span>];<br>        tr1[i] = t, tr2[i] = (LL)i * t;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>; j &gt;= i - <span class="hljs-built_in">lowbit</span>(i) + <span class="hljs-number">1</span>; j -= <span class="hljs-built_in">lowbit</span>(j))<br>            tr1[i] += tr1[j], tr2[i] += tr2[j];<br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(m--)<br>    &#123;<br>        string op;<br>        cin &gt;&gt; op;<br>        <span class="hljs-keyword">if</span>(op == <span class="hljs-string">&quot;C&quot;</span>)<br>        &#123;<br>            <span class="hljs-type">int</span> l, r, d;<br>            cin &gt;&gt; l &gt;&gt; r &gt;&gt; d;<br>            <span class="hljs-built_in">add</span>(tr1, l, d), <span class="hljs-built_in">add</span>(tr2, l, l * d);<br>            <span class="hljs-built_in">add</span>(tr1, r + <span class="hljs-number">1</span>, -d), <span class="hljs-built_in">add</span>(tr2, r + <span class="hljs-number">1</span>, -(r + <span class="hljs-number">1</span>) * d);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-type">int</span> l, r;<br>            cin &gt;&gt; l &gt;&gt; r;<br>            cout &lt;&lt; <span class="hljs-built_in">get_sum</span>(r) - <span class="hljs-built_in">get_sum</span>(l - <span class="hljs-number">1</span>) &lt;&lt; endl;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="拓展一（单点求值-区间修改）"><a href="#拓展一（单点求值-区间修改）" class="headerlink" title="拓展一（单点求值 + 区间修改）"></a>拓展一（单点求值 + 区间修改）</h3><p>需支持的操作为：</p>
+<ul>
+<li>快速<strong>增加</strong>区间 $[l,r]$ 的值</li>
+<li>快速求出下标为 $x$ 的值</li>
+</ul>
+<p>我们维护差分数组 $b_i&#x3D;a_i-a_{i-1}$ ，此时有：</p>
+<p>对于 $a_i$ 中区间 $[l,r]$ 的修改变为对 $b_l$ 和 $b_{r+1}$ 的修改</p>
+<p>求 $a_x$ 的值变为求 $\sum_{i&#x3D;1}^{x}b_i$ 的值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> n, m;<br><br><span class="hljs-type">int</span> a[N];<br><span class="hljs-type">int</span> tr[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i)) <br>        tr[i] += c;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i; i -= <span class="hljs-built_in">lowbit</span>(i))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>        cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> v = a[i] - a[i - <span class="hljs-number">1</span>];<br>        tr[i] = v;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>; j &gt;= i - <span class="hljs-built_in">lowbit</span>(i) + <span class="hljs-number">1</span>; j -= <span class="hljs-built_in">lowbit</span>(j))<br>            tr[i] += tr[j];<br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(m--)<br>    &#123;<br>        string op;<br>        cin &gt;&gt; op;<br>        <span class="hljs-keyword">if</span>(op == <span class="hljs-string">&quot;C&quot;</span>)<br>        &#123;<br>            <span class="hljs-type">int</span> l, r, d;<br>            cin &gt;&gt; l &gt;&gt; r &gt;&gt; d;<br>            <span class="hljs-built_in">add</span>(l, d), <span class="hljs-built_in">add</span>(r + <span class="hljs-number">1</span>, -d);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-type">int</span> x;<br>            cin &gt;&gt; x;<br>            cout &lt;&lt; <span class="hljs-built_in">query</span>(x) &lt;&lt; endl;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="拓展二（区间求和-区间修改）"><a href="#拓展二（区间求和-区间修改）" class="headerlink" title="拓展二（区间求和 + 区间修改）"></a>拓展二（区间求和 + 区间修改）</h3><p>需支持的操作为：</p>
+<ul>
+<li>快速<strong>增加</strong>区间 $[l,r]$ 的值</li>
+<li>快速<strong>询问</strong>区间 $[l,r]$ 的和</li>
+</ul>
+<p>同上，构造差分数组 $b_i&#x3D;a_i-a_{i-1}$</p>
+<p>此时增加区间 $[l,r]$ 的值变为修改 $b_{l}$ 和 $b_{r+1}$ 的值</p>
+<p>区间 $[l,r]$ 的和为：</p>
+<p>$$<br>\sum_{i&#x3D;l}^{r}a_i&#x3D;\sum_{i&#x3D;l}^{r}\sum_{k&#x3D;1}^{i}b_k<br>$$</p>
+<p>我们先考虑前缀和区间 $[1,x]$ 的和，设区间 $[1,x]$ 的和为 $s$ ，有：</p>
+<p>$$<br>\begin{align*}<br>s&amp;&#x3D;\sum_{i&#x3D;1}^{x}\sum_{k&#x3D;1}^{i}b_k\<br>&amp;&#x3D;(b_1)+(b_1+b_2)+(b_1+b_2+b_3)+\cdots+(b_1+b_2+b_3+\cdots+b_x)\<br>&amp;&#x3D;(x+1)(b_1+b_2+b_3+\cdots+b_x)-(b_1+2b_2+3b_3+\cdots+xb_x)\<br>&amp;&#x3D;(x+1)\sum_{i&#x3D;1}^{x}b_i-\sum_{i&#x3D;1}^{x}ib_i<br>\end{align*}<br>$$</p>
+<p>也就是，我们需要用两个树状数组来分别维护 $b_i&#x3D;a_i-a_{i-1}$ 和 $c_i&#x3D;ib_i$ 的前缀和</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">int</span> a[N];<br>LL tr1[N], tr2[N];<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x &amp; -x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span> <span class="hljs-params">(LL tr[], <span class="hljs-type">int</span> x, LL c)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i))<br>        tr[i] += c;<br>&#125;<br><br><span class="hljs-function">LL <span class="hljs-title">query</span><span class="hljs-params">(LL tr[], <span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    LL ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i; i -= <span class="hljs-built_in">lowbit</span>(i))<br>        ans += tr[i];<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><br><span class="hljs-function">LL <span class="hljs-title">get_sum</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> (LL)(x + <span class="hljs-number">1</span>) * <span class="hljs-built_in">query</span>(tr1, x) - (LL)<span class="hljs-built_in">query</span>(tr2, x);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++) cin &gt;&gt; a[i];<br>    <br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    O(nlogn) 建树</span><br><span class="hljs-comment">    for(int i = 1; i &lt;= n; i ++)</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        int t = a[i] - a[i - 1];</span><br><span class="hljs-comment">        add(tr1, i, t), add(tr2, i, (LL)i * t);</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    */</span><br>    <br>    <span class="hljs-comment">//O(n) 建树</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>    &#123;<br>        <span class="hljs-type">int</span> t = a[i] - a[i - <span class="hljs-number">1</span>];<br>        tr1[i] = t, tr2[i] = (LL)i * t;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>; j &gt;= i - <span class="hljs-built_in">lowbit</span>(i) + <span class="hljs-number">1</span>; j -= <span class="hljs-built_in">lowbit</span>(j))<br>            tr1[i] += tr1[j], tr2[i] += tr2[j];<br>    &#125;<br>    <br>    <span class="hljs-keyword">while</span>(m--)<br>    &#123;<br>        string op;<br>        cin &gt;&gt; op;<br>        <span class="hljs-keyword">if</span>(op == <span class="hljs-string">&quot;C&quot;</span>)<br>        &#123;<br>            <span class="hljs-type">int</span> l, r, d;<br>            cin &gt;&gt; l &gt;&gt; r &gt;&gt; d;<br>            <span class="hljs-built_in">add</span>(tr1, l, d), <span class="hljs-built_in">add</span>(tr2, l, l * d);<br>            <span class="hljs-built_in">add</span>(tr1, r + <span class="hljs-number">1</span>, -d), <span class="hljs-built_in">add</span>(tr2, r + <span class="hljs-number">1</span>, -(r + <span class="hljs-number">1</span>) * d);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-type">int</span> l, r;<br>            cin &gt;&gt; l &gt;&gt; r;<br>            cout &lt;&lt; <span class="hljs-built_in">get_sum</span>(r) - <span class="hljs-built_in">get_sum</span>(l - <span class="hljs-number">1</span>) &lt;&lt; endl;<br>        &#125;<br>    &#125;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
                 
               </div>
             

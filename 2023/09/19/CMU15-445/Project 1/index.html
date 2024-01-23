@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Project 1  Project 1  Task 1  Semantic understanding Data member &amp; Detail of implementation Test  Task 2  Semantic Understanding  Task 3 Harvest To do   Task 1 Task 1 要求我们需要实现">
+    <meta name="description" content="Project 1 Project 1 Task 1 Semantic understanding Data member &amp; Detail of implementation Test   Task 2 Semantic Understanding   Task 3 Harvest To do    Task 1Task 1 要求我们需要实现一个 LRU-K 算法（实现 LRUKRepl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU15-445 Project 1">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/09/19/CMU15-445/Project%201/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Project 1  Project 1  Task 1  Semantic understanding Data member &amp; Detail of implementation Test  Task 2  Semantic Understanding  Task 3 Harvest To do   Task 1 Task 1 要求我们需要实现">
+<meta property="og:description" content="Project 1 Project 1 Task 1 Semantic understanding Data member &amp; Detail of implementation Test   Task 2 Semantic Understanding   Task 3 Harvest To do    Task 1Task 1 要求我们需要实现一个 LRU-K 算法（实现 LRUKRepl">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(2).jpg">
 <meta property="article:published_time" content="2023-09-19T01:01:10.769Z">
@@ -346,235 +346,101 @@
             
               <div class="markdown-body">
                 
-                <h1 id="project-1">Project 1</h1>
-<ul>
-<li><a href="#project-1">Project 1</a>
-<ul>
-<li><a href="#task-1">Task 1</a>
-<ul>
+                <h1 id="Project-1"><a href="#Project-1" class="headerlink" title="Project 1"></a>Project 1</h1><ul>
+<li><a href="#project-1">Project 1</a><ul>
+<li><a href="#task-1">Task 1</a><ul>
 <li><a href="#semantic-understanding">Semantic understanding</a></li>
-<li><a href="#data-member--detail-of-implementation">Data member &amp;
-Detail of implementation</a></li>
+<li><a href="#data-member--detail-of-implementation">Data member &amp; Detail of implementation</a></li>
 <li><a href="#test">Test</a></li>
-</ul></li>
-<li><a href="#task-2">Task 2</a>
-<ul>
+</ul>
+</li>
+<li><a href="#task-2">Task 2</a><ul>
 <li><a href="#semantic-understanding-1">Semantic Understanding</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#task-3">Task 3</a></li>
 <li><a href="#harvest">Harvest</a></li>
 <li><a href="#to-do">To do</a></li>
-</ul></li>
 </ul>
-<h2 id="task-1">Task 1</h2>
-<p><code>Task 1</code> 要求我们需要实现一个 <code>LRU-K</code>
-算法（实现 <code>LRUKReplacer</code>），以此来作为
-<code>Buffer Pool Manager</code> 的替换算法</p>
-<h3 id="semantic-understanding">Semantic understanding</h3>
-<p><code>LRU-K</code> 的基本控制单位为 <code>frame</code>，通过计算每个
-<code>frame</code> 的 <code>k-distence</code> 来决定要将哪些
-<code>fream</code> 驱逐出去</p>
-<p>对于访问次数小于 <span class="math inline">\(k\)</span> 的
-<code>frame</code> 而言，其 <code>k-distence</code> 被设置为
-<code>inf</code>；对于访问次数大于等于 <span class="math inline">\(k\)</span> 的 <code>frame</code> 而言，其
-<code>k-distence</code>
-的值为<strong>当前的时间戳减去上次访问的时间戳</strong></p>
-<p>此外，若有多个 <code>k-distence</code> 为
-<code>inf</code>，则驱逐出<strong>总体访问时间最早的那个</strong>，也就是具有最早访问时间的
-<code>frame</code></p>
+</li>
+</ul>
+<h2 id="Task-1"><a href="#Task-1" class="headerlink" title="Task 1"></a>Task 1</h2><p><code>Task 1</code> 要求我们需要实现一个 <code>LRU-K</code> 算法（实现 <code>LRUKReplacer</code>），以此来作为 <code>Buffer Pool Manager</code> 的替换算法</p>
+<h3 id="Semantic-understanding"><a href="#Semantic-understanding" class="headerlink" title="Semantic understanding"></a>Semantic understanding</h3><p><code>LRU-K</code> 的基本控制单位为 <code>frame</code>，通过计算每个 <code>frame</code> 的 <code>k-distence</code> 来决定要将哪些 <code>fream</code> 驱逐出去</p>
+<p>对于访问次数小于 $k$ 的 <code>frame</code> 而言，其 <code>k-distence</code> 被设置为 <code>inf</code>；对于访问次数大于等于 $k$ 的 <code>frame</code> 而言，其 <code>k-distence</code> 的值为<strong>当前的时间戳减去上次访问的时间戳</strong></p>
+<p>此外，若有多个 <code>k-distence</code> 为 <code>inf</code>，则驱逐出<strong>总体访问时间最早的那个</strong>，也就是具有最早访问时间的 <code>frame</code></p>
 <p>这一段在 <code>Writeup</code> 上面的描述如下：</p>
 <blockquote>
-<p>The LRU-K algorithm evicts a frame whose backward k-distance is
-maximum of all frames in the replacer. Backward k-distance is computed
-as the difference in time between current timestamp and the timestamp of
-kth previous access. A frame with fewer than k historical accesses is
-given +inf as its backward k-distance. When multiple frames have +inf
-backward k-distance, the replacer evicts the frame with the earliest
-overall timestamp (i.e., the frame whose least-recent recorded access is
-the overall least recent access, overall, out of all frames).</p>
+<p>The LRU-K algorithm evicts a frame whose backward k-distance is maximum of all frames in the replacer. Backward k-distance is computed as the difference in time between current timestamp and the timestamp of kth previous access. A frame with fewer than k historical accesses is given +inf as its backward k-distance. When multiple frames have +inf backward k-distance, the replacer evicts the frame with the earliest overall timestamp (i.e., the frame whose least-recent recorded access is the overall least recent access, overall, out of all frames).</p>
 </blockquote>
-<p>需要说明的是，这里的<strong>总体访问时间最早</strong>是指该
-<code>frame</code> 具有<strong>最小的时间戳</strong></p>
-<h3 id="data-member-detail-of-implementation">Data member &amp; Detail
-of implementation</h3>
-<p>这里涉及的类有两个，主要的成员含义如下：</p>
+<p>需要说明的是，这里的<strong>总体访问时间最早</strong>是指该 <code>frame</code> 具有<strong>最小的时间戳</strong></p>
+<h3 id="Data-member-amp-Detail-of-implementation"><a href="#Data-member-amp-Detail-of-implementation" class="headerlink" title="Data member &amp; Detail of implementation"></a>Data member &amp; Detail of implementation</h3><p>这里涉及的类有两个，主要的成员含义如下：</p>
 <ul>
-<li><code>LRUKNode</code>：用于记录每个 <code>frame</code>
-的访问历史，在 <code>LRUKReplacer</code> 中有一个哈希表用于存储每个
-<code>frame</code> 与 <code>LRUKNode</code> 之间的映射
-<ul>
+<li><code>LRUKNode</code>：用于记录每个 <code>frame</code> 的访问历史，在 <code>LRUKReplacer</code> 中有一个哈希表用于存储每个 <code>frame</code> 与 <code>LRUKNode</code> 之间的映射<ul>
 <li><code>history_</code>：该 <code>frame</code> 的访问历史</li>
-<li><code>k_</code>：<code>LRU-K</code> 算法中 <code>k</code>
-的大小</li>
-<li><code>fid_t</code>：该 <code>node</code> 对应的 <code>frame</code>
-的值</li>
-<li><code>is_evictable</code>：该 <code>frame</code> 是否可以被
-<code>evict</code></li>
-</ul></li>
-<li><code>LRUKReplacer</code>：实际提供 <code>LRUK</code>
-算法的类；管理的对象的单位为帧 <code>frame_id_t</code>
-<ul>
-<li><code>node_store_</code>：一个哈希表，用于记录当前的
-<code>frame id</code> 与其访问历史之间的映射</li>
-</ul></li>
+<li><code>k_</code>：<code>LRU-K</code> 算法中 <code>k</code> 的大小</li>
+<li><code>fid_t</code>：该 <code>node</code> 对应的 <code>frame</code> 的值</li>
+<li><code>is_evictable</code>：该 <code>frame</code> 是否可以被 <code>evict</code></li>
 </ul>
-<p>我们实现的 <code>replacer</code> 中的 <code>frame_id_t</code> 是一个
-<code>size_t</code>，实际上其他的类型也可以</p>
-<p>真正需要注意的是对于 <code>evict</code> 函数的理解，由于我们区分了
-<code>k-distence</code> 为 <code>inf</code> 与非 <code>inf</code>
-的情况，因此我们在计算 <code>k-distence</code> 时也需要分开</p>
-<p><strong>对于哪些 <code>k-distence</code> 大于等于 <code>k</code> 的
-<code>frame</code> 而言，我们取的是最大的
-<code>k-distence</code>；而对于哪些 <code>k-distence</code> 为
-<code>inf</code> 的 <code>frame</code> 而言，我们取的是具有最小的
-<code>frame</code></strong></p>
+</li>
+<li><code>LRUKReplacer</code>：实际提供 <code>LRUK</code> 算法的类；管理的对象的单位为帧 <code>frame_id_t</code><ul>
+<li><code>node_store_</code>：一个哈希表，用于记录当前的 <code>frame id</code> 与其访问历史之间的映射</li>
+</ul>
+</li>
+</ul>
+<p>我们实现的 <code>replacer</code> 中的 <code>frame_id_t</code> 是一个 <code>size_t</code>，实际上其他的类型也可以</p>
+<p>真正需要注意的是对于 <code>evict</code> 函数的理解，由于我们区分了 <code>k-distence</code> 为 <code>inf</code> 与非 <code>inf</code> 的情况，因此我们在计算 <code>k-distence</code> 时也需要分开</p>
+<p><strong>对于哪些 <code>k-distence</code> 大于等于 <code>k</code> 的 <code>frame</code> 而言，我们取的是最大的 <code>k-distence</code>；而对于哪些 <code>k-distence</code> 为 <code>inf</code> 的 <code>frame</code> 而言，我们取的是具有最小的 <code>frame</code></strong></p>
 <p>只要能理解到这里，那么这个也就很容易了</p>
-<h3 id="test">Test</h3>
-<p>测试时需要将 <code>gtest</code> 的 <code>DISABLE_</code>
-标签去掉，在文件 <code>lru_k_replacer_test</code> 中：</p>
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><p>测试时需要将 <code>gtest</code> 的 <code>DISABLE_</code> 标签去掉，在文件 <code>lru_k_replacer_test</code> 中：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">TEST</span>(LRUKReplacerTest, DISABLED_SampleTest)<br></code></pre></td></tr></table></figure>
+
 <p>修改为：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">TEST</span>(LRUKReplacerTest, SampleTest)<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="task-2">Task 2</h2>
-<p><code>Task 2</code> 是真正去实现一个
-<code>Buffer Pool Manager, bpm</code>，也是这个 <code>Project</code>
-的难点所在</p>
-<h3 id="semantic-understanding-1">Semantic Understanding</h3>
-<p><code>bpm</code> 需要为上层的应用程序提供
-<code>page</code>，并且它自身需要控制将 <code>page</code> 映射到
-<code>frame</code> 以及控制 <code>frame</code>
-从内存到磁盘的换入与换出</p>
-<p>对于上层的应用程序而言，它们可以向 <code>bpm</code> 申请
-<code>page</code>，然后对该 <code>page</code>
-进行写入以及在需要时进行读取</p>
-<p>对于 <code>bpm</code> 而言，它将每个 <code>page</code>
-都映射到唯一的一个 <code>frame</code>，这里的 <code>frame</code>
-是实际在物理内存当中的物理帧
-<code>physical frame</code>。也就是说，<code>bpm</code>
-与操作系统一样提供一层在 <code>physical frame</code> 与
-<code>virtual page</code> 之间的抽象</p>
-<p><code>bpm</code> 为上层应用程序所提供的 <code>page id</code> 的值从
-<code>0</code> 开始递增，但只要条件允许，这个 <code>page id</code>
-就不会存在上界；而 <code>bpm</code> 的 <code>frame id</code>
-的数量<strong>固定</strong>为 <code>bpm</code>
-的大小，由于这是实际存储数据的
-<code>physical frame</code>，因此其数量必然固定</p>
-<p><code>bpm</code> 的 <code>page_table_</code> 用于提供从
-<code>page id</code> 到 <code>frame id</code> 的映射，而
-<code>free_list_</code> 用于实际存储空闲的 <code>frame id</code></p>
-<p><code>NewPage</code> 说明上层应用程序希望向 <code>bpm</code>
-申请一个新的 <code>page</code> 进行读写，只要 <code>bpm</code> 还有空闲
-<code>frame</code> 或者可以逐出某个 <code>frame</code> 所对应的
-<code>page</code>（将这个 <code>page</code> 的内容写入到磁盘，那么这个
-<code>frame</code>
-就暂时空闲了），那么它就可以满足上层应用程序的需求</p>
-<p>需要说明的是，无论是从 <code>free_list</code> 当中获取
-<code>frame</code> 还是直接 <code>evict</code> 所得到的
-<code>frame</code>，都需要<strong>从新对 <code>page_table</code>
-进行赋值</strong></p>
-<p><code>FetchPage</code> 说明上层应用程序希望读取一个已经存在的
-<code>page</code>，这时 <code>bpm</code> 需要通过该 <code>page id</code>
-将对应的 <code>page</code>
-的数据加载到内存中（如果允许的话），然后向上层应用程序返回该页</p>
-<p>在该函数中，一个空闲的 <code>frame</code> 的来源有两种：直接从
-<code>free_list</code> 中读取；<code>evict</code> 掉某个
-<code>frame</code>。无论是哪种方式，<strong>都需要对
-<code>page_table</code> 从新赋值</strong>。当然，如果当前的
-<code>buffer pool</code> 中有，那么就不需要重新赋值</p>
+<h2 id="Task-2"><a href="#Task-2" class="headerlink" title="Task 2"></a>Task 2</h2><p><code>Task 2</code> 是真正去实现一个 <code>Buffer Pool Manager, bpm</code>，也是这个 <code>Project</code> 的难点所在</p>
+<h3 id="Semantic-Understanding"><a href="#Semantic-Understanding" class="headerlink" title="Semantic Understanding"></a>Semantic Understanding</h3><p><code>bpm</code> 需要为上层的应用程序提供 <code>page</code>，并且它自身需要控制将 <code>page</code> 映射到 <code>frame</code> 以及控制 <code>frame</code> 从内存到磁盘的换入与换出</p>
+<p>对于上层的应用程序而言，它们可以向 <code>bpm</code> 申请 <code>page</code>，然后对该 <code>page</code> 进行写入以及在需要时进行读取</p>
+<p>对于 <code>bpm</code> 而言，它将每个 <code>page</code> 都映射到唯一的一个 <code>frame</code>，这里的 <code>frame</code> 是实际在物理内存当中的物理帧 <code>physical frame</code>。也就是说，<code>bpm</code> 与操作系统一样提供一层在 <code>physical frame</code> 与 <code>virtual page</code> 之间的抽象</p>
+<p><code>bpm</code> 为上层应用程序所提供的 <code>page id</code> 的值从 <code>0</code> 开始递增，但只要条件允许，这个 <code>page id</code> 就不会存在上界；而 <code>bpm</code> 的 <code>frame id</code> 的数量<strong>固定</strong>为 <code>bpm</code> 的大小，由于这是实际存储数据的 <code>physical frame</code>，因此其数量必然固定</p>
+<p><code>bpm</code> 的 <code>page_table_</code> 用于提供从 <code>page id</code> 到 <code>frame id</code> 的映射，而 <code>free_list_</code> 用于实际存储空闲的 <code>frame id</code></p>
+<p><code>NewPage</code> 说明上层应用程序希望向 <code>bpm</code> 申请一个新的 <code>page</code> 进行读写，只要 <code>bpm</code> 还有空闲 <code>frame</code> 或者可以逐出某个 <code>frame</code> 所对应的 <code>page</code>（将这个 <code>page</code> 的内容写入到磁盘，那么这个 <code>frame</code> 就暂时空闲了），那么它就可以满足上层应用程序的需求</p>
+<p>需要说明的是，无论是从 <code>free_list</code> 当中获取 <code>frame</code> 还是直接 <code>evict</code> 所得到的 <code>frame</code>，都需要<strong>从新对 <code>page_table</code> 进行赋值</strong></p>
+<p><code>FetchPage</code> 说明上层应用程序希望读取一个已经存在的 <code>page</code>，这时 <code>bpm</code> 需要通过该 <code>page id</code> 将对应的 <code>page</code> 的数据加载到内存中（如果允许的话），然后向上层应用程序返回该页</p>
+<p>在该函数中，一个空闲的 <code>frame</code> 的来源有两种：直接从 <code>free_list</code> 中读取；<code>evict</code> 掉某个 <code>frame</code>。无论是哪种方式，<strong>都需要对 <code>page_table</code> 从新赋值</strong>。当然，如果当前的 <code>buffer pool</code> 中有，那么就不需要重新赋值</p>
 <blockquote>
-<p>这里需要说明一点，<code>comment</code> 中关于 <code>page</code>
-所在位置的表述有两种： <code>in buffer pool</code> 和
-<code>in page table</code>
-是不一样的，前者理解为当前内存中存在；而后者理解为在
-<code>page table</code> 中存在，也就是说这个 <code>page</code>
-可能不在内存当中</p>
+<p>这里需要说明一点，<code>comment</code> 中关于 <code>page</code> 所在位置的表述有两种： <code>in buffer pool</code> 和 <code>in page table</code> 是不一样的，前者理解为当前内存中存在；而后者理解为在 <code>page table</code> 中存在，也就是说这个 <code>page</code> 可能不在内存当中</p>
 </blockquote>
-<p><code>UnpinPage</code> 是用于上层应用程序对该 <code>page</code>
-完成操作后调用的函数。上层应用程序通过 <code>new</code> 或者
-<code>fetch</code> 获取一个 <code>page</code> 后，对其进行操作，最后调用
-<code>UnpinPage</code>，<strong>并设置该 <code>page</code> 的
-<code>is_dirty</code> 位</strong></p>
-<p>需要说明的是，<code>UnpinPage</code> 不能将一个 <code>page</code> 的
-<code>is_dirty</code> 从 <code>true</code> 改为
-<code>false</code>，也就是说它只能对 <code>is_dirty</code> 为
-<code>false</code> 的 <code>page</code> 进行设置</p>
+<p><code>UnpinPage</code> 是用于上层应用程序对该 <code>page</code> 完成操作后调用的函数。上层应用程序通过 <code>new</code> 或者 <code>fetch</code> 获取一个 <code>page</code> 后，对其进行操作，最后调用 <code>UnpinPage</code>，<strong>并设置该 <code>page</code> 的 <code>is_dirty</code> 位</strong></p>
+<p>需要说明的是，<code>UnpinPage</code> 不能将一个 <code>page</code> 的 <code>is_dirty</code> 从 <code>true</code> 改为 <code>false</code>，也就是说它只能对 <code>is_dirty</code> 为 <code>false</code> 的 <code>page</code> 进行设置</p>
 <blockquote>
-<p>在 <code>IsDirty</code> 测试中，我通过 <code>log</code>
-发现了这个问题，也就是先 <code>unpin</code> 设置为
-<code>true</code>，然后 <code>fetch</code> 之后在 <code>unpin</code>
-设置为 <code>false</code>，我们的 <code>unpin</code>
-需要禁止这种行为</p>
+<p>在 <code>IsDirty</code> 测试中，我通过 <code>log</code> 发现了这个问题，也就是先 <code>unpin</code> 设置为 <code>true</code>，然后 <code>fetch</code> 之后在 <code>unpin</code> 设置为 <code>false</code>，我们的 <code>unpin</code> 需要禁止这种行为</p>
 </blockquote>
-<p><code>FlushPage</code> 用于提供一个强制将 <code>page</code>
-写入到磁盘的语义，无论 <code>is_dirty</code> 位是 <code>false</code>
-还是 <code>true</code>。另外，我们不能在 <code>FlushAllPages</code>
-中为每个 <code>page</code> 单独调用
-<code>FlushPage</code>，这会照成死锁</p>
-<p><code>DeletePage</code> 用于直接将一个 <code>page</code>
-删除，也就是说该应用程序不会再次使用该
-<code>page id</code>。该函数只能删除哪些在 <code>buffer pool</code> 中的
-<code>page</code>，对于那些在磁盘中的
-<code>page</code>，该函数<strong>不会将它们读取到内存中然后再删去</strong></p>
+<p><code>FlushPage</code> 用于提供一个强制将 <code>page</code> 写入到磁盘的语义，无论 <code>is_dirty</code> 位是 <code>false</code> 还是 <code>true</code>。另外，我们不能在 <code>FlushAllPages</code> 中为每个 <code>page</code> 单独调用 <code>FlushPage</code>，这会照成死锁</p>
+<p><code>DeletePage</code> 用于直接将一个 <code>page</code> 删除，也就是说该应用程序不会再次使用该 <code>page id</code>。该函数只能删除哪些在 <code>buffer pool</code> 中的 <code>page</code>，对于那些在磁盘中的 <code>page</code>，该函数<strong>不会将它们读取到内存中然后再删去</strong></p>
 <hr>
-<h2 id="task-3">Task 3</h2>
-<p>在前面的描述中，我们知道，<code>NewPage</code> 或者
-<code>FetchPage</code> 必须与 <code>UnpinPage</code>
-搭配使用，否则会出现某个 <code>page</code>
-始终在内存当中不会被驱逐出去的情况</p>
-<p>因此此处引入 <code>BasicPageGuard</code>，用于帮助程序员不需要手动
-<code>unpin</code></p>
-<p>与此同时，对于一个 <code>page</code>
-的读取和写入的加锁和解锁也是一对的，同样会发生这种问题，因此
-<code>ReadPageGuard</code>
-用于读取页面时帮助程序员自动解锁，<code>WritePageGuard</code>
-用于写入页面时帮助程序员自动解锁</p>
-<p>在 <code>bpm</code> 中，<code>NewPageGuarded</code> 和
-<code>FetchPageGuarded</code> 都会返回一个
-<code>BasicPageGuard</code>，在对 <code>BasicPageGuard</code>
-进行操作时，其内部会有一个 <code>is_dirty_</code> 参数用于自动调用
-<code>UnpinPage</code> 时的实参</p>
-<p>因此如果我们对该 <code>page</code> 操作后我们期望
-<code>is_dirty</code> 为 <code>true</code>，那么我们需要调用
-<code>AsMut</code> 这个接口；如果我们期望 <code>is_dirty</code> 为
-<code>false</code>，那么我们需要调用 <code>As</code> 这个接口</p>
+<h2 id="Task-3"><a href="#Task-3" class="headerlink" title="Task 3"></a>Task 3</h2><p>在前面的描述中，我们知道，<code>NewPage</code> 或者 <code>FetchPage</code> 必须与 <code>UnpinPage</code> 搭配使用，否则会出现某个 <code>page</code> 始终在内存当中不会被驱逐出去的情况</p>
+<p>因此此处引入 <code>BasicPageGuard</code>，用于帮助程序员不需要手动 <code>unpin</code></p>
+<p>与此同时，对于一个 <code>page</code> 的读取和写入的加锁和解锁也是一对的，同样会发生这种问题，因此 <code>ReadPageGuard</code> 用于读取页面时帮助程序员自动解锁，<code>WritePageGuard</code> 用于写入页面时帮助程序员自动解锁</p>
+<p>在 <code>bpm</code> 中，<code>NewPageGuarded</code> 和 <code>FetchPageGuarded</code> 都会返回一个 <code>BasicPageGuard</code>，在对 <code>BasicPageGuard</code> 进行操作时，其内部会有一个 <code>is_dirty_</code> 参数用于自动调用 <code>UnpinPage</code> 时的实参</p>
+<p>因此如果我们对该 <code>page</code> 操作后我们期望 <code>is_dirty</code> 为 <code>true</code>，那么我们需要调用 <code>AsMut</code> 这个接口；如果我们期望 <code>is_dirty</code> 为 <code>false</code>，那么我们需要调用 <code>As</code> 这个接口</p>
 <blockquote>
-<p>返回值为 <code>reinterpret_cast&lt;dst&gt;(src)</code>，该操作符会用
-<code>dst</code> 类型重新解释 <code>src</code> 变量</p>
+<p>返回值为 <code>reinterpret_cast&lt;dst&gt;(src)</code>，该操作符会用 <code>dst</code> 类型重新解释 <code>src</code> 变量</p>
 </blockquote>
-<p>在 <code>BasicPageGuard</code> 的 <code>Drop</code>
-函数中，我们直接调用一次 <code>UnpinPage</code>
-即可，当然为了避免在析构函数中再次调用，我们需要将 <code>bpm</code> 和
-<code>page</code> 指针均设置为 <code>nullptr</code></p>
-<p>在 <code>BasicPageGuard</code> 的 <code>Move constructor</code>
-中，我们会<strong>默认当前的对象还未生成</strong>，因此我们直接将
-<code>this</code> 的相关属性设置为 <code>that</code>
-的相关属性即可。全部完成后，需要将 <code>that</code> 的两个指针设置为
-<code>nullptr</code>，避免重复析构</p>
-<p>在 <code>BasicPageGuard</code> 的 <code>Move operator=</code>
-中，<strong>此时当前对象已经生成</strong>，因此我们需要先对
-<code>this</code> 所值对象执行一次 <code>UnpinPage</code>，然后再将
-<code>this</code> 的相关属性设置为 <code>that</code>
-的相关属性。完成后同样需要将 <code>that</code> 的两个指针设置为
-<code>nullptr</code></p>
+<p>在 <code>BasicPageGuard</code> 的 <code>Drop</code> 函数中，我们直接调用一次 <code>UnpinPage</code> 即可，当然为了避免在析构函数中再次调用，我们需要将 <code>bpm</code> 和 <code>page</code> 指针均设置为 <code>nullptr</code></p>
+<p>在 <code>BasicPageGuard</code> 的 <code>Move constructor</code> 中，我们会<strong>默认当前的对象还未生成</strong>，因此我们直接将 <code>this</code> 的相关属性设置为 <code>that</code> 的相关属性即可。全部完成后，需要将 <code>that</code> 的两个指针设置为 <code>nullptr</code>，避免重复析构</p>
+<p>在 <code>BasicPageGuard</code> 的 <code>Move operator=</code> 中，<strong>此时当前对象已经生成</strong>，因此我们需要先对 <code>this</code> 所值对象执行一次 <code>UnpinPage</code>，然后再将 <code>this</code> 的相关属性设置为 <code>that</code> 的相关属性。完成后同样需要将 <code>that</code> 的两个指针设置为 <code>nullptr</code></p>
 <hr>
-<h2 id="harvest">Harvest</h2>
-<p>独立完成了这个实验，对我的提升真的很大，在此写下我的一点经验</p>
-<ol type="1">
-<li>确保我对于某个函数行为的理解与该函数实际的行为不存在
-<code>semantic</code> 上的区别</li>
-<li>将一个类中的所有函数的行为全部理解过后再开始敲代码，这些函数可能存在调用上的联系（这个实验中每次获取一个
-<code>page</code> 后都需要 <code>unpin</code>）</li>
-<li>在 <code>guardscope</code> 中的
-<code>log</code>，可以试图在本地复现，或者理解该 <code>bug</code>
-是如何产生的</li>
+<h2 id="Harvest"><a href="#Harvest" class="headerlink" title="Harvest"></a>Harvest</h2><p>独立完成了这个实验，对我的提升真的很大，在此写下我的一点经验</p>
+<ol>
+<li>确保我对于某个函数行为的理解与该函数实际的行为不存在 <code>semantic</code> 上的区别</li>
+<li>将一个类中的所有函数的行为全部理解过后再开始敲代码，这些函数可能存在调用上的联系（这个实验中每次获取一个 <code>page</code> 后都需要 <code>unpin</code>）</li>
+<li>在 <code>guardscope</code> 中的 <code>log</code>，可以试图在本地复现，或者理解该 <code>bug</code> 是如何产生的</li>
 </ol>
 <blockquote>
 <p><code>guardscope</code> 交了七十多次，七十啊七十</p>
 </blockquote>
-<h2 id="to-do">To do</h2>
-<p><code>innoDB</code> 中的 <code>bpm</code>
-有两个常见优化：<code>prefetch</code> 和 <code>asyncio</code></p>
+<h2 id="To-do"><a href="#To-do" class="headerlink" title="To do"></a>To do</h2><p><code>innoDB</code> 中的 <code>bpm</code> 有两个常见优化：<code>prefetch</code> 和 <code>asyncio</code></p>
 
                 
               </div>
