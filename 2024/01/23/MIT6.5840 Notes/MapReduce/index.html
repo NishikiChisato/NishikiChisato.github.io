@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Chisato.png">
+  <link rel="icon" href="/img/Chisato.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#FDD692">
+  <meta name="author" content="Nishiki Chisato">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MapReduce Interpretation  MapReduce Interpretation  Prerequisite Structure Concepts Execution Fault Tolerance  Worker Failure Master Failure Atomic Rename Backup Task    Prerequisite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce Interpretation">
+<meta property="og:url" content="https://nishikichisato.github.io/2024/01/23/MIT6.5840%20Notes/MapReduce/index.html">
+<meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:description" content="MapReduce Interpretation  MapReduce Interpretation  Prerequisite Structure Concepts Execution Fault Tolerance  Worker Failure Master Failure Atomic Rename Backup Task    Prerequisite">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/MIT6.5840%20Notes/MIT6.5840%20Notes%20%20(1).jpg">
+<meta property="article:published_time" content="2024-01-23T10:29:09.011Z">
+<meta property="article:modified_time" content="2024-01-23T10:52:37.591Z">
+<meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="MIT6.5840 Notes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/MIT6.5840%20Notes/MIT6.5840%20Notes%20%20(1).jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MapReduce Interpretation - Nishiki Chisato&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont_leetcode/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"nishikichisato.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":100},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"725e0a3ead10e3e31858a41d23c0faaa","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?725e0a3ead10e3e31858a41d23c0faaa";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Nishiki Chisato&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/hekari.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MapReduce Interpretation"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Nishiki Chisato
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 18:29" pubdate>
+          January 23, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MapReduce Interpretation</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    Last updated on a few seconds ago
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="mapreduce-interpretation">MapReduce Interpretation</h1>
+<ul>
+<li><a href="#mapreduce-interpretation">MapReduce Interpretation</a>
+<ul>
+<li><a href="#prerequisite">Prerequisite</a></li>
+<li><a href="#structure">Structure</a></li>
+<li><a href="#concepts">Concepts</a></li>
+<li><a href="#execution">Execution</a></li>
+<li><a href="#fault-tolerance">Fault Tolerance</a>
+<ul>
+<li><a href="#worker-failure">Worker Failure</a></li>
+<li><a href="#master-failure">Master Failure</a></li>
+<li><a href="#atomic-rename">Atomic Rename</a></li>
+<li><a href="#backup-task">Backup Task</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="prerequisite">Prerequisite</h2>
+<p>课程主页：<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/schedule.html">MIT6.5840</a></p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf">MapReduce</a></p>
+<h2 id="structure">Structure</h2>
+<figure>
+<img src="MapReduceFramework.png" srcset="/img/loading.gif" lazyload alt="MapReduceFramework">
+<figcaption aria-hidden="true">MapReduceFramework</figcaption>
+</figure>
+<h2 id="concepts">Concepts</h2>
+<p>首先需要先解释一些概念：</p>
+<ul>
+<li><code>map</code>：用户自定义函数，以 <code>key/value pair</code>
+作为输入，将会生成一系列
+<code>intermediate key/value pair (mid-key, mid-value)</code>。<code>MapReduce</code>
+框架将会将具有相同的 <span class="math inline">\(\text{key}\ I\)</span>
+的中间值收集起来（将会得到 <code>mid-key, []value</code>），然后传递给
+<code>Reduce</code></li>
+<li><code>Reduce</code>：用户自定义函数，接收
+<code>mid-key, []mid-value</code>，对其处理后得到<strong>零个或一个输出</strong></li>
+</ul>
+<p>原文描述如下：</p>
+<blockquote>
+<p><em>Map</em>, written by the user, takes an input pair and produces a
+set of intermediate key/value pairs. The MapReduce library groups
+together all intermediate values associated with the same intermediate
+key <span class="math inline">\(I\)</span> and passes them to the Reduce
+function.</p>
+<p>The Reduce function, also written by the user, accepts an
+intermediate key <span class="math inline">\(I\)</span> and a set of
+values for that key. It merges together these values to form a possibly
+smaller set of values. Typically <strong>just zero or one
+output</strong> value is produced per Reduce invocation. The
+intermediate values are supplied to the user’s reduce function via an
+iterator. This allows us to handle lists of values that are too large to
+fit in memory.</p>
+</blockquote>
+<ul>
+<li><code>Worker</code>：运行在主机上的进程，执行由 <code>Master</code>
+分配的 <code>Task</code></li>
+<li><code>Master</code>：运行在主机上的进程，负责给各个
+<code>Worker</code> 分配任务以及协调整个框架的运行</li>
+<li><code>Task</code>：具体运行在 <code>Worker</code>
+上的不同的任务，分为 <code>Map Task</code> 和
+<code>Reduce Task</code></li>
+<li><code>Job</code>：整个 <code>Mapreduce</code> 执行的所有
+<code>Task</code> 的总和被称为一个 <code>job</code>，每个
+<code>job</code> 都由一组 <code>task</code> 组成</li>
+</ul>
+<h2 id="execution">Execution</h2>
+<ul>
+<li><code>MapReduce</code> 框架将输入文件 <code>input file</code>
+将会被分为 <span class="math inline">\(M\)</span> 个分片
+<code>spilts</code>，每个部分通常为 <span class="math inline">\(\text{16MB}\)</span> 到 <span class="math inline">\(\text{64MB}\)</span>，随后在机器集群上启动程序实例</li>
+<li>其中一个程序为 <code>Master</code>，其余的全是
+<code>Worker</code>。一共有 <span class="math inline">\(M\)</span> 个
+<code>Map Task</code> 和 <span class="math inline">\(R\)</span> 个
+<code>Reduce Task</code> 需要被赋予给 <code>Worker</code>
+处理。<code>Master</code> 将会选择空闲的 <code>Worker</code>
+来分配任务</li>
+<li><code>Map Worker</code> 读取每个
+<code>input spilt</code>，执行完毕的结果存储在<strong>本地</strong></li>
+<li>对于每个处在本地磁盘的中间结果而言，它们会被
+<code>partition function</code> 映射成 <span class="math inline">\(R\)</span> 个区域 <code>region</code>。随后
+<code>Worker</code> 将会将这些中间结果的位置发送给
+<code>Master</code>，<code>Master</code> 则负责将位置转发给
+<code>Reduce</code></li>
+<li>当所有的 <code>Map Worker</code>
+工作完成后，<code>Reduce Worker</code> 会被唤醒。后者将会使用
+<code>RPC</code> 来读取 <code>Map Worker</code>
+在本地磁盘内的中间结果（<strong>这一步也会产生网络流量</strong>）。当
+<code>Reduce Worker</code> 读取完所有的中间结果后，会按照
+<code>mid-key</code> 对输入数据进行排序</li>
+<li><code>Reduce Worker</code> 将会遍历所有已排序完毕的数据，将
+<code>(mid-key, []mid-value)</code> 传递给用户自定义的
+<code>Reduce</code> 函数（通常不需要整合所有的输出，因为
+<code>MapReduce</code> 可以链式连接，前者的输出相当于后者的输入）。每个
+<code>Reduce Worker</code> 都会产生一个输出文件，其文件名由用户指定</li>
+</ul>
+<p><code>Map Worker</code> 需要执行的操作包括： - 读取输入文件分片
+<code>spilt</code> - 调用 <code>Map</code> 函数 - 对结果进行
+<code>partition</code> 并向 <code>Master</code> 通知结果存放的位置</p>
+<p><code>Reduce Worker</code> 需要执行的操作包括： - 等待
+<code>Master</code> 唤醒并告知输入文件的位置，然后通过 <code>RPC</code>
+进行读取 - 调用 <code>Reduce</code> 函数</p>
+<p>除此之外，一开始的文件划分则由 <code>Master</code> 完成</p>
+<h2 id="fault-tolerance">Fault Tolerance</h2>
+<p><code>Master</code> 需要存储各个 <strong><code>Map Task</code> 和
+<code>Reduce Task</code></strong> 的状态
+<code>idel/in-progress/completed</code> 以及标识每个运行
+<code>Worker</code> 进程的机器。除此之外，<code>Master</code>
+还需要存储由 <code>Map Worker</code> 产生的 <span class="math inline">\(R\)</span> 个区域 <code>region</code>
+的位置以及文件大小</p>
+<h3 id="worker-failure">Worker Failure</h3>
+<p><code>Master</code> 会周期性地向各个 <code>Worker</code>
+发送信号。如果某个 <code>Worker</code> 在一段时间内没有回复，那么
+<code>Master</code> 认为该 <code>Worker</code> 崩溃。那么对于该
+<code>Worker</code> 而言，有两种情况：</p>
+<ul>
+<li>对于已经完成 <code>completed</code> 或正在进行中
+<code>in-progress</code> 的 <code>Map Task</code> 而言，该
+<code>Task</code> 的状态将会被重新设置为
+<code>idel</code>，需要重新执行该任务</li>
+<li>对于正在进行中 <code>in-progress</code> 的 <code>Reduce Task</code>
+而言，会将其状态设置为 <code>idel</code>，需要重新执行该任务</li>
+</ul>
+<p>对于已完成的 <code>Map Task</code>
+需要重新执行的原因在于，<strong>它的结果存储在本地</strong>，而那台机器已经故障，因此我们无法访问到那台机器的本地磁盘。对于已完成的
+<code>Reduce Task</code>
+而言，<strong>它的结果存储在全局的文件系统中</strong>，因此不需要重新执行</p>
+<h3 id="master-failure">Master Failure</h3>
+<p>我们周期性地向 <code>Master</code> 的存储信息当中写入
+<code>checkpoint</code>。当 <code>Master</code>
+崩溃时，我们可以重新启动该 <code>Master</code>
+程序并能够恢复到崩溃前的数据。然而，由于只有一个
+<code>Master</code>，因此其崩溃通常是概率很小的，因此如果
+<code>Master</code> 崩溃，论文中的实现会直接将整个
+<code>MapReduce</code> 计算给 <code>abort</code> 掉</p>
+<h3 id="atomic-rename">Atomic Rename</h3>
+<p>当 <code>Reduce Task</code> 执行完毕后，会将临时的输出文件
+<code>temporary output file</code> 重命名为最终的输出文件
+<code>final output file</code>。而如果有相同的 <code>Reduce Task</code>
+执行在不同的机器上（<code>Reduce Task</code>
+被重启过），那么最终得到的输出文件将会完全相同。在此，我们<strong>依赖底层的文件系统</strong>提供的原子重命名
+<code>atomic rename</code> 来保证最终的输出文件只有一个</p>
+<h3 id="backup-task">Backup Task</h3>
+<p>在执行的过程中总会出现落后者 <code>straggler</code>
+拖慢了整体的运行速度。这些 <code>straggler</code>
+出现的原因可能是机器本身存在某些故障导致任务的执行速度降低</p>
+<p>当 <code>MapReduce</code> 操作快结束的时候，<code>Master</code>
+会将仍在运行 <code>in-progress</code> 的 <code>Task</code>
+备份并同步执行。只要原始的任务或者备份任务执行完毕，那么该
+<code>Task</code> 将会被标记为完成</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MIT6-5840-Notes/" class="category-chain-item">MIT6.5840 Notes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MIT6-5840-Notes/">#MIT6.5840 Notes</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MapReduce Interpretation</div>
+      <div>https://nishikichisato.github.io/2024/01/23/MIT6.5840 Notes/MapReduce/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Nishiki Chisato</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 23, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>January 23, 2024</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - Share-alike">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/23/MIT6.5840/Lab1/" title="MIT6.5840 Lab1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MIT6.5840 Lab1</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/15/CMU15-445/Project%204/" title="CMU15-445 Project 4">
+                        <span class="hidden-mobile">CMU15-445 Project 4</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MIT6.5840 Notes"
+        id="heading-f30d198fa3877b83009c1a7ec83079ac" role="tab" data-toggle="collapse" href="#collapse-f30d198fa3877b83009c1a7ec83079ac"
+        aria-expanded="true"
+      >
+        MIT6.5840 Notes
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f30d198fa3877b83009c1a7ec83079ac"
+           role="tabpanel" aria-labelledby="heading-f30d198fa3877b83009c1a7ec83079ac">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/01/23/MIT6.5840%20Notes/MapReduce/" title="MapReduce Interpretation"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">MapReduce Interpretation</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

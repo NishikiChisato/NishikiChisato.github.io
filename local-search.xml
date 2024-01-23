@@ -4,6 +4,56 @@
   
   
   <entry>
+    <title>MIT6.5840 Lab1</title>
+    <link href="/2024/01/23/MIT6.5840/Lab1/"/>
+    <url>/2024/01/23/MIT6.5840/Lab1/</url>
+    
+    <content type="html"><![CDATA[<h1 id="lab-1">Lab 1</h1><ul><li><a href="#lab-1">Lab 1</a><ul><li><a href="#prerequesite">Prerequesite</a></li><li><a href="#design--implementation">Design &amp; Implementation</a><ul><li><a href="#worker-actions">Worker Actions</a></li><li><a href="#coordinator-actions">Coordinator Actions</a></li><li><a href="#architecture">Architecture</a></li></ul></li></ul></li></ul><h2 id="prerequesite">Prerequesite</h2><p>在具体开始写代码之前需要先将官方提供的 <a href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">实验文档</a>全部认真看一遍，除此之外还需要详细理解 <a href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf"><code>MapReduce</code></a>的原理，否者这个实验无法进行下去</p><p>这个实验的难点在于 <code>Master/Coordinator</code> 与<code>Worker</code> 之间需要交流哪些信息以及 <code>Coordinator</code>需要维护哪些信息。由于实验只给出了最基本的 <code>RPC</code>调用示例，关于 <code>MapReduce</code>的部分几乎没有代码，因此可以自由发挥的空间十分的大（<del>换句话说，也就是无从下手</del>）</p><h2 id="design-implementation">Design &amp; Implementation</h2><h3 id="worker-actions">Worker Actions</h3><p>对于 <code>Worker</code> 而言：</p><ul><li>向 <code>Coordinator</code> 请求任务</li><li>执行 <code>Map/Reduce Task</code> 或者处于空闲状态</li><li>向 <code>Coordinator</code> 报告 <code>Task</code> 是否执行完毕</li></ul><p><code>Worker</code> 的行为有两种：请求任务和报告信息，因此<code>Coordinator</code> 需要提供两个函数供 <code>Worker</code> 调用</p><p>关于 <code>Map Task</code> 和 <code>Reduce Task</code>：</p><ul><li>由于本实验的输入文件全部给出，因此我们不需要按照论文当中说的对输入文件进行分割</li><li><code>Coordinator</code> 通过将输入文件名发送给<code>Worker</code>，之后 <code>Worker</code> 便可以读取该文件<br></li><li><code>Map Task</code> 的数量是固定的，就是输入文件数；而<code>Reduce Task</code> 则可以由用户进行指定（在<code>mrcoordinator.go</code> 中）</li><li>假设 <code>Map Task</code> 的数量为 <span class="math inline">\(X\)</span>，<code>Reduce Task</code> 的数量为<span class="math inline">\(Y\)</span>，那么会产生的中间文件个数为 <span class="math inline">\(XY\)</span>，每个中间文件用 <code>mr-i-y</code>表示（这里 <code>i</code> 表示 <code>Map Task</code>的编号，<code>j</code> 表示 <code>Reduce Task</code> 的编号）</li><li>对于编号为 <span class="math inline">\(y\)</span> 的<code>Reduce Task</code> 而言，它需要读取所有 <code>mr-i-y</code>的文件</li><li>对于每个中间文件，我们可以使用 <code>os.CreateTemp</code>在当前路径创建临时文件，<strong>对文件写入完毕后</strong>使用<code>os.Rename</code> 来对其进行原子重命名<ul><li>在我最开始的实现中，我直接使用 <code>os.Create</code>来创建一个新文件，然后对文件进行写入。但这种设计存在问题，因为如果两个不同的<code>Worker</code> 执行同一个<code>Map Task</code>，那么它们产生的中间文件就会同名，这时同一个文件就会被两个<code>Worker</code> 进行写入</li><li>而我们使用临时文件加原子重命名这种方式则可以避免这个问题，因为我们总是在文件写入完毕后对其重命名，因此哪怕有两个相同的<code>Worker</code> 执行同一个<code>Map Task</code>，最终的结果也只会生成一个文件，并且不存在两个<code>Worker</code> 都向这个文件写入的情况</li></ul></li></ul><h3 id="coordinator-actions">Coordinator Actions</h3><p>对于 <code>Coordinator</code> 而言：</p><ul><li>响应 <code>Worker</code> 的请求，向其分配<code>Task</code>，并记录信息</li><li>对于超时的 <code>Task</code>，重新分配一遍</li></ul><p>由于我们采用 <code>RPC</code> 来实现通信，因此 <code>Worker</code>通过<strong>不断调用（也就是轮询）</strong> <code>Coordinator</code>暴露出来的函数来交流信息。由于这个过程中存在多个 <code>Worker</code>同时执行函数，因此 <code>Coordinator</code> 需要加锁保护数据</p><p>需要说明的是，<code>RPC</code>所使用的消息的输入参数和回复参数当中的字段都需要大写，不然无法读取到正确的数据</p><p><code>Coordinator</code> 需要记录每个 <code>Task</code>的执行情况，对于那些超时未完成的 <code>Task</code>，需要重新分配一遍</p><ul><li>在我的设计中，<code>Worker</code> 每隔 <code>5</code> 秒向<code>Coordinator</code> 报告一次执行情况用于更新 <code>Task</code>的时间戳</li><li>如果 <code>Coordinator</code> 发现某个 <code>Task</code>的时间戳于当前时间戳超过 <code>10</code> 秒，那么认为原先执行该<code>Task</code> 的 <code>Worker</code> 已经<code>Crash</code>，直接重新分配该任务</li></ul><h3 id="architecture">Architecture</h3><p>最后给出整体的框架图：</p><p>实现代码：<a href="https://github.com/NishikiChisato/MIT6.5840">Code</a></p><figure><img src="Lab1.png" srcset="/img/loading.gif" lazyload alt="Lab1"><figcaption aria-hidden="true">Lab1</figcaption></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>MIT6.5840</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>MIT6.5840</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>MapReduce Interpretation</title>
+    <link href="/2024/01/23/MIT6.5840%20Notes/MapReduce/"/>
+    <url>/2024/01/23/MIT6.5840%20Notes/MapReduce/</url>
+    
+    <content type="html"><![CDATA[<h1 id="mapreduce-interpretation">MapReduce Interpretation</h1><ul><li><a href="#mapreduce-interpretation">MapReduce Interpretation</a><ul><li><a href="#prerequisite">Prerequisite</a></li><li><a href="#structure">Structure</a></li><li><a href="#concepts">Concepts</a></li><li><a href="#execution">Execution</a></li><li><a href="#fault-tolerance">Fault Tolerance</a><ul><li><a href="#worker-failure">Worker Failure</a></li><li><a href="#master-failure">Master Failure</a></li><li><a href="#atomic-rename">Atomic Rename</a></li><li><a href="#backup-task">Backup Task</a></li></ul></li></ul></li></ul><h2 id="prerequisite">Prerequisite</h2><p>课程主页：<a href="https://pdos.csail.mit.edu/6.824/schedule.html">MIT6.5840</a></p><p>论文地址：<a href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf">MapReduce</a></p><h2 id="structure">Structure</h2><figure><img src="MapReduceFramework.png" srcset="/img/loading.gif" lazyload alt="MapReduceFramework"><figcaption aria-hidden="true">MapReduceFramework</figcaption></figure><h2 id="concepts">Concepts</h2><p>首先需要先解释一些概念：</p><ul><li><code>map</code>：用户自定义函数，以 <code>key/value pair</code>作为输入，将会生成一系列<code>intermediate key/value pair (mid-key, mid-value)</code>。<code>MapReduce</code>框架将会将具有相同的 <span class="math inline">\(\text{key}\ I\)</span>的中间值收集起来（将会得到 <code>mid-key, []value</code>），然后传递给<code>Reduce</code></li><li><code>Reduce</code>：用户自定义函数，接收<code>mid-key, []mid-value</code>，对其处理后得到<strong>零个或一个输出</strong></li></ul><p>原文描述如下：</p><blockquote><p><em>Map</em>, written by the user, takes an input pair and produces aset of intermediate key/value pairs. The MapReduce library groupstogether all intermediate values associated with the same intermediatekey <span class="math inline">\(I\)</span> and passes them to the Reducefunction.</p><p>The Reduce function, also written by the user, accepts anintermediate key <span class="math inline">\(I\)</span> and a set ofvalues for that key. It merges together these values to form a possiblysmaller set of values. Typically <strong>just zero or oneoutput</strong> value is produced per Reduce invocation. Theintermediate values are supplied to the user’s reduce function via aniterator. This allows us to handle lists of values that are too large tofit in memory.</p></blockquote><ul><li><code>Worker</code>：运行在主机上的进程，执行由 <code>Master</code>分配的 <code>Task</code></li><li><code>Master</code>：运行在主机上的进程，负责给各个<code>Worker</code> 分配任务以及协调整个框架的运行</li><li><code>Task</code>：具体运行在 <code>Worker</code>上的不同的任务，分为 <code>Map Task</code> 和<code>Reduce Task</code></li><li><code>Job</code>：整个 <code>Mapreduce</code> 执行的所有<code>Task</code> 的总和被称为一个 <code>job</code>，每个<code>job</code> 都由一组 <code>task</code> 组成</li></ul><h2 id="execution">Execution</h2><ul><li><code>MapReduce</code> 框架将输入文件 <code>input file</code>将会被分为 <span class="math inline">\(M\)</span> 个分片<code>spilts</code>，每个部分通常为 <span class="math inline">\(\text{16MB}\)</span> 到 <span class="math inline">\(\text{64MB}\)</span>，随后在机器集群上启动程序实例</li><li>其中一个程序为 <code>Master</code>，其余的全是<code>Worker</code>。一共有 <span class="math inline">\(M\)</span> 个<code>Map Task</code> 和 <span class="math inline">\(R\)</span> 个<code>Reduce Task</code> 需要被赋予给 <code>Worker</code>处理。<code>Master</code> 将会选择空闲的 <code>Worker</code>来分配任务</li><li><code>Map Worker</code> 读取每个<code>input spilt</code>，执行完毕的结果存储在<strong>本地</strong></li><li>对于每个处在本地磁盘的中间结果而言，它们会被<code>partition function</code> 映射成 <span class="math inline">\(R\)</span> 个区域 <code>region</code>。随后<code>Worker</code> 将会将这些中间结果的位置发送给<code>Master</code>，<code>Master</code> 则负责将位置转发给<code>Reduce</code></li><li>当所有的 <code>Map Worker</code>工作完成后，<code>Reduce Worker</code> 会被唤醒。后者将会使用<code>RPC</code> 来读取 <code>Map Worker</code>在本地磁盘内的中间结果（<strong>这一步也会产生网络流量</strong>）。当<code>Reduce Worker</code> 读取完所有的中间结果后，会按照<code>mid-key</code> 对输入数据进行排序</li><li><code>Reduce Worker</code> 将会遍历所有已排序完毕的数据，将<code>(mid-key, []mid-value)</code> 传递给用户自定义的<code>Reduce</code> 函数（通常不需要整合所有的输出，因为<code>MapReduce</code> 可以链式连接，前者的输出相当于后者的输入）。每个<code>Reduce Worker</code> 都会产生一个输出文件，其文件名由用户指定</li></ul><p><code>Map Worker</code> 需要执行的操作包括： - 读取输入文件分片<code>spilt</code> - 调用 <code>Map</code> 函数 - 对结果进行<code>partition</code> 并向 <code>Master</code> 通知结果存放的位置</p><p><code>Reduce Worker</code> 需要执行的操作包括： - 等待<code>Master</code> 唤醒并告知输入文件的位置，然后通过 <code>RPC</code>进行读取 - 调用 <code>Reduce</code> 函数</p><p>除此之外，一开始的文件划分则由 <code>Master</code> 完成</p><h2 id="fault-tolerance">Fault Tolerance</h2><p><code>Master</code> 需要存储各个 <strong><code>Map Task</code> 和<code>Reduce Task</code></strong> 的状态<code>idel/in-progress/completed</code> 以及标识每个运行<code>Worker</code> 进程的机器。除此之外，<code>Master</code>还需要存储由 <code>Map Worker</code> 产生的 <span class="math inline">\(R\)</span> 个区域 <code>region</code>的位置以及文件大小</p><h3 id="worker-failure">Worker Failure</h3><p><code>Master</code> 会周期性地向各个 <code>Worker</code>发送信号。如果某个 <code>Worker</code> 在一段时间内没有回复，那么<code>Master</code> 认为该 <code>Worker</code> 崩溃。那么对于该<code>Worker</code> 而言，有两种情况：</p><ul><li>对于已经完成 <code>completed</code> 或正在进行中<code>in-progress</code> 的 <code>Map Task</code> 而言，该<code>Task</code> 的状态将会被重新设置为<code>idel</code>，需要重新执行该任务</li><li>对于正在进行中 <code>in-progress</code> 的 <code>Reduce Task</code>而言，会将其状态设置为 <code>idel</code>，需要重新执行该任务</li></ul><p>对于已完成的 <code>Map Task</code>需要重新执行的原因在于，<strong>它的结果存储在本地</strong>，而那台机器已经故障，因此我们无法访问到那台机器的本地磁盘。对于已完成的<code>Reduce Task</code>而言，<strong>它的结果存储在全局的文件系统中</strong>，因此不需要重新执行</p><h3 id="master-failure">Master Failure</h3><p>我们周期性地向 <code>Master</code> 的存储信息当中写入<code>checkpoint</code>。当 <code>Master</code>崩溃时，我们可以重新启动该 <code>Master</code>程序并能够恢复到崩溃前的数据。然而，由于只有一个<code>Master</code>，因此其崩溃通常是概率很小的，因此如果<code>Master</code> 崩溃，论文中的实现会直接将整个<code>MapReduce</code> 计算给 <code>abort</code> 掉</p><h3 id="atomic-rename">Atomic Rename</h3><p>当 <code>Reduce Task</code> 执行完毕后，会将临时的输出文件<code>temporary output file</code> 重命名为最终的输出文件<code>final output file</code>。而如果有相同的 <code>Reduce Task</code>执行在不同的机器上（<code>Reduce Task</code>被重启过），那么最终得到的输出文件将会完全相同。在此，我们<strong>依赖底层的文件系统</strong>提供的原子重命名<code>atomic rename</code> 来保证最终的输出文件只有一个</p><h3 id="backup-task">Backup Task</h3><p>在执行的过程中总会出现落后者 <code>straggler</code>拖慢了整体的运行速度。这些 <code>straggler</code>出现的原因可能是机器本身存在某些故障导致任务的执行速度降低</p><p>当 <code>MapReduce</code> 操作快结束的时候，<code>Master</code>会将仍在运行 <code>in-progress</code> 的 <code>Task</code>备份并同步执行。只要原始的任务或者备份任务执行完毕，那么该<code>Task</code> 将会被标记为完成</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>MIT6.5840 Notes</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>MIT6.5840 Notes</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>CMU15-445 Project 4</title>
     <link href="/2023/11/15/CMU15-445/Project%204/"/>
     <url>/2023/11/15/CMU15-445/Project%204/</url>
