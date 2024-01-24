@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LeetCode LeetCode 索引 数学相关 二进制小数的表示   位运算 排列相关 求全局 &amp; 局部倒置对数量 贪心 树状数组 基于排列性质     数组 删除部分元素使数组有序 双指针 + 二分 双指针   快速求出数组元素到某个值的距离 前缀和 + 二分   考虑距离和的增量 前缀和 贪心     数据结构应用题 字符串 子串思考的通用思路 回文字符串   二叉树    索引快">
+    <meta name="description" content="LeetCode  LeetCode  索引 数学相关  二进制小数的表示  位运算 排列相关  求全局 &amp; 局部倒置对数量  贪心 树状数组 基于排列性质   数组  删除部分元素使数组有序  双指针 + 二分 双指针  快速求出数组元素到某个值的距离  前缀和 + 二分  考虑距离和的增量  前缀和 贪心   数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/04/15/Algorithm_Archiv/LeetCode/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="LeetCode LeetCode 索引 数学相关 二进制小数的表示   位运算 排列相关 求全局 &amp; 局部倒置对数量 贪心 树状数组 基于排列性质     数组 删除部分元素使数组有序 双指针 + 二分 双指针   快速求出数组元素到某个值的距离 前缀和 + 二分   考虑距离和的增量 前缀和 贪心     数据结构应用题 字符串 子串思考的通用思路 回文字符串   二叉树    索引快">
+<meta property="og:description" content="LeetCode  LeetCode  索引 数学相关  二进制小数的表示  位运算 排列相关  求全局 &amp; 局部倒置对数量  贪心 树状数组 基于排列性质   数组  删除部分元素使数组有序  双指针 + 二分 双指针  快速求出数组元素到某个值的距离  前缀和 + 二分  考虑距离和的增量  前缀和 贪心   数据">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%20Archiv/Algorithm%20Archiv%20(6).jpg">
 <meta property="article:published_time" content="2023-04-15T02:45:28.356Z">
@@ -274,7 +274,7 @@
         
         
         
-          107 mins
+          109 mins
         
       </span>
     
@@ -346,215 +346,343 @@
             
               <div class="markdown-body">
                 
-                <h1 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h1><ul>
-<li><a href="#leetcode">LeetCode</a><ul>
-<li><a href="#%E7%B4%A2%E5%BC%95">索引</a></li>
-<li><a href="#%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3">数学相关</a><ul>
-<li><a href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%B0%8F%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA">二进制小数的表示</a></li>
+                <h1 id="leetcode">LeetCode</h1>
+<ul>
+<li><a href="#leetcode">LeetCode</a>
+<ul>
+<li><a href="#索引">索引</a></li>
+<li><a href="#数学相关">数学相关</a>
+<ul>
+<li><a href="#二进制小数的表示">二进制小数的表示</a></li>
+</ul></li>
+<li><a href="#位运算">位运算</a></li>
+<li><a href="#排列相关">排列相关</a>
+<ul>
+<li><a href="#求全局--局部倒置对数量">求全局 &amp; 局部倒置对数量</a>
+<ul>
+<li><a href="#贪心">贪心</a></li>
+<li><a href="#树状数组">树状数组</a></li>
+<li><a href="#基于排列性质">基于排列性质</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#数组">数组</a>
+<ul>
+<li><a href="#删除部分元素使数组有序">删除部分元素使数组有序</a>
+<ul>
+<li><a href="#双指针--二分">双指针 + 二分</a></li>
+<li><a href="#双指针">双指针</a></li>
+</ul></li>
+<li><a href="#快速求出数组元素到某个值的距离">快速求出数组元素到某个值的距离</a>
+<ul>
+<li><a href="#前缀和--二分">前缀和 + 二分</a></li>
+</ul></li>
+<li><a href="#考虑距离和的增量">考虑距离和的增量</a>
+<ul>
+<li><a href="#前缀和">前缀和</a></li>
+<li><a href="#贪心-1">贪心</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#数据结构应用题">数据结构应用题</a></li>
+<li><a href="#字符串">字符串</a>
+<ul>
+<li><a href="#子串思考的通用思路">子串思考的通用思路</a></li>
+<li><a href="#回文字符串">回文字符串</a></li>
+</ul></li>
+<li><a href="#二叉树">二叉树</a></li>
+</ul></li>
 </ul>
-</li>
-<li><a href="#%E4%BD%8D%E8%BF%90%E7%AE%97">位运算</a></li>
-<li><a href="#%E6%8E%92%E5%88%97%E7%9B%B8%E5%85%B3">排列相关</a><ul>
-<li><a href="#%E6%B1%82%E5%85%A8%E5%B1%80--%E5%B1%80%E9%83%A8%E5%80%92%E7%BD%AE%E5%AF%B9%E6%95%B0%E9%87%8F">求全局 &amp; 局部倒置对数量</a><ul>
-<li><a href="#%E8%B4%AA%E5%BF%83">贪心</a></li>
-<li><a href="#%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84">树状数组</a></li>
-<li><a href="#%E5%9F%BA%E4%BA%8E%E6%8E%92%E5%88%97%E6%80%A7%E8%B4%A8">基于排列性质</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E7%BB%84">数组</a><ul>
-<li><a href="#%E5%88%A0%E9%99%A4%E9%83%A8%E5%88%86%E5%85%83%E7%B4%A0%E4%BD%BF%E6%95%B0%E7%BB%84%E6%9C%89%E5%BA%8F">删除部分元素使数组有序</a><ul>
-<li><a href="#%E5%8F%8C%E6%8C%87%E9%92%88--%E4%BA%8C%E5%88%86">双指针 + 二分</a></li>
-<li><a href="#%E5%8F%8C%E6%8C%87%E9%92%88">双指针</a></li>
-</ul>
-</li>
-<li><a href="#%E5%BF%AB%E9%80%9F%E6%B1%82%E5%87%BA%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%88%B0%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E8%B7%9D%E7%A6%BB">快速求出数组元素到某个值的距离</a><ul>
-<li><a href="#%E5%89%8D%E7%BC%80%E5%92%8C--%E4%BA%8C%E5%88%86">前缀和 + 二分</a></li>
-</ul>
-</li>
-<li><a href="#%E8%80%83%E8%99%91%E8%B7%9D%E7%A6%BB%E5%92%8C%E7%9A%84%E5%A2%9E%E9%87%8F">考虑距离和的增量</a><ul>
-<li><a href="#%E5%89%8D%E7%BC%80%E5%92%8C">前缀和</a></li>
-<li><a href="#%E8%B4%AA%E5%BF%83-1">贪心</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%BA%94%E7%94%A8%E9%A2%98">数据结构应用题</a></li>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a><ul>
-<li><a href="#%E5%AD%90%E4%B8%B2%E6%80%9D%E8%80%83%E7%9A%84%E9%80%9A%E7%94%A8%E6%80%9D%E8%B7%AF">子串思考的通用思路</a></li>
-<li><a href="#%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2">回文字符串</a></li>
-</ul>
-</li>
-<li><a href="#%E4%BA%8C%E5%8F%89%E6%A0%91">二叉树</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p><a href="#%E5%BF%AB%E9%80%9F%E6%B1%82%E5%87%BA%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%88%B0%E6%9F%90%E4%B8%AA%E5%80%BC%E7%9A%84%E8%B7%9D%E7%A6%BB">快速求出数组元素到某个值的距离</a>——<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/">LeetCode 2602. 使数组元素全部相等的最少操作次数</a></p>
-<h2 id="数学相关"><a href="#数学相关" class="headerlink" title="数学相关"></a>数学相关</h2><h3 id="二进制小数的表示"><a href="#二进制小数的表示" class="headerlink" title="二进制小数的表示"></a>二进制小数的表示</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/bianry-number-to-string-lcci/submissions/">LeetCode 面试题 05.02. 二进制数转字符串</a></p>
-<p>设十进制小数 $num$ 的二进制表示为 $0.b_1b_2b_3\cdots b_k$ ，考虑将其转为二进制字符串</p>
-<p>每次乘 $2$ 将小数点向右移动一位，变为 $b_1.b_2b_3\cdots b_k$，将 $b_1$ 记录下来并减去，至多循环 $32$ 次。如果 $num$ 最终变为 $0$ ，那么便可以直接返回</p>
+<h2 id="索引">索引</h2>
+<p><a href="#快速求出数组元素到某个值的距离">快速求出数组元素到某个值的距离</a>——<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/">LeetCode
+2602. 使数组元素全部相等的最少操作次数</a></p>
+<h2 id="数学相关">数学相关</h2>
+<h3 id="二进制小数的表示">二进制小数的表示</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/bianry-number-to-string-lcci/submissions/">LeetCode
+面试题 05.02. 二进制数转字符串</a></p>
+<p>设十进制小数 <span class="math inline">\(num\)</span> 的二进制表示为
+<span class="math inline">\(0.b_1b_2b_3\cdots b_k\)</span>
+，考虑将其转为二进制字符串</p>
+<p>每次乘 <span class="math inline">\(2\)</span>
+将小数点向右移动一位，变为 <span class="math inline">\(b_1.b_2b_3\cdots
+b_k\)</span>，将 <span class="math inline">\(b_1\)</span>
+记录下来并减去，至多循环 <span class="math inline">\(32\)</span>
+次。如果 <span class="math inline">\(num\)</span> 最终变为 <span class="math inline">\(0\)</span> ，那么便可以直接返回</p>
 <p>不难写出如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">printBin</span><span class="hljs-params">(<span class="hljs-type">double</span> num)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        string ans = <span class="hljs-string">&quot;0.&quot;</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i ++)<br>        &#123;<br>            num *= <span class="hljs-number">2</span>;<br>            <span class="hljs-keyword">if</span>(num &lt; <span class="hljs-number">1</span>)<br>            &#123;<br>                ans += <span class="hljs-string">&quot;0&quot;</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                ans += <span class="hljs-string">&quot;1&quot;</span>;<br>                <span class="hljs-keyword">if</span>(--num == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> ans;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ERROR&quot;</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p>优化：</p>
 <ul>
-<li>任何一个<strong>有限位</strong> $p$ 进制小数均可以表示成<strong>最小分数</strong> $\frac{a}{p^k}$ ，其中 $a$ 和 $p^k$ 互质</li>
+<li>任何一个<strong>有限位</strong> <span class="math inline">\(p\)</span>
+进制小数均可以表示成<strong>最小分数</strong> <span class="math inline">\(\frac{a}{p^k}\)</span> ，其中 <span class="math inline">\(a\)</span> 和 <span class="math inline">\(p^k\)</span> 互质</li>
 </ul>
-<p>$num$ 最多为十进制<strong>六位</strong>小数，设其表示为 $\frac{a}{10^6}$ ，设其对应二进制表示为 $\frac{b}{2^k}$ ，有：</p>
-<p>$$<br>\frac{a}{10^6}&#x3D;\frac{b}{2^k} \rightarrow<br>\frac{a}{2^65^6}&#x3D;\frac{b}{2^k} \rightarrow<br>b&#x3D;\frac{a2^{k-6}}{5^6}<br>$$</p>
-<p>由于 $b$ 与 $2$ 互质，因此 $0\le k\le 6$ ，即对于六位十进制小数而言，其对应二进制小数最多只有六位，因此只需要枚举 $6$ 次即可</p>
+<p><span class="math inline">\(num\)</span>
+最多为十进制<strong>六位</strong>小数，设其表示为 <span class="math inline">\(\frac{a}{10^6}\)</span> ，设其对应二进制表示为
+<span class="math inline">\(\frac{b}{2^k}\)</span> ，有：</p>
+<p><span class="math display">\[
+\frac{a}{10^6}=\frac{b}{2^k} \rightarrow
+\frac{a}{2^65^6}=\frac{b}{2^k} \rightarrow
+b=\frac{a2^{k-6}}{5^6}
+\]</span></p>
+<p>由于 <span class="math inline">\(b\)</span> 与 <span class="math inline">\(2\)</span> 互质，因此 <span class="math inline">\(0\le k\le 6\)</span>
+，即对于六位十进制小数而言，其对应二进制小数最多只有六位，因此只需要枚举
+<span class="math inline">\(6\)</span> 次即可</p>
 <p>完整代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">string <span class="hljs-title">printBin</span><span class="hljs-params">(<span class="hljs-type">double</span> num)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        string ans = <span class="hljs-string">&quot;0.&quot;</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i ++)<br>        &#123;<br>            num *= <span class="hljs-number">2</span>;<br>            <span class="hljs-keyword">if</span>(num &lt; <span class="hljs-number">1</span>)<br>            &#123;<br>                ans += <span class="hljs-string">&quot;0&quot;</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>            &#123;<br>                ans += <span class="hljs-string">&quot;1&quot;</span>;<br>                <span class="hljs-keyword">if</span>(--num == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> ans;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ERROR&quot;</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><p>下面给出常用位运算技巧：</p>
+<h2 id="位运算">位运算</h2>
+<p>下面给出常用位运算技巧：</p>
 <p>我们用一个二进制数来表示一个集合，那么有：</p>
-<ol>
-<li>将 $x$ 变为集合：<code>1 &lt;&lt; x</code></li>
-<li>判断 $x$ 是否在集合 $A$ 中：<code>((A &gt;&gt; x) &amp; 1) == 1</code></li>
-<li>计算两个集合 $A,B$ 的并集 $A\cup B$：<code>A | B</code></li>
-<li>计算 $A\setminus B$，表示从集合 $A$ 中去掉集合 $B$ 中的元素：<code>A &amp; ~B</code> 。例如 <code>110 &amp; ~11 = 100</code></li>
-<li>得到全集 $U&#x3D;{ 0,1,2,\cdots, n - 1 }$：<code>(1 &lt;&lt; n) - 1</code></li>
+<ol type="1">
+<li>将 <span class="math inline">\(x\)</span>
+变为集合：<code>1 &lt;&lt; x</code></li>
+<li>判断 <span class="math inline">\(x\)</span> 是否在集合 <span class="math inline">\(A\)</span>
+中：<code>((A &gt;&gt; x) &amp; 1) == 1</code></li>
+<li>计算两个集合 <span class="math inline">\(A,B\)</span> 的并集 <span class="math inline">\(A\cup B\)</span>：<code>A | B</code></li>
+<li>计算 <span class="math inline">\(A\setminus B\)</span>，表示从集合
+<span class="math inline">\(A\)</span> 中去掉集合 <span class="math inline">\(B\)</span> 中的元素：<code>A &amp; ~B</code>
+。例如 <code>110 &amp; ~11 = 100</code></li>
+<li>得到全集 <span class="math inline">\(U=\{ 0,1,2,\cdots, n - 1
+\}\)</span>：<code>(1 &lt;&lt; n) - 1</code></li>
 </ol>
 <hr>
-<h2 id="排列相关"><a href="#排列相关" class="headerlink" title="排列相关"></a>排列相关</h2><h3 id="求全局-amp-局部倒置对数量"><a href="#求全局-amp-局部倒置对数量" class="headerlink" title="求全局 &amp; 局部倒置对数量"></a>求全局 &amp; 局部倒置对数量</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/global-and-local-inversions/">LeetCode 775. 全局倒置与局部倒置</a></p>
-<p>整理一下题意，对于满足 $nums[i]\gt nums[j],i&lt;j$ 的逆序对称为全局倒置；对于满足 $nums[i]\gt nums[i+1]$ 的逆序对称为局部倒置</p>
-<p>如果全局倒置的数量<strong>等于</strong>局部倒置的数量，则返回 <code>true</code></p>
-<h4 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h4><p>注意到局部倒置的数量为全局倒置数量的<strong>子集</strong>，也就是说如果我们统计所有满足「属于全局倒置而不属于局部倒置」的逆序对，只要这个结果为 $0$ ，就表明全局倒置和局部倒置的数量相等</p>
+<h2 id="排列相关">排列相关</h2>
+<h3 id="求全局-局部倒置对数量">求全局 &amp; 局部倒置对数量</h3>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/global-and-local-inversions/">LeetCode
+775. 全局倒置与局部倒置</a></p>
+<p>整理一下题意，对于满足 <span class="math inline">\(nums[i]\gt
+nums[j],i&lt;j\)</span> 的逆序对称为全局倒置；对于满足 <span class="math inline">\(nums[i]\gt nums[i+1]\)</span>
+的逆序对称为局部倒置</p>
+<p>如果全局倒置的数量<strong>等于</strong>局部倒置的数量，则返回
+<code>true</code></p>
+<h4 id="贪心">贪心</h4>
+<p>注意到局部倒置的数量为全局倒置数量的<strong>子集</strong>，也就是说如果我们统计所有满足「属于全局倒置而不属于局部倒置」的逆序对，只要这个结果为
+<span class="math inline">\(0\)</span>
+，就表明全局倒置和局部倒置的数量相等</p>
 <p>如果当前值比满足「属于全局倒置而不属于局部倒置」后缀的最小值要大，那么说明必然不符合题意</p>
-<p>也就是说，我们需要从 $n-3$ 开始枚举，而后缀最小值从 $n-1$ 开始维护，每次用 $i+1$ 来进行更新</p>
+<p>也就是说，我们需要从 <span class="math inline">\(n-3\)</span>
+开始枚举，而后缀最小值从 <span class="math inline">\(n-1\)</span>
+开始维护，每次用 <span class="math inline">\(i+1\)</span> 来进行更新</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isIdealPermutation</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();        <br>        <span class="hljs-type">int</span> mn = nums[n - <span class="hljs-number">1</span>];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n - <span class="hljs-number">3</span>; i &gt;= <span class="hljs-number">0</span>; i --)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(nums[i] &gt; mn) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            mn = <span class="hljs-built_in">min</span>(mn, nums[i + <span class="hljs-number">1</span>]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：$O(n)$</p>
-<h4 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h4><p>对于 $x$ ，我们需要求出前面所有比其大的数的个数，这恰好可以用树状数组（前缀和）来实现</p>
-<p>我们以<strong>元素值为下标</strong>，数组对应值表示该元素出现的<strong>次数</strong>，对于 $x$ 而言，所有比其小的数的个数为 $\sum_{i&#x3D;1}^{x-1}s_i$</p>
+<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
+<h4 id="树状数组">树状数组</h4>
+<p>对于 <span class="math inline">\(x\)</span>
+，我们需要求出前面所有比其大的数的个数，这恰好可以用树状数组（前缀和）来实现</p>
+<p>我们以<strong>元素值为下标</strong>，数组对应值表示该元素出现的<strong>次数</strong>，对于
+<span class="math inline">\(x\)</span> 而言，所有比其小的数的个数为
+<span class="math inline">\(\sum_{i=1}^{x-1}s_i\)</span></p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br>    <span class="hljs-type">int</span> n;<br>    <span class="hljs-type">int</span> tr[N];<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> x &amp; -x;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &lt;= n; i += <span class="hljs-built_in">lowbit</span>(i))<br>            tr[i] += c;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = x; i &gt; <span class="hljs-number">0</span>; i -= <span class="hljs-built_in">lowbit</span>(i))<br>            ans += tr[i];<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isIdealPermutation</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        n = nums.<span class="hljs-built_in">size</span>();        <br>        <span class="hljs-built_in">memset</span>(tr, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> tr);<br>        <span class="hljs-built_in">add</span>(nums[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br>        <span class="hljs-type">long</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i ++)<br>        &#123;<br>            <span class="hljs-type">int</span> v = nums[i] + <span class="hljs-number">1</span>;<br>            a += <span class="hljs-built_in">query</span>(n) - <span class="hljs-built_in">query</span>(v);<br>            b += nums[i] &lt; nums[i - <span class="hljs-number">1</span>] ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;<br>            <span class="hljs-built_in">add</span>(v, <span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> a == b;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：$O(n\log n)$ ，树状数组的插入和查询均为 $O(\log n)$</p>
-<h4 id="基于排列性质"><a href="#基于排列性质" class="headerlink" title="基于排列性质"></a>基于排列性质</h4><p>由于整个数组是一个从 $0\sim n-1$ 的排列，因此对于每个数组元素，将整个数组排序后都有与其<strong>唯一对应</strong>的位置（也就是以<strong>元素下标</strong>）</p>
-<p>具体地，对于排列 $[3,4,0,2,1]$ ，有：</p>
-<p>$3$ 应当放在下标为 $3$ 的位置，$4$ 应当放在下标为 $4$ 的位置，$0$ 应当放在下标为 $0$ 的位置，$2$ 应当放在下标为 $2$ 的位置，$1$ 应当放在下标为 $1$ 的位置</p>
-<p>回到本题，对于元素 $nums[i]$ 而言，其应当放在位置 $i$ ，如果我们期望由 $nums[i]$ 构成的逆序对满足「属于全局倒置而不属于局部倒置」，这就要求 **$nums[i]$ 距离 $i$ 不能超过 $1$**，也就是不能超过局部倒置的范围，即：</p>
-<p>$$<br>|nums[i]-i|\le 1<br>$$</p>
+<p>时间复杂度：<span class="math inline">\(O(n\log n)\)</span>
+，树状数组的插入和查询均为 <span class="math inline">\(O(\log
+n)\)</span></p>
+<h4 id="基于排列性质">基于排列性质</h4>
+<p>由于整个数组是一个从 <span class="math inline">\(0\sim n-1\)</span>
+的排列，因此对于每个数组元素，将整个数组排序后都有与其<strong>唯一对应</strong>的位置（也就是以<strong>元素下标</strong>）</p>
+<p>具体地，对于排列 <span class="math inline">\([3,4,0,2,1]\)</span>
+，有：</p>
+<p><span class="math inline">\(3\)</span> 应当放在下标为 <span class="math inline">\(3\)</span> 的位置，<span class="math inline">\(4\)</span> 应当放在下标为 <span class="math inline">\(4\)</span> 的位置，<span class="math inline">\(0\)</span> 应当放在下标为 <span class="math inline">\(0\)</span> 的位置，<span class="math inline">\(2\)</span> 应当放在下标为 <span class="math inline">\(2\)</span> 的位置，<span class="math inline">\(1\)</span> 应当放在下标为 <span class="math inline">\(1\)</span> 的位置</p>
+<p>回到本题，对于元素 <span class="math inline">\(nums[i]\)</span>
+而言，其应当放在位置 <span class="math inline">\(i\)</span>
+，如果我们期望由 <span class="math inline">\(nums[i]\)</span>
+构成的逆序对满足「属于全局倒置而不属于局部倒置」，这就要求 <strong><span class="math inline">\(nums[i]\)</span> 距离 <span class="math inline">\(i\)</span> 不能超过 <span class="math inline">\(1\)</span></strong>，也就是不能超过局部倒置的范围，即：</p>
+<p><span class="math display">\[
+|nums[i]-i|\le 1
+\]</span></p>
 <p>所以我们可以对每个数依次判断它与对应位置的距离，完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isIdealPermutation</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-built_in">size</span>(); i ++)<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">abs</span>(nums[i] - i) &gt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/arithmetic-subarrays/">LeetCode 1630. 等差子数组</a></p>
+<h2 id="数组">数组</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/arithmetic-subarrays/">LeetCode
+1630. 等差子数组</a></p>
 <p>这道题可以用最暴力的做法，每次将子数组进行排序，然后考虑子数组是否为等差数列，这里我们直接给出代码，不做过多讨论</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">checkArithmeticSubarrays</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">int</span>&gt;&amp; l, vector&lt;<span class="hljs-type">int</span>&gt;&amp; r)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), m = l.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">bool</span>&gt;<span class="hljs-built_in">ans</span>(m, <span class="hljs-literal">true</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++)<br>        &#123;<br>            vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">tmp</span>(nums.<span class="hljs-built_in">begin</span>() + l[i], nums.<span class="hljs-built_in">begin</span>() + r[i] + <span class="hljs-number">1</span>);<br>            <span class="hljs-built_in">sort</span>(tmp.<span class="hljs-built_in">begin</span>(), tmp.<span class="hljs-built_in">end</span>());<br>            <span class="hljs-type">int</span> d = tmp[<span class="hljs-number">1</span>] - tmp[<span class="hljs-number">0</span>];<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">2</span>; j &lt; tmp.<span class="hljs-built_in">size</span>(); j ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(tmp[j] - tmp[j - <span class="hljs-number">1</span>] != d)<br>                &#123;<br>                    ans[i] = <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>这么做的时间复杂度为：$O(mn\log n)$，其实有 $O(nm)$ 的做法</p>
-<p>对于一个序列，设最大值为 $maxv$ ，最小值为 $minv$ ，元素个数为 $l$，如果从新排列使其能够成为等差序列，其公差必然为：</p>
-<p>$$<br>\frac{maxv-minv}{l-1}<br>$$</p>
+<p>这么做的时间复杂度为：<span class="math inline">\(O(mn\log
+n)\)</span>，其实有 <span class="math inline">\(O(nm)\)</span>
+的做法</p>
+<p>对于一个序列，设最大值为 <span class="math inline">\(maxv\)</span>
+，最小值为 <span class="math inline">\(minv\)</span> ，元素个数为 <span class="math inline">\(l\)</span>，如果从新排列使其能够成为等差序列，其公差必然为：</p>
+<p><span class="math display">\[
+\frac{maxv-minv}{l-1}
+\]</span></p>
 <p>如果无法整除，说明该序列无法构成等差数列</p>
 <p>更进一步，我们需要确认将数从新排列后是否出现冲突，因此需要确认每个数在等差数列当中的位值，如果出现冲突则说明该序列无法构成等差数列</p>
-<p>具体地，对于数 $x$ 而言，其在等差数列当中的位置为：</p>
-<p>$$<br>idx&#x3D;\frac{x-minv}{d}<br>$$</p>
+<p>具体地，对于数 <span class="math inline">\(x\)</span>
+而言，其在等差数列当中的位置为：</p>
+<p><span class="math display">\[
+idx=\frac{x-minv}{d}
+\]</span></p>
 <p>因此这一步我们可以开一个哈希表来判断是否出现冲突，如果都没有出现冲突，则说明该子数组重新排列后可以构成等差数列</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">checkArithmeticSubarrays</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">int</span>&gt;&amp; l, vector&lt;<span class="hljs-type">int</span>&gt;&amp; r)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), m = l.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">bool</span>&gt;ans;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++)<br>        &#123;<br>            <span class="hljs-type">int</span> left = l[i], right = r[i];<br>            <span class="hljs-type">int</span> maxv = *<span class="hljs-built_in">max_element</span>(nums.<span class="hljs-built_in">begin</span>() + left, nums.<span class="hljs-built_in">begin</span>() + right + <span class="hljs-number">1</span>);<br>            <span class="hljs-type">int</span> minv = *<span class="hljs-built_in">min_element</span>(nums.<span class="hljs-built_in">begin</span>() + left, nums.<span class="hljs-built_in">begin</span>() + right + <span class="hljs-number">1</span>);<br>            <span class="hljs-keyword">if</span>((maxv - minv) % (right - left) != <span class="hljs-number">0</span>)<span class="hljs-comment">//无法整除的情况</span><br>            &#123;<br>                ans.<span class="hljs-built_in">push_back</span>(<span class="hljs-literal">false</span>);<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(maxv == minv)<span class="hljs-comment">//数列中每个数都相同</span><br>            &#123;<br>                ans.<span class="hljs-built_in">push_back</span>(<span class="hljs-literal">true</span>);<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            <span class="hljs-type">int</span> d = ((maxv - minv) / (right - left));<br>            <span class="hljs-type">bool</span> flag = <span class="hljs-literal">true</span>;<br>            vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">hash</span>(right - left + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = left; j &lt;= right; j ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>((nums[j] - minv) % d != <span class="hljs-number">0</span>)<span class="hljs-comment">//无法整除的情况</span><br>                &#123;<br>                    flag = <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                <span class="hljs-type">int</span> t = (nums[j] - minv) / d;<br>                <span class="hljs-keyword">if</span>(hash[t])<br>                &#123;<br>                    flag = <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                <span class="hljs-keyword">else</span> hash[t]++;<br>            &#125;<br>            ans.<span class="hljs-built_in">push_back</span>(flag);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h3 id="删除部分元素使数组有序"><a href="#删除部分元素使数组有序" class="headerlink" title="删除部分元素使数组有序"></a>删除部分元素使数组有序</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-subarray-to-be-removed-to-make-array-sorted/">LeetCode 1574. 删除最短的子数组使剩余数组有序</a></p>
-<h4 id="双指针-二分"><a href="#双指针-二分" class="headerlink" title="双指针 + 二分"></a>双指针 + 二分</h4><p>我们需要删除一个子数组使得剩余数组呈<strong>非递减</strong>状态</p>
-<p>首先从左往右遍历，得到<strong>最长非递减前缀</strong>下标 $left$ ，此时数组 $[0\cdots left]$ 均为<strong>非递减数组</strong></p>
-<p>此前从右往左遍历，得到<strong>最长非递减后缀</strong>下标 $right$，此时数组 $[right\cdots n-1]$ 均为<strong>非递减数组</strong></p>
-<p>此时可以我们可以删去 $[0\cdots right-1]$ 或者 $[left+1\cdots n-1]$ ，此时可以保证剩余数组一定有序，即 $ans&#x3D;\min(right,n-1-left)$</p>
-<p>此后，我们枚举区间 $[0\cdots left]$ （设下标为 $l$），在 $[right\cdots n-1]$ 中找到第一个<strong>大于等于</strong>的数（设下标为 $r$），此时删去区间 $[l+1,r-1]$ 可保证剩余数组一定有序，即 $ans&#x3D;\min(ans,r-l-1)$</p>
+<h3 id="删除部分元素使数组有序">删除部分元素使数组有序</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-subarray-to-be-removed-to-make-array-sorted/">LeetCode
+1574. 删除最短的子数组使剩余数组有序</a></p>
+<h4 id="双指针-二分">双指针 + 二分</h4>
+<p>我们需要删除一个子数组使得剩余数组呈<strong>非递减</strong>状态</p>
+<p>首先从左往右遍历，得到<strong>最长非递减前缀</strong>下标 <span class="math inline">\(left\)</span> ，此时数组 <span class="math inline">\([0\cdots left]\)</span>
+均为<strong>非递减数组</strong></p>
+<p>此前从右往左遍历，得到<strong>最长非递减后缀</strong>下标 <span class="math inline">\(right\)</span>，此时数组 <span class="math inline">\([right\cdots n-1]\)</span>
+均为<strong>非递减数组</strong></p>
+<p>此时可以我们可以删去 <span class="math inline">\([0\cdots
+right-1]\)</span> 或者 <span class="math inline">\([left+1\cdots
+n-1]\)</span> ，此时可以保证剩余数组一定有序，即 <span class="math inline">\(ans=\min(right,n-1-left)\)</span></p>
+<p>此后，我们枚举区间 <span class="math inline">\([0\cdots
+left]\)</span> （设下标为 <span class="math inline">\(l\)</span>），在
+<span class="math inline">\([right\cdots n-1]\)</span>
+中找到第一个<strong>大于等于</strong>的数（设下标为 <span class="math inline">\(r\)</span>），此时删去区间 <span class="math inline">\([l+1,r-1]\)</span> 可保证剩余数组一定有序，即
+<span class="math inline">\(ans=\min(ans,r-l-1)\)</span></p>
 <blockquote>
-<p>注：<code>lower_bound</code> 可以找到第一个<strong>大于等于</strong>的数，<code>upper_bound</code> 可以找到第一个<strong>大于</strong>的数</p>
+<p>注：<code>lower_bound</code>
+可以找到第一个<strong>大于等于</strong>的数，<code>upper_bound</code>
+可以找到第一个<strong>大于</strong>的数</p>
 </blockquote>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findLengthOfShortestSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = arr.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = n - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(left + <span class="hljs-number">1</span> &lt;= n - <span class="hljs-number">1</span> &amp;&amp; arr[left] &lt;= arr[left + <span class="hljs-number">1</span>]) left++;<br>        <span class="hljs-keyword">while</span>(right - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span> &amp;&amp; arr[right - <span class="hljs-number">1</span>] &lt;= arr[right]) right--;<br>        <span class="hljs-keyword">if</span>(left &gt;= right) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-built_in">min</span>(right, n - left - <span class="hljs-number">1</span>);<span class="hljs-comment">//删去[left + 1, n - 1] 与 [0, right - 1]</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> l = <span class="hljs-number">0</span>; l &lt;= left; l ++)<br>        &#123;<br>            <span class="hljs-type">int</span> r = <span class="hljs-built_in">lower_bound</span>(arr.<span class="hljs-built_in">begin</span>() + right, arr.<span class="hljs-built_in">end</span>(), arr[l]) - arr.<span class="hljs-built_in">begin</span>();<br>            ans = <span class="hljs-built_in">min</span>(ans, r - l - <span class="hljs-number">1</span>);<span class="hljs-comment">//删去[l + 1, r - 1]</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<h4 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h4><p>类似于上面的做法，我们首先找到**最长非递减后缀 $right$**，此时 $ans&#x3D;right$</p>
-<p>左指针 $left$ 从左往右遍历，我们需要删除的区间为开区间 $(left,right)$</p>
-<p>对左指针而言，首先需要保证非递减，因此必然需要满足 $arr[left-1]&#x3D;arr[left]$ </p>
-<p>再者，对于元素 $arr[left]$ ，我们需要<strong>右移</strong>右指针 $right$ ，使得 $arr[right]\ge arr[left]$ </p>
+<h4 id="双指针">双指针</h4>
+<p>类似于上面的做法，我们首先找到<strong>最长非递减后缀 <span class="math inline">\(right\)</span></strong>，此时 <span class="math inline">\(ans=right\)</span></p>
+<p>左指针 <span class="math inline">\(left\)</span>
+从左往右遍历，我们需要删除的区间为开区间 <span class="math inline">\((left,right)\)</span></p>
+<p>对左指针而言，首先需要保证非递减，因此必然需要满足 <span class="math inline">\(arr[left-1]=arr[left]\)</span></p>
+<p>再者，对于元素 <span class="math inline">\(arr[left]\)</span>
+，我们需要<strong>右移</strong>右指针 <span class="math inline">\(right\)</span> ，使得 <span class="math inline">\(arr[right]\ge arr[left]\)</span></p>
 <p>完整代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findLengthOfShortestSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = arr.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> right = n - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(right &gt;= <span class="hljs-number">1</span> &amp;&amp; arr[right - <span class="hljs-number">1</span>] &lt;= arr[right]) right--;<br>        <span class="hljs-keyword">if</span>(right == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> ans = right;<span class="hljs-comment">//删除[0,right-1]</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>; left == <span class="hljs-number">0</span> || arr[left - <span class="hljs-number">1</span>] &lt;= arr[left]; left ++)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(right &lt;= n - <span class="hljs-number">1</span> &amp;&amp; arr[left] &gt; arr[right]) right++;<br>            ans = <span class="hljs-built_in">min</span>(ans, right - left - <span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<hr>
-<h3 id="快速求出数组元素到某个值的距离"><a href="#快速求出数组元素到某个值的距离" class="headerlink" title="快速求出数组元素到某个值的距离"></a>快速求出数组元素到某个值的距离</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/">LeetCode 2602. 使数组元素全部相等的最少操作次数</a></p>
-<h4 id="前缀和-二分"><a href="#前缀和-二分" class="headerlink" title="前缀和 + 二分"></a>前缀和 + 二分</h4><p>将 $nums[i]$ 中的元素全部变为 $q$ ，相当于求 <strong>$nums[i]$ 中每个元素到 $q$ 的距离</strong></p>
-<p>由于 $nums[i]$ 的顺序与最终结果无关，因此可以先对其<strong>排序</strong></p>
-<p>此后我们二分，找到第一个<strong>大于等于</strong> $q$ 的数的下标 $k$ ，此时左边 $\lt q$，右边 $\ge q$</p>
-<p>然后我们从面积的角度来考虑，左边的距离和为：$q$ 对应面积减去元素面积；右边距离和为：元素面积减去 $q$ 对应面积，即：</p>
-<p>$$<br>\begin{align*}<br>l&amp;&#x3D;k\times q-s[k]\<br>r&amp;&#x3D;(s[n]-s[k])-(n-k)\times q<br>\end{align*}<br>$$</p>
+<h2 id="section"><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findLengthOfShortestSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; arr)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = arr.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> right = n - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(right &gt;= <span class="hljs-number">1</span> &amp;&amp; arr[right - <span class="hljs-number">1</span>] &lt;= arr[right]) right--;<br>        <span class="hljs-keyword">if</span>(right == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> ans = right;<span class="hljs-comment">//删除[0,right-1]</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> left = <span class="hljs-number">0</span>; left == <span class="hljs-number">0</span> || arr[left - <span class="hljs-number">1</span>] &lt;= arr[left]; left ++)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(right &lt;= n - <span class="hljs-number">1</span> &amp;&amp; arr[left] &gt; arr[right]) right++;<br>            ans = <span class="hljs-built_in">min</span>(ans, right - left - <span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure></h2>
+<h3 id="快速求出数组元素到某个值的距离">快速求出数组元素到某个值的距离</h3>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/">LeetCode
+2602. 使数组元素全部相等的最少操作次数</a></p>
+<h4 id="前缀和-二分">前缀和 + 二分</h4>
+<p>将 <span class="math inline">\(nums[i]\)</span> 中的元素全部变为
+<span class="math inline">\(q\)</span> ，相当于求 <strong><span class="math inline">\(nums[i]\)</span> 中每个元素到 <span class="math inline">\(q\)</span> 的距离</strong></p>
+<p>由于 <span class="math inline">\(nums[i]\)</span>
+的顺序与最终结果无关，因此可以先对其<strong>排序</strong></p>
+<p>此后我们二分，找到第一个<strong>大于等于</strong> <span class="math inline">\(q\)</span> 的数的下标 <span class="math inline">\(k\)</span> ，此时左边 <span class="math inline">\(\lt q\)</span>，右边 <span class="math inline">\(\ge q\)</span></p>
+<p>然后我们从面积的角度来考虑，左边的距离和为：<span class="math inline">\(q\)</span>
+对应面积减去元素面积；右边距离和为：元素面积减去 <span class="math inline">\(q\)</span> 对应面积，即：</p>
+<p><span class="math display">\[
+\begin{align*}
+l&amp;=k\times q-s[k]\\
+r&amp;=(s[n]-s[k])-(n-k)\times q
+\end{align*}
+\]</span></p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">minOperations</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-type">int</span>&gt;&amp; queries)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>(), m = queries.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;<span class="hljs-built_in">s</span>(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++)<br>            s[i] = s[i - <span class="hljs-number">1</span>] + nums[i - <span class="hljs-number">1</span>];<br>        vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;<span class="hljs-built_in">ans</span>(m);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++)<br>        &#123;<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> k = <span class="hljs-built_in">lower_bound</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>(), queries[i]) - nums.<span class="hljs-built_in">begin</span>();<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> l = k * queries[i] - s[k];<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> r = (s[n] - s[k]) - (n - k) * queries[i];<br>            ans[i] = l + r;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度：$O(n\log n)$</p>
-<h3 id="考虑距离和的增量"><a href="#考虑距离和的增量" class="headerlink" title="考虑距离和的增量"></a>考虑距离和的增量</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-distances/">LeetCode 2615. 等值距离和</a></p>
-<h4 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h4><p>我们先对<strong>所有相同元素的下标进行分组</strong>，之后再单独考虑每个组内部的情况</p>
-<p>对于某个组 $q$ ，其每个元素均为下标，我们需要求<strong>每个元素到其余元素的距离之和</strong>，那么本题与上一题就一样了</p>
+<p>时间复杂度：<span class="math inline">\(O(n\log n)\)</span></p>
+<h3 id="考虑距离和的增量">考虑距离和的增量</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-distances/">LeetCode
+2615. 等值距离和</a></p>
+<h4 id="前缀和">前缀和</h4>
+<p>我们先对<strong>所有相同元素的下标进行分组</strong>，之后再单独考虑每个组内部的情况</p>
+<p>对于某个组 <span class="math inline">\(q\)</span>
+，其每个元素均为下标，我们需要求<strong>每个元素到其余元素的距离之和</strong>，那么本题与上一题就一样了</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">distance</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        unordered_map&lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;&gt;hash;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>            hash[nums[i]].<span class="hljs-built_in">push_back</span>(i);<br>        vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;<span class="hljs-built_in">s</span>(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>), <span class="hljs-built_in">ans</span>(n);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; [_, q] : hash)<br>        &#123;<br>            <span class="hljs-type">int</span> m = q.<span class="hljs-built_in">size</span>();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i ++)<br>                s[i] = s[i - <span class="hljs-number">1</span>] + q[i - <span class="hljs-number">1</span>];<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++)<br>            &#123;<br>                <span class="hljs-type">long</span> <span class="hljs-type">long</span> v = q[i];<br>                <span class="hljs-type">long</span> <span class="hljs-type">long</span> l = i * v - s[i];<br>                <span class="hljs-type">long</span> <span class="hljs-type">long</span> r = s[m] - s[i] - v * (m - i);<br>                ans[v] = l + r;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：$O(n)$ ，由于数组 $q$ 本身有序且每次求的 $v$ 均为数组元素，因此不需要二分</p>
-<h4 id="贪心-1"><a href="#贪心-1" class="headerlink" title="贪心"></a>贪心</h4><p>设数组 $q$ 长度为 $n$ ，下标从 $0$ 开始，$s_i$ 表示下标 $i$ 对应元素到其余元素的距离</p>
-<p>假设当前已经求出了 $s_0$ ，我们考虑 $s_1$ 与 $s_0$ 之间的关系：</p>
-<p>从 $q_0$ 到 $q_1$ ，有 <strong>$1$ 个</strong>元素增大了 $q_1-q_0$ ，$n-1$ 个元素减小了 $q_1-q_0$ ，即：$s_1&#x3D;s_0+(q_1-q_0)-(n-1)(q_1-q_0)$</p>
-<p>更一般地，$s_i$ 与 $s_{i-1}$ 之间，有 $i$ 个元素增大了 $q_i-q_{i-1}$ ，有 $n-i$ 个元素减小了 $q_i-q_{i-1}$，即：</p>
-<p>$$<br>\begin{align*}<br>s_i&amp;&#x3D;s_{i-1}+i\times (q_i-q_{i-1})-(n-i)\times (q_i-q_{i-1})\<br>&amp;&#x3D;s_{i-1}+(2i-n)\times(q_i-q_{i-1})<br>\end{align*}<br>$$</p>
-<p>在代码实现上，我们先求出 $s_0$ ，然后不断更新 $s_i$ 即可</p>
+<p>时间复杂度：<span class="math inline">\(O(n)\)</span> ，由于数组
+<span class="math inline">\(q\)</span> 本身有序且每次求的 <span class="math inline">\(v\)</span> 均为数组元素，因此不需要二分</p>
+<h4 id="贪心-1">贪心</h4>
+<p>设数组 <span class="math inline">\(q\)</span> 长度为 <span class="math inline">\(n\)</span> ，下标从 <span class="math inline">\(0\)</span> 开始，<span class="math inline">\(s_i\)</span> 表示下标 <span class="math inline">\(i\)</span> 对应元素到其余元素的距离</p>
+<p>假设当前已经求出了 <span class="math inline">\(s_0\)</span>
+，我们考虑 <span class="math inline">\(s_1\)</span> 与 <span class="math inline">\(s_0\)</span> 之间的关系：</p>
+<p>从 <span class="math inline">\(q_0\)</span> 到 <span class="math inline">\(q_1\)</span> ，有 <strong><span class="math inline">\(1\)</span> 个</strong>元素增大了 <span class="math inline">\(q_1-q_0\)</span> ，<span class="math inline">\(n-1\)</span> 个元素减小了 <span class="math inline">\(q_1-q_0\)</span> ，即：<span class="math inline">\(s_1=s_0+(q_1-q_0)-(n-1)(q_1-q_0)\)</span></p>
+<p>更一般地，<span class="math inline">\(s_i\)</span> 与 <span class="math inline">\(s_{i-1}\)</span> 之间，有 <span class="math inline">\(i\)</span> 个元素增大了 <span class="math inline">\(q_i-q_{i-1}\)</span> ，有 <span class="math inline">\(n-i\)</span> 个元素减小了 <span class="math inline">\(q_i-q_{i-1}\)</span>，即：</p>
+<p><span class="math display">\[
+\begin{align*}
+s_i&amp;=s_{i-1}+i\times (q_i-q_{i-1})-(n-i)\times (q_i-q_{i-1})\\
+&amp;=s_{i-1}+(2i-n)\times(q_i-q_{i-1})
+\end{align*}
+\]</span></p>
+<p>在代码实现上，我们先求出 <span class="math inline">\(s_0\)</span>
+，然后不断更新 <span class="math inline">\(s_i\)</span> 即可</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">distance</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        unordered_map&lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;&gt;hash;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++)<br>            hash[nums[i]].<span class="hljs-built_in">push_back</span>(i);<br>        vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt;<span class="hljs-built_in">ans</span>(n);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; [_, q] : hash)<br>        &#123;<br>            <span class="hljs-type">int</span> m = q.<span class="hljs-built_in">size</span>();<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> s = <span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++) s += (q[i] - q[<span class="hljs-number">0</span>]);<br>            ans[q[<span class="hljs-number">0</span>]] = s;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; m; i ++)<br>                ans[q[i]] = s += (<span class="hljs-type">long</span> <span class="hljs-type">long</span>)(<span class="hljs-number">2</span> * i - m) * (q[i] - q[i - <span class="hljs-number">1</span>]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="数据结构应用题"><a href="#数据结构应用题" class="headerlink" title="数据结构应用题"></a>数据结构应用题</h2><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/hand-of-straights/">846. 一手顺子</a></p>
-<p>出于便利，我们用 $m$ 代替 $groupSize$</p>
-<p>只要 $hand$ 和 $m$ 唯一给定，那么划分的方式也就确定了，因此本题实质上是<strong>模拟</strong>的过程</p>
+<h2 id="数据结构应用题">数据结构应用题</h2>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/hand-of-straights/">846.
+一手顺子</a></p>
+<p>出于便利，我们用 <span class="math inline">\(m\)</span> 代替 <span class="math inline">\(groupSize\)</span></p>
+<p>只要 <span class="math inline">\(hand\)</span> 和 <span class="math inline">\(m\)</span>
+唯一给定，那么划分的方式也就确定了，因此本题实质上是<strong>模拟</strong>的过程</p>
 <p>在这里我们用「哈希表」来对每个数进行频率统计，之后<strong>从小到大</strong>枚举每个数</p>
-<p>设当前枚举数为 $t$ ，我们考虑以 $t$ 为<strong>左端点</strong>的序列</p>
-<p>如果序列 $t,t+1,t+2,\cdots, t+m-1$ 当中的任意一个数均在哈希表中出现过，则将对应数的出现频率减一</p>
-<p>这个过程中，只要出现有某个数出现频率变为负数，说明发生冲突，直接返回 <code>false</code></p>
-<p>而对于当前枚举的左端点 $t$ ，如果其在哈希表中对应值为 $0$ ，表明当前数已经与前面的数相匹配，直接跳过</p>
+<p>设当前枚举数为 <span class="math inline">\(t\)</span> ，我们考虑以
+<span class="math inline">\(t\)</span>
+为<strong>左端点</strong>的序列</p>
+<p>如果序列 <span class="math inline">\(t,t+1,t+2,\cdots, t+m-1\)</span>
+当中的任意一个数均在哈希表中出现过，则将对应数的出现频率减一</p>
+<p>这个过程中，只要出现有某个数出现频率变为负数，说明发生冲突，直接返回
+<code>false</code></p>
+<p>而对于当前枚举的左端点 <span class="math inline">\(t\)</span>
+，如果其在哈希表中对应值为 <span class="math inline">\(0\)</span>
+，表明当前数已经与前面的数相匹配，直接跳过</p>
 <p>由于我们每次都需要取当前的较小值，因此考虑用「小根堆」解决</p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isNStraightHand</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; hand, <span class="hljs-type">int</span> groupSize)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span>(hand.<span class="hljs-built_in">size</span>() % groupSize) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        unordered_map&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;hash;<br>        priority_queue&lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt;heap;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x : hand) hash[x]++, heap.<span class="hljs-built_in">push</span>(x);<br>        <span class="hljs-keyword">while</span>(heap.<span class="hljs-built_in">size</span>())<br>        &#123;<br>            <span class="hljs-type">int</span> t = heap.<span class="hljs-built_in">top</span>();<br>            heap.<span class="hljs-built_in">pop</span>();<br>            <span class="hljs-keyword">if</span>(hash[t] == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; groupSize; i ++)<br>            &#123;<br>                hash[t + i]--;<br>                <span class="hljs-keyword">if</span>(hash[t + i] &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;                <br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="子串思考的通用思路"><a href="#子串思考的通用思路" class="headerlink" title="子串思考的通用思路"></a>子串思考的通用思路</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-substrings-that-differ-by-one-character/">LeetCode 1638. 统计只差一个字符的子串数目</a></p>
+<h2 id="字符串">字符串</h2>
+<h3 id="子串思考的通用思路">子串思考的通用思路</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-substrings-that-differ-by-one-character/">LeetCode
+1638. 统计只差一个字符的子串数目</a></p>
 <p>如果需要枚举一个字符串的子串，需要知道两个量：结束位置与起始位置</p>
-<p>如果需要枚举<strong>一对</strong>字符串的子串，在长度相同的情况下，需要知道三个量：<code>s</code> 中的结束位置 $i$ 、<code>t</code> 中的结束位置 $j$ 、子串长度（起始位置 $k$）</p>
-<p>首先考虑 $i&#x3D;j$ 的情况</p>
-<p>此时该子串的结束位置是固定的，我们<strong>向前枚举</strong>，找到<strong>上一个不同字符的下标 $k1$<strong>，与</strong>上上个不同字符的下标 $k0$</strong></p>
-<p>此时统计的个数为区间 $(k0,k1]$ 当中的字符数，即 $k1-k0$</p>
-<p>二者的初值可以直接为 $-1$（二者的意义均为：不同字符的位置）</p>
-<p>对于 $i\ne j$ 的情况，我们枚举二者的<strong>差值</strong> $d&#x3D;i-j$ </p>
-<p>由于 $1\le i\le n,1\le j\le m$ ，因此 $1-m\le d\le n-1$</p>
-<p>我们<strong>始终以 <code>s</code> 为基准</strong>，考察 $d$ 的范围：</p>
+<p>如果需要枚举<strong>一对</strong>字符串的子串，在长度相同的情况下，需要知道三个量：<code>s</code>
+中的结束位置 <span class="math inline">\(i\)</span> 、<code>t</code>
+中的结束位置 <span class="math inline">\(j\)</span> 、子串长度（起始位置
+<span class="math inline">\(k\)</span>）</p>
+<p>首先考虑 <span class="math inline">\(i=j\)</span> 的情况</p>
+<p>此时该子串的结束位置是固定的，我们<strong>向前枚举</strong>，找到<strong>上一个不同字符的下标
+<span class="math inline">\(k1\)</span></strong>，与<strong>上上个不同字符的下标
+<span class="math inline">\(k0\)</span></strong></p>
+<p>此时统计的个数为区间 <span class="math inline">\((k0,k1]\)</span>
+当中的字符数，即 <span class="math inline">\(k1-k0\)</span></p>
+<p>二者的初值可以直接为 <span class="math inline">\(-1\)</span>（二者的意义均为：不同字符的位置）</p>
+<p>对于 <span class="math inline">\(i\ne j\)</span>
+的情况，我们枚举二者的<strong>差值</strong> <span class="math inline">\(d=i-j\)</span></p>
+<p>由于 <span class="math inline">\(1\le i\le n,1\le j\le m\)</span>
+，因此 <span class="math inline">\(1-m\le d\le n-1\)</span></p>
+<p>我们<strong>始终以 <code>s</code> 为基准</strong>，考察 <span class="math inline">\(d\)</span> 的范围：</p>
 <ul>
-<li><p>若 $d\gt 0$ ，此时有 $i\gt j$ ，相当于将 <code>t</code> 右移 $d$ 个单位，此时 <code>s</code> 的起始遍历位置为 $d$ ，<code>t</code> 的起始遍历位置为 $0$，将 $k0,k1$ 初始化为 $d-1$</p>
-</li>
-<li><p>若 $d\lt 0$ ，此时有 $i\lt j$ ，相当于将 <code>t</code> 左移 $d$ 个单位，此时 <code>s</code> 的起始遍历位置为 $0$ ，<code>t</code> 的起始遍历位置为 $d$ ，将 $k0,k1$ 初始化为 $-1$</p>
-</li>
+<li><p>若 <span class="math inline">\(d\gt 0\)</span> ，此时有 <span class="math inline">\(i\gt j\)</span> ，相当于将 <code>t</code> 右移
+<span class="math inline">\(d\)</span> 个单位，此时 <code>s</code>
+的起始遍历位置为 <span class="math inline">\(d\)</span> ，<code>t</code>
+的起始遍历位置为 <span class="math inline">\(0\)</span>，将 <span class="math inline">\(k0,k1\)</span> 初始化为 <span class="math inline">\(d-1\)</span></p></li>
+<li><p>若 <span class="math inline">\(d\lt 0\)</span> ，此时有 <span class="math inline">\(i\lt j\)</span> ，相当于将 <code>t</code> 左移
+<span class="math inline">\(d\)</span> 个单位，此时 <code>s</code>
+的起始遍历位置为 <span class="math inline">\(0\)</span> ，<code>t</code>
+的起始遍历位置为 <span class="math inline">\(d\)</span> ，将 <span class="math inline">\(k0,k1\)</span> 初始化为 <span class="math inline">\(-1\)</span></p></li>
 </ul>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countSubstrings</span><span class="hljs-params">(string s, string t)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = s.<span class="hljs-built_in">length</span>(), m = t.<span class="hljs-built_in">length</span>(), ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> d = <span class="hljs-number">1</span> - m; d &lt;= n - <span class="hljs-number">1</span>; d ++)<span class="hljs-comment">//d = i - j =&gt; j = i - d</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>, d), k1 = i - <span class="hljs-number">1</span>, k0 = k1; i &lt; n &amp;&amp; i - d &lt; m; i ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(s[i] != t[i - d])<br>                    k0 = k1, k1 = i;<br>                ans += k1 - k0;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>时间复杂度：$O((n+m)\min(n,m))&#x3D;O(nm)$</p>
-<h3 id="回文字符串"><a href="#回文字符串" class="headerlink" title="回文字符串"></a>回文字符串</h3><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-k-palindrome-strings/">1400. 构造 K 个回文字符串</a></p>
-<p>对于回文字符串有一个结论：对于长度为 $n$ 的回文字符串，一定可以分解为<strong>个数或长度</strong>为 $d,\ d\in[1,n]$ 的回文字符串</p>
+<p>时间复杂度：<span class="math inline">\(O((n+m)\min(n,m))=O(nm)\)</span></p>
+<h3 id="回文字符串">回文字符串</h3>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-k-palindrome-strings/">1400.
+构造 K 个回文字符串</a></p>
+<p>对于回文字符串有一个结论：对于长度为 <span class="math inline">\(n\)</span>
+的回文字符串，一定可以分解为<strong>个数或长度</strong>为 <span class="math inline">\(d,\ d\in[1,n]\)</span> 的回文字符串</p>
 <p>我们考虑回文字符串的组成，必然有两种可能：</p>
 <ul>
 <li>长度为奇数，其中心为<strong>一个字符</strong></li>
 <li>长度为偶数，其中心为<strong>两个相等字符</strong></li>
 </ul>
-<p>我们随意取一个回文字符串 <code>abcdfdcba</code> ，我们去掉中心字符，得到 <code>abcddcba</code> 和 <code>f</code> ，进一步，我们对 <code>abcddcba</code> 进行拆分，有：<code>abccba</code>，<code>dd</code>，<code>f</code></p>
+<p>我们随意取一个回文字符串 <code>abcdfdcba</code>
+，我们去掉中心字符，得到 <code>abcddcba</code> 和 <code>f</code>
+，进一步，我们对 <code>abcddcba</code>
+进行拆分，有：<code>abccba</code>，<code>dd</code>，<code>f</code></p>
 <p>这个过程可以持续下去，我们可以得到一个结论：</p>
-<p>对于一个长度为 $n$ 的回文字符串，对其拆分必然可以得到个数为 $1,2,3,\cdots,n$ 的回文字符串同时也可以得到长度为 $1,2,3,\cdots,n$ 的回文字符串</p>
-<p>回到本题，对于字符串 <code>s</code> ，如果我们求出其能表示出的<strong>最少回文字符串 $l$ <strong>和</strong>最多回文字符串 $r$</strong> ，那么只要 $k$ 处于 $[l,r]$ 内，必然是符合条件</p>
-<p>设 <code>s</code> 中有 $p$ 个字符出现了奇数次，有 $q$ 个字符出现了偶数次，那么 <code>s</code> 所能构成的回文字符串的个数最小值是多少？</p>
-<p>对于出现偶数次的字符，我们可以任意组合，但对于出现奇数次的字符，我们需要保证其<strong>必须处于一个回文字符串的中心</strong>，因此这最少能表示的字符个数为 $p$</p>
-<p>特别地，如果如果 $p&#x3D;&#x3D;0$ ，表明全部由偶数个字符组成，此时个数为 $1$ ，因此总体为 $\max(p,1)$</p>
+<p>对于一个长度为 <span class="math inline">\(n\)</span>
+的回文字符串，对其拆分必然可以得到个数为 <span class="math inline">\(1,2,3,\cdots,n\)</span>
+的回文字符串同时也可以得到长度为 <span class="math inline">\(1,2,3,\cdots,n\)</span> 的回文字符串</p>
+<p>回到本题，对于字符串 <code>s</code>
+，如果我们求出其能表示出的<strong>最少回文字符串 <span class="math inline">\(l\)</span> </strong>和<strong>最多回文字符串 <span class="math inline">\(r\)</span></strong> ，那么只要 <span class="math inline">\(k\)</span> 处于 <span class="math inline">\([l,r]\)</span> 内，必然是符合条件</p>
+<p>设 <code>s</code> 中有 <span class="math inline">\(p\)</span>
+个字符出现了奇数次，有 <span class="math inline">\(q\)</span>
+个字符出现了偶数次，那么 <code>s</code>
+所能构成的回文字符串的个数最小值是多少？</p>
+<p>对于出现偶数次的字符，我们可以任意组合，但对于出现奇数次的字符，我们需要保证其<strong>必须处于一个回文字符串的中心</strong>，因此这最少能表示的字符个数为
+<span class="math inline">\(p\)</span></p>
+<p>特别地，如果如果 <span class="math inline">\(p==0\)</span>
+，表明全部由偶数个字符组成，此时个数为 <span class="math inline">\(1\)</span> ，因此总体为 <span class="math inline">\(\max(p,1)\)</span></p>
 <p>完整代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">canConstruct</span><span class="hljs-params">(string s, <span class="hljs-type">int</span> k)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        unordered_map&lt;<span class="hljs-type">char</span>, <span class="hljs-type">int</span>&gt;hash;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> c : s) hash[c]++;<br>        <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>, tot = s.<span class="hljs-built_in">length</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> p : hash)<br>            <span class="hljs-keyword">if</span>(p.second &amp; <span class="hljs-number">1</span>) cnt++;<br>        <span class="hljs-keyword">return</span> k &gt;= <span class="hljs-built_in">max</span>(cnt, <span class="hljs-number">1</span>) &amp;&amp; k &lt;= tot;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-nodes-and-return-forest/">1110. 删点成林</a></p>
+<h2 id="二叉树">二叉树</h2>
+<p>原题链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-nodes-and-return-forest/">1110.
+删点成林</a></p>
 <p>我们考虑如果要将一个节点加入答案数组需要满足什么条件：</p>
 <ul>
 <li>当前点不能有父节点</li>
@@ -562,12 +690,16 @@
 <li>当前点的左右子树均处理完毕</li>
 </ul>
 <p>我们根据这三个条件着手设计递归函数</p>
-<p>基于前两点，我们需要用 $u$ 来表示当前递归到的节点，用 $has_father$ 来表示当前节点是否有父节点</p>
-<p>在返回值部分，我们需要<strong>根据当前节点的左孩子与右孩子是否被删除来判断是否需要对当前节点进行更改</strong>，因此需要用 <code>bool</code> 作为返回类型</p>
+<p>基于前两点，我们需要用 <span class="math inline">\(u\)</span>
+来表示当前递归到的节点，用 <span class="math inline">\(has\_father\)</span>
+来表示当前节点是否有父节点</p>
+<p>在返回值部分，我们需要<strong>根据当前节点的左孩子与右孩子是否被删除来判断是否需要对当前节点进行更改</strong>，因此需要用
+<code>bool</code> 作为返回类型</p>
 <p>意思是说，如果当前节点的左孩子需要被删除，那么我们需要将当前节点的左孩子置空，这对于右孩子也是一样</p>
 <p>基于此设计，在返回时我们需要<strong>返回当前节点是否会被删除</strong></p>
 <p>在代码实现上，考虑去重可以直接用哈希表</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;TreeNode*&gt; <span class="hljs-title">delNodes</span><span class="hljs-params">(TreeNode* root, vector&lt;<span class="hljs-type">int</span>&gt;&amp; to_delete)</span> </span><br><span class="hljs-function">    </span>&#123;<br>        unordered_set&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">hash</span>(to_delete.<span class="hljs-built_in">begin</span>(), to_delete.<span class="hljs-built_in">end</span>());<br>        vector&lt;TreeNode*&gt;ans;<br>        function&lt;<span class="hljs-type">bool</span>(TreeNode*, <span class="hljs-type">bool</span>)&gt; dfs = [&amp;](TreeNode* u, <span class="hljs-type">bool</span> has_father) -&gt; <span class="hljs-type">bool</span><br>        &#123;<br>            <span class="hljs-comment">//当前节点为nullptr，直接返回true</span><br>            <span class="hljs-keyword">if</span>(!u) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            <span class="hljs-type">bool</span> is_delete = hash.<span class="hljs-built_in">count</span>(u-&gt;val);<span class="hljs-comment">//为true表示当前节点需要删除</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">dfs</span>(u-&gt;left, !is_delete))<br>                u-&gt;left = <span class="hljs-literal">nullptr</span>;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">dfs</span>(u-&gt;right, !is_delete))<br>                u-&gt;right = <span class="hljs-literal">nullptr</span>;<br>            <span class="hljs-comment">//当前节点不能被删除且没有父节点</span><br>            <span class="hljs-keyword">if</span>(!has_father &amp;&amp; !is_delete)<br>                ans.<span class="hljs-built_in">push_back</span>(u);<br>            <span class="hljs-keyword">return</span> is_delete;<br>        &#125;;<br>        <span class="hljs-built_in">dfs</span>(root, <span class="hljs-literal">false</span>);<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             

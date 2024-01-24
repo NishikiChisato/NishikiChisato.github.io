@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="cachelab cachelab 准备 实验开始 Part A 重要概念 核心代码   Part B   后记    准备所有文件均可以从官网上直接下载：Lab Assignments 实验开始Part A 我们需要首先学会 getopt 这个函数  直接编译会报错： 1error: implicit declaration of function ‘getopt’  这是因为编译参数为 -st">
+    <meta name="description" content="cachelab  cachelab  准备 实验开始  Part A  重要概念 核心代码  Part B  后记   准备 所有文件均可以从官网上直接下载：Lab Assignments 实验开始 Part A  我们需要首先学会 getopt 这个函数  直接编译会报错： 1error: implicit declaration of fun">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSAPP_lab CacheLab">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/07/08/CSAPP_LAB/CacheLab/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="cachelab cachelab 准备 实验开始 Part A 重要概念 核心代码   Part B   后记    准备所有文件均可以从官网上直接下载：Lab Assignments 实验开始Part A 我们需要首先学会 getopt 这个函数  直接编译会报错： 1error: implicit declaration of function ‘getopt’  这是因为编译参数为 -st">
+<meta property="og:description" content="cachelab  cachelab  准备 实验开始  Part A  重要概念 核心代码  Part B  后记   准备 所有文件均可以从官网上直接下载：Lab Assignments 实验开始 Part A  我们需要首先学会 getopt 这个函数  直接编译会报错： 1error: implicit declaration of fun">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CSAPP_lab/CSAPP_lab%20(5).jpg">
 <meta property="article:published_time" content="2023-07-08T00:13:43.288Z">
@@ -346,390 +346,466 @@
             
               <div class="markdown-body">
                 
-                <h1 id="cachelab"><a href="#cachelab" class="headerlink" title="cachelab"></a>cachelab</h1><ul>
-<li><a href="#cachelab">cachelab</a><ul>
-<li><a href="#%E5%87%86%E5%A4%87">准备</a></li>
-<li><a href="#%E5%AE%9E%E9%AA%8C%E5%BC%80%E5%A7%8B">实验开始</a><ul>
-<li><a href="#part-a">Part A</a><ul>
-<li><a href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5">重要概念</a></li>
-<li><a href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81">核心代码</a></li>
-</ul>
-</li>
+                <h1 id="cachelab">cachelab</h1>
+<ul>
+<li><a href="#cachelab">cachelab</a>
+<ul>
+<li><a href="#准备">准备</a></li>
+<li><a href="#实验开始">实验开始</a>
+<ul>
+<li><a href="#part-a">Part A</a>
+<ul>
+<li><a href="#重要概念">重要概念</a></li>
+<li><a href="#核心代码">核心代码</a></li>
+</ul></li>
 <li><a href="#part-b">Part B</a></li>
+</ul></li>
+<li><a href="#后记">后记</a></li>
+</ul></li>
 </ul>
-</li>
-<li><a href="#%E5%90%8E%E8%AE%B0">后记</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>所有文件均可以从官网上直接下载：<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">Lab Assignments</a></p>
-<h2 id="实验开始"><a href="#实验开始" class="headerlink" title="实验开始"></a>实验开始</h2><h3 id="Part-A"><a href="#Part-A" class="headerlink" title="Part A"></a>Part A</h3><blockquote>
+<h2 id="准备">准备</h2>
+<p>所有文件均可以从官网上直接下载：<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">Lab Assignments</a></p>
+<h2 id="实验开始">实验开始</h2>
+<h3 id="part-a">Part A</h3>
+<blockquote>
 <p>我们需要首先学会 <code>getopt</code> 这个函数</p>
 </blockquote>
 <p>直接编译会报错：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">error: implicit declaration of <span class="hljs-keyword">function</span> ‘getopt’<br></code></pre></td></tr></table></figure>
-
-<p>这是因为编译参数为 <code>-std=c99</code> 导致的，这将会阻止 <code>GNU extension</code>，因此我们需要自己包含 <code>getopt.h</code> 这个头文件。见这里<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/22575940/getopt-not-included-implicit-declaration-of-function-getopt">原贴</a></p>
-<h4 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h4><p>该实验要求我们模拟一个高速缓存 <code>cache</code> ，我们需要先明确几个概念并且一定要理解书中对于高速缓存的过程模拟（<code>430</code> 页），不然这里很难进行</p>
+<p>这是因为编译参数为 <code>-std=c99</code> 导致的，这将会阻止
+<code>GNU extension</code>，因此我们需要自己包含 <code>getopt.h</code>
+这个头文件。见这里<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/22575940/getopt-not-included-implicit-declaration-of-function-getopt">原贴</a></p>
+<h4 id="重要概念">重要概念</h4>
+<p>该实验要求我们模拟一个高速缓存 <code>cache</code>
+，我们需要先明确几个概念并且一定要理解书中对于高速缓存的过程模拟（<code>430</code>
+页），不然这里很难进行</p>
 <ul>
 <li>基本概念：</li>
 </ul>
-<p>我们取最一般的情况：组相联的高速缓存。假设组 <code>set</code> 的个数为 $S&#x3D;2^s$，每个组中含有 $E$ 个行 <code>line</code>。每个行可以划分为<strong>三个部分</strong>：有效位 <code>valid</code> 、标记位 <code>tag</code> 和高速缓存块 <code>block</code></p>
-<p>高速缓存块 <code>block</code> 的大小为 $B&#x3D;2^b$，高速缓存块实际上是一系列对象的集合。当我们需要查找某对象的值时，首先给出该对象的地址，如果在当前<strong>层</strong>无法利用该地址找到对应的对象，我们需要从下一层将高速缓存块 <code>block</code> 替换上来。这里有一点很关键是：一行的实际内容就是高速缓存块，因此我们<strong>实际上执行的是行替换</strong></p>
-<p>当我们利用组索引和标记确定确定哪一行之后，我们便确定了高速缓存块，这个块中存储了很多的对象，我们利用 <code>b</code> 位的块偏移来索引这些对象</p>
+<p>我们取最一般的情况：组相联的高速缓存。假设组 <code>set</code>
+的个数为 <span class="math inline">\(S=2^s\)</span>，每个组中含有 <span class="math inline">\(E\)</span> 个行
+<code>line</code>。每个行可以划分为<strong>三个部分</strong>：有效位
+<code>valid</code> 、标记位 <code>tag</code> 和高速缓存块
+<code>block</code></p>
+<p>高速缓存块 <code>block</code> 的大小为 <span class="math inline">\(B=2^b\)</span>，高速缓存块实际上是一系列对象的集合。当我们需要查找某对象的值时，首先给出该对象的地址，如果在当前<strong>层</strong>无法利用该地址找到对应的对象，我们需要从下一层将高速缓存块
+<code>block</code>
+替换上来。这里有一点很关键是：一行的实际内容就是高速缓存块，因此我们<strong>实际上执行的是行替换</strong></p>
+<p>当我们利用组索引和标记确定确定哪一行之后，我们便确定了高速缓存块，这个块中存储了很多的对象，我们利用
+<code>b</code> 位的块偏移来索引这些对象</p>
 <ul>
 <li>关于读取</li>
 </ul>
 <p>我给定一个地址，我需要读该地址对应的内存字（某个对象），此时与两种情况：</p>
 <ul>
-<li><p>如果命中 <code>hit</code>，那么高速缓存将直接返回该内存字</p>
-</li>
-<li><p>如果不命中 <code>miss</code>，如上面所说，我们会执行行替换，再将该内存字返回（我们在此不考虑替换策略）</p>
-</li>
-<li><p>关于写入</p>
-</li>
+<li><p>如果命中
+<code>hit</code>，那么高速缓存将直接返回该内存字</p></li>
+<li><p>如果不命中
+<code>miss</code>，如上面所说，我们会执行行替换，再将该内存字返回（我们在此不考虑替换策略）</p></li>
+<li><p>关于写入</p></li>
 </ul>
 <p>我们给定一个地址，我需要向该地址写入某个值</p>
 <ul>
-<li>如果命中 <code>hit</code>，意思是指在当前层的高速缓存中，<strong>存储了该地址对应的字的值</strong>，那么我们直接对该地址所对应的值修改即可（我们不考虑写命中的修改方法）</li>
-<li>如果不命中 <code>miss</code>，意思是指当前层的高速缓存中，<strong>没有存储该地址对应的字的值</strong>，我们需要执行行替换，将这个字写入（这被称为 <code>write-allocate</code>，还有一种被称为 <code>not-write-allocate</code> 的方法，直接将这个字写入到低一级的高速缓存中）</li>
+<li>如果命中
+<code>hit</code>，意思是指在当前层的高速缓存中，<strong>存储了该地址对应的字的值</strong>，那么我们直接对该地址所对应的值修改即可（我们不考虑写命中的修改方法）</li>
+<li>如果不命中
+<code>miss</code>，意思是指当前层的高速缓存中，<strong>没有存储该地址对应的字的值</strong>，我们需要执行行替换，将这个字写入（这被称为
+<code>write-allocate</code>，还有一种被称为
+<code>not-write-allocate</code>
+的方法，直接将这个字写入到低一级的高速缓存中）</li>
 </ul>
-<p>在这里，由于我们假设地址是对齐的，因此可以不考虑 <code>size</code> 这个变量，那么我们已知一个地址，只需要：</p>
+<p>在这里，由于我们假设地址是对齐的，因此可以不考虑 <code>size</code>
+这个变量，那么我们已知一个地址，只需要：</p>
 <ul>
-<li>找出其组索引 <code>group</code> 和标记位 <code>tag</code>。前者用于<strong>寻找该地址属于哪个组</strong>，后者用于<strong>确定该组中是否存在包含该地址的行</strong>。一个地址<strong>一定</strong>对应一行和一个标记位</li>
-<li>我们的 <code>LRU</code> 算法替换的对象是<strong>同组当中的某一行</strong>，当我们将某个组替换上来后，该组的有效位要置一</li>
-<li>不像书中模拟那样，我们需要依靠块索引来得到地址包含的内容。在这里我们只是确定是否会发生 <code>hit, miss, evict</code>，并不需要实际的读取出相应的值。因此，只要我们能够确定该地址对应的组的某一行中，那么就是 <code>hit</code>，如果该组的所有行已经满了，那么就是 <code>evict</code>，如果该地址对应的组中没有行包含该地址，那么就是 <code>miss</code></li>
-<li>无论是 <code>Load</code> 指令还是 <code>Store</code> 指令，都遵循上面这一点，因此我们只需要实现一个公共的函数供二者调用即可。我们仅仅只是模拟，并不需要将数值取出来</li>
-<li>对于 <code>Modify</code>，本质上是先执行 <code>Load</code> 后执行 <code>Store</code>，我们调用两次公共函数即可</li>
+<li>找出其组索引 <code>group</code> 和标记位
+<code>tag</code>。前者用于<strong>寻找该地址属于哪个组</strong>，后者用于<strong>确定该组中是否存在包含该地址的行</strong>。一个地址<strong>一定</strong>对应一行和一个标记位</li>
+<li>我们的 <code>LRU</code>
+算法替换的对象是<strong>同组当中的某一行</strong>，当我们将某个组替换上来后，该组的有效位要置一</li>
+<li>不像书中模拟那样，我们需要依靠块索引来得到地址包含的内容。在这里我们只是确定是否会发生
+<code>hit, miss, evict</code>，并不需要实际的读取出相应的值。因此，只要我们能够确定该地址对应的组的某一行中，那么就是
+<code>hit</code>，如果该组的所有行已经满了，那么就是
+<code>evict</code>，如果该地址对应的组中没有行包含该地址，那么就是
+<code>miss</code></li>
+<li>无论是 <code>Load</code> 指令还是 <code>Store</code>
+指令，都遵循上面这一点，因此我们只需要实现一个公共的函数供二者调用即可。我们仅仅只是模拟，并不需要将数值取出来</li>
+<li>对于 <code>Modify</code>，本质上是先执行 <code>Load</code> 后执行
+<code>Store</code>，我们调用两次公共函数即可</li>
 </ul>
-<h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><p>因此，我们构建一个二维数组，以组索引 <code>group</code> 为横坐标，行的个数 <code>E</code> 为纵坐标，定义如下：</p>
+<h4 id="核心代码">核心代码</h4>
+<p>因此，我们构建一个二维数组，以组索引 <code>group</code>
+为横坐标，行的个数 <code>E</code> 为纵坐标，定义如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> tag, valid, timestamp;<br>&#125;line;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> S, E, B;<br>    line** ptr;<br>&#125;cache;<br></code></pre></td></tr></table></figure>
-
-<p><code>timestamp</code> 表示时间戳，用于记录该地址进入缓存 <code>cache</code> 的时间</p>
+<p><code>timestamp</code> 表示时间戳，用于记录该地址进入缓存
+<code>cache</code> 的时间</p>
 <p>根据上面的分析可知，我们不需要得到块索引，只需要得到组索引和标记位：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//addr is address</span><br><span class="hljs-type">int</span> group = (addr &gt;&gt; b) &amp; ((<span class="hljs-number">1</span> &lt;&lt; s) - <span class="hljs-number">1</span>);<br><span class="hljs-type">int</span> tag = addr &gt;&gt; (b + s);<br></code></pre></td></tr></table></figure>
-
-<p>我们首先考察在 <code>group</code> 组中是否存在该地址，也就是 <code>group</code> 中所存储的行的 <code>tag</code> 是否与当前地址的 <code>tag</code> 相同</p>
+<p>我们首先考察在 <code>group</code> 组中是否存在该地址，也就是
+<code>group</code> 中所存储的行的 <code>tag</code> 是否与当前地址的
+<code>tag</code> 相同</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">get_idx</span><span class="hljs-params">(<span class="hljs-type">int</span> tag, <span class="hljs-type">int</span> group)</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid &amp;&amp; <span class="hljs-built_in">set</span>.ptr[group][i].tag == tag)<br>            <span class="hljs-keyword">return</span> i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>我们公共函数 <code>update</code> 的定义如下：</p>
 <p>当我们需要的行不存在时，进一步考察该组是否已经放满</p>
 <ul>
-<li><p>如果放满则需要用 <code>LRU</code> 找出应该被踢出的行，将其下标标记为 <code>idx</code></p>
-</li>
-<li><p>如果没有放满则找到一个可用的行，也就是找到 <code>valid</code> 为零的行</p>
-</li>
+<li><p>如果放满则需要用 <code>LRU</code>
+找出应该被踢出的行，将其下标标记为 <code>idx</code></p></li>
+<li><p>如果没有放满则找到一个可用的行，也就是找到 <code>valid</code>
+为零的行</p></li>
 </ul>
 <p>如果我们需要的行存在，则不做任何处理</p>
-<p>在每次循环的结尾，我们需要更新将当前地址对应行的时间戳设置为当前值 <code>time</code></p>
+<p>在每次循环的结尾，我们需要更新将当前地址对应行的时间戳设置为当前值
+<code>time</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(<span class="hljs-type">int</span> tag, <span class="hljs-type">int</span> group, <span class="hljs-type">int</span> time)</span><br>&#123;<br>    <span class="hljs-comment">//idx表示某一行，即当前地址所对应的行是否存在</span><br>    <span class="hljs-type">int</span> idx = get_idx(tag, group);<br>    <span class="hljs-keyword">if</span>(idx == <span class="hljs-number">-1</span>)<span class="hljs-comment">//miss</span><br>    &#123;<br>        misses++;<br>        <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;miss\n&quot;</span>);<br>        <span class="hljs-type">int</span> full = <span class="hljs-number">1</span>;<br>        <span class="hljs-comment">//该组中是否存在行没有满</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid == <span class="hljs-number">0</span>)<br>                full = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(full)<br>        &#123;<br>            evictions++;<br>            <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;eviction\n&quot;</span>);<br>            <span class="hljs-type">int</span> mx = <span class="hljs-number">-1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(time - <span class="hljs-built_in">set</span>.ptr[group][i].timestamp &gt; mx)<br>                &#123;<br>                    mx = time - <span class="hljs-built_in">set</span>.ptr[group][i].timestamp;<br>                    idx = i;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid == <span class="hljs-number">0</span>)<br>                &#123;<br>                    idx = i;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        hits++;<br>        <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hit\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].timestamp = time;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].tag = tag;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].valid = <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>完整代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;getopt.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;cachelab.h&quot;</span></span><br><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">usage</span><span class="hljs-params">()</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">parse_arg</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">calculate</span><span class="hljs-params">()</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">free_cache</span><span class="hljs-params">()</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> tag, valid, timestamp;<br>&#125;line;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> S, E, B;<br>    line** ptr;<br>&#125;cache;<br><br>cache <span class="hljs-built_in">set</span>;<br><span class="hljs-type">int</span> op = <span class="hljs-number">-1</span>, verbose = <span class="hljs-number">0</span>, s = <span class="hljs-number">-1</span>, E = <span class="hljs-number">-1</span>, b = <span class="hljs-number">-1</span>;<br><span class="hljs-type">char</span>* file_input = <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">int</span> hits, misses, evictions;<br><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span><br>&#123;<br><br>    <span class="hljs-type">int</span> res = parse_arg(argc, argv);<br>    <span class="hljs-keyword">if</span>(res == <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br><br>    init();<br>    calculate();<br>    <span class="hljs-comment">//free_cache();</span><br>    printSummary(hits, misses, evictions);    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">free_cache</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.S; i ++)<br>        <span class="hljs-built_in">free</span>(<span class="hljs-built_in">set</span>.ptr[i]);<br>    <span class="hljs-built_in">free</span>(<span class="hljs-built_in">set</span>.ptr);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">calculate</span><span class="hljs-params">()</span><br>&#123;<br>    FILE* fp = fopen(file_input, <span class="hljs-string">&quot;r&quot;</span>);<br>    <span class="hljs-type">char</span> file_line[<span class="hljs-number">20</span>], op;<br>    <span class="hljs-type">int</span> addr, size, time = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(fgets(file_line, <span class="hljs-number">20</span>, fp) != <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(file_line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;I&#x27;</span>) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-comment">//我们假设内存自动对齐，因此可以忽略size</span><br>        <span class="hljs-built_in">sscanf</span>(file_line, <span class="hljs-string">&quot; %c %x,%d&quot;</span>, &amp;op, &amp;addr, &amp;size);<br>        <span class="hljs-type">int</span> group = (addr &gt;&gt; b) &amp; ((<span class="hljs-number">1</span> &lt;&lt; s) - <span class="hljs-number">1</span>);<br>        <span class="hljs-type">int</span> tag = addr &gt;&gt; (b + s);<br><br>        <span class="hljs-keyword">switch</span>(op)<br>        &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;M&#x27;</span>: update(tag, group, ++time);<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;L&#x27;</span>:<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;S&#x27;</span>: update(tag, group, ++time);<br>        &#125;<br>    &#125;<br>    fclose(fp);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">get_idx</span><span class="hljs-params">(<span class="hljs-type">int</span> tag, <span class="hljs-type">int</span> group)</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid &amp;&amp; <span class="hljs-built_in">set</span>.ptr[group][i].tag == tag)<br>            <span class="hljs-keyword">return</span> i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(<span class="hljs-type">int</span> tag, <span class="hljs-type">int</span> group, <span class="hljs-type">int</span> time)</span><br>&#123;<br>    <span class="hljs-comment">//idx表示某一行，即当前地址所对应的行是否存在</span><br>    <span class="hljs-type">int</span> idx = get_idx(tag, group);<br>    <span class="hljs-keyword">if</span>(idx == <span class="hljs-number">-1</span>)<span class="hljs-comment">//miss</span><br>    &#123;<br>        misses++;<br>        <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;miss\n&quot;</span>);<br>        <span class="hljs-type">int</span> full = <span class="hljs-number">1</span>;<br>        <span class="hljs-comment">//该组中是否存在行没有满</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid == <span class="hljs-number">0</span>)<br>                full = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(full)<br>        &#123;<br>            evictions++;<br>            <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;eviction\n&quot;</span>);<br>            <span class="hljs-type">int</span> mx = <span class="hljs-number">-1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(time - <span class="hljs-built_in">set</span>.ptr[group][i].timestamp &gt; mx)<br>                &#123;<br>                    mx = time - <span class="hljs-built_in">set</span>.ptr[group][i].timestamp;<br>                    idx = i;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.E; i ++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(<span class="hljs-built_in">set</span>.ptr[group][i].valid == <span class="hljs-number">0</span>)<br>                &#123;<br>                    idx = i;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        hits++;<br>        <span class="hljs-keyword">if</span>(verbose) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hit\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].timestamp = time;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].tag = tag;<br>    <span class="hljs-built_in">set</span>.ptr[group][idx].valid = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-built_in">set</span>.S = <span class="hljs-number">1</span> &lt;&lt; s;<br>    <span class="hljs-built_in">set</span>.B = <span class="hljs-number">1</span> &lt;&lt; b;<br>    <span class="hljs-built_in">set</span>.E = E;      <span class="hljs-comment">//E表示标记个数</span><br>    <span class="hljs-built_in">set</span>.ptr = (line**)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">set</span>.S * <span class="hljs-keyword">sizeof</span> (line*));<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">set</span>.S; i ++)<br>    &#123;<br>        <span class="hljs-built_in">set</span>.ptr[i] = (line*)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">set</span>.E * <span class="hljs-keyword">sizeof</span> (line));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-built_in">set</span>.E; j ++)<br>        &#123;<br>            <span class="hljs-built_in">set</span>.ptr[i][j].tag = <span class="hljs-number">-1</span>;<br>            <span class="hljs-built_in">set</span>.ptr[i][j].valid = <span class="hljs-number">0</span>;<br>            <span class="hljs-built_in">set</span>.ptr[i][j].timestamp = <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">usage</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Usage: ./csim-ref [-hv] -s &lt;num&gt; -E &lt;num&gt; -b &lt;num&gt; -t &lt;file&gt;\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-h: Optional help flag that prints usage info\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-v: Optional verbose flag that displays trace info\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-s &lt;s&gt;: Number of set index bits (S = 2s is the number of sets)\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-E &lt;E&gt;: Associativity (number of lines per set)\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-b &lt;b&gt;: Number of block bits (B = 2b is the block size)\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-t &lt;tracefile&gt;: Name of the valgrind trace to replay\n&quot;</span>);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">parse_arg</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span><br>&#123;<br>    <span class="hljs-keyword">while</span>((op = getopt(argc, argv, <span class="hljs-string">&quot;hvs:E:b:t:&quot;</span>)) != <span class="hljs-number">-1</span>)<br>    &#123;<br>        <span class="hljs-keyword">switch</span>(op)<br>        &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;h&#x27;</span>:<br>                usage();<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;v&#x27;</span>:<br>                verbose = <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;s&#x27;</span>:<br>                s = atoi(optarg);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;E&#x27;</span>:<br>                E = atoi(optarg);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;b&#x27;</span>:<br>                b = atoi(optarg);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;t&#x27;</span>:<br>                file_input = optarg;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">default</span>:<br>                usage();<br>                <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(file_input == <span class="hljs-literal">NULL</span>) <br>    &#123;<br>        usage();<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./test-csim <br>                        Your simulator     Reference simulator<br>Points (s,E,b)    Hits  Misses  Evicts    Hits  Misses  Evicts<br>     3 (1,1,1)       9       8       6       9       8       6  traces/yi2.trace<br>     3 (4,2,4)       4       5       2       4       5       2  traces/yi.trace<br>     3 (2,1,4)       2       3       1       2       3       1  traces/dave.trace<br>     3 (2,1,3)     167      71      67     167      71      67  traces/trans.trace<br>     3 (2,2,3)     201      37      29     201      37      29  traces/trans.trace<br>     3 (2,4,3)     212      26      10     212      26      10  traces/trans.trace<br>     3 (5,1,5)     231       7       0     231       7       0  traces/trans.trace<br>     6 (5,1,5)  265189   21775   21743  265189   21775   21743  traces/long.trace<br>    27<br><br>TEST_CSIM_RESULTS=27<br></code></pre></td></tr></table></figure>
-
-<h3 id="Part-B"><a href="#Part-B" class="headerlink" title="Part B"></a>Part B</h3><p><code>Part B</code> 要求我们优化矩阵转置函数，使得其 <code>miss</code> 数最小</p>
+<h3 id="part-b">Part B</h3>
+<p><code>Part B</code> 要求我们优化矩阵转置函数，使得其
+<code>miss</code> 数最小</p>
 <p>开始这个实验之前，一定要去把书后面的家庭作业做完，不然无法进行下去</p>
-<p>我们给定的高速缓存的参数为 $s &#x3D; 5,\ E &#x3D; 1,\ b &#x3D; 5$，因此高速缓存有 <code>32</code> 行，每行可以存储 $2^{5}&#x2F;4&#x3D;8$ 个 <code>int</code>。也就是说，我们缓存可以存储的 <code>int</code> 个数为 $32\times 8 &#x3D; 256$ 个</p>
+<p>我们给定的高速缓存的参数为 <span class="math inline">\(s = 5,\ E =
+1,\ b = 5\)</span>，因此高速缓存有 <code>32</code> 行，每行可以存储
+<span class="math inline">\(2^{5}/4=8\)</span> 个
+<code>int</code>。也就是说，我们缓存可以存储的 <code>int</code> 个数为
+<span class="math inline">\(32\times 8 = 256\)</span> 个</p>
 <p>但，这当中会发生地址的碰撞，我们详细地考虑一下高速缓存的碰撞问题</p>
-<p>高速缓存需要用地址来进行索引，对于单个 $32\times 32$ 的 <code>int</code> 矩阵而言，地址的范围为：$32\times 32\times 4 &#x3D;4096&#x3D;2^{12}$，也就是说，我们需要 <code>12</code> 位地址来进行索引</p>
-<p><code>12</code> 位地址的后五位表示 <code>b</code>，往前五位表示 <code>s</code>，最高的三位表示标记，即：</p>
+<p>高速缓存需要用地址来进行索引，对于单个 <span class="math inline">\(32\times 32\)</span> 的 <code>int</code>
+矩阵而言，地址的范围为：<span class="math inline">\(32\times 32\times 4
+=4096=2^{12}\)</span>，也就是说，我们需要 <code>12</code>
+位地址来进行索引</p>
+<p><code>12</code> 位地址的后五位表示 <code>b</code>，往前五位表示
+<code>s</code>，最高的三位表示标记，即：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs tap">00  <span class="hljs-number"> 00000 </span>  00000<br>标记  组索引  块索引<br></code></pre></td></tr></table></figure>
-
-<p>由于我们的相联度只有 <code>1</code>，即每组只有一行，每一行能存储 <code>8</code> 个 <code>int</code>，我们必须要考虑什么时候会发生碰撞的问题：</p>
+<p>由于我们的相联度只有 <code>1</code>，即每组只有一行，每一行能存储
+<code>8</code> 个
+<code>int</code>，我们必须要考虑什么时候会发生碰撞的问题：</p>
 <p>当组索引相同是，无论块索引的值如何，<strong>只要标记不同，就会发生碰撞</strong></p>
 <p>也就是说，以下的两个地址会发生碰撞：</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">01 </span>  <span class="hljs-number">10010</span>    <span class="hljs-number">01000</span><br><span class="hljs-symbol">10 </span>  <span class="hljs-number">10010</span>    <span class="hljs-number">10101</span>  <br></code></pre></td></tr></table></figure>
-
 <p>这是因为标记的作用是在同一组中寻找需要的行的，而我们这里每一组只有一行，因此只要两个地址的组索引相同，那么就会映射到同一行</p>
-<p>因此，最大不冲突的行索引为 <code>11111</code>，对应的地址为 <code>00 11111 11111</code>。也就是说，所有高于此地址的映射都将发生冲突</p>
-<p>因此**这个高速缓存在不发生冲突的情况下，最多只能存储 $2^{10}&#x2F;4&#x3D;256$ 个 <code>int</code>**，也就是 <code>A[8]</code> 行会与 <code>A[0]</code> 行重合，以此类推</p>
-<p>这是单个矩阵的情况，我们转置需要两个矩阵，<strong>因此<code>A[0]</code> 行、<code>A[8]</code> 行、<code>B[0]</code> 行和 <code>B[8]</code> 会共享同一行</strong></p>
-<p>由于我们每一行只能存储 <code>8</code> 个 <code>int</code>，并且矩阵的转置要求小矩阵是正方形，因此适合的分块大小为 $8\times 8$</p>
-<p>我们在 $32\times 32$ 矩阵中进行分析：</p>
-<p>将 $32\times 32$ 矩阵分成 $16$ 个 $8\times 8$ 的小矩阵，分别用坐标 $(0,0)$ 到 $(3,3)$ 来表示</p>
-<p>我们用 <code>h</code> 表示 <code>hit</code>，<code>m</code> 表示 <code>miss</code>，对于 $(0,0)$ 处的小矩阵有：</p>
-<p>对于矩阵 $A$ 而言，其碰撞结果如下：</p>
+<p>因此，最大不冲突的行索引为 <code>11111</code>，对应的地址为
+<code>00 11111 11111</code>。也就是说，所有高于此地址的映射都将发生冲突</p>
+<p>因此<strong>这个高速缓存在不发生冲突的情况下，最多只能存储 <span class="math inline">\(2^{10}/4=256\)</span> 个
+<code>int</code></strong>，也就是 <code>A[8]</code> 行会与
+<code>A[0]</code> 行重合，以此类推</p>
+<p>这是单个矩阵的情况，我们转置需要两个矩阵，<strong>因此<code>A[0]</code>
+行、<code>A[8]</code> 行、<code>B[0]</code> 行和 <code>B[8]</code>
+会共享同一行</strong></p>
+<p>由于我们每一行只能存储 <code>8</code> 个
+<code>int</code>，并且矩阵的转置要求小矩阵是正方形，因此适合的分块大小为
+<span class="math inline">\(8\times 8\)</span></p>
+<p>我们在 <span class="math inline">\(32\times 32\)</span>
+矩阵中进行分析：</p>
+<p>将 <span class="math inline">\(32\times 32\)</span> 矩阵分成 <span class="math inline">\(16\)</span> 个 <span class="math inline">\(8\times
+8\)</span> 的小矩阵，分别用坐标 <span class="math inline">\((0,0)\)</span> 到 <span class="math inline">\((3,3)\)</span> 来表示</p>
+<p>我们用 <code>h</code> 表示 <code>hit</code>，<code>m</code> 表示
+<code>miss</code>，对于 <span class="math inline">\((0,0)\)</span>
+处的小矩阵有：</p>
+<p>对于矩阵 <span class="math inline">\(A\)</span>
+而言，其碰撞结果如下：</p>
 <table>
 <thead>
-<tr>
-<th align="center"></th>
-<th align="center"><code>c0</code></th>
-<th align="center"><code>c1</code></th>
-<th align="center"><code>c2</code></th>
-<th align="center"><code>c3</code></th>
-<th align="center"><code>c4</code></th>
-<th align="center"><code>c5</code></th>
-<th align="center"><code>c6</code></th>
-<th align="center"><code>c7</code></th>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><code>c0</code></th>
+<th style="text-align: center;"><code>c1</code></th>
+<th style="text-align: center;"><code>c2</code></th>
+<th style="text-align: center;"><code>c3</code></th>
+<th style="text-align: center;"><code>c4</code></th>
+<th style="text-align: center;"><code>c5</code></th>
+<th style="text-align: center;"><code>c6</code></th>
+<th style="text-align: center;"><code>c7</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>r0</code></td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>r0</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r1</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r1</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r2</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r2</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r3</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r3</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r4</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r4</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r5</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r5</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r6</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r6</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
 </tr>
-<tr>
-<td align="center"><code>r7</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r7</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-</tbody></table>
-<p>对于转置矩阵 $B$ 而言，其碰撞结果如下：</p>
+</tbody>
+</table>
+<p>对于转置矩阵 <span class="math inline">\(B\)</span>
+而言，其碰撞结果如下：</p>
 <table>
 <thead>
-<tr>
-<th align="center"></th>
-<th align="center"><code>c0</code></th>
-<th align="center"><code>c1</code></th>
-<th align="center"><code>c2</code></th>
-<th align="center"><code>c3</code></th>
-<th align="center"><code>c4</code></th>
-<th align="center"><code>c5</code></th>
-<th align="center"><code>c6</code></th>
-<th align="center"><code>c7</code></th>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><code>c0</code></th>
+<th style="text-align: center;"><code>c1</code></th>
+<th style="text-align: center;"><code>c2</code></th>
+<th style="text-align: center;"><code>c3</code></th>
+<th style="text-align: center;"><code>c4</code></th>
+<th style="text-align: center;"><code>c5</code></th>
+<th style="text-align: center;"><code>c6</code></th>
+<th style="text-align: center;"><code>c7</code></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><code>r0</code></td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>r0</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r1</code></td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r1</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r2</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r2</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r3</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r3</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r4</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r4</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r5</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">m</td>
-<td align="center">h</td>
+<tr class="even">
+<td style="text-align: center;"><code>r5</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
 </tr>
-<tr>
-<td align="center"><code>r6</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
-<td align="center">m</td>
+<tr class="odd">
+<td style="text-align: center;"><code>r6</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">m</td>
 </tr>
-<tr>
-<td align="center"><code>r7</code></td>
-<td align="center">m</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">h</td>
-<td align="center">m</td>
+<tr class="even">
+<td style="text-align: center;"><code>r7</code></td>
+<td style="text-align: center;">m</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: center;">m</td>
 </tr>
-</tbody></table>
-<p>我们求出上面一个发生了 $37$ 次 <code>miss</code></p>
-<p>$(0,0)$ 位置的矩阵二者存在相互碰撞的情况，事实上所有处于对角线的小矩阵都是如此</p>
-<p>对于两个不出在对角线的矩阵，二者之间的映射不会发生碰撞，因此一共会有 <code>16</code> 次 <code>miss</code></p>
-<p>那么我们可以求出整个 $32\times 32$ 矩阵的总 <code>miss</code> 的值：$37\times 4+16\times 6&#x3D;340$</p>
+</tbody>
+</table>
+<p>我们求出上面一个发生了 <span class="math inline">\(37\)</span> 次
+<code>miss</code></p>
+<p><span class="math inline">\((0,0)\)</span>
+位置的矩阵二者存在相互碰撞的情况，事实上所有处于对角线的小矩阵都是如此</p>
+<p>对于两个不出在对角线的矩阵，二者之间的映射不会发生碰撞，因此一共会有
+<code>16</code> 次 <code>miss</code></p>
+<p>那么我们可以求出整个 <span class="math inline">\(32\times 32\)</span>
+矩阵的总 <code>miss</code> 的值：<span class="math inline">\(37\times
+4+16\times 6=340\)</span></p>
 <p>我们按上述思想写出如下程序：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">transpose_submit</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">8</span>)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">8</span>)<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> n = <span class="hljs-number">0</span>; n &lt; <span class="hljs-number">8</span>; n ++)<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> m = <span class="hljs-number">0</span>; m &lt; <span class="hljs-number">8</span>; m ++)<br>                    B[j + m][i + n] = A[i + n][j + m];<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>运行结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./test-trans -N 32 -M 32<br><br>Function 0 (1 total)<br>Step 1: Validating and generating memory traces<br>Step 2: Evaluating performance (s=5, E=1, b=5)<br>func 0 (Transpose submission): hits:1709, misses:344, evictions:312<br><br>Summary <span class="hljs-keyword">for</span> official submission (func 0): correctness=1 misses=344<br><br>TEST_TRANS_RESULTS=1:344<br></code></pre></td></tr></table></figure>
-
-<p>可以看到与我们的计算结果十分的接近，我们现在知道出现 <code>miss</code> 的原因主要是二者映射到同一块区域造成的</p>
-<p>我们考虑在一个分块内，利用八个变量先将 $A$ 的值记录下来，然后再对 $B$ 赋值</p>
-<p>我们用 <code>(i, j)</code> 表示每个分块左上角的坐标，用 <code>k</code> 来对分块内部进行枚举，之后枚举八次，因此有：</p>
+<p>可以看到与我们的计算结果十分的接近，我们现在知道出现
+<code>miss</code> 的原因主要是二者映射到同一块区域造成的</p>
+<p>我们考虑在一个分块内，利用八个变量先将 <span class="math inline">\(A\)</span> 的值记录下来，然后再对 <span class="math inline">\(B\)</span> 赋值</p>
+<p>我们用 <code>(i, j)</code> 表示每个分块左上角的坐标，用
+<code>k</code> 来对分块内部进行枚举，之后枚举八次，因此有：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">solve32</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">8</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">8</span>)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">8</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k + i][j];<br>                <span class="hljs-type">int</span> a2 = A[k + i][j + <span class="hljs-number">1</span>];<br>                <span class="hljs-type">int</span> a3 = A[k + i][j + <span class="hljs-number">2</span>];<br>                <span class="hljs-type">int</span> a4 = A[k + i][j + <span class="hljs-number">3</span>];<br>                <span class="hljs-type">int</span> a5 = A[k + i][j + <span class="hljs-number">4</span>];<br>                <span class="hljs-type">int</span> a6 = A[k + i][j + <span class="hljs-number">5</span>];<br>                <span class="hljs-type">int</span> a7 = A[k + i][j + <span class="hljs-number">6</span>];<br>                <span class="hljs-type">int</span> a8 = A[k + i][j + <span class="hljs-number">7</span>];<br>                B[j][k + i] = a1;<br>                B[j + <span class="hljs-number">1</span>][k + i] = a2;<br>                B[j + <span class="hljs-number">2</span>][k + i] = a3;<br>                B[j + <span class="hljs-number">3</span>][k + i] = a4;<br>                B[j + <span class="hljs-number">4</span>][k + i] = a5;<br>                B[j + <span class="hljs-number">5</span>][k + i] = a6;<br>                B[j + <span class="hljs-number">6</span>][k + i] = a7;<br>                B[j + <span class="hljs-number">7</span>][k + i] = a8;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./test-trans -N 32 -M 32<br><br>Function 0 (1 total)<br>Step 1: Validating and generating memory traces<br>Step 2: Evaluating performance (s=5, E=1, b=5)<br>func 0 (Transpose submission): hits:1765, misses:288, evictions:256<br><br>Summary <span class="hljs-keyword">for</span> official submission (func 0): correctness=1 misses=288<br><br>TEST_TRANS_RESULTS=1:288<br></code></pre></td></tr></table></figure>
-
-<p>当我们将这个程序运行在 $64\times 64$ 的矩阵上，我们得到如下结果：</p>
+<p>当我们将这个程序运行在 <span class="math inline">\(64\times
+64\)</span> 的矩阵上，我们得到如下结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">func 0 (Transpose submission): hits:3585, misses:4612, evictions:4580<br></code></pre></td></tr></table></figure>
-
 <p>这跟没优化的结果基本一致，我们需要知道这是为什么</p>
-<p>这个高速缓存在不发生碰撞的情况下最多只能存储 <code>256</code> 个 <code>int</code>，因此对于 $64\times 64$ 的矩阵而言，只能保证前四行是不发生碰撞的</p>
-<p>换句话说，<code>A[0]</code>、<code>A[4]</code>、<code>B[0]</code>、<code>B[4]</code> 的映射都会发生碰撞</p>
-<p>因此我们直接将 $64\times 64$ 的矩阵划分为 $4\times 4$ 的矩阵，先测试一下效率：</p>
+<p>这个高速缓存在不发生碰撞的情况下最多只能存储 <code>256</code> 个
+<code>int</code>，因此对于 <span class="math inline">\(64\times
+64\)</span> 的矩阵而言，只能保证前四行是不发生碰撞的</p>
+<p>换句话说，<code>A[0]</code>、<code>A[4]</code>、<code>B[0]</code>、<code>B[4]</code>
+的映射都会发生碰撞</p>
+<p>因此我们直接将 <span class="math inline">\(64\times 64\)</span>
+的矩阵划分为 <span class="math inline">\(4\times 4\)</span>
+的矩阵，先测试一下效率：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">transpose_submit</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">4</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">4</span>)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k + i][j];<br>                <span class="hljs-type">int</span> a2 = A[k + i][j + <span class="hljs-number">1</span>];<br>                <span class="hljs-type">int</span> a3 = A[k + i][j + <span class="hljs-number">2</span>];<br>                <span class="hljs-type">int</span> a4 = A[k + i][j + <span class="hljs-number">3</span>];<br>                B[j][k + i] = a1;<br>                B[j + <span class="hljs-number">1</span>][k + i] = a2;<br>                B[j + <span class="hljs-number">2</span>][k + i] = a3;<br>                B[j + <span class="hljs-number">3</span>][k + i] = a4;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">TEST_TRANS_RESULTS=1:1700<br></code></pre></td></tr></table></figure>
-
 <p>可以发现，我们的思路其实是没有说明问题的，我们需要找到一种更大的分块方法并保证发生的碰撞尽可能小</p>
-<p>将 $8\times 8$ 的矩阵分成 <code>4</code> 个小块，然后分别对每个小块进行处理，得到如下代码：</p>
+<p>将 <span class="math inline">\(8\times 8\)</span> 的矩阵分成
+<code>4</code> 个小块，然后分别对每个小块进行处理，得到如下代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> transpose_submit_desc[] = <span class="hljs-string">&quot;Transpose submission&quot;</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">transpose_submit</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">8</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">8</span>)<br>        &#123;<br>            <span class="hljs-comment">//A左上角 - B左上角</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k][j];<br>                <span class="hljs-type">int</span> a2 = A[k][j + <span class="hljs-number">1</span>];<br>                <span class="hljs-type">int</span> a3 = A[k][j + <span class="hljs-number">2</span>];<br>                <span class="hljs-type">int</span> a4 = A[k][j + <span class="hljs-number">3</span>];<br>                B[j][k] = a1;<br>                B[j + <span class="hljs-number">1</span>][k] = a2;<br>                B[j + <span class="hljs-number">2</span>][k] = a3;<br>                B[j + <span class="hljs-number">3</span>][k] = a4;<br>            &#125;<br>            <span class="hljs-comment">//A左下角 - B右上角</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k + <span class="hljs-number">4</span>][j];<br>                <span class="hljs-type">int</span> a2 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">1</span>];<br>                <span class="hljs-type">int</span> a3 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">2</span>];<br>                <span class="hljs-type">int</span> a4 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">3</span>];<br>                B[j][k + <span class="hljs-number">4</span>] = a1;<br>                B[j + <span class="hljs-number">1</span>][k + <span class="hljs-number">4</span>] = a2;<br>                B[j + <span class="hljs-number">2</span>][k + <span class="hljs-number">4</span>] = a3;<br>                B[j + <span class="hljs-number">3</span>][k + <span class="hljs-number">4</span>] = a4;<br>            &#125;<br>            <span class="hljs-comment">//A右下角 - B右下角</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">4</span>];<br>                <span class="hljs-type">int</span> a2 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">5</span>];<br>                <span class="hljs-type">int</span> a3 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">6</span>];<br>                <span class="hljs-type">int</span> a4 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">7</span>];<br>                B[j + <span class="hljs-number">4</span>][k + <span class="hljs-number">4</span>] = a1;<br>                B[j + <span class="hljs-number">5</span>][k + <span class="hljs-number">4</span>] = a2;<br>                B[j + <span class="hljs-number">6</span>][k + <span class="hljs-number">4</span>] = a3;<br>                B[j + <span class="hljs-number">7</span>][k + <span class="hljs-number">4</span>] = a4;<br>            &#125;<br>            <span class="hljs-comment">//A右上角 - B左下角</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-type">int</span> a1 = A[k][j + <span class="hljs-number">4</span>];<br>                <span class="hljs-type">int</span> a2 = A[k][j + <span class="hljs-number">5</span>];<br>                <span class="hljs-type">int</span> a3 = A[k][j + <span class="hljs-number">6</span>];<br>                <span class="hljs-type">int</span> a4 = A[k][j + <span class="hljs-number">7</span>];<br>                B[j + <span class="hljs-number">4</span>][k] = a1;<br>                B[j + <span class="hljs-number">5</span>][k] = a2;<br>                B[j + <span class="hljs-number">6</span>][k] = a3;<br>                B[j + <span class="hljs-number">7</span>][k] = a4;                <br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">TEST_TRANS_RESULTS=1:1428<br></code></pre></td></tr></table></figure>
-
 <p>我们尽可能让它们之间不要起冲突，具体地，可以只要对应块的映射不重叠，则可以保证冲突的最小值，例如：</p>
 <ul>
-<li><code>A</code> 的左上角可以与 <code>B</code> 的右上或右下角（<code>A</code> 的左下角同理）</li>
-<li><code>A</code> 的左上角和右上角可以与 <code>B</code> 的左上角和右上角（利用前面的临时变量展开的原理）</li>
+<li><code>A</code> 的左上角可以与 <code>B</code>
+的右上或右下角（<code>A</code> 的左下角同理）</li>
+<li><code>A</code> 的左上角和右上角可以与 <code>B</code>
+的左上角和右上角（利用前面的临时变量展开的原理）</li>
 </ul>
-<p>我们将 $8\times 8$ 的矩阵分割成四个 $4\times 4$ 的矩阵，从左上到右下分别用坐标 <code>(0, 0)</code> 到 <code>(1, 1)</code> 表示</p>
-<p>在一开始我们对 $A$ 中矩阵 <code>(0, 0)</code> 和 <code>(0, 1)</code> 操作时，为了尽可能的利用高速缓存，我们将 $A$ 的一行记录在局部变量中，这一行本应放在 $B$ 的 <code>(0, 0)</code> 和 <code>(1, 0)</code>，但由于这两块会引起冲突，因此我们将 $A$ 的 <code>(0, 1)</code> 放在 $B$ 的 <code>(0, 1)</code>，我们之后再将 $B$ 的 <code>(0, 1)</code> 移动到 $B$ 的左下角即可</p>
+<p>我们将 <span class="math inline">\(8\times 8\)</span>
+的矩阵分割成四个 <span class="math inline">\(4\times 4\)</span>
+的矩阵，从左上到右下分别用坐标 <code>(0, 0)</code> 到
+<code>(1, 1)</code> 表示</p>
+<p>在一开始我们对 <span class="math inline">\(A\)</span> 中矩阵
+<code>(0, 0)</code> 和 <code>(0, 1)</code>
+操作时，为了尽可能的利用高速缓存，我们将 <span class="math inline">\(A\)</span> 的一行记录在局部变量中，这一行本应放在
+<span class="math inline">\(B\)</span> 的 <code>(0, 0)</code> 和
+<code>(1, 0)</code>，但由于这两块会引起冲突，因此我们将 <span class="math inline">\(A\)</span> 的 <code>(0, 1)</code> 放在 <span class="math inline">\(B\)</span> 的 <code>(0, 1)</code>，我们之后再将
+<span class="math inline">\(B\)</span> 的 <code>(0, 1)</code> 移动到
+<span class="math inline">\(B\)</span> 的左下角即可</p>
 <p>重新排列之后的结果为：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> transpose_submit_desc[] = <span class="hljs-string">&quot;Transpose submission&quot;</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">transpose_submit</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-type">int</span> a1, a2, a3, a4, a5, a6, a7, a8;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">8</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">8</span>)<br>        &#123;<br>            <span class="hljs-comment">//A的左上 -&gt; B的左上</span><br>            <span class="hljs-comment">//A的右上 -&gt; B的右上</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                a1 = A[k][j];<br>                a2 = A[k][j + <span class="hljs-number">1</span>];<br>                a3 = A[k][j + <span class="hljs-number">2</span>];<br>                a4 = A[k][j + <span class="hljs-number">3</span>];<br>                a5 = A[k][j + <span class="hljs-number">4</span>];<br>                a6 = A[k][j + <span class="hljs-number">5</span>];<br>                a7 = A[k][j + <span class="hljs-number">6</span>];<br>                a8 = A[k][j + <span class="hljs-number">7</span>];<br>                B[j][k] = a1;<br>                B[j + <span class="hljs-number">1</span>][k] = a2;<br>                B[j + <span class="hljs-number">2</span>][k] = a3;<br>                B[j + <span class="hljs-number">3</span>][k] = a4;<br>                B[j][k + <span class="hljs-number">4</span>] = a5;<br>                B[j + <span class="hljs-number">1</span>][k + <span class="hljs-number">4</span>] = a6;<br>                B[j + <span class="hljs-number">2</span>][k + <span class="hljs-number">4</span>] = a7;<br>                B[j + <span class="hljs-number">3</span>][k + <span class="hljs-number">4</span>] = a8;<br>            &#125;<br><br>            <span class="hljs-comment">//B的右上 -&gt; B的左下</span><br>            <span class="hljs-comment">//A的左下 -&gt; B的右上</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                <span class="hljs-comment">//B的右上</span><br>                a5 = B[j][k + <span class="hljs-number">4</span>];<br>                a6 = B[j + <span class="hljs-number">1</span>][k + <span class="hljs-number">4</span>];<br>                a7 = B[j + <span class="hljs-number">2</span>][k + <span class="hljs-number">4</span>];<br>                a8 = B[j + <span class="hljs-number">3</span>][k + <span class="hljs-number">4</span>];<br><br>                <span class="hljs-comment">//A的左下</span><br>                a1 = A[k + <span class="hljs-number">4</span>][j];<br>                a2 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">1</span>];<br>                a3 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">2</span>];<br>                a4 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">3</span>];<br><br>                <span class="hljs-comment">//B的右上</span><br>                B[j][k + <span class="hljs-number">4</span>] = a1;<br>                B[j + <span class="hljs-number">1</span>][k + <span class="hljs-number">4</span>] = a2;<br>                B[j + <span class="hljs-number">2</span>][k + <span class="hljs-number">4</span>] = a3;<br>                B[j + <span class="hljs-number">3</span>][k + <span class="hljs-number">4</span>] = a4;<br><br>                <span class="hljs-comment">//B的左下</span><br>                B[j + <span class="hljs-number">4</span>][k] = a5;<br>                B[j + <span class="hljs-number">5</span>][k] = a6;<br>                B[j + <span class="hljs-number">6</span>][k] = a7;<br>                B[j + <span class="hljs-number">7</span>][k] = a8;<br>            &#125;<br>            <span class="hljs-comment">//A的右下 -&gt; B的右下</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<br>            &#123;<br>                a1 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">4</span>];<br>                a2 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">5</span>];<br>                a3 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">6</span>];<br>                a4 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">7</span>];    <br>                B[j + <span class="hljs-number">4</span>][k + <span class="hljs-number">4</span>] = a1;<br>                B[j + <span class="hljs-number">5</span>][k + <span class="hljs-number">4</span>] = a2;<br>                B[j + <span class="hljs-number">6</span>][k + <span class="hljs-number">4</span>] = a3;<br>                B[j + <span class="hljs-number">7</span>][k + <span class="hljs-number">4</span>] = a4;<br> <br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">TEST_TRANS_RESULTS=1:2684<br></code></pre></td></tr></table></figure>
-
-<p>我们看到速度反而下降了，我们在将 $B$ 的 <code>(0, 1)</code> 矩阵移动到 <code>(1, 0)</code> 时，采取的是列优先的策略，我们考虑将其改为行优先，这样对于每一次循环，发生 <code>miss</code> 的次数将从 <code>4</code> 次降为 <code>1</code> 次</p>
-<p>由于 $B$ 为 $A$ 的转置矩阵，因此对于 $A$ 中坐标 $(i,j)$ 而言，其在 $B$ 中的坐标为 $(j,i)$。换句话说，<strong>如果我们用 $K$ 枚举 $A$ 中的行，那么对于 $B$ 就是在枚举列</strong></p>
-<p>在上面的代码中，由于我们的 $k$ 枚举的是 $A$ 中的行，这会对应于去枚举 $B$ 中的列，换句话说，在我们对 $B$ 的 <code>(0, 1)</code> 矩阵进行移动时，<strong>只能做到一列一列移动</strong></p>
-<p>为了将 $B$ 的移动转为一行一行移动，我们需要让 $k$ 枚举 $A$ 中的列。我们写出如下代码：</p>
+<p>我们看到速度反而下降了，我们在将 <span class="math inline">\(B\)</span> 的 <code>(0, 1)</code> 矩阵移动到
+<code>(1, 0)</code>
+时，采取的是列优先的策略，我们考虑将其改为行优先，这样对于每一次循环，发生
+<code>miss</code> 的次数将从 <code>4</code> 次降为 <code>1</code> 次</p>
+<p>由于 <span class="math inline">\(B\)</span> 为 <span class="math inline">\(A\)</span> 的转置矩阵，因此对于 <span class="math inline">\(A\)</span> 中坐标 <span class="math inline">\((i,j)\)</span> 而言，其在 <span class="math inline">\(B\)</span> 中的坐标为 <span class="math inline">\((j,i)\)</span>。换句话说，<strong>如果我们用 <span class="math inline">\(K\)</span> 枚举 <span class="math inline">\(A\)</span> 中的行，那么对于 <span class="math inline">\(B\)</span> 就是在枚举列</strong></p>
+<p>在上面的代码中，由于我们的 <span class="math inline">\(k\)</span>
+枚举的是 <span class="math inline">\(A\)</span> 中的行，这会对应于去枚举
+<span class="math inline">\(B\)</span> 中的列，换句话说，在我们对 <span class="math inline">\(B\)</span> 的 <code>(0, 1)</code>
+矩阵进行移动时，<strong>只能做到一列一列移动</strong></p>
+<p>为了将 <span class="math inline">\(B\)</span>
+的移动转为一行一行移动，我们需要让 <span class="math inline">\(k\)</span> 枚举 <span class="math inline">\(A\)</span> 中的列。我们写出如下代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">solve64</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-type">int</span> a1, a2, a3, a4, a5, a6, a7, a8;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; i += <span class="hljs-number">8</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j += <span class="hljs-number">8</span>)<br>        &#123;<br>            <span class="hljs-comment">//A的左上 -&gt; B的左上</span><br>            <span class="hljs-comment">//A的右上 -&gt; B的右上</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<span class="hljs-comment">//k枚举A中的行</span><br>            &#123;<br>                a1 = A[k][j];<br>                a2 = A[k][j + <span class="hljs-number">1</span>];<br>                a3 = A[k][j + <span class="hljs-number">2</span>];<br>                a4 = A[k][j + <span class="hljs-number">3</span>];<br>                a5 = A[k][j + <span class="hljs-number">4</span>];<br>                a6 = A[k][j + <span class="hljs-number">5</span>];<br>                a7 = A[k][j + <span class="hljs-number">6</span>];<br>                a8 = A[k][j + <span class="hljs-number">7</span>];<br>                B[j][k] = a1;<br>                B[j + <span class="hljs-number">1</span>][k] = a2;<br>                B[j + <span class="hljs-number">2</span>][k] = a3;<br>                B[j + <span class="hljs-number">3</span>][k] = a4;<br>                B[j][k + <span class="hljs-number">4</span>] = a5;<br>                B[j + <span class="hljs-number">1</span>][k + <span class="hljs-number">4</span>] = a6;<br>                B[j + <span class="hljs-number">2</span>][k + <span class="hljs-number">4</span>] = a7;<br>                B[j + <span class="hljs-number">3</span>][k + <span class="hljs-number">4</span>] = a8;<br>            &#125;<br><br>            <span class="hljs-comment">//B的右上 -&gt; B的左下</span><br>            <span class="hljs-comment">//A的左下 -&gt; B的右上</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = j; k &lt; j + <span class="hljs-number">4</span>; k ++)<span class="hljs-comment">//k枚举A中的列</span><br>            &#123;<br>                <span class="hljs-comment">//若A中枚举坐标为(i, k)，则B中对应的坐标为(k, i)</span><br>                <span class="hljs-comment">//B的右上</span><br>                a1 = B[k][i + <span class="hljs-number">4</span>];<br>                a2 = B[k][i + <span class="hljs-number">5</span>];<br>                a3 = B[k][i + <span class="hljs-number">6</span>];<br>                a4 = B[k][i + <span class="hljs-number">7</span>];<br>                <span class="hljs-comment">//A的左下</span><br>                a5 = A[i + <span class="hljs-number">4</span>][k];<br>                a6 = A[i + <span class="hljs-number">5</span>][k];<br>                a7 = A[i + <span class="hljs-number">6</span>][k];<br>                a8 = A[i + <span class="hljs-number">7</span>][k];<br>                <span class="hljs-comment">//B的右上</span><br>                B[k][i + <span class="hljs-number">4</span>] = a5;<br>                B[k][i + <span class="hljs-number">5</span>] = a6;<br>                B[k][i + <span class="hljs-number">6</span>] = a7;<br>                B[k][i + <span class="hljs-number">7</span>] = a8;<br>                <span class="hljs-comment">//B的左下</span><br>                B[k + <span class="hljs-number">4</span>][i] = a1;<br>                B[k + <span class="hljs-number">4</span>][i + <span class="hljs-number">1</span>] = a2;<br>                B[k + <span class="hljs-number">4</span>][i + <span class="hljs-number">2</span>] = a3;<br>                B[k + <span class="hljs-number">4</span>][i + <span class="hljs-number">3</span>] = a4;<br><br>            &#125;<br>            <span class="hljs-comment">//A的右下 -&gt; B的右下</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i; k &lt; i + <span class="hljs-number">4</span>; k ++)<span class="hljs-comment">//k枚举A中的行</span><br>            &#123;<br>                a1 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">4</span>];<br>                a2 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">5</span>];<br>                a3 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">6</span>];<br>                a4 = A[k + <span class="hljs-number">4</span>][j + <span class="hljs-number">7</span>];    <br>                B[j + <span class="hljs-number">4</span>][k + <span class="hljs-number">4</span>] = a1;<br>                B[j + <span class="hljs-number">5</span>][k + <span class="hljs-number">4</span>] = a2;<br>                B[j + <span class="hljs-number">6</span>][k + <span class="hljs-number">4</span>] = a3;<br>                B[j + <span class="hljs-number">7</span>][k + <span class="hljs-number">4</span>] = a4;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./test-trans -N 64 -M 64<br><br>Function 0 (1 total)<br>Step 1: Validating and generating memory traces<br>Step 2: Evaluating performance (s=5, E=1, b=5)<br>func 0 (Transpose submission): hits:9017, misses:1228, evictions:1196<br><br>Summary <span class="hljs-keyword">for</span> official submission (func 0): correctness=1 misses=1228<br><br>TEST_TRANS_RESULTS=1:1228<br></code></pre></td></tr></table></figure>
-
-<p>对于第三个 $67\times 61$ 的矩阵，这个矩阵我们无法将其划分为完整的小分块，我们随意的尝试几个数，得出结果即可，这个很难优化</p>
-<p>我们将分块的大小设置为 <code>18</code>，这个结果是我试出来的，这里的限制很松，很容易过</p>
+<p>对于第三个 <span class="math inline">\(67\times 61\)</span>
+的矩阵，这个矩阵我们无法将其划分为完整的小分块，我们随意的尝试几个数，得出结果即可，这个很难优化</p>
+<p>我们将分块的大小设置为
+<code>18</code>，这个结果是我试出来的，这里的限制很松，很容易过</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">solveMisc</span><span class="hljs-params">(<span class="hljs-type">int</span> M, <span class="hljs-type">int</span> N, <span class="hljs-type">int</span> A[N][M], <span class="hljs-type">int</span> B[M][N])</span><br>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i += <span class="hljs-number">18</span>)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; M; j += <span class="hljs-number">18</span>)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> n = i; n &lt; i + <span class="hljs-number">18</span> &amp;&amp; n &lt; N; n ++)<br>            &#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> m = j; m &lt; j + <span class="hljs-number">18</span> &amp;&amp; m &lt; M; m ++)<br>                &#123;<br>                    B[m][n] = A[n][m];<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./test-trans -N 67 -M 61<br><br>Function 0 (1 total)<br>Step 1: Validating and generating memory traces<br>Step 2: Evaluating performance (s=5, E=1, b=5)<br>func 0 (Transpose submission): hits:6217, misses:1962, evictions:1930<br><br>Summary <span class="hljs-keyword">for</span> official submission (func 0): correctness=1 misses=1962<br></code></pre></td></tr></table></figure>
-
 <p>全部测试结果如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./driver.py <br>Part A: Testing cache simulator<br>Running ./test-csim<br>                        Your simulator     Reference simulator<br>Points (s,E,b)    Hits  Misses  Evicts    Hits  Misses  Evicts<br>     3 (1,1,1)       9       8       6       9       8       6  traces/yi2.trace<br>     3 (4,2,4)       4       5       2       4       5       2  traces/yi.trace<br>     3 (2,1,4)       2       3       1       2       3       1  traces/dave.trace<br>     3 (2,1,3)     167      71      67     167      71      67  traces/trans.trace<br>     3 (2,2,3)     201      37      29     201      37      29  traces/trans.trace<br>     3 (2,4,3)     212      26      10     212      26      10  traces/trans.trace<br>     3 (5,1,5)     231       7       0     231       7       0  traces/trans.trace<br>     6 (5,1,5)  265189   21775   21743  265189   21775   21743  traces/long.trace<br>    27<br><br><br>Part B: Testing transpose <span class="hljs-keyword">function</span><br>Running ./test-trans -M 32 -N 32<br>Running ./test-trans -M 64 -N 64<br>Running ./test-trans -M 61 -N 67<br><br>Cache Lab summary:<br>                        Points   Max pts      Misses<br>Csim correctness          27.0        27<br>Trans perf 32x32           8.0         8         288<br>Trans perf 64x64           8.0         8        1228<br>Trans perf 61x67          10.0        10        1962<br>          Total points    53.0        53<br></code></pre></td></tr></table></figure>
-
 <hr>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这个实验我花了两天的时间，大概肝了 <code>20+</code> 个小时。通过这个实验，我这才把 <code>cache</code> 的寻址以及碰撞给搞清楚了。我一把书看完就来做这个实验，一开始这些概念真的很模糊，但这个实验神奇的地方就在于它会强迫我去通过做书后面的家庭作业来让我能够有一个更加深入的理解。总的来说，感觉还不错</p>
+<h2 id="后记">后记</h2>
+<p>这个实验我花了两天的时间，大概肝了 <code>20+</code>
+个小时。通过这个实验，我这才把 <code>cache</code>
+的寻址以及碰撞给搞清楚了。我一把书看完就来做这个实验，一开始这些概念真的很模糊，但这个实验神奇的地方就在于它会强迫我去通过做书后面的家庭作业来让我能够有一个更加深入的理解。总的来说，感觉还不错</p>
 
                 
               </div>

@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Buffer Pool Manager Buffer Pool Manager Relational Model Database &amp; DBMS &amp; Data model Relational Model   SQL Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey &amp; Candicate Ke">
+    <meta name="description" content="Buffer Pool Manager  Buffer Pool Manager  Relational Model  Database &amp; DBMS &amp; Data model Relational Model  SQL  Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU15-445 Buffer Pool Manager">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/11/05/CMU15-445%20Notes/Buffer%20Pool%20Manager/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Buffer Pool Manager Buffer Pool Manager Relational Model Database &amp; DBMS &amp; Data model Relational Model   SQL Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey &amp; Candicate Ke">
+<meta property="og:description" content="Buffer Pool Manager  Buffer Pool Manager  Relational Model  Database &amp; DBMS &amp; Data model Relational Model  SQL  Relation &amp; tuple Schema &amp; Instance &amp; Domain Superkey">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445%20Notes/CMU15-445%20Notes%20(1).jpg">
 <meta property="article:published_time" content="2023-11-05T14:27:59.571Z">
@@ -274,7 +274,7 @@
         
         
         
-          93 mins
+          88 mins
         
       </span>
     
@@ -346,159 +346,370 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Buffer-Pool-Manager"><a href="#Buffer-Pool-Manager" class="headerlink" title="Buffer Pool Manager"></a>Buffer Pool Manager</h1><ul>
-<li><a href="#buffer-pool-manager">Buffer Pool Manager</a><ul>
-<li><a href="#relational-model">Relational Model</a><ul>
-<li><a href="#database--dbms--data-model">Database &amp; DBMS &amp; Data model</a></li>
+                <h1 id="buffer-pool-manager">Buffer Pool Manager</h1>
+<ul>
+<li><a href="#buffer-pool-manager">Buffer Pool Manager</a>
+<ul>
+<li><a href="#relational-model">Relational Model</a>
+<ul>
+<li><a href="#database--dbms--data-model">Database &amp; DBMS &amp; Data
+model</a></li>
 <li><a href="#relational-model-1">Relational Model</a></li>
-</ul>
-</li>
-<li><a href="#sql">SQL</a><ul>
+</ul></li>
+<li><a href="#sql">SQL</a>
+<ul>
 <li><a href="#relation--tuple">Relation &amp; tuple</a></li>
-<li><a href="#schema--instance--domain">Schema &amp; Instance &amp; Domain</a></li>
-<li><a href="#superkey--candicate-key">Superkey &amp; Candicate Key</a></li>
-<li><a href="#referential-integrity-constrain--foreign-key-constrain">Referential integrity constrain &amp; foreign-key constrain</a></li>
+<li><a href="#schema--instance--domain">Schema &amp; Instance &amp;
+Domain</a></li>
+<li><a href="#superkey--candicate-key">Superkey &amp; Candicate
+Key</a></li>
+<li><a href="#referential-integrity-constrain--foreign-key-constrain">Referential
+integrity constrain &amp; foreign-key constrain</a></li>
 <li><a href="#session">Session</a></li>
-<li><a href="#natural-join--outer-join">natural join &amp; outer join</a></li>
-<li><a href="#common-table-expressioncte">Common Table Expression(CTE)</a></li>
+<li><a href="#natural-join--outer-join">natural join &amp; outer
+join</a></li>
+<li><a href="#common-table-expressioncte">Common Table
+Expression(CTE)</a></li>
 <li><a href="#recursive-cte">Recursive CTE</a></li>
-</ul>
-</li>
-<li><a href="#database-storage">Database Storage</a><ul>
-<li><a href="#os-vs-buffer-pool-manager">OS vs. Buffer Pool Manager</a></li>
-<li><a href="#file-storage">File Storage</a><ul>
+</ul></li>
+<li><a href="#database-storage">Database Storage</a>
+<ul>
+<li><a href="#os-vs-buffer-pool-manager">OS vs. Buffer Pool
+Manager</a></li>
+<li><a href="#file-storage">File Storage</a>
+<ul>
 <li><a href="#heap-file-organization">Heap File Organization</a></li>
-</ul>
-</li>
-<li><a href="#page-layout">Page Layout</a><ul>
+</ul></li>
+<li><a href="#page-layout">Page Layout</a>
+<ul>
 <li><a href="#slotted-page">Slotted-Page</a></li>
 <li><a href="#log-structured-storage">Log-Structured storage</a></li>
-</ul>
-</li>
+</ul></li>
 <li><a href="#tuple-layout">Tuple Layout</a></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Relational-Model"><a href="#Relational-Model" class="headerlink" title="Relational Model"></a>Relational Model</h2><h3 id="Database-amp-DBMS-amp-Data-model"><a href="#Database-amp-DBMS-amp-Data-model" class="headerlink" title="Database &amp; DBMS &amp; Data model"></a>Database &amp; DBMS &amp; Data model</h3><p><em>Database</em> is a organized collection of inter-related data that modles the aspect of the real world, and the <em>database management system</em>(DBMS) is a software to management database. Therefore, database is a set of data, and DBMS can be thought of a interface to control the database.</p>
-<p>Database is stored as comma-seperqted value(CSV) file that DBMS manages, every entity well be stored in its own file, and application has to prase the CSV file to read or write recoed. Each entity has its own set of attributes, so <strong>defferent record</strong> are delimited by new line, while each of corresponding attributes <strong>within a record</strong> are delimited by comma</p>
-<p>From this perspective, database can be thought of as a collection of multiple files</p>
-<p>Consider a database models a digital music store, the two basic entities aes artist and album, so we need two CSV file to store every record in entities</p>
-<p><em>Data model</em> is a collection of concept for describing the data in database. <em>Relational model</em> is one of the <em>data model</em></p>
-<h3 id="Relational-Model-1"><a href="#Relational-Model-1" class="headerlink" title="Relational Model"></a>Relational Model</h3><p>Early database application were diffcult to build and maintain because there was a tight copluing between logical layers and physical layers, therefore the <em>relational model</em> was gradually proposed.</p>
-<p><em>Relational model</em> define database abstraction <strong>based on relations</strong> to avoid maintainance overhead.</p>
-<p>It has three key points: </p>
+<h2 id="relational-model">Relational Model</h2>
+<h3 id="database-dbms-data-model">Database &amp; DBMS &amp; Data
+model</h3>
+<p><em>Database</em> is a organized collection of inter-related data
+that modles the aspect of the real world, and the <em>database
+management system</em>(DBMS) is a software to management database.
+Therefore, database is a set of data, and DBMS can be thought of a
+interface to control the database.</p>
+<p>Database is stored as comma-seperqted value(CSV) file that DBMS
+manages, every entity well be stored in its own file, and application
+has to prase the CSV file to read or write recoed. Each entity has its
+own set of attributes, so <strong>defferent record</strong> are
+delimited by new line, while each of corresponding attributes
+<strong>within a record</strong> are delimited by comma</p>
+<p>From this perspective, database can be thought of as a collection of
+multiple files</p>
+<p>Consider a database models a digital music store, the two basic
+entities aes artist and album, so we need two CSV file to store every
+record in entities</p>
+<p><em>Data model</em> is a collection of concept for describing the
+data in database. <em>Relational model</em> is one of the <em>data
+model</em></p>
+<h3 id="relational-model-1">Relational Model</h3>
+<p>Early database application were diffcult to build and maintain
+because there was a tight copluing between logical layers and physical
+layers, therefore the <em>relational model</em> was gradually
+proposed.</p>
+<p><em>Relational model</em> define database abstraction <strong>based
+on relations</strong> to avoid maintainance overhead.</p>
+<p>It has three key points:</p>
 <ul>
 <li>Store database in simple structure(relations)</li>
-<li>Access data through high-level language, DBMS just figure out best execution strategy</li>
-<li>Physical store(how to store data in physical layers) left up to DBMS implementation</li>
+<li>Access data through high-level language, DBMS just figure out best
+execution strategy</li>
+<li>Physical store(how to store data in physical layers) left up to DBMS
+implementation</li>
 </ul>
 <p>Relation data model defines three concepts:</p>
 <ul>
-<li>Structure: The definition of <em>relations</em> and their content., what attributes <em>relations</em> contain and what value attributes can hold</li>
-<li>Integrity: Ensure the database’s contents satisfy constrains(for example the value of attribute has to number or string)</li>
-<li>Manipulation: How to access and modify the database’s content</li>
+<li>Structure: The definition of <em>relations</em> and their content.,
+what attributes <em>relations</em> contain and what value attributes can
+hold</li>
+<li>Integrity: Ensure the database's contents satisfy constrains(for
+example the value of attribute has to number or string)</li>
+<li>Manipulation: How to access and modify the database's content</li>
 </ul>
-<h2 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h2><h3 id="Relation-amp-tuple"><a href="#Relation-amp-tuple" class="headerlink" title="Relation &amp; tuple"></a>Relation &amp; tuple</h3><p><em>Relation</em> is an unordered set that contain the relationship of attributes that represent <em>entities</em>. Therefore, <em>relation</em> simplely a unordered set, and it contain a series of attrbutes, all of which have corresponding value.</p>
-<p><em>Tuple</em> is a set of attributes values in <em>relation</em>, value can be atomic(i.e. number, string, bool), scalar, lists and other nested data structure.</p>
-<p>A <em>relations</em> has two <em>key</em>, which is <em>primary key</em> which <strong>uniquely</strong> identifies a single <em>tuple</em> and <em>foreign key</em> which specifies an attribute from one <em>relation</em> has map to a <em>tuple</em> in another <em>relation</em></p>
+<h2 id="sql">SQL</h2>
+<h3 id="relation-tuple">Relation &amp; tuple</h3>
+<p><em>Relation</em> is an unordered set that contain the relationship
+of attributes that represent <em>entities</em>. Therefore,
+<em>relation</em> simplely a unordered set, and it contain a series of
+attrbutes, all of which have corresponding value.</p>
+<p><em>Tuple</em> is a set of attributes values in <em>relation</em>,
+value can be atomic(i.e. number, string, bool), scalar, lists and other
+nested data structure.</p>
+<p>A <em>relations</em> has two <em>key</em>, which is <em>primary
+key</em> which <strong>uniquely</strong> identifies a single
+<em>tuple</em> and <em>foreign key</em> which specifies an attribute
+from one <em>relation</em> has map to a <em>tuple</em> in another
+<em>relation</em></p>
 <ul>
-<li><em>Relation</em> has a lot of pairs which contain <em>key</em> and <em>tuple</em></li>
-<li><em>tuple</em> simplely a set of value, each of which corresponding to single attribute</li>
+<li><em>Relation</em> has a lot of pairs which contain <em>key</em> and
+<em>tuple</em></li>
+<li><em>tuple</em> simplely a set of value, each of which corresponding
+to single attribute</li>
 </ul>
-<h3 id="Schema-amp-Instance-amp-Domain"><a href="#Schema-amp-Instance-amp-Domain" class="headerlink" title="Schema &amp; Instance &amp; Domain"></a>Schema &amp; Instance &amp; Domain</h3><p><em>Schema</em> is a description of a particular collection of data based on <em>data model</em>.</p>
-<p><em>Instance</em> is a state which database stores the informance at a particular moment</p>
-<p>If we abstract <em>relation</em> into a table, the <em>attribute</em> is the meaning of column, and the <em>tuple</em> is the value of attribute&#x2F;element in the row</p>
-<p>That’s to say, in the <em>relational model</em>, data are represented in the form of table(<em>relation</em> also refers ot table). Each table have multi column, each column has a unique name(<em>attribute</em> refers to the name of colume). Each row of the table represents the value of each attribute(<em>tuple</em> refers to row). The permitted value of the attribute in table is <em>domain</em>(the <em>domain</em> of all attribute is <strong>atomic</strong>, namely, its element are considered to be indivisible units)</p>
-<p>Schema and instance can be understood by analogy to programming language. The <em>database scaema</em> is corresponding to the variable declarations, and the value of the variable at a point in time corresponding to the <em>database instance</em></p>
-<h3 id="Superkey-amp-Candicate-Key"><a href="#Superkey-amp-Candicate-Key" class="headerlink" title="Superkey &amp; Candicate Key"></a>Superkey &amp; Candicate Key</h3><p>We require that no two tuple in relation have exactly the same value for each attribute, Therefore we need a way to distinguish two tuple. We use the concept of <em>superkey</em> to solve it, <em>superkey</em> is a set of <strong>one or more attribute</strong> that can specify uniquely a tuple in relation</p>
-<p>Formally, Let $R$ denote the set of attributes in relation $r$, if we say subset $K$ of set $R$ is a <em>superkey</em>, that is, $t_1$ and $t_2$ are both in $R$ and $t_1 \neq t_2$, then $t_1.K \neq t_2.K$</p>
-<p>A superkey can contain extraneous attribute, so if a set is a superkey, then so is any <strong>superset</strong> for it</p>
-<p>Formally, Let $R$ denote the set of attributes in relation $r$, if we say subset $K$ of set $R$ is a <em>superkey</em>, then any <strong>superset</strong> of set $K$ also is superkey</p>
-<p>If a superkey has no porper subset, such minimal superkey are called <em>candidate key</em></p>
-<p>We shall use the term <em>primary key</em> to denote <em>candidate key</em>, and to be clear, the meaning of these two concept are exactly the same</p>
-<h3 id="Referential-integrity-constrain-amp-foreign-key-constrain"><a href="#Referential-integrity-constrain-amp-foreign-key-constrain" class="headerlink" title="Referential integrity constrain &amp; foreign-key constrain"></a>Referential integrity constrain &amp; foreign-key constrain</h3><blockquote>
+<h3 id="schema-instance-domain">Schema &amp; Instance &amp; Domain</h3>
+<p><em>Schema</em> is a description of a particular collection of data
+based on <em>data model</em>.</p>
+<p><em>Instance</em> is a state which database stores the informance at
+a particular moment</p>
+<p>If we abstract <em>relation</em> into a table, the <em>attribute</em>
+is the meaning of column, and the <em>tuple</em> is the value of
+attribute/element in the row</p>
+<p>That's to say, in the <em>relational model</em>, data are represented
+in the form of table(<em>relation</em> also refers ot table). Each table
+have multi column, each column has a unique name(<em>attribute</em>
+refers to the name of colume). Each row of the table represents the
+value of each attribute(<em>tuple</em> refers to row). The permitted
+value of the attribute in table is <em>domain</em>(the <em>domain</em>
+of all attribute is <strong>atomic</strong>, namely, its element are
+considered to be indivisible units)</p>
+<p>Schema and instance can be understood by analogy to programming
+language. The <em>database scaema</em> is corresponding to the variable
+declarations, and the value of the variable at a point in time
+corresponding to the <em>database instance</em></p>
+<h3 id="superkey-candicate-key">Superkey &amp; Candicate Key</h3>
+<p>We require that no two tuple in relation have exactly the same value
+for each attribute, Therefore we need a way to distinguish two tuple. We
+use the concept of <em>superkey</em> to solve it, <em>superkey</em> is a
+set of <strong>one or more attribute</strong> that can specify uniquely
+a tuple in relation</p>
+<p>Formally, Let <span class="math inline">\(R\)</span> denote the set
+of attributes in relation <span class="math inline">\(r\)</span>, if we
+say subset <span class="math inline">\(K\)</span> of set <span class="math inline">\(R\)</span> is a <em>superkey</em>, that is, <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> are both in <span class="math inline">\(R\)</span> and <span class="math inline">\(t_1
+\neq t_2\)</span>, then <span class="math inline">\(t_1.K \neq
+t_2.K\)</span></p>
+<p>A superkey can contain extraneous attribute, so if a set is a
+superkey, then so is any <strong>superset</strong> for it</p>
+<p>Formally, Let <span class="math inline">\(R\)</span> denote the set
+of attributes in relation <span class="math inline">\(r\)</span>, if we
+say subset <span class="math inline">\(K\)</span> of set <span class="math inline">\(R\)</span> is a <em>superkey</em>, then any
+<strong>superset</strong> of set <span class="math inline">\(K\)</span>
+also is superkey</p>
+<p>If a superkey has no porper subset, such minimal superkey are called
+<em>candidate key</em></p>
+<p>We shall use the term <em>primary key</em> to denote <em>candidate
+key</em>, and to be clear, the meaning of these two concept are exactly
+the same</p>
+<h3 id="referential-integrity-constrain-foreign-key-constrain">Referential
+integrity constrain &amp; foreign-key constrain</h3>
+<blockquote>
 <p>Page: 46</p>
 </blockquote>
-<p>The <em>foreign-key constrain</em> requires that attribute(s) of referencing relation must be the <strong>primary key</strong> of the referenced relation. the <em>referential integrity constrain</em>, on the other hand, simply requires that the value appearing in referencing relation <strong>must</strong> appears in referenced relation</p>
-<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>The session, in database, refers to a connection established between a user and a database system for a special period of time. During the session, database system would keep track of session-special informance(e.g. identity, privilege), user can also perform multi operation. The session remains active until user log out, disconnect, or set timeout period is reached. </p>
-<h3 id="natural-join-amp-outer-join"><a href="#natural-join-amp-outer-join" class="headerlink" title="natural join &amp; outer join"></a>natural join &amp; outer join</h3><p>Suppose we have two relation called $A$ and $B$ respectively, and only attribute they shared. <em>Natural join</em> operation will list the collection of tuple that have the same value of this attribute in both realtions. The tuple which don’t appear in the result relation have two main reason, one is corresponding attribute value are not same; the other is this tuple of this attribute in first relation don’t appear in the second relation</p>
-<p>Therefore, <em>outer join</em> is a workaround, which will list those tuple don’t appear in second relation</p>
-<h3 id="Common-Table-Expression-CTE"><a href="#Common-Table-Expression-CTE" class="headerlink" title="Common Table Expression(CTE)"></a>Common Table Expression(CTE)</h3><p>The common table expression(CTE) allows you to create a <em>temporar</em>y* named result set that aviable temporarily to <code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code> clause</p>
-<h3 id="Recursive-CTE"><a href="#Recursive-CTE" class="headerlink" title="Recursive CTE"></a>Recursive CTE</h3><p>A recursive common table expression (CTE) is a CTE that references itself. By doing so, the CTE repeatedly executes, returns subsets of data, until it returns the complete result set.</p>
+<p>The <em>foreign-key constrain</em> requires that attribute(s) of
+referencing relation must be the <strong>primary key</strong> of the
+referenced relation. the <em>referential integrity constrain</em>, on
+the other hand, simply requires that the value appearing in referencing
+relation <strong>must</strong> appears in referenced relation</p>
+<h3 id="session">Session</h3>
+<p>The session, in database, refers to a connection established between
+a user and a database system for a special period of time. During the
+session, database system would keep track of session-special
+informance(e.g. identity, privilege), user can also perform multi
+operation. The session remains active until user log out, disconnect, or
+set timeout period is reached.</p>
+<h3 id="natural-join-outer-join">natural join &amp; outer join</h3>
+<p>Suppose we have two relation called <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> respectively, and only attribute they
+shared. <em>Natural join</em> operation will list the collection of
+tuple that have the same value of this attribute in both realtions. The
+tuple which don't appear in the result relation have two main reason,
+one is corresponding attribute value are not same; the other is this
+tuple of this attribute in first relation don't appear in the second
+relation</p>
+<p>Therefore, <em>outer join</em> is a workaround, which will list those
+tuple don't appear in second relation</p>
+<h3 id="common-table-expressioncte">Common Table Expression(CTE)</h3>
+<p>The common table expression(CTE) allows you to create a
+<em>temporar</em>y* named result set that aviable temporarily to
+<code>SELECT</code>, <code>UPDATE</code>, <code>DELETE</code> clause</p>
+<h3 id="recursive-cte">Recursive CTE</h3>
+<p>A recursive common table expression (CTE) is a CTE that references
+itself. By doing so, the CTE repeatedly executes, returns subsets of
+data, until it returns the complete result set.</p>
 <p>The execution order of a recursive CTE is as follows:</p>
 <ul>
-<li>First, execute the anchor member to form the base result set (R0), <strong>use this result for the next iteration</strong>.</li>
-<li>Second, execute the recursive member <strong>with the input result set from the previous iteration</strong> (Ri-1) and return a sub-result set (Ri) until the termination condition is met.</li>
-<li>Third, combine all result sets R0, R1, … Rn using UNION ALL operator to produce the final result set.</li>
+<li>First, execute the anchor member to form the base result set (R0),
+<strong>use this result for the next iteration</strong>.</li>
+<li>Second, execute the recursive member <strong>with the input result
+set from the previous iteration</strong> (Ri-1) and return a sub-result
+set (Ri) until the termination condition is met.</li>
+<li>Third, combine all result sets R0, R1, … Rn using UNION ALL operator
+to produce the final result set.</li>
 </ul>
-<h2 id="Database-Storage"><a href="#Database-Storage" class="headerlink" title="Database Storage"></a>Database Storage</h2><h3 id="OS-vs-Buffer-Pool-Manager"><a href="#OS-vs-Buffer-Pool-Manager" class="headerlink" title="OS vs. Buffer Pool Manager"></a>OS vs. Buffer Pool Manager</h3><blockquote>
+<h2 id="database-storage">Database Storage</h2>
+<h3 id="os-vs.-buffer-pool-manager">OS vs. Buffer Pool Manager</h3>
+<blockquote>
 <p>GPT answer</p>
 </blockquote>
 <ul>
 <li>Problem #1: Transaction Safety</li>
 </ul>
-<p>When using memory-mapped I&#x2F;O, the operating system can flush dirty pages at any time, which can cause problems for transactional consistency. If a transaction modifies a page in memory and the OS flushes that page to disk before the transaction commits, the database can become inconsistent. To address this problem, the database system must use techniques such as write-ahead logging to ensure that all changes to the database are recorded before they are flushed to disk.</p>
+<p>When using memory-mapped I/O, the operating system can flush dirty
+pages at any time, which can cause problems for transactional
+consistency. If a transaction modifies a page in memory and the OS
+flushes that page to disk before the transaction commits, the database
+can become inconsistent. To address this problem, the database system
+must use techniques such as write-ahead logging to ensure that all
+changes to the database are recorded before they are flushed to
+disk.</p>
 <ul>
-<li>Problem #2: I&#x2F;O Stalls</li>
+<li>Problem #2: I/O Stalls</li>
 </ul>
-<p>When using memory-mapped I&#x2F;O, the database system doesn’t know which pages are in memory and which are not. If a thread tries to access a page that is not in memory, the OS will stall the thread while it reads the page from disk. This can cause significant performance problems, especially if many threads are accessing the database concurrently.</p>
+<p>When using memory-mapped I/O, the database system doesn't know which
+pages are in memory and which are not. If a thread tries to access a
+page that is not in memory, the OS will stall the thread while it reads
+the page from disk. This can cause significant performance problems,
+especially if many threads are accessing the database concurrently.</p>
 <ul>
 <li>Problem #3: Error Handling</li>
 </ul>
-<p>When using memory-mapped I&#x2F;O, it can be difficult to validate pages and handle errors. Any access to a page that is not in memory can cause a SIGBUS signal, which the database system must handle. This can be challenging, especially if the database system is running in a multi-threaded environment.</p>
+<p>When using memory-mapped I/O, it can be difficult to validate pages
+and handle errors. Any access to a page that is not in memory can cause
+a SIGBUS signal, which the database system must handle. This can be
+challenging, especially if the database system is running in a
+multi-threaded environment.</p>
 <ul>
 <li>Problem #4: Performance Issues</li>
 </ul>
-<p>When using memory-mapped I&#x2F;O, the database system can experience performance issues due to OS data structure contention and TLB shootdowns. OS data structures such as the page table can become a bottleneck if many threads are accessing the database concurrently. Additionally, TLB shootdowns can occur when the OS needs to invalidate TLB entries for a page that has been modified, which can cause significant performance overhead.</p>
-<p>To address these problems, some database systems use alternative I&#x2F;O mechanisms such as direct I&#x2F;O or asynchronous I&#x2F;O. These mechanisms can provide better control over I&#x2F;O operations and reduce the impact of OS-level issues on database performance and consistency.</p>
-<h3 id="File-Storage"><a href="#File-Storage" class="headerlink" title="File Storage"></a>File Storage</h3><p>DBMS store database as one or more <strong>file</strong> in disk, and this file is seprated by several partition called <em>block(page)</em>. Different DBMS manage page in file in different way: </p>
+<p>When using memory-mapped I/O, the database system can experience
+performance issues due to OS data structure contention and TLB
+shootdowns. OS data structures such as the page table can become a
+bottleneck if many threads are accessing the database concurrently.
+Additionally, TLB shootdowns can occur when the OS needs to invalidate
+TLB entries for a page that has been modified, which can cause
+significant performance overhead.</p>
+<p>To address these problems, some database systems use alternative I/O
+mechanisms such as direct I/O or asynchronous I/O. These mechanisms can
+provide better control over I/O operations and reduce the impact of
+OS-level issues on database performance and consistency.</p>
+<h3 id="file-storage">File Storage</h3>
+<p>DBMS store database as one or more <strong>file</strong> in disk, and
+this file is seprated by several partition called <em>block(page)</em>.
+Different DBMS manage page in file in different way:</p>
 <ul>
 <li>Heap File Organization</li>
 <li>Tree File Organization</li>
 </ul>
-<p>Hardware page usually <em>4K</em>, OS page usually <em>4K</em>, and database page vary from <em>1K</em> to <em>16K</em>. The read and write operation in Hardware page is <em>atomic</em></p>
-<h4 id="Heap-File-Organization"><a href="#Heap-File-Organization" class="headerlink" title="Heap File Organization"></a>Heap File Organization</h4><p>The <em>heap file</em> is an unordered collection of pages with tuple that store in random order. Therefore, in single file, we can easily find a specific page by adding the <em>begin address</em> and <em>offset</em>. On the other hand, in multiple file, we need meta-data to track which page store in which file and which file has free space</p>
-<p>![HeapFile](.&#x2F;Buffer Pool Manager&#x2F;HeapFile.png)</p>
-<p>DBMS also maintain some special page called <em>directory</em>, which store the location of the page in which we store data <strong>in database file</strong>. Intuitively, the role of directory is similar to index</p>
-<p>![Directory](.&#x2F;Buffer Pool Manager&#x2F;Directory.png)</p>
-<p>We must make sure that the content of directory is in sync with data page, both of which are simultaneously update</p>
-<h3 id="Page-Layout"><a href="#Page-Layout" class="headerlink" title="Page Layout"></a>Page Layout</h3><p>Every page include header which contain <em>metadata</em>:</p>
+<p>Hardware page usually <em>4K</em>, OS page usually <em>4K</em>, and
+database page vary from <em>1K</em> to <em>16K</em>. The read and write
+operation in Hardware page is <em>atomic</em></p>
+<h4 id="heap-file-organization">Heap File Organization</h4>
+<p>The <em>heap file</em> is an unordered collection of pages with tuple
+that store in random order. Therefore, in single file, we can easily
+find a specific page by adding the <em>begin address</em> and
+<em>offset</em>. On the other hand, in multiple file, we need meta-data
+to track which page store in which file and which file has free
+space</p>
+<figure>
+<img src="HeapFile.png" srcset="/img/loading.gif" lazyload alt="HeapFile">
+<figcaption aria-hidden="true">HeapFile</figcaption>
+</figure>
+<p>DBMS also maintain some special page called <em>directory</em>, which
+store the location of the page in which we store data <strong>in
+database file</strong>. Intuitively, the role of directory is similar to
+index</p>
+<figure>
+<img src="Directory.png" srcset="/img/loading.gif" lazyload alt="Directory">
+<figcaption aria-hidden="true">Directory</figcaption>
+</figure>
+<p>We must make sure that the content of directory is in sync with data
+page, both of which are simultaneously update</p>
+<h3 id="page-layout">Page Layout</h3>
+<p>Every page include header which contain <em>metadata</em>:</p>
 <ul>
 <li>Page size</li>
 <li>CheckSum</li>
-<li>Self-containment(This page contain all informance regarding to read and write this page)</li>
+<li>Self-containment(This page contain all informance regarding to read
+and write this page)</li>
 </ul>
-<p>In a database file, every page(block) are organized into certain structure, There are two commonly used ones: Slotted page and log structured</p>
-<h4 id="Slotted-Page"><a href="#Slotted-Page" class="headerlink" title="Slotted-Page"></a>Slotted-Page</h4><p>The header contain the number of slot and slot array</p>
+<p>In a database file, every page(block) are organized into certain
+structure, There are two commonly used ones: Slotted page and log
+structured</p>
+<h4 id="slotted-page">Slotted-Page</h4>
+<p>The header contain the number of slot and slot array</p>
 <ul>
-<li>When insertint a tuple, the slot array grows from the front to the back and the data grow from the back to the front</li>
-<li>When deleteint a tuple, the tuples before deleted tuple will be moved backword</li>
+<li>When insertint a tuple, the slot array grows from the front to the
+back and the data grow from the back to the front</li>
+<li>When deleteint a tuple, the tuples before deleted tuple will be
+moved backword</li>
 </ul>
-<p>With this structure, we can easily <strong>store variable-length tuple</strong></p>
+<p>With this structure, we can easily <strong>store variable-length
+tuple</strong></p>
 <p>The change process is shown the following figure below</p>
-<p>![Slotted_Page1](.&#x2F;Buffer Pool Manager&#x2F;Slotted_Page1.png)</p>
-<p>If we add a new tuple into this page, the length of <em>slotted array</em> would grow from the front to the back, the length of data tuple would grow in the opposite direction</p>
-<p>![Slotted_Page2](.&#x2F;Buffer Pool Manager&#x2F;Slotted_Page2.png)</p>
-<p>When we delete tuple 3, as the following figure shown, we should move the tuple at the right position of the deleted tuple to left </p>
-<p>![Slotted_Page3](.&#x2F;Buffer Pool Manager&#x2F;Slotted_Page3.png)</p>
-<p>![Slotted_Page4](.&#x2F;Buffer Pool Manager&#x2F;Slotted_Page4.png)</p>
-<h4 id="Log-Structured-storage"><a href="#Log-Structured-storage" class="headerlink" title="Log-Structured storage"></a>Log-Structured storage</h4><p>Instead of storing the content of tuple in file, <em>log-structured storage</em> simply sotre the change informantion in file</p>
-<p>![Log_Structured1](.&#x2F;Buffer Pool Manager&#x2F;Log_Structured1.png)</p>
+<figure>
+<img src="Slotted_Page1.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page1">
+<figcaption aria-hidden="true">Slotted_Page1</figcaption>
+</figure>
+<p>If we add a new tuple into this page, the length of <em>slotted
+array</em> would grow from the front to the back, the length of data
+tuple would grow in the opposite direction</p>
+<figure>
+<img src="Slotted_Page2.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page2">
+<figcaption aria-hidden="true">Slotted_Page2</figcaption>
+</figure>
+<p>When we delete tuple 3, as the following figure shown, we should move
+the tuple at the right position of the deleted tuple to left</p>
+<figure>
+<img src="Slotted_Page3.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page3">
+<figcaption aria-hidden="true">Slotted_Page3</figcaption>
+</figure>
+<figure>
+<img src="Slotted_Page4.png" srcset="/img/loading.gif" lazyload alt="Slotted_Page4">
+<figcaption aria-hidden="true">Slotted_Page4</figcaption>
+</figure>
+<h4 id="log-structured-storage">Log-Structured storage</h4>
+<p>Instead of storing the content of tuple in file, <em>log-structured
+storage</em> simply sotre the change informantion in file</p>
+<figure>
+<img src="Log_Structured1.png" srcset="/img/loading.gif" lazyload alt="Log_Structured1">
+<figcaption aria-hidden="true">Log_Structured1</figcaption>
+</figure>
 <p>When the page get full, we should immediately write out to disk</p>
-<p>![Log_Structured2](.&#x2F;Buffer Pool Manager&#x2F;Log_Structured2.png)</p>
-<p>If we intend to read specific tuple, with a given <em>tuple id</em>, DBMS would fild the newest log record corresponding to that id. Also, we can maintain several index which map <em>tuple id</em> to newest record</p>
-<p>![Log_Structured3](.&#x2F;Buffer Pool Manager&#x2F;Log_Structured3.png)</p>
-<p>Due to the log would gorw forever, DBMS needs to compact this log periodically</p>
-<p>![Log_Structured4](.&#x2F;Buffer Pool Manager&#x2F;Log_Structured4.png)</p>
-<p>After that, DBMS needs to sort this log in page, which would mitigate retireve pressure</p>
-<p>![Log_Structured5](.&#x2F;Buffer Pool Manager&#x2F;Log_Structured5.png)</p>
-<p>The downside of this approach are twofold. First, it would result in <em>Write-Amplification</em>, suppoes that I insert a tuple and never update it again, when we perform compaction, this tuple would <strong>REPEATEDLY</strong> read into memory and written to disk. Second, the cost of compaction is much too expensive</p>
-<h3 id="Tuple-Layout"><a href="#Tuple-Layout" class="headerlink" title="Tuple Layout"></a>Tuple Layout</h3><p>Every tuple contain a header, which include the metadata of this tuple</p>
-<p>The <em>bitmap</em> stored in header used to represent whether certain attribute is <em>NULL</em></p>
-<p>The tuple data typically store in the order specified when create this relation </p>
-<p>Each tuple have a <em>unique identifier</em>(i.e. <em>page, slot id&#x2F;offset</em>) </p>
+<figure>
+<img src="Log_Structured2.png" srcset="/img/loading.gif" lazyload alt="Log_Structured2">
+<figcaption aria-hidden="true">Log_Structured2</figcaption>
+</figure>
+<p>If we intend to read specific tuple, with a given <em>tuple id</em>,
+DBMS would fild the newest log record corresponding to that id. Also, we
+can maintain several index which map <em>tuple id</em> to newest
+record</p>
+<figure>
+<img src="Log_Structured3.png" srcset="/img/loading.gif" lazyload alt="Log_Structured3">
+<figcaption aria-hidden="true">Log_Structured3</figcaption>
+</figure>
+<p>Due to the log would gorw forever, DBMS needs to compact this log
+periodically</p>
+<figure>
+<img src="Log_Structured4.png" srcset="/img/loading.gif" lazyload alt="Log_Structured4">
+<figcaption aria-hidden="true">Log_Structured4</figcaption>
+</figure>
+<p>After that, DBMS needs to sort this log in page, which would mitigate
+retireve pressure</p>
+<figure>
+<img src="Log_Structured5.png" srcset="/img/loading.gif" lazyload alt="Log_Structured5">
+<figcaption aria-hidden="true">Log_Structured5</figcaption>
+</figure>
+<p>The downside of this approach are twofold. First, it would result in
+<em>Write-Amplification</em>, suppoes that I insert a tuple and never
+update it again, when we perform compaction, this tuple would
+<strong>REPEATEDLY</strong> read into memory and written to disk.
+Second, the cost of compaction is much too expensive</p>
+<h3 id="tuple-layout">Tuple Layout</h3>
+<p>Every tuple contain a header, which include the metadata of this
+tuple</p>
+<p>The <em>bitmap</em> stored in header used to represent whether
+certain attribute is <em>NULL</em></p>
+<p>The tuple data typically store in the order specified when create
+this relation</p>
+<p>Each tuple have a <em>unique identifier</em>(i.e. <em>page, slot
+id/offset</em>)</p>
 
                 
               </div>
