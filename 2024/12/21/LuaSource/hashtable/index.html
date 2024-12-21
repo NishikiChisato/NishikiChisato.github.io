@@ -18,23 +18,26 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="12345title: The Design of Hash Table in Lua 5.4tags: Lua 5.4 source codecategories: Luacategory_bar: trueindex_img: &#x2F;img&#x2F;LuaSource&#x2F;LuaSource (1).png  Design of Table Operation for Table  Auxiliar">
+    <meta name="description" content="Design of Table Operation for Table  Auxiliary function  Finding main position of key Get free position Array part Rehash  Insert operation Get operation  Main get function &amp; Gene">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nishiki Chisato&#39;s Blog">
+<meta property="og:title" content="The Design of Hash Table in Lua 5.4">
 <meta property="og:url" content="https://nishikichisato.github.io/2024/12/21/LuaSource/hashtable/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="12345title: The Design of Hash Table in Lua 5.4tags: Lua 5.4 source codecategories: Luacategory_bar: trueindex_img: &#x2F;img&#x2F;LuaSource&#x2F;LuaSource (1).png  Design of Table Operation for Table  Auxiliar">
+<meta property="og:description" content="Design of Table Operation for Table  Auxiliary function  Finding main position of key Get free position Array part Rehash  Insert operation Get operation  Main get function &amp; Gene">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nishikichisato.github.io/img/LuaSource/LuaSource%20(1).png">
 <meta property="article:published_time" content="2024-12-21T12:10:07.007Z">
-<meta property="article:modified_time" content="2024-12-21T12:11:54.244Z">
+<meta property="article:modified_time" content="2024-12-21T12:17:55.428Z">
 <meta property="article:author" content="Nishiki Chisato">
+<meta property="article:tag" content="Lua 5.4 source code">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nishikichisato.github.io/img/LuaSource/LuaSource%20(1).png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Nishiki Chisato&#39;s Blog</title>
+  <title>The Design of Hash Table in Lua 5.4 - Nishiki Chisato&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +235,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="The Design of Hash Table in Lua 5.4"></span>
           
         </div>
 
@@ -260,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          44k words
+          43k words
         
       </span>
     
@@ -271,7 +274,7 @@
         
         
         
-          364 mins
+          363 mins
         
       </span>
     
@@ -330,12 +333,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">The Design of Hash Table in Lua 5.4</h1>
             
               <p class="note note-info">
                 
                   
-                    Last updated on 3 minutes ago
+                    Last updated on a minute ago
                   
                 
               </p>
@@ -343,8 +346,7 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs subunit">title: The Design of Hash Table in Lua 5.4<br><span class="hljs-keyword">tags:</span> Lua 5.4 source code<br>categories: Lua<br>category_bar: true<br>index_img: /img/LuaSource/LuaSource (1).png<br></code></pre></td></tr></table></figure>
-<ul>
+                <ul>
 <li><a href="#design-of-table">Design of Table</a></li>
 <li><a href="#operation-for-table">Operation for Table</a>
 <ul>
@@ -891,6 +893,34 @@ the condition), we should initialize the left and right endpoints to be
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Lua/" class="category-chain-item">Lua</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Lua-5-4-source-code/">#Lua 5.4 source code</a>
+      
+    </div>
   
 </div>
 
@@ -900,7 +930,7 @@ the condition), we should initialize the left and right endpoints to be
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
+      <div>The Design of Hash Table in Lua 5.4</div>
       <div>https://nishikichisato.github.io/2024/12/21/LuaSource/hashtable/</div>
     </div>
     <div class="license-meta">
@@ -956,9 +986,9 @@ the condition), we should initialize the left and right endpoints to be
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/21/LuaSource/stack_layout/" title="">
+                      <a href="/2024/12/21/LuaSource/stack_layout/" title="The lua stack layout in Lua 5.4">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">The lua stack layout in Lua 5.4</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -985,6 +1015,76 @@ the condition), we should initialize the left and right endpoints to be
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Lua"
+        id="heading-0ae9478a1db9d1e2c48efa49eac1c7c6" role="tab" data-toggle="collapse" href="#collapse-0ae9478a1db9d1e2c48efa49eac1c7c6"
+        aria-expanded="true"
+      >
+        Lua
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-0ae9478a1db9d1e2c48efa49eac1c7c6"
+           role="tabpanel" aria-labelledby="heading-0ae9478a1db9d1e2c48efa49eac1c7c6">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/12/21/LuaSource/hashfloat/" title="A way to hashing floating-point in Lua 5.4"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">A way to hashing floating-point in Lua 5.4</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/12/21/LuaSource/hashtable/" title="The Design of Hash Table in Lua 5.4"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">The Design of Hash Table in Lua 5.4</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/12/21/LuaSource/stack_layout/" title="The lua stack layout in Lua 5.4"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">The lua stack layout in Lua 5.4</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
   </div>
