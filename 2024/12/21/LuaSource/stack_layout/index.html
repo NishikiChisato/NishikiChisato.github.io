@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Stack Layout In the lua_State structure, there are three pointers(L-&gt;stack, L-&gt;stack_last and L-&gt;top) that relate to stack management. Additionally, there is a structure representing info">
+    <meta name="description" content="Stack LayoutIn the lua_State structure, there are three pointers(L-&gt;stack, L-&gt;stack_last and L-&gt;top)that relate to stack management. Additionally, there is a structure representing informatio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The lua stack layout in Lua 5.4">
 <meta property="og:url" content="https://nishikichisato.github.io/2024/12/21/LuaSource/stack_layout/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Stack Layout In the lua_State structure, there are three pointers(L-&gt;stack, L-&gt;stack_last and L-&gt;top) that relate to stack management. Additionally, there is a structure representing info">
+<meta property="og:description" content="Stack LayoutIn the lua_State structure, there are three pointers(L-&gt;stack, L-&gt;stack_last and L-&gt;top)that relate to stack management. Additionally, there is a structure representing informatio">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/LuaSource/LuaSource%20(3).png">
 <meta property="article:published_time" content="2024-12-21T12:10:07.013Z">
@@ -346,41 +346,16 @@
             
               <div class="markdown-body">
                 
-                <h1 id="stack-layout">Stack Layout</h1>
-<p>In the <code>lua_State</code> structure, there are three
-pointers(<code>L-&gt;stack</code>, <code>L-&gt;stack_last</code> and
-<code>L-&gt;top</code>) that relate to stack management. Additionally,
-there is a structure representing information about the current called
-function, which is <code>CallInfo* ci</code>. In the
-<code>CallInfo</code> structure, there are two
-pointers(<code>ci-&gt;func</code> and <code>ci-&gt;top</code>) that also
-relate to stack management. Here, we will dive into the layout of entire
-stack and show the internal meaning of these pointers.</p>
-<p><code>L-&gt;stack</code> and <code>L-&gt;stack_last</code> used to
-represents the start of and the end of the total Lua stack area,
-respectively. The sizo of total stack may shrink or grow as needed,
-depending on the stack's usage.</p>
-<p><code>ci-&gt;func</code> points to the stack position where the
-function frame starts, and <code>ci-&gt;top</code> points to the
-<strong>maximum stack position that current function can use</strong>.
-These two pointers define the function's stack frame.</p>
-<p><code>L-&gt;top</code> represents the current position of the stack's
-top, which is where a new values are pushed. This pointer only used to
-track the active top of current stack, so its value can be greater then
-and equal to <code>ci-&gt;func</code> but less then
-<code>ci-&gt;top</code>(it cannot exceed <code>ci-&gt;top</code>).</p>
-<p>The relationship of these pointer is
-<code>L-&gt;stack &lt;= ci-&gt;func &lt; L-&gt;top &lt;= ci-&gt;top &lt; L-&gt;stack_last</code>.</p>
+                <h1 id="Stack-Layout"><a href="#Stack-Layout" class="headerlink" title="Stack Layout"></a>Stack Layout</h1><p>In the <code>lua_State</code> structure, there are three pointers(<code>L-&gt;stack</code>, <code>L-&gt;stack_last</code> and <code>L-&gt;top</code>)<br>that relate to stack management. Additionally, there is a structure representing information<br>about the current called function, which is <code>CallInfo* ci</code>. In the <code>CallInfo</code> structure, there<br>are two pointers(<code>ci-&gt;func</code> and <code>ci-&gt;top</code>) that also relate to stack management. Here, we will<br>dive into the layout of entire stack and show the internal meaning of these pointers.</p>
+<p><code>L-&gt;stack</code> and <code>L-&gt;stack_last</code> used to represents the start of and the end of the total<br>Lua stack area, respectively. The sizo of total stack may shrink or grow as needed,<br>depending on the stack’s usage.</p>
+<p><code>ci-&gt;func</code> points to the stack position where the function frame starts, and <code>ci-&gt;top</code> points to<br>the <strong>maximum stack position that current function can use</strong>. These two pointers define the<br>function’s stack frame.</p>
+<p><code>L-&gt;top</code> represents the current position of the stack’s top, which is where a new values are pushed.<br>This pointer only used to track the active top of current stack, so its value can be greater then<br>and equal to <code>ci-&gt;func</code> but less then <code>ci-&gt;top</code>(it cannot exceed <code>ci-&gt;top</code>).</p>
+<p>The relationship of these pointer is <code>L-&gt;stack &lt;= ci-&gt;func &lt; L-&gt;top &lt;= ci-&gt;top &lt; L-&gt;stack_last</code>. </p>
 <p>so, we have:</p>
 <ul>
-<li><code>L-&gt;top - (ci-&gt;func + 1)</code> represents the number of
-elements that currently exists in stack within the function's
-frame.</li>
-<li><code>L-&gt;top - (ci-&gt;func + 1)</code> represents the index of
-top of stack. If the stack is empty, we have
-<code>L-&gt;top == ci-&gt;func + 1</code>.</li>
-<li><code>ci-&gt;top - L-&gt;top</code> represents the unused space of
-current function's frame.</li>
+<li><code>L-&gt;top - (ci-&gt;func + 1)</code> represents the number of elements that currently exists in stack within the function’s frame.</li>
+<li><code>L-&gt;top - (ci-&gt;func + 1)</code> represents the index of top of stack. If the stack is empty, we have <code>L-&gt;top == ci-&gt;func + 1</code>.</li>
+<li><code>ci-&gt;top - L-&gt;top</code> represents the unused space of current function’s frame.</li>
 </ul>
 
                 

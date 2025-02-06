@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Project 4  Project 4  Concurrency Problem  Dirty Read Unrepeatable Read Phantom Read Lost Update  Isolation Level Definition Issue  LockRequestQueue Lock Upgrade  Task 1  Lock Unlo">
+    <meta name="description" content="Project 4 Project 4 Concurrency Problem Dirty Read Unrepeatable Read Phantom Read Lost Update   Isolation Level Definition Issue LockRequestQueue Lock Upgrade   Task 1 Lock Unlock   Task 2 Task 3 Isol">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU15-445 Project 4">
 <meta property="og:url" content="https://nishikichisato.github.io/2023/11/15/CMU15-445/Project%204/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Project 4  Project 4  Concurrency Problem  Dirty Read Unrepeatable Read Phantom Read Lost Update  Isolation Level Definition Issue  LockRequestQueue Lock Upgrade  Task 1  Lock Unlo">
+<meta property="og:description" content="Project 4 Project 4 Concurrency Problem Dirty Read Unrepeatable Read Phantom Read Lost Update   Isolation Level Definition Issue LockRequestQueue Lock Upgrade   Task 1 Lock Unlock   Task 2 Task 3 Isol">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/CMU15-445/CMU15-445%20%20(5).jpg">
 <meta property="article:published_time" content="2023-11-15T08:00:52.509Z">
@@ -274,7 +274,7 @@
         
         
         
-          81 mins
+          80 mins
         
       </span>
     
@@ -346,445 +346,295 @@
             
               <div class="markdown-body">
                 
-                <h1 id="project-4">Project 4</h1>
-<ul>
-<li><a href="#project-4">Project 4</a>
-<ul>
-<li><a href="#concurrency-problem">Concurrency Problem</a>
-<ul>
+                <h1 id="Project-4"><a href="#Project-4" class="headerlink" title="Project 4"></a>Project 4</h1><ul>
+<li><a href="#project-4">Project 4</a><ul>
+<li><a href="#concurrency-problem">Concurrency Problem</a><ul>
 <li><a href="#dirty-read">Dirty Read</a></li>
 <li><a href="#unrepeatable-read">Unrepeatable Read</a></li>
 <li><a href="#phantom-read">Phantom Read</a></li>
 <li><a href="#lost-update">Lost Update</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#isolation-level">Isolation Level</a></li>
-<li><a href="#definition-issue">Definition Issue</a>
-<ul>
+<li><a href="#definition-issue">Definition Issue</a><ul>
 <li><a href="#lockrequestqueue">LockRequestQueue</a></li>
 <li><a href="#lock-upgrade">Lock Upgrade</a></li>
-</ul></li>
-<li><a href="#task-1">Task 1</a>
-<ul>
+</ul>
+</li>
+<li><a href="#task-1">Task 1</a><ul>
 <li><a href="#lock">Lock</a></li>
 <li><a href="#unlock">Unlock</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#task-2">Task 2</a></li>
-<li><a href="#task-3">Task 3</a>
-<ul>
+<li><a href="#task-3">Task 3</a><ul>
 <li><a href="#isolation-level-1">Isolation Level</a></li>
 <li><a href="#another-details">Another Details</a></li>
-</ul></li>
+</ul>
+</li>
 <li><a href="#summary">Summary</a></li>
-</ul></li>
 </ul>
-<h2 id="concurrency-problem">Concurrency Problem</h2>
-<p>我们首先总结并发情况下可能会出现的问题</p>
-<h3 id="dirty-read">Dirty Read</h3>
-<table>
+</li>
+</ul>
+<h2 id="Concurrency-Problem"><a href="#Concurrency-Problem" class="headerlink" title="Concurrency Problem"></a>Concurrency Problem</h2><p>我们首先总结并发情况下可能会出现的问题</p>
+<h3 id="Dirty-Read"><a href="#Dirty-Read" class="headerlink" title="Dirty Read"></a>Dirty Read</h3><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(T_1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(T_2\)</span></th>
+<tr>
+<th align="center">$T_1$</th>
+<th align="center">$T_2$</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(W(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tbody><tr>
+<td align="center">$W(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$R(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(W(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center">$W(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"><code>commit / abort</code></td>
-<td style="text-align: center;"><code>commit</code></td>
+<tr>
+<td align="center"><code>commit / abort</code></td>
+<td align="center"><code>commit</code></td>
 </tr>
-</tbody>
-</table>
-<p><span class="math inline">\(T_2\)</span> 读取到了 <span class="math inline">\(T_1\)</span> <strong>未提交</strong>的值，我们称为
-<code>dirty read</code></p>
-<h3 id="unrepeatable-read">Unrepeatable Read</h3>
-<table>
+</tbody></table>
+<p>$T_2$ 读取到了 $T_1$ <strong>未提交</strong>的值，我们称为 <code>dirty read</code></p>
+<h3 id="Unrepeatable-Read"><a href="#Unrepeatable-Read" class="headerlink" title="Unrepeatable Read"></a>Unrepeatable Read</h3><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(T_1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(T_2\)</span></th>
+<tr>
+<th align="center">$T_1$</th>
+<th align="center">$T_2$</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tbody><tr>
+<td align="center">$R(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$R(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(W(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center">$W(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$R(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>commit</code></td>
-<td style="text-align: center;"><code>commit</code></td>
+<tr>
+<td align="center"><code>commit</code></td>
+<td align="center"><code>commit</code></td>
 </tr>
-</tbody>
-</table>
-<p><span class="math inline">\(T_2\)</span> 两次读取的值不一样，我们称为
-<code>unrepeatable read</code></p>
-<h3 id="phantom-read">Phantom Read</h3>
-<table>
+</tbody></table>
+<p>$T_2$ 两次读取的值不一样，我们称为 <code>unrepeatable read</code></p>
+<h3 id="Phantom-Read"><a href="#Phantom-Read" class="headerlink" title="Phantom Read"></a>Phantom Read</h3><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(T_1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(T_2\)</span></th>
+<tr>
+<th align="center">$T_1$</th>
+<th align="center">$T_2$</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tbody><tr>
+<td align="center">$R(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$R(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(D(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tr>
+<td align="center">$D(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(R(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$R(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>commit</code></td>
-<td style="text-align: center;"><code>commit</code></td>
+<tr>
+<td align="center"><code>commit</code></td>
+<td align="center"><code>commit</code></td>
 </tr>
-</tbody>
-</table>
-<p><span class="math inline">\(T_2\)</span>
-第二次读取的值被删除了，我们称为 <code>phantom read</code></p>
-<h3 id="lost-update">Lost Update</h3>
-<table>
+</tbody></table>
+<p>$T_2$ 第二次读取的值被删除了，我们称为 <code>phantom read</code></p>
+<h3 id="Lost-Update"><a href="#Lost-Update" class="headerlink" title="Lost Update"></a>Lost Update</h3><table>
 <thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(T_1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(T_2\)</span></th>
+<tr>
+<th align="center">$T_1$</th>
+<th align="center">$T_2$</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(W(A)\)</span></td>
-<td style="text-align: center;"></td>
+<tbody><tr>
+<td align="center">$W(A)$</td>
+<td align="center"></td>
 </tr>
-<tr class="even">
-<td style="text-align: center;"></td>
-<td style="text-align: center;"><span class="math inline">\(W(A)\)</span></td>
+<tr>
+<td align="center"></td>
+<td align="center">$W(A)$</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;"><code>commit</code></td>
-<td style="text-align: center;"><code>commit</code></td>
+<tr>
+<td align="center"><code>commit</code></td>
+<td align="center"><code>commit</code></td>
 </tr>
-</tbody>
-</table>
-<p><span class="math inline">\(T_1\)</span> 的写入被覆盖了，我们称为
-<code>lost update</code></p>
-<h2 id="isolation-level">Isolation Level</h2>
-<p>依据不同的隔离级别，分别有可能会出现不同的问题：</p>
+</tbody></table>
+<p>$T_1$ 的写入被覆盖了，我们称为 <code>lost update</code></p>
+<h2 id="Isolation-Level"><a href="#Isolation-Level" class="headerlink" title="Isolation Level"></a>Isolation Level</h2><p>依据不同的隔离级别，分别有可能会出现不同的问题：</p>
 <ul>
-<li><p><code>Serializable</code>：执行 <code>strict 2PL</code> 和
-<code>index lock</code>，不会出现上面的问题</p></li>
-<li><p><code>Repeatable Read</code>：只执行
-<code>strict 2PL</code>，不执行 <code>index lock</code>。只存在
-<code>phantom read</code></p>
+<li><p><code>Serializable</code>：执行 <code>strict 2PL</code> 和 <code>index lock</code>，不会出现上面的问题</p>
+</li>
+<li><p><code>Repeatable Read</code>：只执行 <code>strict 2PL</code>，不执行 <code>index lock</code>。只存在 <code>phantom read</code></p>
 <ul>
-<li>在 <code>growing</code> 阶段允许获取所有类型的
-<code>lock</code></li>
-<li>在 <code>shrinking</code> 阶段不允许获取任何类型的
-<code>lock</code></li>
-</ul></li>
+<li>在 <code>growing</code> 阶段允许获取所有类型的 <code>lock</code></li>
+<li>在 <code>shrinking</code> 阶段不允许获取任何类型的 <code>lock</code></li>
 </ul>
-<p>出现 <code>phantom read</code>
-的原因在于两个事务对同一个谓词逻辑下的集合执行操作，如果我们加
-<code>index lock</code>，那么同一时间就只允许一个事务去访问该谓词逻辑下的集合，这便解决了
-<code>phantom read</code></p>
-<p>在上面的例子中，一旦引入 <code>index lock</code>，那么 <span class="math inline">\(T_2\)</span> 就只能在 <span class="math inline">\(T_1\)</span>
-<strong>对该对象的操作完全执行完毕</strong>后再对该对象进行操作</p>
-<ul>
-<li><code>Read Committed</code>：在 <code>RR</code> 的基础上，允许
-<code>shrinking</code> 阶段获取 <code>S</code> 和 <code>IS</code>，存在
-<code>phantom read</code> 和 <code>unrepeatable read</code>
-<ul>
-<li>在 <code>growing</code> 阶段允许获取所有类型的
-<code>lock</code></li>
-<li>在 <code>shrinking</code> 阶段只允许获取 <code>S</code> 和
-<code>IS</code></li>
-</ul></li>
+</li>
 </ul>
-<p>在 <code>2PL</code> 中，一个事务最开始的状态为
-<code>growing</code>，一旦其释放了某个
-<code>lock</code>，那么其状态转换为
-<code>shrinking</code>。<code>2PL</code>
-的思想实际是事务在开始时获取所有需要的
-<code>lock</code>，然后对所有的对象执行完操作后，再一起释放
-<code>lock</code></p>
-<p>也就是说，进入 <code>shrinking</code>
-这个阶段后，就说明当前事务已经对某些对象执行完操作了。如果这个时候运行该事务再次读取某些对象的值（也就是获取
-<code>S</code> 和
-<code>IS</code>），那么本次读取的值和之前读取的值就有可能存在不同</p>
+<p>出现 <code>phantom read</code> 的原因在于两个事务对同一个谓词逻辑下的集合执行操作，如果我们加 <code>index lock</code>，那么同一时间就只允许一个事务去访问该谓词逻辑下的集合，这便解决了 <code>phantom read</code></p>
+<p>在上面的例子中，一旦引入 <code>index lock</code>，那么 $T_2$ 就只能在 $T_1$ <strong>对该对象的操作完全执行完毕</strong>后再对该对象进行操作</p>
 <ul>
-<li><code>Read Uncommitted</code>：在 <code>RC</code>
-的基础上，删去所有与 <code>S</code> 相关的 <code>lock</code>，这会造成
-<code>dirty read</code>，因此在 <code>RU</code>
-隔离级别下，会存在：<code>phantom read</code>、<code>unrepeatable read</code>
-和 <code>dirty read</code>
-<ul>
-<li>在 <code>growing</code> 阶段只允许获取 <code>X</code> 和
-<code>IX</code></li>
-<li>在 <code>shrinking</code> 阶段不允许获取任何类型的
-<code>lock</code></li>
-</ul></li>
+<li><code>Read Committed</code>：在 <code>RR</code> 的基础上，允许 <code>shrinking</code> 阶段获取 <code>S</code> 和 <code>IS</code>，存在 <code>phantom read</code> 和 <code>unrepeatable read</code><ul>
+<li>在 <code>growing</code> 阶段允许获取所有类型的 <code>lock</code></li>
+<li>在 <code>shrinking</code> 阶段只允许获取 <code>S</code> 和 <code>IS</code></li>
 </ul>
-<p>在有 <code>S</code> 相关的 <code>lock</code>
-时，事务读取某个对象的值的过程中，这个对象的数值一定不会发生改变。也就是说，在这个过程中如果多次对该对象读取的话，每次读取的值都是一样的。而<strong>删去读取锁则没有这层保障</strong></p>
-<h2 id="definition-issue">Definition Issue</h2>
-<h3 id="lockrequestqueue">LockRequestQueue</h3>
-<p>可以将 <code>LockRequestQueue</code> 中的 <code>request_queue_</code>
-中的 <code>raw pointer</code> 修改为
-<code>smart pointer</code>，具体看这里 <a target="_blank" rel="noopener" href="https://discord.com/channels/724929902075445281/1014055970634215434/1053312638014206093">Discord</a></p>
+</li>
+</ul>
+<p>在 <code>2PL</code> 中，一个事务最开始的状态为 <code>growing</code>，一旦其释放了某个 <code>lock</code>，那么其状态转换为 <code>shrinking</code>。<code>2PL</code> 的思想实际是事务在开始时获取所有需要的 <code>lock</code>，然后对所有的对象执行完操作后，再一起释放 <code>lock</code></p>
+<p>也就是说，进入 <code>shrinking</code> 这个阶段后，就说明当前事务已经对某些对象执行完操作了。如果这个时候运行该事务再次读取某些对象的值（也就是获取 <code>S</code> 和 <code>IS</code>），那么本次读取的值和之前读取的值就有可能存在不同</p>
+<ul>
+<li><code>Read Uncommitted</code>：在 <code>RC</code> 的基础上，删去所有与 <code>S</code> 相关的 <code>lock</code>，这会造成 <code>dirty read</code>，因此在 <code>RU</code> 隔离级别下，会存在：<code>phantom read</code>、<code>unrepeatable read</code> 和 <code>dirty read</code><ul>
+<li>在 <code>growing</code> 阶段只允许获取 <code>X</code> 和 <code>IX</code></li>
+<li>在 <code>shrinking</code> 阶段不允许获取任何类型的 <code>lock</code></li>
+</ul>
+</li>
+</ul>
+<p>在有 <code>S</code> 相关的 <code>lock</code> 时，事务读取某个对象的值的过程中，这个对象的数值一定不会发生改变。也就是说，在这个过程中如果多次对该对象读取的话，每次读取的值都是一样的。而<strong>删去读取锁则没有这层保障</strong></p>
+<h2 id="Definition-Issue"><a href="#Definition-Issue" class="headerlink" title="Definition Issue"></a>Definition Issue</h2><h3 id="LockRequestQueue"><a href="#LockRequestQueue" class="headerlink" title="LockRequestQueue"></a>LockRequestQueue</h3><p>可以将 <code>LockRequestQueue</code> 中的 <code>request_queue_</code> 中的 <code>raw pointer</code> 修改为 <code>smart pointer</code>，具体看这里 <a target="_blank" rel="noopener" href="https://discord.com/channels/724929902075445281/1014055970634215434/1053312638014206093">Discord</a></p>
 <p>因此我们 <code>LockRequestQueue</code> 中的定义如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LockRequestQueue</span> &#123;<br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-comment">/** List of lock requests for the same resource (table or row) */</span><br>  std::list&lt;std::shared_ptr&lt;LockRequest&gt;&gt; request_queue_;<br>  <span class="hljs-comment">/** For notifying blocked transactions on this rid */</span><br>  std::condition_variable cv_;<br>  <span class="hljs-comment">/** txn_id of an upgrading transaction (if any) */</span><br>  <span class="hljs-type">txn_id_t</span> upgrading_ = INVALID_TXN_ID;<br>  <span class="hljs-comment">/** coordination */</span><br>  std::mutex latch_;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<h3 id="lock-upgrade">Lock Upgrade</h3>
-<p>对于 <code>lock upgrade</code>，其主要步骤如下：</p>
+
+<h3 id="Lock-Upgrade"><a href="#Lock-Upgrade" class="headerlink" title="Lock Upgrade"></a>Lock Upgrade</h3><p>对于 <code>lock upgrade</code>，其主要步骤如下：</p>
 <blockquote>
-<p>具体参考 <a target="_blank" rel="noopener" href="https://discord.com/channels/724929902075445281/1014055970634215434/1053318845240197170"><code>discord</code></a>
-上 <code>TA</code> 给出的解释：</p>
-<p>moraceae — 2022/12/16 22:33</p>
-<p>I do not remember where we say this (hopefully it's in the writeup or
-the code header. or lecture?), but upgrading can be decomposed into
-three operations:</p>
+<p>具体参考 <a target="_blank" rel="noopener" href="https://discord.com/channels/724929902075445281/1014055970634215434/1053318845240197170"><code>discord</code></a> 上 <code>TA</code> 给出的解释：</p>
+<p>moraceae — 2022&#x2F;12&#x2F;16 22:33</p>
+<p>I do not remember where we say this (hopefully it’s in the writeup or the code header. or lecture?), but upgrading can be decomposed into three operations:</p>
 <ul>
-<li><p>Is it possible to upgrade?</p></li>
-<li><p>Drop my current lock and reserve my position as the only person
-allowed to upgrade right now.</p></li>
-<li><p>Wait to get the new lock granted.</p></li>
+<li><p>Is it possible to upgrade?</p>
+</li>
+<li><p>Drop my current lock and reserve my position as the only person allowed to upgrade right now.</p>
+</li>
+<li><p>Wait to get the new lock granted.</p>
+</li>
 </ul>
-<p>So in this case, when txn0 tries to S -&gt; X, the lock manager
-notices that this is an upgrade. txn0 drops its S lock, reserves its
-position as the only one upgrade at the front of the ungranted queue,
-and waits. When txn2 unlocks, the next lock granted will be txn0's
-upgrade to X</p>
+<p>So in this case, when txn0 tries to S -&gt; X, the lock manager notices that this is an upgrade. txn0 drops its S lock, reserves its position as the only one upgrade at the front of the ungranted queue, and waits. When txn2 unlocks, the next lock granted will be txn0’s upgrade to X</p>
 </blockquote>
 <p>详细的过程我们在下面的 <code>task 1</code> 中进行解释</p>
-<h2 id="task-1">Task 1</h2>
-<p><code>lock manager</code> 的主要工作是授予 <code>grant</code> 和释放
-<code>release</code> 相应的 <code>lock</code>。这里的 <code>grant</code>
-还有可能涉及到 <code>lock upgrade</code></p>
-<h3 id="lock">Lock</h3>
-<p>对于同一个 <code>table</code> 而言，<code>LM</code>
-需要记录<strong>所有对该 <code>table</code> 持有 <code>lock</code>
-的事务</strong>和<strong>所有对该 <code>table</code> 请求
-<code>lock</code> 的事务</strong>。换句话说在
-<code>LockRequestQueue</code> 中，我们不仅仅需要记录那些还没获取
-<code>lock</code>
-的事务（也就是发起锁请求的那些事务），我们还需要记录那些已经获取
-<code>lock</code> 的事务</p>
+<h2 id="Task-1"><a href="#Task-1" class="headerlink" title="Task 1"></a>Task 1</h2><p><code>lock manager</code> 的主要工作是授予 <code>grant</code> 和释放 <code>release</code> 相应的 <code>lock</code>。这里的 <code>grant</code> 还有可能涉及到 <code>lock upgrade</code></p>
+<h3 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h3><p>对于同一个 <code>table</code> 而言，<code>LM</code> 需要记录<strong>所有对该 <code>table</code> 持有 <code>lock</code> 的事务</strong>和<strong>所有对该 <code>table</code> 请求 <code>lock</code> 的事务</strong>。换句话说在 <code>LockRequestQueue</code> 中，我们不仅仅需要记录那些还没获取 <code>lock</code> 的事务（也就是发起锁请求的那些事务），我们还需要记录那些已经获取 <code>lock</code> 的事务</p>
 <blockquote>
-<p>一开始我认为只需要记录那些还没获取 <code>lock</code>
-的事务，但这存在的问题是，在释放 <code>lock</code>
-时我们无法断定该事务是否先前获取了该 <code>table</code> 的
-<code>lock</code>，以及我们无法判断本次 <code>lock</code> 请求是否是一次
-<code>lock upgrade</code></p>
+<p>一开始我认为只需要记录那些还没获取 <code>lock</code> 的事务，但这存在的问题是，在释放 <code>lock</code> 时我们无法断定该事务是否先前获取了该 <code>table</code> 的 <code>lock</code>，以及我们无法判断本次 <code>lock</code> 请求是否是一次 <code>lock upgrade</code></p>
 </blockquote>
 <p>我们按照如下步骤来实现 <code>lock table</code> 的操作：</p>
-<ol type="1">
-<li>判断事务的状态是否能够获取
-<code>lock</code>，依据不同的隔离类型，对该事务能够获取
-<code>lock</code> 进行判断：</li>
+<ol>
+<li>判断事务的状态是否能够获取 <code>lock</code>，依据不同的隔离类型，对该事务能够获取 <code>lock</code> 进行判断：</li>
 </ol>
 <figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pf">REPEATABLE_READ:<br>    The transaction is required <span class="hljs-keyword">to</span> take <span class="hljs-literal">all</span> locks.<br>    All locks are allowed <span class="hljs-keyword">in</span> the GROWING <span class="hljs-keyword">state</span><br>    No locks are allowed <span class="hljs-keyword">in</span> the SHRINKING <span class="hljs-keyword">state</span><br><br>READ_COMMITTED:<br>    The transaction is required <span class="hljs-keyword">to</span> take <span class="hljs-literal">all</span> locks.<br>    All locks are allowed <span class="hljs-keyword">in</span> the GROWING <span class="hljs-keyword">state</span><br>    Only IS, S locks are allowed <span class="hljs-keyword">in</span> the SHRINKING <span class="hljs-keyword">state</span><br><br>READ_UNCOMMITTED:<br>    The transaction is required <span class="hljs-keyword">to</span> take only IX, X locks.<br>    X, IX locks are allowed <span class="hljs-keyword">in</span> the GROWING <span class="hljs-keyword">state</span>.<br>    S, IS, SIX locks are never allowed<br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li>获取该 <code>table</code> 对应的
-<code>LockRequestQueue</code>，如果<strong>不存在则需要新建</strong>，我们将其表示为
-<code>pointer</code></li>
-<li>先对 <code>pointer</code> 进行加锁（使用
-<code>std::unique_lock</code>，因为后面我们需要用到信号量），然后判断当前
-<code>lock request</code> 是否为 <code>lock upgrade</code></li>
+
+<ol start="2">
+<li>获取该 <code>table</code> 对应的 <code>LockRequestQueue</code>，如果<strong>不存在则需要新建</strong>，我们将其表示为 <code>pointer</code></li>
+<li>先对 <code>pointer</code> 进行加锁（使用 <code>std::unique_lock</code>，因为后面我们需要用到信号量），然后判断当前 <code>lock request</code> 是否为 <code>lock upgrade</code></li>
 </ol>
-<p>我们依次遍历整个 <code>request queue</code>，对于遍历到的每一项
-<code>iter</code> ，如果其 <code>grant</code> 为 <code>true</code>
-并且其 <code>txn id</code> 等于当前事务的
-<code>id</code>，那么我们进行以下判断：</p>
+<p>我们依次遍历整个 <code>request queue</code>，对于遍历到的每一项 <code>iter</code> ，如果其 <code>grant</code> 为 <code>true</code> 并且其 <code>txn id</code> 等于当前事务的 <code>id</code>，那么我们进行以下判断：</p>
 <ul>
-<li>如果 <code>iter</code> 的 <code>lock_mode</code> 和当前事务请求的
-<code>lock_mode</code> 相同，说明这是一次重复的请求，直接返回
-<code>true</code></li>
-<li>是否存在其他的事务在执行 <code>lock upgrade</code>（直接判断
-<code>pointer-&gt;upgrading_</code> 即可），如果存在则直接
-<code>abort</code> 并返回 <code>false</code>（我们 <code>abort</code>
-之后也需要返回 <code>false</code>）</li>
+<li>如果 <code>iter</code> 的 <code>lock_mode</code> 和当前事务请求的 <code>lock_mode</code> 相同，说明这是一次重复的请求，直接返回 <code>true</code></li>
+<li>是否存在其他的事务在执行 <code>lock upgrade</code>（直接判断 <code>pointer-&gt;upgrading_</code> 即可），如果存在则直接 <code>abort</code> 并返回 <code>false</code>（我们 <code>abort</code> 之后也需要返回 <code>false</code>）</li>
 </ul>
 <p><code>lock upgrade</code> 主要是以下的几种情况：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-keyword">IS</span> -&gt; <span class="hljs-comment">[S, X, IX, SIX]</span><br>S -&gt; <span class="hljs-comment">[X, SIX]</span><br>IX -&gt; <span class="hljs-comment">[X, SIX]</span><br>SIX -&gt; <span class="hljs-comment">[X]</span><br></code></pre></td></tr></table></figure>
+
 <p><code>lock upgrade</code> 的过程如下：</p>
 <ul>
-<li><p>我们首先将这个 <code>lock</code> 给 <code>drop</code>
-掉，也就是将其从队列中删去</p></li>
-<li><p>然后，我们在队列的头部插入一个插入一个新的
-<code>request</code></p></li>
+<li><p>我们首先将这个 <code>lock</code> 给 <code>drop</code> 掉，也就是将其从队列中删去</p>
+</li>
+<li><p>然后，我们在队列的头部插入一个插入一个新的 <code>request</code></p>
+</li>
 </ul>
 <blockquote>
-<p>关于为什么不允许在同一个对象上存在多个
-<code>lock upgrade</code>，我认为的原因在于高级别的 <code>lock</code>
-不允许共存</p>
-<p>假设两个事务 <span class="math inline">\(T_1\)</span> 和 <span class="math inline">\(T_2\)</span> 均持有
-<code>S</code>，某时刻它们同时需要对该对象进行写入，因此它们会同时执行一次
-<code>lock upgrade</code>，也就是
-<code>S -&gt; X</code>。但是，<code>X</code>
-是无法多个事务共存的，因此我们必须要 <code>abort</code> 一个事务</p>
-<p>这是我最开始的想法，但如果两个事务都是
-<code>IS -&gt; IX</code>，那么就是反例了</p>
+<p>关于为什么不允许在同一个对象上存在多个 <code>lock upgrade</code>，我认为的原因在于高级别的 <code>lock</code> 不允许共存</p>
+<p>假设两个事务 $T_1$ 和 $T_2$ 均持有 <code>S</code>，某时刻它们同时需要对该对象进行写入，因此它们会同时执行一次 <code>lock upgrade</code>，也就是 <code>S -&gt; X</code>。但是，<code>X</code> 是无法多个事务共存的，因此我们必须要 <code>abort</code> 一个事务</p>
+<p>这是我最开始的想法，但如果两个事务都是 <code>IS -&gt; IX</code>，那么就是反例了</p>
 </blockquote>
-<ol start="4" type="1">
-<li>检查完 <code>upgrade</code> 后，如果本次请求不是
-<code>upgrade</code>，那么我们需要将其插入队列的尾部；而如果是
-<code>upgrade</code>，则什么也不做（因为我们前面已经执行了插入）</li>
+<ol start="4">
+<li>检查完 <code>upgrade</code> 后，如果本次请求不是 <code>upgrade</code>，那么我们需要将其插入队列的尾部；而如果是 <code>upgrade</code>，则什么也不做（因为我们前面已经执行了插入）</li>
 </ol>
-<p>在我们执行完插入操作后，如果当前的隔离级别为 <code>RR</code>
-的话，需要将当前事务的状态设置为 <code>GROWING</code></p>
-<ol start="5" type="1">
-<li>随后，该线程调用 <code>wait</code>
-函数等待条件的满足。这也是我卡最久的地方，因为需要考虑的情况实在是太多了</li>
+<p>在我们执行完插入操作后，如果当前的隔离级别为 <code>RR</code> 的话，需要将当前事务的状态设置为 <code>GROWING</code></p>
+<ol start="5">
+<li>随后，该线程调用 <code>wait</code> 函数等待条件的满足。这也是我卡最久的地方，因为需要考虑的情况实在是太多了</li>
 </ol>
-<p>我们首先考虑最简单的情况，<strong>在队列中不存在 <code>abort</code>
-的事务所对应的请求</strong></p>
+<p>我们首先考虑最简单的情况，<strong>在队列中不存在 <code>abort</code> 的事务所对应的请求</strong></p>
 <blockquote>
-<p>这里需要说明一点，当我们用 <code>SetState</code> 将事务的状态设置为
-<code>abort</code>
-时，如果这个事务的请求已经存在于队列中，那么我们必须要将其移出队列，问题的关键是在哪里移出</p>
-<p>事务的声明中有记录当前事务<strong>已获取</strong>的资源的
-<code>lock</code>，全部都是用 <code>*_lock_set_</code>
-来表示。由于这些都是表示事务已经获取的
-<code>lock</code>，而事务在等待时如果被 <code>abort</code>，那么对应的
-<code>*_lock_set_</code> 当中是没有对应值的</p>
-<p>而在 <code>TransactionManager</code> 中的 <code>abort</code>
-函数，则会释放所有当前事务<strong>已经获取的
-<code>lock</code></strong>，对于那些还没有获取但卡在队列中的请求，这里同样没办法将其删除</p>
-<p>因此，我们只能在 <code>LockTable</code> 或者 <code>LockRow</code>
-函数中将一个已经 <code>abort</code> 事务的请求移出队列</p>
+<p>这里需要说明一点，当我们用 <code>SetState</code> 将事务的状态设置为 <code>abort</code> 时，如果这个事务的请求已经存在于队列中，那么我们必须要将其移出队列，问题的关键是在哪里移出</p>
+<p>事务的声明中有记录当前事务<strong>已获取</strong>的资源的 <code>lock</code>，全部都是用 <code>*_lock_set_</code> 来表示。由于这些都是表示事务已经获取的 <code>lock</code>，而事务在等待时如果被 <code>abort</code>，那么对应的 <code>*_lock_set_</code> 当中是没有对应值的</p>
+<p>而在 <code>TransactionManager</code> 中的 <code>abort</code> 函数，则会释放所有当前事务**已经获取的 <code>lock</code>**，对于那些还没有获取但卡在队列中的请求，这里同样没办法将其删除</p>
+<p>因此，我们只能在 <code>LockTable</code> 或者 <code>LockRow</code> 函数中将一个已经 <code>abort</code> 事务的请求移出队列</p>
 </blockquote>
 <p>这个时候，我们有两点要求：</p>
 <ul>
-<li>如果当前队列中存在 <code>granted</code>
-的请求，那么我们需要检查当前事务的请求与其是否兼容
-<ul>
-<li>如果有多个 <code>granted</code>
-的请求，我们只需要取第一个即可，因为这些 <code>granted</code>
-的请求之间是相互兼容的</li>
-</ul></li>
-<li>如果当前队列中不存在 <code>granted</code>
-的请求，那么我们需要保证<strong>满足条件</strong>的请求<strong>都能</strong>获得
-<code>lock</code>
-<ul>
-<li>满足条件有两点：
-<ul>
-<li>若当前事务在队列的<strong>队头</strong>，那么可以获取
-<code>lock</code></li>
-<li>若当前事务不在队列的队头，但其获取请求与队头的请求相兼容，那么也可以获取
-<code>lock</code></li>
-</ul></li>
-</ul></li>
+<li>如果当前队列中存在 <code>granted</code> 的请求，那么我们需要检查当前事务的请求与其是否兼容<ul>
+<li>如果有多个 <code>granted</code> 的请求，我们只需要取第一个即可，因为这些 <code>granted</code> 的请求之间是相互兼容的</li>
 </ul>
-<p>也就是说，对于当前事务而言，<strong>有三种能够获得 <code>lock</code>
-的可能</strong>。如果当前请求是
-<code>lock upgrade</code>，那么我们在授予完 <code>lock</code>
-之后还需要对 <code>pointer-&gt;upgrading_</code> 重新置为
-<code>INVALID_TXN_ID</code></p>
-<p>只有<strong>前两种可能</strong>才允许
-<code>lock upgrade</code>。第二种所对应的情况很简单，主要是第一种所对应的情况，具体的例子如下（默认都是同一个对象）：</p>
+</li>
+<li>如果当前队列中不存在 <code>granted</code> 的请求，那么我们需要保证<strong>满足条件</strong>的请求<strong>都能</strong>获得 <code>lock</code><ul>
+<li>满足条件有两点：<ul>
+<li>若当前事务在队列的<strong>队头</strong>，那么可以获取 <code>lock</code></li>
+<li>若当前事务不在队列的队头，但其获取请求与队头的请求相兼容，那么也可以获取 <code>lock</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>也就是说，对于当前事务而言，<strong>有三种能够获得 <code>lock</code> 的可能</strong>。如果当前请求是 <code>lock upgrade</code>，那么我们在授予完 <code>lock</code> 之后还需要对 <code>pointer-&gt;upgrading_</code> 重新置为 <code>INVALID_TXN_ID</code></p>
+<p>只有<strong>前两种可能</strong>才允许 <code>lock upgrade</code>。第二种所对应的情况很简单，主要是第一种所对应的情况，具体的例子如下（默认都是同一个对象）：</p>
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gcode">tx<span class="hljs-symbol">n0</span> <span class="hljs-comment">(IS granted)</span><br>tx<span class="hljs-symbol">n1</span> <span class="hljs-comment">(IX granted)</span><br>tx<span class="hljs-symbol">n2</span> <span class="hljs-comment">(IX granted)</span><br><br>tx<span class="hljs-symbol">n0</span> <span class="hljs-comment">(IS -&gt; IX)</span><br></code></pre></td></tr></table></figure>
-<p>初始时 <code>txn0</code> 持有 <code>IS</code>，<code>txn1</code> 和
-<code>txn2</code> 持有 <code>IX</code>。此时 <code>txn0</code> 尝试
-<code>lock upgrade</code>，由于此时只有一个锁升级请求并且
-<code>IX</code> 之间可以共存，因此这是满足条件的</p>
-<p>到此为止，我们已经可以实现基础的 <code>Lock Manager</code>
-的功能，我们需要在此基础上加上 <code>abort</code> 事务的处理</p>
-<p>一个直观的想法是，当线程在醒来之后先检查以下自己的状态，如果为
-<code>abort</code> 那么将对应项从队列中删除，然后直接跳出
-<code>wait</code>
-的判断；然后，每个线程都会遍历这个队列找到对应的项，判断是否可以授予
-<code>lock</code></p>
-<p>但这里有个问题是，当前线程只知道自己的状态是否为
-<code>abort</code>，无法确定其他线程所对应的事务是否被
-<code>abort</code></p>
+
+<p>初始时 <code>txn0</code> 持有 <code>IS</code>，<code>txn1</code> 和 <code>txn2</code> 持有 <code>IX</code>。此时 <code>txn0</code> 尝试 <code>lock upgrade</code>，由于此时只有一个锁升级请求并且 <code>IX</code> 之间可以共存，因此这是满足条件的</p>
+<p>到此为止，我们已经可以实现基础的 <code>Lock Manager</code> 的功能，我们需要在此基础上加上 <code>abort</code> 事务的处理</p>
+<p>一个直观的想法是，当线程在醒来之后先检查以下自己的状态，如果为 <code>abort</code> 那么将对应项从队列中删除，然后直接跳出 <code>wait</code> 的判断；然后，每个线程都会遍历这个队列找到对应的项，判断是否可以授予 <code>lock</code></p>
+<p>但这里有个问题是，当前线程只知道自己的状态是否为 <code>abort</code>，无法确定其他线程所对应的事务是否被 <code>abort</code></p>
 <p>并且由于线程唤醒后的执行是无法确定的，因此这会导致很大的问题：</p>
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gcode">tx<span class="hljs-symbol">n0</span><span class="hljs-comment">(abort)</span>:  X<br>tx<span class="hljs-symbol">n1</span>:         IS<br>tx<span class="hljs-symbol">n2</span>:         IS<br></code></pre></td></tr></table></figure>
-<p>当线程唤醒时，如果 <code>txn0</code> 的状态为
-<code>abort</code>，另外两个事务正常。如果是 <code>txn0</code>
-先被唤醒，那么它会先删除，然后 <code>txn1</code> 和 <code>txn2</code>
-将会获取 <code>lock</code>，这不会出现问题</p>
-<p>如果 <code>txn1</code> 先被唤醒，由于它无法确定 <code>txn0</code>
-是否被 <code>abort</code>，因此它发现自己的请求无法与 <code>txn0</code>
-相兼容，那么 <code>txn1</code> 将会被阻塞；同理，<code>txn2</code>
-被先唤醒也是一样的情况。这就导致两个线程都被卡死，并且这不是
-<code>deadlock</code>，因此 <code>deadlock detection algorithm</code>
-不会 <code>abort</code> 掉任何一个事务</p>
-<p>这个问题卡了我很久的时间，我所想出的解决办法是，如果当前线程判断自己的状态为
-<code>abort</code>，在从队列中删除后，再调用一次 <code>notify_all</code>
-函数来唤醒所有已经沉睡的线程</p>
-<p>这么做是因为一个 <code>abort</code>
-的事务在队列中，它要么不会照成影响，要么<strong>只会导致所有其他的事务都被卡住</strong>。因此我们直接
-<code>notify_all</code> 一遍即可</p>
+
+<p>当线程唤醒时，如果 <code>txn0</code> 的状态为 <code>abort</code>，另外两个事务正常。如果是 <code>txn0</code> 先被唤醒，那么它会先删除，然后 <code>txn1</code> 和 <code>txn2</code> 将会获取 <code>lock</code>，这不会出现问题</p>
+<p>如果 <code>txn1</code> 先被唤醒，由于它无法确定 <code>txn0</code> 是否被 <code>abort</code>，因此它发现自己的请求无法与 <code>txn0</code> 相兼容，那么 <code>txn1</code> 将会被阻塞；同理，<code>txn2</code> 被先唤醒也是一样的情况。这就导致两个线程都被卡死，并且这不是 <code>deadlock</code>，因此 <code>deadlock detection algorithm</code> 不会 <code>abort</code> 掉任何一个事务</p>
+<p>这个问题卡了我很久的时间，我所想出的解决办法是，如果当前线程判断自己的状态为 <code>abort</code>，在从队列中删除后，再调用一次 <code>notify_all</code> 函数来唤醒所有已经沉睡的线程</p>
+<p>这么做是因为一个 <code>abort</code> 的事务在队列中，它要么不会照成影响，要么<strong>只会导致所有其他的事务都被卡住</strong>。因此我们直接 <code>notify_all</code> 一遍即可</p>
 <blockquote>
-<p>我想不出在我前面设定的执行逻辑下，一个 <code>abort</code>
-的事务能够照成除了卡死所有事务以外的影响。事实上，我将我的代码交上去之后能够通过所有的测试，那么这大概率就是正确的</p>
+<p>我想不出在我前面设定的执行逻辑下，一个 <code>abort</code> 的事务能够照成除了卡死所有事务以外的影响。事实上，我将我的代码交上去之后能够通过所有的测试，那么这大概率就是正确的</p>
 </blockquote>
-<ol start="6" type="1">
-<li>在 <code>wait</code>
-函数的后面，我们需要<strong>再次检查当前事务的状态是否为
-<code>abort</code></strong>，之后就是对事务的 <code>*_lock_set_</code>
-进行修改</li>
+<ol start="6">
+<li>在 <code>wait</code> 函数的后面，我们需要**再次检查当前事务的状态是否为 <code>abort</code>**，之后就是对事务的 <code>*_lock_set_</code> 进行修改</li>
 </ol>
-<p><code>lock table</code> 的操作如上，<code>lock row</code>
-的操作也类似</p>
-<h3 id="unlock">Unlock</h3>
-<p>对于 <code>unlock</code> 的操作则相对简单很多</p>
-<ol type="1">
-<li>通过 <code>table_lock_map</code> 找到对于的
-<code>LockRequestQueue</code>，然后从队列中将当前事务对应的项删去。当然，我们需要判断当前的
-<code>unlock</code> 操作是否满足条件，不满足则需要抛出异常并返回
-<code>false</code></li>
-<li>修改事务的 <code>lock set</code>，然后依据隔离级别将其状态修改为
-<code>shrinking</code>，具体的要求如下：</li>
+<p><code>lock table</code> 的操作如上，<code>lock row</code> 的操作也类似</p>
+<h3 id="Unlock"><a href="#Unlock" class="headerlink" title="Unlock"></a>Unlock</h3><p>对于 <code>unlock</code> 的操作则相对简单很多</p>
+<ol>
+<li>通过 <code>table_lock_map</code> 找到对于的 <code>LockRequestQueue</code>，然后从队列中将当前事务对应的项删去。当然，我们需要判断当前的 <code>unlock</code> 操作是否满足条件，不满足则需要抛出异常并返回 <code>false</code></li>
+<li>修改事务的 <code>lock set</code>，然后依据隔离级别将其状态修改为 <code>shrinking</code>，具体的要求如下：</li>
 </ol>
 <figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pf">TRANSACTION STATE UPDATE<br>   Unlock should update the transaction <span class="hljs-keyword">state</span> appropriately (depending upon the ISOLATION LEVEL)<br>   Only unlocking S or X locks changes transaction <span class="hljs-keyword">state</span>.<br><br>   REPEATABLE_READ:<br>       Unlocking S/X locks should <span class="hljs-built_in">set</span> the transaction <span class="hljs-keyword">state</span> <span class="hljs-keyword">to</span> SHRINKING<br><br>   READ_COMMITTED:<br>       Unlocking X locks should <span class="hljs-built_in">set</span> the transaction <span class="hljs-keyword">state</span> <span class="hljs-keyword">to</span> SHRINKING.<br>       Unlocking S locks does not affect transaction <span class="hljs-keyword">state</span>.<br><br>  READ_UNCOMMITTED:<br>       Unlocking X locks should <span class="hljs-built_in">set</span> the transaction <span class="hljs-keyword">state</span> <span class="hljs-keyword">to</span> SHRINKING.<br>       S locks are not permitted under READ_UNCOMMITTED.<br>           The behaviour upon unlocking an S lock under this isolation level is undefined.<br></code></pre></td></tr></table></figure>
-<ol start="3" type="1">
+
+<ol start="3">
 <li>最后，调用 <code>notify_all</code> 函数唤醒所有的休眠线程</li>
 </ol>
-<h2 id="task-2">Task 2</h2>
-<p>在 <code>deadlock detection</code> 函数中，我们不能对
-<code>lock request queue</code>
-中的项进行删除，只能简单地将对应的事务的状态置为
-<code>ABORTED</code>，然后对所有的事务执行 <code>notify_all</code></p>
-<p>我们主要讨论死锁检测算法的实现，因为这是 <code>task 2</code>
-中最关键的部分</p>
-<p>我们的死锁检测算法需要从<strong>最小的 <code>txn id</code>
-开始</strong>，然后输出图中存在的环，我们<strong>需要 <code>abort</code>
-的事务是环中 <code>txn id</code> 最大的那个</strong></p>
+<h2 id="Task-2"><a href="#Task-2" class="headerlink" title="Task 2"></a>Task 2</h2><p>在 <code>deadlock detection</code> 函数中，我们不能对 <code>lock request queue</code> 中的项进行删除，只能简单地将对应的事务的状态置为 <code>ABORTED</code>，然后对所有的事务执行 <code>notify_all</code></p>
+<p>我们主要讨论死锁检测算法的实现，因为这是 <code>task 2</code> 中最关键的部分</p>
+<p>我们的死锁检测算法需要从<strong>最小的 <code>txn id</code> 开始</strong>，然后输出图中存在的环，我们<strong>需要 <code>abort</code> 的事务是环中 <code>txn id</code> 最大的那个</strong></p>
 <p>举个例子：</p>
 <p>现在图中存在两个环：</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span>-&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">1</span><br><br><span class="hljs-symbol">3 </span>-&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">5</span> -&gt; <span class="hljs-number">3</span><br><br></code></pre></td></tr></table></figure>
-<p>这种情况下我们应当输出 <code>2</code>。下面，我们着手使用 <span class="math inline">\(\text{DFS}\)</span> 来设计这个算法</p>
+
+<p>这种情况下我们应当输出 <code>2</code>。下面，我们着手使用 $\text{DFS}$ 来设计这个算法</p>
 <blockquote>
 <p>主要参考<a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/detect-cycle-direct-graph-using-colors/">这篇文章</a></p>
 </blockquote>
@@ -794,154 +644,82 @@ upgrade to X</p>
 <li><code>1</code>：表示当前节点已经遍历过，但其<strong>子节点还没有完全遍历</strong></li>
 <li><code>2</code>：表示当前节点和其子节点已经全部遍历完毕</li>
 </ul>
-<p>当我们在遍历的过程中，如果遍历到某个的为
-<code>1</code>，那么就说明当前所走的路径中存在环。但我们还不能马上去整条路径的最大
-<code>txn id</code>，具体的原因如下：</p>
+<p>当我们在遍历的过程中，如果遍历到某个的为 <code>1</code>，那么就说明当前所走的路径中存在环。但我们还不能马上去整条路径的最大 <code>txn id</code>，具体的原因如下：</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span>-&gt; <span class="hljs-number">2</span> -&gt; <span class="hljs-number">3</span> -&gt; <span class="hljs-number">4</span> -&gt; <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
-<p>这种情况下，环为 <code>(2, 3, 4)</code>，但由于我们的起点为
-<code>5</code>，并且 <code>5</code>
-并不在环中，如果我们直接输出的话结果就是错误的，因此我们需要在遍历的时候维护一个邻接表，记录<strong>每个节点的父节点</strong></p>
+
+<p>这种情况下，环为 <code>(2, 3, 4)</code>，但由于我们的起点为 <code>5</code>，并且 <code>5</code> 并不在环中，如果我们直接输出的话结果就是错误的，因此我们需要在遍历的时候维护一个邻接表，记录<strong>每个节点的父节点</strong></p>
 <p>然后，当我们确定这条路径上存在环时，我们首先从当前节点的父节点开始走，然后遍历邻接表，直到走到当前节点，这整条路径就是一个完整环，不会带有其他的节点</p>
 <p>最后，我们输出环上的最大 <code>txn id</code> 即可</p>
-<h2 id="task-3">Task 3</h2>
-<h3 id="isolation-level-1">Isolation Level</h3>
-<p>这个部分的关键在于不同的隔离级别之间的 <code>lock</code> 与
-<code>unlock</code> 的逻辑，我们现在详细说明这一点：</p>
-<p>隔离基本从高到低分别为：<code>Repetable Read (RR)</code>，<code>Read Committed (RC)</code>
-和 <code>Read Uncommitted (RU)</code>。分别的 <code>lock</code> 与
-<code>unlock</code> 的逻辑如下：</p>
+<h2 id="Task-3"><a href="#Task-3" class="headerlink" title="Task 3"></a>Task 3</h2><h3 id="Isolation-Level-1"><a href="#Isolation-Level-1" class="headerlink" title="Isolation Level"></a>Isolation Level</h3><p>这个部分的关键在于不同的隔离级别之间的 <code>lock</code> 与 <code>unlock</code> 的逻辑，我们现在详细说明这一点：</p>
+<p>隔离基本从高到低分别为：<code>Repetable Read (RR)</code>，<code>Read Committed (RC)</code> 和 <code>Read Uncommitted (RU)</code>。分别的 <code>lock</code> 与 <code>unlock</code> 的逻辑如下：</p>
 <ul>
-<li><code>RR</code>：对 <code>table</code> 加 <code>IS, IX</code>，对
-<code>row</code> 加 <code>S, X</code>
-<ul>
-<li>对于 <code>table</code>：<strong>无论是 <code>IS</code> 还是
-<code>IX</code>，在获取后一律不释放，在事务 <code>commit</code> 或
-<code>abort</code> 时再释放获得的 <code>lock</code></strong></li>
-<li>对于 <code>row</code>：<strong>无论是 <code>S</code> 还是
-<code>X</code>，在获取后一律不释放，在事务 <code>commit</code> 或
-<code>abort</code> 时再释放获得的 <code>lock</code></strong></li>
-</ul></li>
-<li><code>RC</code>：在上面的基础上，我们允许<strong>读取完
-<code>row</code> 后立即释放 <code>S</code></strong>
-<ul>
+<li><code>RR</code>：对 <code>table</code> 加 <code>IS, IX</code>，对 <code>row</code> 加 <code>S, X</code><ul>
+<li>对于 <code>table</code>：<strong>无论是 <code>IS</code> 还是 <code>IX</code>，在获取后一律不释放，在事务 <code>commit</code> 或 <code>abort</code> 时再释放获得的 <code>lock</code></strong></li>
+<li>对于 <code>row</code>：<strong>无论是 <code>S</code> 还是 <code>X</code>，在获取后一律不释放，在事务 <code>commit</code> 或 <code>abort</code> 时再释放获得的 <code>lock</code></strong></li>
+</ul>
+</li>
+<li><code>RC</code>：在上面的基础上，我们允许<strong>读取完 <code>row</code> 后立即释放 <code>S</code></strong><ul>
 <li>对于 <code>table</code>：同上</li>
-<li>对于 <code>row</code>，如果是 <code>X</code>，那么同上；如果是
-<code>S</code>，那么在<strong>读取完后立即释放</strong></li>
-</ul></li>
-<li><code>RU</code>：在上面的基础上，我们不再引入 <code>IS</code> 和
-<code>S</code>，也就是<strong>读取时不持有
-<code>lock</code>，但写入时依旧需要持有 <code>lock</code></strong>
-<ul>
-<li>对于 <code>table</code>：如果仅仅是读取，那么<strong>不获取
-<code>lock</code></strong>；如果需要写入，那么获取
-<code>IX</code>，<strong>在事务 <code>commit</code> 或
-<code>abort</code> 时释放获得的 <code>lock</code></strong></li>
-<li>对于 <code>row</code>：如果仅仅是读取，那么不获取
-<code>lock</code>；如果需要写入，那么获取 <code>S</code>，<strong>在事务
-<code>commit</code> 或 <code>abort</code> 时释放获得的
-<code>lock</code></strong></li>
-</ul></li>
+<li>对于 <code>row</code>，如果是 <code>X</code>，那么同上；如果是 <code>S</code>，那么在<strong>读取完后立即释放</strong></li>
+</ul>
+</li>
+<li><code>RU</code>：在上面的基础上，我们不再引入 <code>IS</code> 和 <code>S</code>，也就是<strong>读取时不持有 <code>lock</code>，但写入时依旧需要持有 <code>lock</code></strong><ul>
+<li>对于 <code>table</code>：如果仅仅是读取，那么<strong>不获取 <code>lock</code><strong>；如果需要写入，那么获取 <code>IX</code>，</strong>在事务 <code>commit</code> 或 <code>abort</code> 时释放获得的 <code>lock</code></strong></li>
+<li>对于 <code>row</code>：如果仅仅是读取，那么不获取 <code>lock</code>；如果需要写入，那么获取 <code>S</code>，<strong>在事务 <code>commit</code> 或 <code>abort</code> 时释放获得的 <code>lock</code></strong></li>
+</ul>
+</li>
 </ul>
 <p>总结一下：</p>
 <ul>
-<li>对于读锁，不同的隔离基本的限制<strong>逐渐减弱</strong>：
-<ul>
-<li><code>RR</code> 一定要获取，并且需要一直持有直到事务
-<code>commit</code> 或 <code>abort</code></li>
+<li>对于读锁，不同的隔离基本的限制<strong>逐渐减弱</strong>：<ul>
+<li><code>RR</code> 一定要获取，并且需要一直持有直到事务 <code>commit</code> 或 <code>abort</code></li>
 <li><code>RC</code> 一定要获取，但读取完对象后需要立刻释放</li>
 <li><code>RU</code> 不获取读锁</li>
-</ul></li>
-<li>对于写锁，所有的隔离基本的限制<strong>均相同</strong>
-<ul>
-<li><code>RR</code>，<code>RC</code>，<code>RU</code>
-均需要获取写锁，并且需要一直持有直到事务 <code>commit</code> 或
-<code>abort</code></li>
-</ul></li>
+</ul>
+</li>
+<li>对于写锁，所有的隔离基本的限制<strong>均相同</strong><ul>
+<li><code>RR</code>，<code>RC</code>，<code>RU</code> 均需要获取写锁，并且需要一直持有直到事务 <code>commit</code> 或 <code>abort</code></li>
+</ul>
+</li>
 </ul>
 <p>对于读锁的不同限制也就导致了不同隔离基本所会产生的问题不同：</p>
 <ul>
-<li><code>RR</code> 由于执行 <code>strict 2PL</code>，因此只会有
-<code>phantom read</code></li>
+<li><code>RR</code> 由于执行 <code>strict 2PL</code>，因此只会有 <code>phantom read</code></li>
 </ul>
-<p>由于我们加锁的对象只是 <code>table</code> 和
-<code>row</code>，而没有对 <code>index</code>
-进行加锁，因此如果访问不涉及 <code>index</code> 时那么缺失不会有
-<code>phantom read</code></p>
-<p>但一旦访问需要涉及
-<code>index</code>，由于两个事务的操作集合相同，并且 <code>index</code>
-没有写锁的保护，因此必然会照成 <code>phantom read</code></p>
+<p>由于我们加锁的对象只是 <code>table</code> 和 <code>row</code>，而没有对 <code>index</code> 进行加锁，因此如果访问不涉及 <code>index</code> 时那么缺失不会有 <code>phantom read</code></p>
+<p>但一旦访问需要涉及 <code>index</code>，由于两个事务的操作集合相同，并且 <code>index</code> 没有写锁的保护，因此必然会照成 <code>phantom read</code></p>
 <ul>
-<li><code>RC</code> 在 <code>RR</code> 的基础上，我们放宽
-<code>strict 2PL</code>
-的要求，允许在读取完对象后就释放读锁，这会额外导致
-<code>unrepeatible read</code></li>
+<li><code>RC</code> 在 <code>RR</code> 的基础上，我们放宽 <code>strict 2PL</code> 的要求，允许在读取完对象后就释放读锁，这会额外导致 <code>unrepeatible read</code></li>
 </ul>
 <p>因为如果我们前后两次读取同一对象，在这两次读取之间我们并没有持有读锁，因此它有可能会被更改</p>
 <blockquote>
-<p>这里补充一点，<code>2PL</code>
-是在事务的开始获取当前事务需要操作对象的所有
-<code>lock</code>，然后一旦操作完对象，就将对应的 <code>lock</code>
-进行释放，这会导致 <code>cascading abort</code></p>
-<p><code>strict 2PL</code> 是在事务 <code>commit</code> 或
-<code>abort</code> 时再释放 <code>lock</code>，这可以解决
-<code>cascading abort</code></p>
+<p>这里补充一点，<code>2PL</code> 是在事务的开始获取当前事务需要操作对象的所有 <code>lock</code>，然后一旦操作完对象，就将对应的 <code>lock</code> 进行释放，这会导致 <code>cascading abort</code></p>
+<p><code>strict 2PL</code> 是在事务 <code>commit</code> 或 <code>abort</code> 时再释放 <code>lock</code>，这可以解决 <code>cascading abort</code></p>
 </blockquote>
 <ul>
-<li><code>RU</code> 在 <code>RC</code>
-的基础上，彻底放弃获取读锁，这会额外导致 <code>dirty read</code></li>
+<li><code>RU</code> 在 <code>RC</code> 的基础上，彻底放弃获取读锁，这会额外导致 <code>dirty read</code></li>
 </ul>
 <p>这是显然的，由于在读取的过程中缺少读锁的保护，因此如果有个事务正在对该对象进行写入，那么就会读取到中间值</p>
-<h3 id="another-details">Another Details</h3>
-<p>有一些细节性的东西需要注意一下：</p>
+<h3 id="Another-Details"><a href="#Another-Details" class="headerlink" title="Another Details"></a>Another Details</h3><p>有一些细节性的东西需要注意一下：</p>
 <ul>
-<li>如果先前已经获得了更高级别的
-<code>lock</code>，那么这次不需要再次获取</li>
-<li>在 <code>revert</code> 的时候，我们需要倒序遍历
-<code>write record set</code></li>
-<li>由于我们执行插入和删除都是 <code>logical</code>
-的，也就是仅仅只是设置 <code>tuple</code> 元数据中的
-<code>is_delete_</code> 字段，因此在 <code>revert</code>
-的时候我们将其反过来设置即可</li>
+<li>如果先前已经获得了更高级别的 <code>lock</code>，那么这次不需要再次获取</li>
+<li>在 <code>revert</code> 的时候，我们需要倒序遍历 <code>write record set</code></li>
+<li>由于我们执行插入和删除都是 <code>logical</code> 的，也就是仅仅只是设置 <code>tuple</code> 元数据中的 <code>is_delete_</code> 字段，因此在 <code>revert</code> 的时候我们将其反过来设置即可</li>
 </ul>
-<h2 id="summary">Summary</h2>
-<p>最后一个实验完结了，我想着写下一点我的感想</p>
-<p>首先感谢 <code>CMU</code> 慷慨地提供了如此优质的教学资源，开放了
-<code>Autograder</code> 的线上测评以及 <code>TAs</code> 在
-<code>discord</code> 上面的解答</p>
-<p>这门课程我算是独立完成的，之所以说「算是」，因为我除了参考官方提供的资源外，我还参考了
-<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/shi-yi-12-95-43">十一</a> 和 <a target="_blank" rel="noopener" href="https://www.zhihu.com/people/aneureka">Aneureka</a>
-这两位大佬的博客。我真的十分感谢前人留下的经验，这些经验给了我极大的帮助</p>
-<p>我十分喜欢这种摸着石头过河的感觉，其实每个 <code>project</code>
-所对应的 <code>writeup</code>
-里面给出的内容都十分有限，如果想要通过测试就必须要注意到非常多的细节。这就需要我通过
-<code>autograder</code> 返回的 <code>log</code>
-来反推出我的代码里面还存在什么问题，进而完善我对每个函数在语义
-<code>sematic</code> 上面的理解</p>
-<p>由于我还需要找到这些 <code>bug</code>
-是如何发生的，这个过程还增长了我调试的能力。我印象最深的是
-<code>P2</code> 的 <code>B+ Tree</code> 以及 <code>P4</code> 的
-<code>deadlock detection</code>
-的调试，我还总结出了在多线程环境下并发问题该如何调试</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>最后一个实验完结了，我想着写下一点我的感想</p>
+<p>首先感谢 <code>CMU</code> 慷慨地提供了如此优质的教学资源，开放了 <code>Autograder</code> 的线上测评以及 <code>TAs</code> 在 <code>discord</code> 上面的解答</p>
+<p>这门课程我算是独立完成的，之所以说「算是」，因为我除了参考官方提供的资源外，我还参考了 <a target="_blank" rel="noopener" href="https://www.zhihu.com/people/shi-yi-12-95-43">十一</a> 和 <a target="_blank" rel="noopener" href="https://www.zhihu.com/people/aneureka">Aneureka</a> 这两位大佬的博客。我真的十分感谢前人留下的经验，这些经验给了我极大的帮助</p>
+<p>我十分喜欢这种摸着石头过河的感觉，其实每个 <code>project</code> 所对应的 <code>writeup</code> 里面给出的内容都十分有限，如果想要通过测试就必须要注意到非常多的细节。这就需要我通过 <code>autograder</code> 返回的 <code>log</code> 来反推出我的代码里面还存在什么问题，进而完善我对每个函数在语义 <code>sematic</code> 上面的理解</p>
+<p>由于我还需要找到这些 <code>bug</code> 是如何发生的，这个过程还增长了我调试的能力。我印象最深的是  <code>P2</code> 的 <code>B+ Tree</code> 以及 <code>P4</code> 的 <code>deadlock detection</code> 的调试，我还总结出了在多线程环境下并发问题该如何调试</p>
 <blockquote>
-<p>对于 <code>B+ Tree</code>
-而言，在单线程环境下如果可以正常运行，那么多线程环境下需要注意的是
-<code>data race</code> 和 <code>deadlock</code></p>
+<p>对于 <code>B+ Tree</code> 而言，在单线程环境下如果可以正常运行，那么多线程环境下需要注意的是 <code>data race</code> 和 <code>deadlock</code></p>
 <ul>
-<li><code>data race</code>：开多个线程对 <code>B+ Tree</code>
-进行插入，等待所有线程运行完毕后检查所有的叶节点，看是否存在某个值被覆盖</li>
-<li><code>deadlock</code>：开多个线程对 <code>B+ Tree</code>
-进行操作，然后在 <code>join</code> 的前面打断点，通过
-<code>i thread</code>
-查看当前是否有被卡住的线程。如果有，则跳到对应的线程查看被卡在了那里</li>
+<li><code>data race</code>：开多个线程对 <code>B+ Tree</code> 进行插入，等待所有线程运行完毕后检查所有的叶节点，看是否存在某个值被覆盖</li>
+<li><code>deadlock</code>：开多个线程对 <code>B+ Tree</code> 进行操作，然后在 <code>join</code> 的前面打断点，通过 <code>i thread</code> 查看当前是否有被卡住的线程。如果有，则跳到对应的线程查看被卡在了那里</li>
 </ul>
-<p>对于 <code>deadlock detection</code> 而言，我大概理解了
-<code>gdb</code>
-调试多线程时，每个线程的运行是怎样的，即：只要当前线程停止，那么其余线程也停止；只要当前线程运行，那么其余线程也运行。所以相比于
-<code>P2</code>
-那时候的多线程调试而言，我姑且认为我能够在恰当的位置打断点，然后跳到需要的线程去查看对应的数据</p>
+<p>对于 <code>deadlock detection</code> 而言，我大概理解了 <code>gdb</code> 调试多线程时，每个线程的运行是怎样的，即：只要当前线程停止，那么其余线程也停止；只要当前线程运行，那么其余线程也运行。所以相比于 <code>P2</code> 那时候的多线程调试而言，我姑且认为我能够在恰当的位置打断点，然后跳到需要的线程去查看对应的数据</p>
 </blockquote>
-<p>做完这四个
-<code>project</code>，我真的收益良多。我所学到的知识以及关于程序的调试技巧，这都不是只看书就能够掌握的。当我克服我所遇到的问题，并回头望去的时候，当真觉得：「当你穿过了暴风雨，你就不再是原来的那个人了」</p>
+<p>做完这四个 <code>project</code>，我真的收益良多。我所学到的知识以及关于程序的调试技巧，这都不是只看书就能够掌握的。当我克服我所遇到的问题，并回头望去的时候，当真觉得：「当你穿过了暴风雨，你就不再是原来的那个人了」</p>
 <p>最后，希望我所写的这四篇文章能够对后来的人有所帮助</p>
 
                 
