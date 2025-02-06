@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="归并排序该排序的算法思想基于这样一个事实——不断将两个「小的」「有序的」的数组归并成一个「大的」「有序的」的数组，这是分治思想的一个典型应用 可以看到，该排序可以通过递归来实现，并且它一定会有两种基本实现：自顶向下、自底向上 ​	  原地归并的抽象方法由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个 merge 函数来实现这个过程。通过递归地不断调用该函数进而实现整体">
+    <meta name="description" content="归并排序 该排序的算法思想基于这样一个事实——不断将两个「小的」「有序的」的数组归并成一个「大的」「有序的」的数组，这是分治思想的一个典型应用 可以看到，该排序可以通过递归来实现，并且它一定会有两种基本实现：自顶向下、自底向上 ​ 原地归并的抽象方法 由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个 merge 函数来实现这个过程。通过递归地不断调用该函">
 <meta property="og:type" content="article">
 <meta property="og:title" content="归并排序及其分析">
 <meta property="og:url" content="https://nishikichisato.github.io/2022/09/27/%E7%AE%97%E6%B3%954/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="归并排序该排序的算法思想基于这样一个事实——不断将两个「小的」「有序的」的数组归并成一个「大的」「有序的」的数组，这是分治思想的一个典型应用 可以看到，该排序可以通过递归来实现，并且它一定会有两种基本实现：自顶向下、自底向上 ​	  原地归并的抽象方法由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个 merge 函数来实现这个过程。通过递归地不断调用该函数进而实现整体">
+<meta property="og:description" content="归并排序 该排序的算法思想基于这样一个事实——不断将两个「小的」「有序的」的数组归并成一个「大的」「有序的」的数组，这是分治思想的一个典型应用 可以看到，该排序可以通过递归来实现，并且它一定会有两种基本实现：自顶向下、自底向上 ​ 原地归并的抽象方法 由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个 merge 函数来实现这个过程。通过递归地不断调用该函">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Algorithm%204/Algorithm%204%20(1).jpg">
 <meta property="article:published_time" content="2022-09-27T01:49:13.875Z">
@@ -263,7 +263,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k words
+          4.2k words
         
       </span>
     
@@ -346,50 +346,90 @@
             
               <div class="markdown-body">
                 
-                <h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>该排序的算法思想基于这样一个事实——不断将两个<strong>「小的」「有序的」</strong>的数组归并成一个<strong>「大的」「有序的」</strong>的数组，这是<em>分治思想</em>的一个典型应用</p>
+                <h3 id="归并排序">归并排序</h3>
+<p>该排序的算法思想基于这样一个事实——不断将两个<strong>「小的」「有序的」</strong>的数组归并成一个<strong>「大的」「有序的」</strong>的数组，这是<em>分治思想</em>的一个典型应用</p>
 <p>可以看到，该排序可以通过<strong>递归</strong>来实现，并且它一定会有两种基本实现：自顶向下、自底向上</p>
-<p>​	 </p>
-<h4 id="原地归并的抽象方法"><a href="#原地归并的抽象方法" class="headerlink" title="原地归并的抽象方法"></a>原地归并的抽象方法</h4><p>由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个 <code>merge</code> 函数来实现这个过程。通过递归地不断调用该函数进而实现整体的归并函数</p>
-<p>我们设计这样一个函数签名 <code>merge(vector&lt;int&gt;&amp; a, int lo, int mid, int hi)</code> 来实现将两个<strong>有序</strong>子数组 <code>a[lo, mid]</code> 和 <code>a[mid + 1, hi]</code> 归并成一个大的有序的数组 <code>a[lo, hi]</code> （其中 <code>hi &gt; lo</code>）。其实现如下：</p>
+<p>​</p>
+<h4 id="原地归并的抽象方法">原地归并的抽象方法</h4>
+<p>由于需要将两个小的、有序的数组合并成一个大的、有序的数组，那么我们就必须要一个
+<code>merge</code>
+函数来实现这个过程。通过递归地不断调用该函数进而实现整体的归并函数</p>
+<p>我们设计这样一个函数签名
+<code>merge(vector&lt;int&gt;&amp; a, int lo, int mid, int hi)</code>
+来实现将两个<strong>有序</strong>子数组 <code>a[lo, mid]</code> 和
+<code>a[mid + 1, hi]</code> 归并成一个大的有序的数组
+<code>a[lo, hi]</code> （其中
+<code>hi &gt; lo</code>）。其实现如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Merge</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> mid, <span class="hljs-type">int</span> hi)</span><span class="hljs-comment">//[lo, mid], [mid+1, hi]</span></span><br><span class="hljs-function">	</span>&#123;<br>        <span class="hljs-comment">//aux不在该函数内部初始化</span><br>		<span class="hljs-type">int</span> i = lo, j = mid + <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>			aux[k] = a[k];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (i &gt; mid)<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; hi)<br>				a[k] = aux[i++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">less</span>(aux[j], aux[i]))<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> a[k] = aux[i++];<br>		&#125;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">static</span> vector&lt;<span class="hljs-type">int</span>&gt;aux;<span class="hljs-comment">//辅助数组</span><br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>该方法先将 <code>a[]</code> 数组复制到 <code>aux[]</code> 数组当中，然后再归并回 <code>a[]</code> 中</p>
-<p><code>lo</code> 与 <code>hi</code> 均表示对数组进行界限，<code>mid</code> 将一个数组分割成两个小数组，<code>i</code> 与 <code>j</code> 用来遍历这两个小数组</p>
+<p>该方法先将 <code>a[]</code> 数组复制到 <code>aux[]</code>
+数组当中，然后再归并回 <code>a[]</code> 中</p>
+<p><code>lo</code> 与 <code>hi</code>
+均表示对数组进行界限，<code>mid</code>
+将一个数组分割成两个小数组，<code>i</code> 与 <code>j</code>
+用来遍历这两个小数组</p>
 <p>在对 <code>a[]</code> 进行归并时，有：</p>
 <ul>
-<li><p>如果左半边元素用完时（<code>if(i &gt; mid)</code>），选择右半边元素（<code>a[k] = aux[j++]</code>）</p>
-</li>
-<li><p>如果右半边元素用完时（<code>if(j &gt; mid)</code>），选择左半边元素（<code>a[k] = aux[i++]</code>）</p>
-</li>
-<li><p>右半边当前元素小于左半边当前元素（<code>if(less(a[j], a[i]))</code>），选择右半边元素（<code>a[k] = aux[j++]</code>）</p>
-</li>
-<li><p>左半边当前元素小于等于右半边当前元素（<code>else</code> 部分），选择左半边元素（<code>a[k] = aux[i++]</code>）</p>
-</li>
+<li><p>如果左半边元素用完时（<code>if(i &gt; mid)</code>），选择右半边元素（<code>a[k] = aux[j++]</code>）</p></li>
+<li><p>如果右半边元素用完时（<code>if(j &gt; mid)</code>），选择左半边元素（<code>a[k] = aux[i++]</code>）</p></li>
+<li><p>右半边当前元素小于左半边当前元素（<code>if(less(a[j], a[i]))</code>），选择右半边元素（<code>a[k] = aux[j++]</code>）</p></li>
+<li><p>左半边当前元素小于等于右半边当前元素（<code>else</code>
+部分），选择左半边元素（<code>a[k] = aux[i++]</code>）</p></li>
 </ul>
-<p>​	 </p>
-<h4 id="自顶向下的归并"><a href="#自顶向下的归并" class="headerlink" title="自顶向下的归并"></a>自顶向下的归并</h4><p>我们的目的是，将所有数组分割到不能再分割时（数组大小为 2 ），再对各个数组进行归并.也就是说，归并是发生在叶子节点的，因此需要用后续遍历来实现</p>
+<p>​</p>
+<h4 id="自顶向下的归并">自顶向下的归并</h4>
+<p>我们的目的是，将所有数组分割到不能再分割时（数组大小为 2
+），再对各个数组进行归并.也就是说，归并是发生在叶子节点的，因此需要用后续遍历来实现</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Merge</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		aux.<span class="hljs-built_in">assign</span>(a.<span class="hljs-built_in">size</span>(), <span class="hljs-number">0</span>);<br>		<span class="hljs-built_in">sort</span>(a, <span class="hljs-number">0</span>, a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> hi)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (lo &gt;= hi)<span class="hljs-comment">//区间端点相等，该区间就一个数，无法归并</span><br>			<span class="hljs-keyword">return</span>;<br>		<span class="hljs-type">int</span> mid = hi + (lo - hi) / <span class="hljs-number">2</span>;<br>		<span class="hljs-built_in">sort</span>(a, lo, mid);<br>		<span class="hljs-built_in">sort</span>(a, mid + <span class="hljs-number">1</span>, hi);<br>		<span class="hljs-built_in">merge</span>(a, lo, mid, hi);<span class="hljs-comment">//后序遍历</span><br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> mid, <span class="hljs-type">int</span> hi)</span><span class="hljs-comment">//[lo, mid], [mid+1, hi]</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		aux.<span class="hljs-built_in">assign</span>(N, <span class="hljs-number">0</span>);<br>		<span class="hljs-type">int</span> i = lo, j = mid + <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>			aux[k] = a[k];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (i &gt; mid)<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; hi)<br>				a[k] = aux[i++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">less</span>(aux[j], aux[i]))<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> a[k] = aux[i++];<br>		&#125;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">static</span> vector&lt;<span class="hljs-type">int</span>&gt;aux;<span class="hljs-comment">//辅助数组</span><br>&#125;;<br></code></pre></td></tr></table></figure>
-
-<p>​	 </p>
-<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>由于归并排序是通过辅助数组与主数组相互赋值来实现的，因此归并排序<strong>不需要交换元素</strong>，只需要<strong>比较元素</strong>。因此宏观上，我们从比较次数来分析整个归并排序的时间复杂度；微观上，我们从访问数组次数来分析单次归并排序的时间复杂度</p>
+<p>​</p>
+<h4 id="分析">分析</h4>
+<p>由于归并排序是通过辅助数组与主数组相互赋值来实现的，因此归并排序<strong>不需要交换元素</strong>，只需要<strong>比较元素</strong>。因此宏观上，我们从比较次数来分析整个归并排序的时间复杂度；微观上，我们从访问数组次数来分析单次归并排序的时间复杂度</p>
 <ul>
 <li>在比较次数方面：</li>
 </ul>
-<p>我们用 $C(N)$ 来表示将一个大小为 $N$ 的数组进行归并所需要的<strong>比较次数</strong>。显然，$C(0)&#x3D;C(1)&#x3D;1$ ，当我们通过 <code>sort</code> 递归调用时，比较次数的上限是：<br>$$<br>C(N)\le C(\lfloor N&#x2F;2 \rfloor)+C(\lceil N&#x2F;2 \rceil)+N<br>$$<br>式中第一项为对左半边进行归并所需的比较次数，第二项为对右半边进行归并所需的比较次数，第三项为对整个数组进行归并所需的比较次数。由于归并所需的最小比较次数为 $\lfloor N&#x2F;2 \rfloor$ （只需要比较一半的元素，另一半自动归位），因此 $C(N)$ 的下限为：<br>$$<br>C(N)\ge C(\lfloor N&#x2F;2 \rfloor)+C(\lceil N&#x2F;2 \rceil)+\lfloor N&#x2F;2 \rfloor<br>$$<br>取最极端的情况（考虑上限），令 $N&#x3D;2^n$ 。因为 $\lfloor N&#x2F;2 \rfloor&#x3D;2^{n-1}$ ，$\lceil N&#x2F;2 \rceil&#x3D;2^{n-1}$ 有：<br>$$<br>C(2^n)&#x3D; 2\cdot C(2^{n-1})+2^{n}<br>$$<br>同时除以 $2^n$ ，有：<br>$$<br>C(2^n)&#x2F;2^n&#x3D;C(2^{n-1})&#x2F;2^{n-1}+1<br>$$<br>迭代一次，有：<br>$$<br>C(2^n)&#x2F;2^n&#x3D;C(2^{n-2})&#x2F;2^{n-2}+1+1<br>$$<br>迭代 $n-1$ 次，有：<br>$$<br>C(2^n)&#x2F;2^n&#x3D;C(2^0)&#x2F;2^0+n<br>$$<br>同时乘以 $2^n$ ，有：<br>$$<br>C(N)&#x3D;NlogN<br>$$<br>也就是说，对于任意长度为 $N$ 的数组，最多需要有 $NlogN$ 次比较就可以完成排序</p>
+<p>我们用 <span class="math inline">\(C(N)\)</span> 来表示将一个大小为
+<span class="math inline">\(N\)</span>
+的数组进行归并所需要的<strong>比较次数</strong>。显然，<span class="math inline">\(C(0)=C(1)=1\)</span> ，当我们通过
+<code>sort</code> 递归调用时，比较次数的上限是： <span class="math display">\[
+C(N)\le C(\lfloor N/2 \rfloor)+C(\lceil N/2 \rceil)+N
+\]</span>
+式中第一项为对左半边进行归并所需的比较次数，第二项为对右半边进行归并所需的比较次数，第三项为对整个数组进行归并所需的比较次数。由于归并所需的最小比较次数为
+<span class="math inline">\(\lfloor N/2 \rfloor\)</span>
+（只需要比较一半的元素，另一半自动归位），因此 <span class="math inline">\(C(N)\)</span> 的下限为： <span class="math display">\[
+C(N)\ge C(\lfloor N/2 \rfloor)+C(\lceil N/2 \rceil)+\lfloor N/2 \rfloor
+\]</span> 取最极端的情况（考虑上限），令 <span class="math inline">\(N=2^n\)</span> 。因为 <span class="math inline">\(\lfloor N/2 \rfloor=2^{n-1}\)</span> ，<span class="math inline">\(\lceil N/2 \rceil=2^{n-1}\)</span> 有： <span class="math display">\[
+C(2^n)= 2\cdot C(2^{n-1})+2^{n}
+\]</span> 同时除以 <span class="math inline">\(2^n\)</span> ，有： <span class="math display">\[
+C(2^n)/2^n=C(2^{n-1})/2^{n-1}+1
+\]</span> 迭代一次，有： <span class="math display">\[
+C(2^n)/2^n=C(2^{n-2})/2^{n-2}+1+1
+\]</span> 迭代 <span class="math inline">\(n-1\)</span> 次，有： <span class="math display">\[
+C(2^n)/2^n=C(2^0)/2^0+n
+\]</span> 同时乘以 <span class="math inline">\(2^n\)</span> ，有： <span class="math display">\[
+C(N)=NlogN
+\]</span> 也就是说，对于任意长度为 <span class="math inline">\(N\)</span> 的数组，最多需要有 <span class="math inline">\(NlogN\)</span> 次比较就可以完成排序</p>
 <ul>
 <li>在访问数组方面：</li>
 </ul>
-<p>对于长度为 $N$ 的数组，单次归并最多会访问 $6N$ 次数组，整体会访问 $6NlogN$ 次数组</p>
-<p>这个的证明很简单。在对 <code>aux</code> 数组进行复制时，有 $N$ 次数组读取和 $N$ 次数组写入，在对 <code>a</code> 进行归并时，有 $N$ 次数组读取和 $N$ 次数组写入</p>
-<p>在比较方面，对长度为 $N$ 的数组，对<strong>数的比较</strong>最多为 $N&#x2F;2$ 次，但由于我们第二个 <code>for</code> 有四次比较，因此比较的总次数为 $2N$ </p>
-<p>总和就是 $6N$ </p>
-<p>​	 </p>
-<h4 id="自底向上的归并"><a href="#自底向上的归并" class="headerlink" title="自底向上的归并"></a>自底向上的归并</h4><p>我们首先对数组实行两两归并（单个小数组大小为 1 ，归并后大数组大小为 2 ），四四归并（两个大小为 2 的小数组进行归并），八八归并，如此这般</p>
+<p>对于长度为 <span class="math inline">\(N\)</span>
+的数组，单次归并最多会访问 <span class="math inline">\(6N\)</span>
+次数组，整体会访问 <span class="math inline">\(6NlogN\)</span>
+次数组</p>
+<p>这个的证明很简单。在对 <code>aux</code> 数组进行复制时，有 <span class="math inline">\(N\)</span> 次数组读取和 <span class="math inline">\(N\)</span> 次数组写入，在对 <code>a</code>
+进行归并时，有 <span class="math inline">\(N\)</span> 次数组读取和 <span class="math inline">\(N\)</span> 次数组写入</p>
+<p>在比较方面，对长度为 <span class="math inline">\(N\)</span>
+的数组，对<strong>数的比较</strong>最多为 <span class="math inline">\(N/2\)</span> 次，但由于我们第二个 <code>for</code>
+有四次比较，因此比较的总次数为 <span class="math inline">\(2N\)</span></p>
+<p>总和就是 <span class="math inline">\(6N\)</span></p>
+<p>​</p>
+<h4 id="自底向上的归并">自底向上的归并</h4>
+<p>我们首先对数组实行两两归并（单个小数组大小为 1 ，归并后大数组大小为 2
+），四四归并（两个大小为 2 的小数组进行归并），八八归并，如此这般</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Merge</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">less</span><span class="hljs-params">(<span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> v &lt; w;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">exch</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> tmp = a[i];<br>		a[i] = a[j];<br>		a[j] = tmp;<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">sort</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a)</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> sz = <span class="hljs-number">1</span>; sz &lt; N; sz = sz + sz)<span class="hljs-comment">//小数组大小不能比N大</span><br>			<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> inx = <span class="hljs-number">0</span>; inx + sz &lt; N; inx += sz + sz)<span class="hljs-comment">//inx为数组开始下标，每次递增两个小数组的大小</span><br>				<span class="hljs-built_in">merge</span>(a, inx, inx + sz - <span class="hljs-number">1</span>, <span class="hljs-built_in">min</span>(inx + sz + sz - <span class="hljs-number">1</span>, N - <span class="hljs-number">1</span>));<span class="hljs-comment">//我们考虑的是数组下标，因此需要减1</span><br>	&#125;<br><br><br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> lo, <span class="hljs-type">int</span> mid, <span class="hljs-type">int</span> hi)</span><span class="hljs-comment">//[lo, mid], [mid+1, hi]</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-type">int</span> N = a.<span class="hljs-built_in">size</span>();<br>		aux.<span class="hljs-built_in">assign</span>(N, <span class="hljs-number">0</span>);<br>		<span class="hljs-type">int</span> i = lo, j = mid + <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>			aux[k] = a[k];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= hi; k++)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (i &gt; mid)<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (j &gt; hi)<br>				a[k] = aux[i++];<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">less</span>(aux[j], aux[i]))<br>				a[k] = aux[j++];<br>			<span class="hljs-keyword">else</span> a[k] = aux[i++];<br>		&#125;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">static</span> vector&lt;<span class="hljs-type">int</span>&gt;aux;<span class="hljs-comment">//辅助数组</span><br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p>无论是自顶向下还是自底向上，比较次数和数组访问次数都一样</p>
-<p>​	 </p>
-<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p>书中证明了所有基于<strong>比较</strong>的算法的比较次数的下限为 $\sim NlogN$ ，而归并排序只需要比较，不需要移动</p>
+<p>​</p>
+<h4 id="最后">最后</h4>
+<p>书中证明了所有基于<strong>比较</strong>的算法的比较次数的下限为 <span class="math inline">\(\sim NlogN\)</span>
+，而归并排序只需要比较，不需要移动</p>
 <p>所以归并排序是一种<strong>渐进最优的基于比较的算法</strong></p>
 
                 

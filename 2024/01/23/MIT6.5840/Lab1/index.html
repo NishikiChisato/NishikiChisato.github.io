@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Lab 1 Lab 1 Prerequisite Design Worker Actions Coordinator Actions Architecture   Implementation Coordinator Definition Request &amp; Response Message   Worker Map&#x2F;Reduce Task Main Function   Sum">
+    <meta name="description" content="Lab 1  Lab 1  Prerequisite Design  Worker Actions Coordinator Actions Architecture  Implementation  Coordinator  Definition Request &amp; Response Message  Worker  Map&#x2F;Reduce Task">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MIT6.5840 Lab1">
 <meta property="og:url" content="https://nishikichisato.github.io/2024/01/23/MIT6.5840/Lab1/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="Lab 1 Lab 1 Prerequisite Design Worker Actions Coordinator Actions Architecture   Implementation Coordinator Definition Request &amp; Response Message   Worker Map&#x2F;Reduce Task Main Function   Sum">
+<meta property="og:description" content="Lab 1  Lab 1  Prerequisite Design  Worker Actions Coordinator Actions Architecture  Implementation  Coordinator  Definition Request &amp; Response Message  Worker  Map&#x2F;Reduce Task">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/MIT6.5840/MIT6.5840%20(1).jpg">
 <meta property="article:published_time" content="2024-01-23T10:29:29.277Z">
@@ -346,126 +346,227 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Lab-1"><a href="#Lab-1" class="headerlink" title="Lab 1"></a>Lab 1</h1><ul>
-<li><a href="#lab-1">Lab 1</a><ul>
+                <h1 id="lab-1">Lab 1</h1>
+<ul>
+<li><a href="#lab-1">Lab 1</a>
+<ul>
 <li><a href="#prerequisite">Prerequisite</a></li>
-<li><a href="#design">Design</a><ul>
+<li><a href="#design">Design</a>
+<ul>
 <li><a href="#worker-actions">Worker Actions</a></li>
 <li><a href="#coordinator-actions">Coordinator Actions</a></li>
 <li><a href="#architecture">Architecture</a></li>
-</ul>
-</li>
-<li><a href="#implementation">Implementation</a><ul>
-<li><a href="#coordinator">Coordinator</a><ul>
+</ul></li>
+<li><a href="#implementation">Implementation</a>
+<ul>
+<li><a href="#coordinator">Coordinator</a>
+<ul>
 <li><a href="#definition">Definition</a></li>
-<li><a href="#request--response-message">Request &amp; Response Message</a></li>
-</ul>
-</li>
-<li><a href="#worker">Worker</a><ul>
-<li><a href="#mapreduce-task">Map&#x2F;Reduce Task</a></li>
+<li><a href="#request--response-message">Request &amp; Response
+Message</a></li>
+</ul></li>
+<li><a href="#worker">Worker</a>
+<ul>
+<li><a href="#mapreduce-task">Map/Reduce Task</a></li>
 <li><a href="#main-function">Main Function</a></li>
-</ul>
-</li>
+</ul></li>
 <li><a href="#summary">Summary</a></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Prerequisite"><a href="#Prerequisite" class="headerlink" title="Prerequisite"></a>Prerequisite</h2><p>在具体开始写代码之前需要先将官方提供的 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">实验文档</a> 全部认真看一遍，除此之外还需要详细理解 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf"><code>MapReduce</code></a> 的原理，否者这个实验无法进行下去</p>
-<p>这个实验的难点在于 <code>Master/Coordinator</code> 与 <code>Worker</code> 之间需要交流哪些信息以及 <code>Coordinator</code> 需要维护哪些信息。由于实验只给出了最基本的 <code>RPC</code> 调用示例，关于 <code>MapReduce</code> 的部分几乎没有代码，因此可以自由发挥的空间十分的大（<del>换句话说，也就是无从下手</del>）</p>
-<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h2><h3 id="Worker-Actions"><a href="#Worker-Actions" class="headerlink" title="Worker Actions"></a>Worker Actions</h3><p>对于 <code>Worker</code> 而言：</p>
+<h2 id="prerequisite">Prerequisite</h2>
+<p>在具体开始写代码之前需要先将官方提供的 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">实验文档</a>
+全部认真看一遍，除此之外还需要详细理解 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf"><code>MapReduce</code></a>
+的原理，否者这个实验无法进行下去</p>
+<p>这个实验的难点在于 <code>Master/Coordinator</code> 与
+<code>Worker</code> 之间需要交流哪些信息以及 <code>Coordinator</code>
+需要维护哪些信息。由于实验只给出了最基本的 <code>RPC</code>
+调用示例，关于 <code>MapReduce</code>
+的部分几乎没有代码，因此可以自由发挥的空间十分的大（<del>换句话说，也就是无从下手</del>）</p>
+<h2 id="design">Design</h2>
+<h3 id="worker-actions">Worker Actions</h3>
+<p>对于 <code>Worker</code> 而言：</p>
 <ul>
 <li>向 <code>Coordinator</code> 请求任务</li>
 <li>执行 <code>Map/Reduce Task</code> 或者处于空闲状态</li>
 <li>向 <code>Coordinator</code> 报告 <code>Task</code> 是否执行完毕</li>
 </ul>
-<p><code>Worker</code> 的行为有两种：请求任务和报告信息，因此 <code>Coordinator</code> 需要提供两个函数供 <code>Worker</code> 调用</p>
+<p><code>Worker</code> 的行为有两种：请求任务和报告信息，因此
+<code>Coordinator</code> 需要提供两个函数供 <code>Worker</code> 调用</p>
 <p>关于 <code>Map Task</code> 和 <code>Reduce Task</code>：</p>
 <ul>
 <li>由于本实验的输入文件全部给出，因此我们不需要按照论文当中说的对输入文件进行分割</li>
-<li><code>Coordinator</code> 通过将输入文件名发送给 <code>Worker</code>，之后 <code>Worker</code> 便可以读取该文件  </li>
-<li><code>Map Task</code> 的数量是固定的，就是输入文件数；而 <code>Reduce Task</code> 则可以由用户进行指定（在 <code>mrcoordinator.go</code> 中）</li>
-<li>假设 <code>Map Task</code> 的数量为 $X$，<code>Reduce Task</code> 的数量为 $Y$，那么会产生的中间文件个数为 $XY$，每个中间文件用 <code>mr-i-y</code> 表示（这里 <code>i</code> 表示 <code>Map Task</code> 的编号，<code>j</code> 表示 <code>Reduce Task</code> 的编号）</li>
-<li>对于编号为 $y$ 的 <code>Reduce Task</code> 而言，它需要读取所有 <code>mr-i-j</code> 的文件</li>
-<li>对于每个中间文件，我们可以使用 <code>os.CreateTemp</code> <strong>在当前路径</strong>创建临时文件，<strong>对文件写入完毕后</strong>使用 <code>os.Rename</code> 来对其进行原子重命名<ul>
-<li>在我最开始的实现中，我直接使用 <code>os.Create</code> 来创建一个新文件，然后对文件进行写入。但这种设计存在问题，因为如果两个不同的 <code>Worker</code> 执行同一个 <code>Map Task</code>，那么它们产生的中间文件就会同名，这时同一个文件就会被两个 <code>Worker</code> 进行写入</li>
-<li>而我们使用临时文件加原子重命名这种方式则可以避免这个问题，因为我们总是在文件写入完毕后对其重命名，因此哪怕有两个相同的 <code>Worker</code> 执行同一个 <code>Map Task</code>，最终的结果也只会生成一个文件，并且不存在两个 <code>Worker</code> 都向这个文件写入的情况</li>
-</ul>
+<li><code>Coordinator</code> 通过将输入文件名发送给
+<code>Worker</code>，之后 <code>Worker</code> 便可以读取该文件<br>
 </li>
-</ul>
-<h3 id="Coordinator-Actions"><a href="#Coordinator-Actions" class="headerlink" title="Coordinator Actions"></a>Coordinator Actions</h3><p>对于 <code>Coordinator</code> 而言：</p>
+<li><code>Map Task</code> 的数量是固定的，就是输入文件数；而
+<code>Reduce Task</code> 则可以由用户进行指定（在
+<code>mrcoordinator.go</code> 中）</li>
+<li>假设 <code>Map Task</code> 的数量为 <span class="math inline">\(X\)</span>，<code>Reduce Task</code> 的数量为
+<span class="math inline">\(Y\)</span>，那么会产生的中间文件个数为 <span class="math inline">\(XY\)</span>，每个中间文件用 <code>mr-i-y</code>
+表示（这里 <code>i</code> 表示 <code>Map Task</code>
+的编号，<code>j</code> 表示 <code>Reduce Task</code> 的编号）</li>
+<li>对于编号为 <span class="math inline">\(y\)</span> 的
+<code>Reduce Task</code> 而言，它需要读取所有 <code>mr-i-j</code>
+的文件</li>
+<li>对于每个中间文件，我们可以使用 <code>os.CreateTemp</code>
+<strong>在当前路径</strong>创建临时文件，<strong>对文件写入完毕后</strong>使用
+<code>os.Rename</code> 来对其进行原子重命名
 <ul>
-<li>响应 <code>Worker</code> 的请求，向其分配 <code>Task</code>，并记录信息</li>
+<li>在我最开始的实现中，我直接使用 <code>os.Create</code>
+来创建一个新文件，然后对文件进行写入。但这种设计存在问题，因为如果两个不同的
+<code>Worker</code> 执行同一个
+<code>Map Task</code>，那么它们产生的中间文件就会同名，这时同一个文件就会被两个
+<code>Worker</code> 进行写入</li>
+<li>而我们使用临时文件加原子重命名这种方式则可以避免这个问题，因为我们总是在文件写入完毕后对其重命名，因此哪怕有两个相同的
+<code>Worker</code> 执行同一个
+<code>Map Task</code>，最终的结果也只会生成一个文件，并且不存在两个
+<code>Worker</code> 都向这个文件写入的情况</li>
+</ul></li>
+</ul>
+<h3 id="coordinator-actions">Coordinator Actions</h3>
+<p>对于 <code>Coordinator</code> 而言：</p>
+<ul>
+<li>响应 <code>Worker</code> 的请求，向其分配
+<code>Task</code>，并记录信息</li>
 <li>对于超时的 <code>Task</code>，重新分配一遍</li>
 </ul>
-<p>由于我们采用 <code>RPC</code> 来实现通信，因此 <code>Worker</code> 通过<strong>不断调用（也就是轮询）</strong> <code>Coordinator</code> 暴露出来的函数来交流信息。由于这个过程中存在多个 <code>Worker</code> 同时执行函数，因此 <code>Coordinator</code> 需要加锁保护数据</p>
-<p>需要说明的是，<code>RPC</code> 所使用的消息的输入参数和回复参数当中的字段都需要大写，不然无法读取到正确的数据</p>
-<p><code>Coordinator</code> 需要记录每个 <code>Task</code> 的执行情况，对于那些超时未完成的 <code>Task</code>，需要重新分配一遍</p>
+<p>由于我们采用 <code>RPC</code> 来实现通信，因此 <code>Worker</code>
+通过<strong>不断调用（也就是轮询）</strong> <code>Coordinator</code>
+暴露出来的函数来交流信息。由于这个过程中存在多个 <code>Worker</code>
+同时执行函数，因此 <code>Coordinator</code> 需要加锁保护数据</p>
+<p>需要说明的是，<code>RPC</code>
+所使用的消息的输入参数和回复参数当中的字段都需要大写，不然无法读取到正确的数据</p>
+<p><code>Coordinator</code> 需要记录每个 <code>Task</code>
+的执行情况，对于那些超时未完成的 <code>Task</code>，需要重新分配一遍</p>
 <ul>
-<li>在我的设计中，<code>Worker</code> 每隔 <code>5</code> 秒向 <code>Coordinator</code> 报告一次执行情况用于更新 <code>Task</code> 的时间戳</li>
-<li>如果 <code>Coordinator</code> 发现某个 <code>Task</code> 的时间戳于当前时间戳超过 <code>10</code> 秒，那么认为原先执行该 <code>Task</code> 的 <code>Worker</code> 已经 <code>Crash</code>，直接重新分配该任务</li>
+<li>在我的设计中，<code>Worker</code> 每隔 <code>5</code> 秒向
+<code>Coordinator</code> 报告一次执行情况用于更新 <code>Task</code>
+的时间戳</li>
+<li>如果 <code>Coordinator</code> 发现某个 <code>Task</code>
+的时间戳于当前时间戳超过 <code>10</code> 秒，那么认为原先执行该
+<code>Task</code> 的 <code>Worker</code> 已经
+<code>Crash</code>，直接重新分配该任务</li>
 </ul>
-<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>最后给出整体的框架图：</p>
+<h3 id="architecture">Architecture</h3>
+<p>最后给出整体的框架图：</p>
 <p>实现代码：<a target="_blank" rel="noopener" href="https://github.com/NishikiChisato/MIT6.5840">Code</a></p>
-<p><img src="Lab1.png" srcset="/img/loading.gif" lazyload alt="Lab1"></p>
-<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>这里给出详细的实现细节</p>
-<h3 id="Coordinator"><a href="#Coordinator" class="headerlink" title="Coordinator"></a>Coordinator</h3><h4 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h4><p>我们首先需要定义一些常量用于表示 <code>Task</code> 的状态和类型</p>
+<figure>
+<img src="Lab1.png" srcset="/img/loading.gif" lazyload alt="Lab1">
+<figcaption aria-hidden="true">Lab1</figcaption>
+</figure>
+<h2 id="implementation">Implementation</h2>
+<p>这里给出详细的实现细节</p>
+<h3 id="coordinator">Coordinator</h3>
+<h4 id="definition">Definition</h4>
+<p>我们首先需要定义一些常量用于表示 <code>Task</code> 的状态和类型</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TaskStatus <span class="hljs-type">int</span><br><span class="hljs-keyword">type</span> TaskType <span class="hljs-type">int</span><br><br><span class="hljs-keyword">const</span> (<br>	<span class="hljs-comment">// Task status</span><br>	NotStart TaskStatus = <span class="hljs-literal">iota</span><br>	InProgress<br>	Completed<br>)<br><br><span class="hljs-keyword">const</span> (<br>	<span class="hljs-comment">// Task type</span><br>	NotAssigned TaskType = <span class="hljs-literal">iota</span><br>	MapType<br>	ReduceType<br>)<br><br></code></pre></td></tr></table></figure>
-
-<p><code>Coordinator</code> 并不需要记录每个 <code>Worker</code> 的状态，因为 <code>Worker</code> 仅仅是用于执行不同的任务。如果某个 <code>Worker</code> 崩溃了，那么我们只需要重新分配这个 <code>Task</code> 给那些可以工作的 <code>Worker</code> 执行就好（<del>超时重传的机制可以解决一切问题</del>）</p>
-<p><code>Task Type</code> 并不是只有 <code>Map</code> 和 <code>Reduce</code>，这是因为一个 <code>Worker</code> 可以处于空闲状态，也就是即不执行 <code>Map</code> 也不执行 <code>Reduce</code>，我们需要用 <code>NotAssigned</code> 来进行标识</p>
-<p>我们需要记录 <code>Map Task</code> 和 <code>Reduce Task</code> 的信息，定义如下：</p>
+<p><code>Coordinator</code> 并不需要记录每个 <code>Worker</code>
+的状态，因为 <code>Worker</code> 仅仅是用于执行不同的任务。如果某个
+<code>Worker</code> 崩溃了，那么我们只需要重新分配这个 <code>Task</code>
+给那些可以工作的 <code>Worker</code>
+执行就好（<del>超时重传的机制可以解决一切问题</del>）</p>
+<p><code>Task Type</code> 并不是只有 <code>Map</code> 和
+<code>Reduce</code>，这是因为一个 <code>Worker</code>
+可以处于空闲状态，也就是即不执行 <code>Map</code> 也不执行
+<code>Reduce</code>，我们需要用 <code>NotAssigned</code> 来进行标识</p>
+<p>我们需要记录 <code>Map Task</code> 和 <code>Reduce Task</code>
+的信息，定义如下：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MapInfo <span class="hljs-keyword">struct</span> &#123;<br>	<span class="hljs-comment">// in this lab, we don&#x27;t need to transport file content to worker.</span><br>	<span class="hljs-comment">// worker read exact file by using its file name.</span><br>	<span class="hljs-comment">// the number of map task is equal to the number of input file</span><br>	<span class="hljs-comment">// the number of reduce task is determined by user</span><br>	File_name_ <span class="hljs-type">string</span><br>	Task_id_   <span class="hljs-type">int</span><br>	Status_    TaskStatus<br>	Type_      TaskType<br>	Timestamp_ time.Time <span class="hljs-comment">// timestamp for re-assign</span><br>&#125;<br><br><span class="hljs-keyword">type</span> ReduceInfo <span class="hljs-keyword">struct</span> &#123;<br>	Task_id_   <span class="hljs-type">int</span><br>	Status_    TaskStatus<br>	Type_      TaskType<br>	Timestamp_ time.Time <span class="hljs-comment">// timestamp for re-assign</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>如前文所述，<code>Map Task</code> 中只需要记录输入的文件名即可，并不需要将文件的内容也包含在内</p>
+<p>如前文所述，<code>Map Task</code>
+中只需要记录输入的文件名即可，并不需要将文件的内容也包含在内</p>
 <p><code>Coordinator</code> 的定义如下：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Coordinator <span class="hljs-keyword">struct</span> &#123;<br>	<span class="hljs-comment">// Your definitions here.</span><br>	map_queue_    []*MapInfo<br>	reduce_queue_ []*ReduceInfo<br>	latch_        sync.Mutex <span class="hljs-comment">// mutex for concurrency</span><br>	nReduce_      <span class="hljs-type">int</span><br>	nMap_         <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>由于存在并发问题，我们需要使用 <code>Mutex</code> 来保护共享变量。实际上更加 <code>go style</code> 的方式是用 <code>channal</code>，但我还是习惯去用 <code>lock</code></p>
-<h4 id="Request-amp-Response-Message"><a href="#Request-amp-Response-Message" class="headerlink" title="Request &amp; Response Message"></a>Request &amp; Response Message</h4><p><code>Worker</code> 需要向 <code>Coordinator</code> 请求任务以及向 <code>Coordinator</code> 报告任务执行情况，这分别通过调用 <code>HandleRequest</code> 和 <code>HandleRespond</code> 来实现</p>
+<p>由于存在并发问题，我们需要使用 <code>Mutex</code>
+来保护共享变量。实际上更加 <code>go style</code> 的方式是用
+<code>channal</code>，但我还是习惯去用 <code>lock</code></p>
+<h4 id="request-response-message">Request &amp; Response Message</h4>
+<p><code>Worker</code> 需要向 <code>Coordinator</code> 请求任务以及向
+<code>Coordinator</code> 报告任务执行情况，这分别通过调用
+<code>HandleRequest</code> 和 <code>HandleRespond</code> 来实现</p>
 <p>我们需要定义如下 <code>RPC</code> 的输入参数以及返回值</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> RequestArgs <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br><span class="hljs-keyword">type</span> RequestReply <span class="hljs-keyword">struct</span> &#123;<br>	NMap_        <span class="hljs-type">int</span><br>	NReduce_     <span class="hljs-type">int</span><br>	Task_type_   TaskType<br>	Map_task_    MapInfo<br>	Reduce_task_ ReduceInfo<br>&#125;<br><br><span class="hljs-keyword">type</span> ResponseArgs <span class="hljs-keyword">struct</span> &#123;<br>	Task_types   TaskType<br>	Map_task_    MapInfo<br>	Reduce_task_ ReduceInfo<br>&#125;<br><br><span class="hljs-keyword">type</span> ResponseReply <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>由于 <code>Request</code> 消息用于请求任务，因此必须包含 <code>MapInfo</code> 和 <code>ReduceInfo</code> 以及用于标识当前任务的类型</p>
-<p><code>Worker</code> 向 <code>Coordinator</code> 报告任务执行情况时同样需要包含上面这三个变量，而任务的执行情况则在 <code>MapInfo</code> 和 <code>ReduceInfo</code> 中</p>
+<p>由于 <code>Request</code> 消息用于请求任务，因此必须包含
+<code>MapInfo</code> 和 <code>ReduceInfo</code>
+以及用于标识当前任务的类型</p>
+<p><code>Worker</code> 向 <code>Coordinator</code>
+报告任务执行情况时同样需要包含上面这三个变量，而任务的执行情况则在
+<code>MapInfo</code> 和 <code>ReduceInfo</code> 中</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Coordinator)</span></span> HandleRequest(args *RequestArgs, reply *RequestReply) <span class="hljs-type">error</span> &#123;<br>	<span class="hljs-comment">//fmt.Println(&quot;Coordinator HandleRequest Call&quot;)</span><br>	c.latch_.Lock()<br>	<span class="hljs-keyword">for</span> i, e := <span class="hljs-keyword">range</span> c.map_queue_ &#123;<br>		<span class="hljs-comment">//fmt.Printf(&quot;[map]: idx: %v\n&quot;, i)</span><br>		<span class="hljs-keyword">if</span> (e.Status_ == NotStart) || (e.Status_ == InProgress &amp;&amp; time.Since(c.map_queue_[i].Timestamp_) &gt; time.Second*<span class="hljs-number">10</span>) &#123;<br>			c.map_queue_[i].Timestamp_ = time.Now()<br>			c.map_queue_[i].Status_ = InProgress<br>			reply.Map_task_ = *c.map_queue_[i]<br>			reply.Task_type_ = MapType<br>			reply.NMap_ = c.nMap_<br>			reply.NReduce_ = c.nReduce_<br>			c.latch_.Unlock()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">for</span> i, e := <span class="hljs-keyword">range</span> c.reduce_queue_ &#123;<br>		<span class="hljs-comment">//fmt.Printf(&quot;[reduce]: idx: %v\n&quot;, i)</span><br>		<span class="hljs-keyword">if</span> (e.Status_ == NotStart) || (e.Status_ == InProgress &amp;&amp; time.Since(c.reduce_queue_[i].Timestamp_) &gt; time.Second*<span class="hljs-number">10</span>) &#123;<br>			c.reduce_queue_[i].Timestamp_ = time.Now()<br>			c.reduce_queue_[i].Status_ = InProgress<br>			reply.Reduce_task_ = *c.reduce_queue_[i]<br>			reply.Task_type_ = ReduceType<br>			reply.NMap_ = c.nMap_<br>			reply.NReduce_ = c.nReduce_<br>			c.latch_.Unlock()<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-comment">// don&#x27;t have task to assign</span><br>	reply.Task_type_ = NotAssigned<br>	c.latch_.Unlock()<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>对于所有未分配的 <code>Task</code>，其状态都是 <code>NotStart</code>，一旦分配则将其修改为 <code>InProgress</code>。除非该 <code>Task</code> 完成，否则一直都是 <code>InProgress</code></p>
-<p>在分配 <code>Task</code> 后，我们需要设置该 <code>Task</code> 的时间戳，用于超时重传</p>
+<p>对于所有未分配的 <code>Task</code>，其状态都是
+<code>NotStart</code>，一旦分配则将其修改为
+<code>InProgress</code>。除非该 <code>Task</code> 完成，否则一直都是
+<code>InProgress</code></p>
+<p>在分配 <code>Task</code> 后，我们需要设置该 <code>Task</code>
+的时间戳，用于超时重传</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Coordinator)</span></span> HandleResponse(args *ResponseArgs, reply *ResponseReply) <span class="hljs-type">error</span> &#123;<br>	<span class="hljs-comment">//fmt.Println(&quot;Coordinator HandleRespond Call&quot;)</span><br>	c.latch_.Lock()<br>	<span class="hljs-keyword">if</span> args.Task_types == MapType &#123;<br>		c.map_queue_[args.Map_task_.Task_id_].Timestamp_ = time.Now()<br>		<span class="hljs-keyword">if</span> args.Map_task_.Status_ == Completed &#123;<br>			c.map_queue_[args.Map_task_.Task_id_].Status_ = Completed<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span> args.Task_types == ReduceType &#123;<br>		c.reduce_queue_[args.Reduce_task_.Task_id_].Timestamp_ = time.Now()<br>		<span class="hljs-keyword">if</span> args.Reduce_task_.Status_ == Completed &#123;<br>			c.reduce_queue_[args.Reduce_task_.Task_id_].Status_ = Completed<br>		&#125;<br>	&#125;<br>	c.latch_.Unlock()<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>而对于 <code>Worker</code> 报告的信息，<code>Coordinator</code> 每接收到都需要重新设置该 <code>Task</code> 的时间戳，用于表示执行该 <code>Task</code> 的 <code>Worker</code> 没有崩溃。而如果该 <code>Task</code> 执行完毕，那么将其状态修改为 <code>Completed</code></p>
-<h3 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h3><p>相比之下，<code>Worker</code> 这边的代码稍显复杂</p>
+<p>而对于 <code>Worker</code> 报告的信息，<code>Coordinator</code>
+每接收到都需要重新设置该 <code>Task</code> 的时间戳，用于表示执行该
+<code>Task</code> 的 <code>Worker</code> 没有崩溃。而如果该
+<code>Task</code> 执行完毕，那么将其状态修改为
+<code>Completed</code></p>
+<h3 id="worker">Worker</h3>
+<p>相比之下，<code>Worker</code> 这边的代码稍显复杂</p>
 <p><code>Worker</code> 的行为有：</p>
 <ul>
 <li>执行 <code>Map/Reduce Task</code></li>
 <li>报告 <code>Task</code> 的执行情况</li>
 </ul>
 <p>我们先给出执行 <code>Map/Reduce Task</code> 的代码</p>
-<h4 id="Map-x2F-Reduce-Task"><a href="#Map-x2F-Reduce-Task" class="headerlink" title="Map&#x2F;Reduce Task"></a>Map&#x2F;Reduce Task</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MapFunction</span><span class="hljs-params">(req *RequestReply, mapf <span class="hljs-keyword">func</span>(<span class="hljs-type">string</span>, <span class="hljs-type">string</span>)</span></span> []KeyValue) <span class="hljs-type">bool</span> &#123;<br>	file, err := os.Open(req.Map_task_.File_name_)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-comment">//log.Fatalf(&quot;cannot open %v\n&quot;, req.Map_task_.File_name_)</span><br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>	&#125;<br>	content, err := ioutil.ReadAll(file)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-comment">//log.Fatalf(&quot;cannot read %v\n&quot;, req.Map_task_.File_name_)</span><br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>	&#125;<br>	file.Close()<br>	kva := mapf(req.Map_task_.File_name_, <span class="hljs-type">string</span>(content))<br>	groups := <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>][]KeyValue&#123;&#125;<br>	<span class="hljs-keyword">for</span> _, kv := <span class="hljs-keyword">range</span> kva &#123;<br>		groups[ihash(kv.Key)%req.NReduce_] = <span class="hljs-built_in">append</span>(groups[ihash(kv.Key)%req.NReduce_], kv)<br>	&#125;<br>	<span class="hljs-comment">// create tmp file list and encoder list</span><br>	tfile_list := []*os.File&#123;&#125;<br>	enc_list := []*json.Encoder&#123;&#125;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; req.NReduce_; i++ &#123;<br>		<span class="hljs-comment">//tfile, _ := os.Create(tfilename)</span><br>		tfile, _ := os.CreateTemp(<span class="hljs-string">&quot;./&quot;</span>, <span class="hljs-string">&quot;tmp-mr-&quot;</span>)<br>		<span class="hljs-keyword">defer</span> tfile.Close()<br>		tfile_list = <span class="hljs-built_in">append</span>(tfile_list, tfile)<br>		enc_list = <span class="hljs-built_in">append</span>(enc_list, json.NewEncoder(tfile))<br>	&#125;<br><br>	<span class="hljs-comment">// encode</span><br>	<span class="hljs-keyword">for</span> idx, vals := <span class="hljs-keyword">range</span> groups &#123;<br>		enc := enc_list[idx]<br>		<span class="hljs-keyword">for</span> _, kv := <span class="hljs-keyword">range</span> vals &#123;<br>			err := enc.Encode(&amp;kv)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-comment">//log.Fatalf(&quot;encode error: [file name]: %v\n&quot;, tfile_list[idx])</span><br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; req.NReduce_; i++ &#123;<br>		tfilename := fmt.Sprintf(<span class="hljs-string">&quot;mr-%d-%d&quot;</span>, req.Map_task_.Task_id_, i)<br>		<span class="hljs-keyword">if</span> err := os.Rename(tfile_list[i].Name(), tfilename); err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>关于 <code>mapf</code> 的调用可以从 <code>mrsequential.go</code> 中偷代码，我们重点需要关注以下几点：</p>
+<h4 id="mapreduce-task">Map/Reduce Task</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MapFunction</span><span class="hljs-params">(req *RequestReply, mapf <span class="hljs-keyword">func</span>(<span class="hljs-type">string</span>, <span class="hljs-type">string</span>)</span></span> []KeyValue) <span class="hljs-type">bool</span> &#123;<br>	file, err := os.Open(req.Map_task_.File_name_)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-comment">//log.Fatalf(&quot;cannot open %v\n&quot;, req.Map_task_.File_name_)</span><br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>	&#125;<br>	content, err := ioutil.ReadAll(file)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-comment">//log.Fatalf(&quot;cannot read %v\n&quot;, req.Map_task_.File_name_)</span><br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>	&#125;<br>	file.Close()<br>	kva := mapf(req.Map_task_.File_name_, <span class="hljs-type">string</span>(content))<br>	groups := <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>][]KeyValue&#123;&#125;<br>	<span class="hljs-keyword">for</span> _, kv := <span class="hljs-keyword">range</span> kva &#123;<br>		groups[ihash(kv.Key)%req.NReduce_] = <span class="hljs-built_in">append</span>(groups[ihash(kv.Key)%req.NReduce_], kv)<br>	&#125;<br>	<span class="hljs-comment">// create tmp file list and encoder list</span><br>	tfile_list := []*os.File&#123;&#125;<br>	enc_list := []*json.Encoder&#123;&#125;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; req.NReduce_; i++ &#123;<br>		<span class="hljs-comment">//tfile, _ := os.Create(tfilename)</span><br>		tfile, _ := os.CreateTemp(<span class="hljs-string">&quot;./&quot;</span>, <span class="hljs-string">&quot;tmp-mr-&quot;</span>)<br>		<span class="hljs-keyword">defer</span> tfile.Close()<br>		tfile_list = <span class="hljs-built_in">append</span>(tfile_list, tfile)<br>		enc_list = <span class="hljs-built_in">append</span>(enc_list, json.NewEncoder(tfile))<br>	&#125;<br><br>	<span class="hljs-comment">// encode</span><br>	<span class="hljs-keyword">for</span> idx, vals := <span class="hljs-keyword">range</span> groups &#123;<br>		enc := enc_list[idx]<br>		<span class="hljs-keyword">for</span> _, kv := <span class="hljs-keyword">range</span> vals &#123;<br>			err := enc.Encode(&amp;kv)<br>			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-comment">//log.Fatalf(&quot;encode error: [file name]: %v\n&quot;, tfile_list[idx])</span><br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>			&#125;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; req.NReduce_; i++ &#123;<br>		tfilename := fmt.Sprintf(<span class="hljs-string">&quot;mr-%d-%d&quot;</span>, req.Map_task_.Task_id_, i)<br>		<span class="hljs-keyword">if</span> err := os.Rename(tfile_list[i].Name(), tfilename); err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>关于 <code>mapf</code> 的调用可以从 <code>mrsequential.go</code>
+中偷代码，我们重点需要关注以下几点：</p>
 <ul>
-<li>对 <code>mapf</code> 调用完毕后，我们得到的是 <code>[]KeyValue</code>。我们需要对该数组中的元素分配到 <code>nReduce</code> 个 <code>bucket</code> 中，这里我们使用 <code>map</code> 来解决</li>
-<li>该函数返回值表示 <code>Map Task</code> 是否成功执行，<code>true</code> 为执行成功，<code>false</code> 为执行失败</li>
-<li>在使用 <code>os.CreateTemp</code> 时，第一个参数用于表示临时文件的路径。由于我们在当前文件夹创建临时文件，因此为 <code>&quot;./&quot;</code></li>
-<li>创建文件的格式为 <code>json</code>，这里在官方的文档中有简易的教程</li>
+<li>对 <code>mapf</code> 调用完毕后，我们得到的是
+<code>[]KeyValue</code>。我们需要对该数组中的元素分配到
+<code>nReduce</code> 个 <code>bucket</code> 中，这里我们使用
+<code>map</code> 来解决</li>
+<li>该函数返回值表示 <code>Map Task</code>
+是否成功执行，<code>true</code> 为执行成功，<code>false</code>
+为执行失败</li>
+<li>在使用 <code>os.CreateTemp</code>
+时，第一个参数用于表示临时文件的路径。由于我们在当前文件夹创建临时文件，因此为
+<code>"./"</code></li>
+<li>创建文件的格式为
+<code>json</code>，这里在官方的文档中有简易的教程</li>
 </ul>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ReduceFunction</span><span class="hljs-params">(req *RequestReply, reducef <span class="hljs-keyword">func</span>(<span class="hljs-type">string</span>, []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span>) <span class="hljs-type">bool</span> &#123;<br>	kva := []KeyValue&#123;&#125;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; req.NMap_; i++ &#123;<br>		ifilename := fmt.Sprintf(<span class="hljs-string">&quot;mr-%d-%d&quot;</span>, i, req.Reduce_task_.Task_id_)<br>		ifile, err := os.Open(ifilename)<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">//log.Fatalf(&quot;cannot open %v\n&quot;, ifilename)</span><br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>		&#125;<br>		dec := json.NewDecoder(ifile)<br>		<span class="hljs-keyword">for</span> &#123;<br>			<span class="hljs-keyword">var</span> kv KeyValue<br>			<span class="hljs-keyword">if</span> err := dec.Decode(&amp;kv); err != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-keyword">break</span><br>			&#125;<br>			kva = <span class="hljs-built_in">append</span>(kva, kv)<br>		&#125;<br>	&#125;<br>	sort.Sort(ByKey(kva))<br>	ofilename := fmt.Sprintf(<span class="hljs-string">&quot;mr-out-%d&quot;</span>, req.Reduce_task_.Task_id_)<br>	ofile, _ := os.Create(ofilename)<br>	<span class="hljs-keyword">defer</span> ofile.Close()<br><br>	i := <span class="hljs-number">0</span><br>	<span class="hljs-keyword">for</span> i &lt; <span class="hljs-built_in">len</span>(kva) &#123;<br>		j := i + <span class="hljs-number">1</span><br>		<span class="hljs-keyword">for</span> j &lt; <span class="hljs-built_in">len</span>(kva) &amp;&amp; kva[j].Key == kva[i].Key &#123;<br>			j++<br>		&#125;<br>		values := []<span class="hljs-type">string</span>&#123;&#125;<br>		<span class="hljs-keyword">for</span> k := i; k &lt; j; k++ &#123;<br>			values = <span class="hljs-built_in">append</span>(values, kva[k].Value)<br>		&#125;<br>		output := reducef(kva[i].Key, values)<br><br>		<span class="hljs-comment">// this is the correct format for each line of Reduce output.</span><br>		fmt.Fprintf(ofile, <span class="hljs-string">&quot;%v %v\n&quot;</span>, kva[i].Key, output)<br><br>		i = j<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><code>Reduce Task</code> 的执行需要先从中间文件中读取数据。由于每个 <code>Map Task</code> 都会产生 <code>nReduce</code> 个 <code>bucket</code>，因此 <code>Reduce Task</code> 需要从<strong>每个 <code>Map Task</code> 所产生的中间文件读取对应编号的文件</strong></p>
-<p>全部读取完毕后，需要对其<strong>进行排序</strong>。往后的代码就是复制 <code>mrsequential.go</code> 中的了</p>
-<h4 id="Main-Function"><a href="#Main-Function" class="headerlink" title="Main Function"></a>Main Function</h4><p>我们直接给出 <code>Worker</code> 的主要代码，其中 <code>CallRequest</code> 和 <code>CallResponse</code> 都是一个封装函数，用于调用 <code>RPC</code></p>
+<p><code>Reduce Task</code> 的执行需要先从中间文件中读取数据。由于每个
+<code>Map Task</code> 都会产生 <code>nReduce</code> 个
+<code>bucket</code>，因此 <code>Reduce Task</code> 需要从<strong>每个
+<code>Map Task</code> 所产生的中间文件读取对应编号的文件</strong></p>
+<p>全部读取完毕后，需要对其<strong>进行排序</strong>。往后的代码就是复制
+<code>mrsequential.go</code> 中的了</p>
+<h4 id="main-function">Main Function</h4>
+<p>我们直接给出 <code>Worker</code> 的主要代码，其中
+<code>CallRequest</code> 和 <code>CallResponse</code>
+都是一个封装函数，用于调用 <code>RPC</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Worker</span><span class="hljs-params">(mapf <span class="hljs-keyword">func</span>(<span class="hljs-type">string</span>, <span class="hljs-type">string</span>)</span></span> []KeyValue, reducef <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">string</span>, []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span>) &#123;<br><br>	<span class="hljs-comment">// Your worker implementation here.</span><br><br>	<span class="hljs-comment">// uncomment to send the Example RPC to the coordinator.</span><br>	<span class="hljs-comment">// CallExample()</span><br><br>	<span class="hljs-keyword">var</span> cur_task_type TaskType = NotAssigned<br>	<span class="hljs-keyword">var</span> success_call atomic.Value<br>	success_call.Store(<span class="hljs-literal">false</span>)<br>	<span class="hljs-keyword">for</span> &#123;<br>		req := CallRequest()<br>		cur_task_type = req.Task_type_<br>		<span class="hljs-keyword">switch</span> cur_task_type &#123;<br>		<span class="hljs-keyword">case</span> NotAssigned:<br>			time.Sleep(time.Second)<br>		<span class="hljs-keyword">case</span> MapType:<br>			<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>				<span class="hljs-keyword">for</span> success_call.CompareAndSwap(<span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>) &#123;<br>					nor_rsp := ResponseArgs&#123;&#125;<br>					nor_rsp.Task_types = cur_task_type<br>					nor_rsp.Map_task_ = MapInfo&#123;File_name_: req.Map_task_.File_name_,<br>						Task_id_: req.Map_task_.Task_id_,<br>						Status_:  InProgress,<br>						Type_:    req.Map_task_.Type_&#125;<br>					CallResponse(&amp;nor_rsp)<br>					time.Sleep(<span class="hljs-number">5</span> * time.Second)<br>				&#125;<br>			&#125;()<br>			success_call.Store(MapFunction(&amp;req, mapf))<br>		<span class="hljs-keyword">case</span> ReduceType:<br>			<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>				<span class="hljs-keyword">for</span> success_call.CompareAndSwap(<span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>) &#123;<br>					nor_rsp := ResponseArgs&#123;&#125;<br>					nor_rsp.Task_types = cur_task_type<br>					nor_rsp.Reduce_task_ = ReduceInfo&#123;Task_id_: req.Reduce_task_.Task_id_,<br>						Status_: InProgress,<br>						Type_:   req.Reduce_task_.Type_&#125;<br>					CallResponse(&amp;nor_rsp)<br>					time.Sleep(<span class="hljs-number">5</span> * time.Second)<br>				&#125;<br>			&#125;()<br>			success_call.Store(ReduceFunction(&amp;req, reducef))<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> cur_task_type != NotAssigned &amp;&amp; success_call.CompareAndSwap(<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>) &#123;<br>			rsp_args := ResponseArgs&#123;&#125;<br>			rsp_args.Task_types = cur_task_type<br>			<span class="hljs-keyword">switch</span> cur_task_type &#123;<br>			<span class="hljs-keyword">case</span> MapType:<br>				rsp_args.Map_task_ = MapInfo&#123;File_name_: req.Map_task_.File_name_,<br>					Task_id_: req.Map_task_.Task_id_,<br>					Status_:  Completed,<br>					Type_:    req.Map_task_.Type_&#125;<br>				CallResponse(&amp;rsp_args)<br>			<span class="hljs-keyword">case</span> ReduceType:<br>				rsp_args.Reduce_task_ = ReduceInfo&#123;Task_id_: req.Reduce_task_.Task_id_,<br>					Status_: Completed,<br>					Type_:   req.Reduce_task_.Type_&#125;<br>				CallResponse(&amp;rsp_args)<br>			&#125;<br>		&#125;<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>唯一需要注意的是在执行具体的 <code>Map/Reduce Task</code> 之前，我们需要先创建一个 <code>goroutine</code> 来定时向 <code>Coordinator</code> 联系，每隔 <code>5</code> 秒发送一次信息，用于避免因 <code>Worker</code> 执行任务耗时太长导致 <code>Coordinator</code> 误以为该 <code>Worker</code> 已经崩溃而重新分配该 <code>Task</code></p>
-<p>一旦 <code>Map/Reduce Task</code> 执行完毕，那么这个 <code>goroutine</code> 也需要停止发送信息。为了保证不出现 <code>race condition</code>，我使用的 <code>atomic.Value</code> 来存储 <code>bool</code> 来实现这一点（这里是一个线程只会写入该变量，另一个线程只会读取该变量，会出现 <code>unrepeatable read</code>）</p>
-<p><code>Store</code> 用于原子地存储值到 <code>atomic.Value</code> 中，而 <code>CompareAndSwap</code> 则用于原子地测试与交换数值，这等价于下面的代码：</p>
+<p>唯一需要注意的是在执行具体的 <code>Map/Reduce Task</code>
+之前，我们需要先创建一个 <code>goroutine</code> 来定时向
+<code>Coordinator</code> 联系，每隔 <code>5</code>
+秒发送一次信息，用于避免因 <code>Worker</code> 执行任务耗时太长导致
+<code>Coordinator</code> 误以为该 <code>Worker</code>
+已经崩溃而重新分配该 <code>Task</code></p>
+<p>一旦 <code>Map/Reduce Task</code> 执行完毕，那么这个
+<code>goroutine</code> 也需要停止发送信息。为了保证不出现
+<code>race condition</code>，我使用的 <code>atomic.Value</code> 来存储
+<code>bool</code>
+来实现这一点（这里是一个线程只会写入该变量，另一个线程只会读取该变量，会出现
+<code>unrepeatable read</code>）</p>
+<p><code>Store</code> 用于原子地存储值到 <code>atomic.Value</code>
+中，而 <code>CompareAndSwap</code>
+则用于原子地测试与交换数值，这等价于下面的代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">CompareAndSwap</span><span class="hljs-params">(<span class="hljs-type">void</span>* old, <span class="hljs-type">void</span>* <span class="hljs-keyword">new</span>)</span> </span>&#123;<br>  <span class="hljs-keyword">if</span>(*addr == *old) &#123;<br>    *addr = *<span class="hljs-keyword">new</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这里我们同样可以使用 <code>lock</code> 来实现，只需要额外定义一个 <code>Mutex</code> 即可 </p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>第一个实验难度并不算大，只需要把论文当中的的原理理解了就行，难点在于设计 <code>Worker</code> 和 <code>Coordinator</code> 之间的通信。这个实验给我最大的感受就是自由发挥的空间十分的大，官方只给了最基本的框架代码，关于 <code>MR</code> 的部分全靠自己设计，让我有一种自己独立将论文当中的内容给实现出来的成就感</p>
+<p>这里我们同样可以使用 <code>lock</code> 来实现，只需要额外定义一个
+<code>Mutex</code> 即可</p>
+<h3 id="summary">Summary</h3>
+<p>第一个实验难度并不算大，只需要把论文当中的的原理理解了就行，难点在于设计
+<code>Worker</code> 和 <code>Coordinator</code>
+之间的通信。这个实验给我最大的感受就是自由发挥的空间十分的大，官方只给了最基本的框架代码，关于
+<code>MR</code>
+的部分全靠自己设计，让我有一种自己独立将论文当中的内容给实现出来的成就感</p>
 
                 
               </div>

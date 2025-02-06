@@ -18,12 +18,12 @@
   <meta name="author" content="Nishiki Chisato">
   <meta name="keywords" content="">
   
-    <meta name="description" content="[Skynet] Understanding malloc hook  [Skynet] Understanding malloc hook Intro Description Conclusion Example    IntroWhen I first encoutered skynet_malloc.h in skynet’s source code, I was much confused">
+    <meta name="description" content="[Skynet] Understanding malloc hook   [Skynet] Understanding malloc hook  Intro Description Conclusion Example    Intro When I first encoutered skynet_malloc.h in skynet&#39;s source code, I">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Malloc hook in Skynet">
 <meta property="og:url" content="https://nishikichisato.github.io/2025/02/06/Skynet/malloc_hook/index.html">
 <meta property="og:site_name" content="Nishiki Chisato&#39;s Blog">
-<meta property="og:description" content="[Skynet] Understanding malloc hook  [Skynet] Understanding malloc hook Intro Description Conclusion Example    IntroWhen I first encoutered skynet_malloc.h in skynet’s source code, I was much confused">
+<meta property="og:description" content="[Skynet] Understanding malloc hook   [Skynet] Understanding malloc hook  Intro Description Conclusion Example    Intro When I first encoutered skynet_malloc.h in skynet&#39;s source code, I">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://nishikichisato.github.io/img/Skynet/Skynet%20(1).png">
 <meta property="article:published_time" content="2025-02-06T11:43:17.199Z">
@@ -338,7 +338,7 @@
               <p class="note note-info">
                 
                   
-                    Last updated on 5 minutes ago
+                    Last updated on 7 minutes ago
                   
                 
               </p>
@@ -346,74 +346,124 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Skynet-Understanding-malloc-hook"><a href="#Skynet-Understanding-malloc-hook" class="headerlink" title="[Skynet] Understanding malloc hook"></a>[Skynet] Understanding malloc hook</h1><!--toc:start-->
+                <h1 id="skynet-understanding-malloc-hook">[Skynet] Understanding malloc
+hook</h1>
+<!--toc:start-->
 <ul>
-<li><a href="#skynet-understanding-malloc-hook">[Skynet] Understanding malloc hook</a><ul>
+<li><a href="#skynet-understanding-malloc-hook">[Skynet] Understanding
+malloc hook</a>
+<ul>
 <li><a href="#intro">Intro</a></li>
 <li><a href="#description">Description</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#example">Example</a><!--toc:end--></li>
+<li><a href="#example">Example</a> <!--toc:end--></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When I first encoutered <code>skynet_malloc.h</code> in skynet’s source code, I was much confused by this design:</p>
+<h2 id="intro">Intro</h2>
+<p>When I first encoutered <code>skynet_malloc.h</code> in skynet's
+source code, I was much confused by this design:</p>
 <ul>
-<li>Why does the header both define marcos(e.g. <code>skynet_malloc</code>)and declarations(e.g. <code>void* skynet_malloc(size_t sz)</code>)?</li>
-<li>Why is there no <code>skynet_malloc.c</code> file to provide these definitions?</li>
+<li>Why does the header both define marcos(e.g.
+<code>skynet_malloc</code>)and declarations(e.g.
+<code>void* skynet_malloc(size_t sz)</code>)?</li>
+<li>Why is there no <code>skynet_malloc.c</code> file to provide these
+definitions?</li>
 </ul>
-<p>Additionally, while <code>malloc_hook.h</code> and <code>malloc_hook.c</code> form a compilation unit. <code>malloc_hook.h</code> does not declare <code>skynet_malloc</code>, instead, <code>malloc_hook.c</code> defines it.<br>If we just simply treat it as deplication, when we try to remove this function, although we can pass compilation safely, we cannot run skynet framework.</p>
-<p>In this article, I aim to provide a clear and understandable explanation of this design. This article is relatively short, as the concept may seem complex at first but is actually quite simple.</p>
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Let’s first example the content of <code>skynet_malloc.h</code></p>
+<p>Additionally, while <code>malloc_hook.h</code> and
+<code>malloc_hook.c</code> form a compilation unit.
+<code>malloc_hook.h</code> does not declare <code>skynet_malloc</code>,
+instead, <code>malloc_hook.c</code> defines it. If we just simply treat
+it as deplication, when we try to remove this function, although we can
+pass compilation safely, we cannot run skynet framework.</p>
+<p>In this article, I aim to provide a clear and understandable
+explanation of this design. This article is relatively short, as the
+concept may seem complex at first but is actually quite simple.</p>
+<h2 id="description">Description</h2>
+<p>Let's first example the content of <code>skynet_malloc.h</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_malloc malloc</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_calloc calloc</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_realloc realloc</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_free free</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_memalign memalign</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_aligned_alloc aligned_alloc</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> skynet_posix_memalign posix_memalign</span><br><br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> sz)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_calloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> nmemb,<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_realloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">skynet_free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>;<br><span class="hljs-type">char</span> * <span class="hljs-title function_">skynet_strdup</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *str)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_lalloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> osize, <span class="hljs-type">size_t</span> nsize)</span>;	<span class="hljs-comment">// use for lua</span><br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_memalign</span><span class="hljs-params">(<span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">skynet_aligned_alloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">skynet_posix_memalign</span><span class="hljs-params">(<span class="hljs-type">void</span> **memptr, <span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
-
-<p>As we know, marcos essentially perform a text replacement. So, when another source file includes this header, all instances of <code>skynet_malloc</code> will<br>be replaced by <code>malloc</code>. In other words, the content of <code>skynet_malloc.h</code> after preprocessor becomes:</p>
+<p>As we know, marcos essentially perform a text replacement. So, when
+another source file includes this header, all instances of
+<code>skynet_malloc</code> will be replaced by <code>malloc</code>. In
+other words, the content of <code>skynet_malloc.h</code> after
+preprocessor becomes:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> * <span class="hljs-title function_">malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> sz)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">calloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> nmemb,<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">realloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span>;<br><span class="hljs-type">char</span> * <span class="hljs-title function_">strdup</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *str)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">lalloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> osize, <span class="hljs-type">size_t</span> nsize)</span>;	<span class="hljs-comment">// use for lua</span><br><span class="hljs-type">void</span> * <span class="hljs-title function_">memalign</span><span class="hljs-params">(<span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">aligned_alloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">posix_memalign</span><span class="hljs-params">(<span class="hljs-type">void</span> **memptr, <span class="hljs-type">size_t</span> alignment, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
-
-<p>Although there are function names, they are still replaced by preprocessor. To verify this, we can check whether <code>skynet_malloc</code> is replaced by <code>malloc</code> by processing a source file with preprocessor.</p>
-<p>The <code>skynet_mq.c</code> is a good example, we can run the following command:</p>
+<p>Although there are function names, they are still replaced by
+preprocessor. To verify this, we can check whether
+<code>skynet_malloc</code> is replaced by <code>malloc</code> by
+processing a source file with preprocessor.</p>
+<p>The <code>skynet_mq.c</code> is a good example, we can run the
+following command:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">clang -E -o _skynet -Iskynet-src -I3rd/jemalloc/include/jemalloc skynet-src/skynet_mq.c<br>nvim _skynet<br></code></pre></td></tr></table></figure>
-
-<p>In this file, <code>skynet_mq_create</code> calls <code>skynet_malloc</code>, <strong>but after preprocessoing, <code>skynet_malloc</code> is replaced with <code>malloc</code></strong>.<br>Now, we can draw a prelimilary conclusion that, all instances of <code>skynet_malloc</code> are replaced by <code>malloc</code>.<br>Furthermore, any file including <code>skynet.h</code> will also have this replacement.</p>
-<p>Additionally, <code>malloc_hook.c</code> <strong>defines</strong> <code>skynet_malloc</code>. <strong>This symblo, too, is replaced by <code>malloc</code> during preprocessor</strong>.<br>Essentially, this definition prepares for the definition of <code>malloc</code> rather than <code>skynet_malloc</code>.</p>
+<p>In this file, <code>skynet_mq_create</code> calls
+<code>skynet_malloc</code>, <strong>but after preprocessoing,
+<code>skynet_malloc</code> is replaced with
+<code>malloc</code></strong>. Now, we can draw a prelimilary conclusion
+that, all instances of <code>skynet_malloc</code> are replaced by
+<code>malloc</code>. Furthermore, any file including
+<code>skynet.h</code> will also have this replacement.</p>
+<p>Additionally, <code>malloc_hook.c</code> <strong>defines</strong>
+<code>skynet_malloc</code>. <strong>This symblo, too, is replaced by
+<code>malloc</code> during preprocessor</strong>. Essentially, this
+definition prepares for the definition of <code>malloc</code> rather
+than <code>skynet_malloc</code>.</p>
 <p>By combining these conclusions together, we can deduce:</p>
 <ul>
-<li>If a file wants to invoke <code>skynet_malloc</code>, it must include <code>skynet_malloc</code>.</li>
-<li>Since <code>skynet_malloc.h</code> defines the marcos and declares for <code>skynet_malloc</code>, so any instances of <code>skynet_malloc</code> are replaced by <code>malloc</code>.</li>
-<li>Due to we also compile with <code>malloc_hook.c</code> together(we can check makefile to prove it), this unit is used to provide the definition of <code>malloc</code>.</li>
-<li>When <code>jemalloc</code> is enabled, this definition adds extra functionality to track memory usage.<ul>
-<li>Due to we compile <code>jemalloc</code> with prefix <code>je_</code>(check makefile), this definition essentially calls <code>jemalloc</code> interface.</li>
-</ul>
-</li>
-</ul>
-<p>We can further verify this by executing the following command to check <code>malloc_hook.c</code>:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">clang -E -o _skynet -Iskynet-src -I3rd/jemalloc/include/jemalloc skynet-src/malloc_hook.c<br>nvim _skynet<br></code></pre></td></tr></table></figure>
-
-<p>This file does not contain the definition of <code>skynet_malloc</code>; instead, the original definition of <code>skynet_malloc</code> is replaced by the definition of <code>malloc</code>.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The final conclusions are:</p>
+<li>If a file wants to invoke <code>skynet_malloc</code>, it must
+include <code>skynet_malloc</code>.</li>
+<li>Since <code>skynet_malloc.h</code> defines the marcos and declares
+for <code>skynet_malloc</code>, so any instances of
+<code>skynet_malloc</code> are replaced by <code>malloc</code>.</li>
+<li>Due to we also compile with <code>malloc_hook.c</code> together(we
+can check makefile to prove it), this unit is used to provide the
+definition of <code>malloc</code>.</li>
+<li>When <code>jemalloc</code> is enabled, this definition adds extra
+functionality to track memory usage.
 <ul>
-<li>Skynet framework uses its internal memory allocation interface <code>skynet_malloc</code> to allocate memory.</li>
-<li>At compile time, every instnace of <code>skynet_malloc</code> is replaced by <code>malloc</code>.</li>
-<li>Without <code>jemalloc</code>, <code>malloc</code> in standard library is used.</li>
-<li>With <code>jemalloc</code> enabled, we can track extra information for memory usage and invoke <code>jemalloc</code> internally.<ul>
-<li>Additionally, only when we let <code>jemalloc</code> enabled, <code>malloc</code> is re-defined, which can further confirming these conclusions.</li>
+<li>Due to we compile <code>jemalloc</code> with prefix
+<code>je_</code>(check makefile), this definition essentially calls
+<code>jemalloc</code> interface.</li>
+</ul></li>
 </ul>
-</li>
+<p>We can further verify this by executing the following command to
+check <code>malloc_hook.c</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">clang -E -o _skynet -Iskynet-src -I3rd/jemalloc/include/jemalloc skynet-src/malloc_hook.c<br>nvim _skynet<br></code></pre></td></tr></table></figure>
+<p>This file does not contain the definition of
+<code>skynet_malloc</code>; instead, the original definition of
+<code>skynet_malloc</code> is replaced by the definition of
+<code>malloc</code>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The final conclusions are:</p>
+<ul>
+<li>Skynet framework uses its internal memory allocation interface
+<code>skynet_malloc</code> to allocate memory.</li>
+<li>At compile time, every instnace of <code>skynet_malloc</code> is
+replaced by <code>malloc</code>.</li>
+<li>Without <code>jemalloc</code>, <code>malloc</code> in standard
+library is used.</li>
+<li>With <code>jemalloc</code> enabled, we can track extra information
+for memory usage and invoke <code>jemalloc</code> internally.
+<ul>
+<li>Additionally, only when we let <code>jemalloc</code> enabled,
+<code>malloc</code> is re-defined, which can further confirming these
+conclusions.</li>
+</ul></li>
 </ul>
-<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>Below is a simplified example illustrating this design with three files:</p>
+<h2 id="example">Example</h2>
+<p>Below is a simplified example illustrating this design with three
+files:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// inc_malloc.h</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __INC_MALLOC_H__</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __INC_MALLOC_H__</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stddef.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> inc_malloc malloc</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> inc_free free</span><br><br><span class="hljs-type">void</span>* <span class="hljs-title function_">inc_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> sz)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">inc_free</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span>;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// malloc_hook.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;inc_malloc.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> NOUSE_JEMALLOC</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;jemalloc/jemalloc.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MEM_MALLOCED 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MEM_FREE 2</span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>  <span class="hljs-type">size_t</span> mem_size;<br>  <span class="hljs-type">uint32_t</span> tag;<br>  <span class="hljs-type">size_t</span> cookie_size;<br>&#125; mem_cookie;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PREFIX_SIZE sizeof(mem_cookie)</span><br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">fill_prefix</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr, <span class="hljs-type">size_t</span> sz, <span class="hljs-type">size_t</span> cookie_size)</span> &#123;<br>  mem_cookie* st = (mem_cookie*)ptr; <br>  st-&gt;mem_size = sz;<br>  st-&gt;tag = MEM_MALLOCED;<br>  <span class="hljs-type">char</span>* ret = (<span class="hljs-type">char</span>*)st + cookie_size;<br>  <span class="hljs-built_in">memcpy</span>(ret - <span class="hljs-keyword">sizeof</span>(cookie_size), &amp;cookie_size, <span class="hljs-keyword">sizeof</span>(cookie_size));<br>  <span class="hljs-keyword">return</span> ret;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">size_t</span> <span class="hljs-title function_">get_cookie_size</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span> &#123;<br>  <span class="hljs-type">size_t</span> sz;<br>  <span class="hljs-built_in">memcpy</span>(&amp;sz, (<span class="hljs-type">char</span>*)ptr - <span class="hljs-keyword">sizeof</span>(sz), <span class="hljs-keyword">sizeof</span>(sz));<br>  <span class="hljs-keyword">return</span> sz;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title function_">clear_prefix</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span> &#123;<br>  <span class="hljs-type">size_t</span> cookie_size = get_cookie_size(ptr);<br>  mem_cookie* st = (mem_cookie*)((<span class="hljs-type">char</span>*)ptr - cookie_size);<br>  st-&gt;tag = MEM_FREE;<br>  <span class="hljs-keyword">return</span> st;<br>&#125;<br><br><span class="hljs-type">void</span>* <span class="hljs-title function_">inc_malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> sz)</span> &#123;<br>  <span class="hljs-type">void</span>* ptr = je_malloc(sz + PREFIX_SIZE);<br>  <span class="hljs-keyword">return</span> fill_prefix(ptr, sz, PREFIX_SIZE);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">inc_free</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span> &#123;<br>  <span class="hljs-keyword">if</span>(ptr == <span class="hljs-literal">NULL</span>) &#123;<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br>  <span class="hljs-type">void</span>* rawptr = clear_prefix(ptr);<br>  je_free(rawptr);<br>  <span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">dumpmem</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span> &#123;<br>  <span class="hljs-type">size_t</span> cookie_size = get_cookie_size(ptr);<br>  mem_cookie* st = (mem_cookie*)((<span class="hljs-type">char</span>*)ptr - cookie_size);<br>  <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stdout</span>, <span class="hljs-string">&quot;[mem_cookie: %p]: mem_size: %zu bytes, tag: %s, cookie_size: %zu bytes\nptr: %p\n&quot;</span><br>          , st<br>          , st-&gt;mem_size<br>          , st-&gt;tag == MEM_MALLOCED ? (<span class="hljs-string">&quot;MEM_MALLOCED&quot;</span>) : st-&gt;tag == MEM_FREE ? <span class="hljs-string">&quot;MEM_FREE&quot;</span> : <span class="hljs-string">&quot;ERR&quot;</span><br>          , st-&gt;cookie_size, ptr);<br>  fflush(<span class="hljs-built_in">stdout</span>);<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">dumpmem</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span> &#123;<br>  <span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stdout</span>, <span class="hljs-string">&quot;not use jemalloc\n&quot;</span>);<br>  fflush(<span class="hljs-built_in">stdout</span>);<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// test.c</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;inc_malloc.h&quot;</span> <span class="hljs-comment">// we must include this file</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">dumpmem</span><span class="hljs-params">(<span class="hljs-type">void</span>* ptr)</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-type">const</span> <span class="hljs-type">int</span> cnt = <span class="hljs-number">3</span>;<br>  <span class="hljs-type">int</span>* ptr = (<span class="hljs-type">int</span>*)inc_malloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>) * cnt);<br>  dumpmem(ptr);<br>  inc_free(ptr);<br>  dumpmem(ptr);<br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
 <p>If we not compile with jemalloc, the output is:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">❯ clang -I. -ljemalloc test.c malloc_hooc.c -DNOUSE_JEMALLOC -o <span class="hljs-built_in">test</span><br>❯ ./test<br>not use jemalloc<br>not use jemalloc<br></code></pre></td></tr></table></figure>
-
 <p>Instead, if we compile with it, the output is:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">❯ clang -I. -ljemalloc test.c malloc_hooc.c -o <span class="hljs-built_in">test</span><br>❯ ./test<br>[mem_cookie: 0x73caee21d000]: mem_size: 12 bytes, tag: MEM_MALLOCED, cookie_size: 24 bytes<br>ptr: 0x73caee21d018<br>[mem_cookie: 0x73caee21d000]: mem_size: 12 bytes, tag: MEM_FREE, cookie_size: 24 bytes<br>ptr: 0x73caee21d018<br></code></pre></td></tr></table></figure>
-
 <blockquote>
-<p>Notes: In an earlier version of this example, I directly used <code>printf</code> inside <code>inc_malloc</code> and <code>inc_free</code> to print debugging information. This approach led to infinite loop because <code>printf</code> itself calls <code>malloc</code> internally.</p>
+<p>Notes: In an earlier version of this example, I directly used
+<code>printf</code> inside <code>inc_malloc</code> and
+<code>inc_free</code> to print debugging information. This approach led
+to infinite loop because <code>printf</code> itself calls
+<code>malloc</code> internally.</p>
 </blockquote>
 
                 
