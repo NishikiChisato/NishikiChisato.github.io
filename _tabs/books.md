@@ -1,5 +1,5 @@
 ---
-layout: book_list
-icon: fas fa-archive
+layout: books
+icon: fas fa-book-open
 order: 4
 ---
