@@ -1,91 +1,19 @@
 ---
 layout: default
 refactor: true
+title: "My Reading List"
+description: "Explore the books I've read, either chronologically by year or grouped by category."
 ---
 
 {% include lang.html %}
-
 {% include toc-status.html %}
 
 <article class="px-1" data-toc="{{ enable_toc }}">
-  <header>
+  <header class="mb-4">
     <h1 data-toc-skip>{{ page.title }}</h1>
     {% if page.description %}
-      <p class="post-desc fw-light mb-4">{{ page.description }}</p>
+      <p class="post-desc fw-light">{{ page.description }}</p>
     {% endif %}
-
-    <div class="post-meta text-muted">
-      <!-- published date -->
-      <span>
-        {{ site.data.locales[lang].post.posted }}
-        {% include datetime.html date=page.date tooltip=true lang=lang %}
-      </span>
-
-      <!-- lastmod date -->
-      {% if page.last_modified_at and page.last_modified_at != page.date %}
-        <span>
-          {{ site.data.locales[lang].post.updated }}
-          {% include datetime.html date=page.last_modified_at tooltip=true lang=lang %}
-        </span>
-      {% endif %}
-
-      {% if page.image %}
-        {% capture src %}src="{{ page.image.path | default: page.image }}"{% endcapture %}
-        {% capture class %}class="preview-img{% if page.image.no_bg %}{{ ' no-bg' }}{% endif %}"{% endcapture %}
-        {% capture alt %}alt="{{ page.image.alt | xml_escape | default: "Preview Image" }}"{% endcapture %}
-
-        {% if page.image.lqip %}
-          {%- capture lqip -%}lqip="{{ page.image.lqip }}"{%- endcapture -%}
-        {% endif %}
-
-        <div class="mt-3 mb-3">
-          <img {{ src }} {{ class }} {{ alt }} w="1200" h="630" {{ lqip }}>
-          {%- if page.image.alt -%}
-            <figcaption class="text-center pt-2 pb-2">{{ page.image.alt }}</figcaption>
-          {%- endif -%}
-        </div>
-      {% endif %}
-
-      <div class="d-flex justify-content-between">
-        <!-- author(s) -->
-        <span>
-          {% if page.author %}
-            {% assign authors = page.author %}
-          {% elsif page.authors %}
-            {% assign authors = page.authors %}
-          {% endif %}
-
-          {{ site.data.locales[lang].post.written_by }}
-
-          <em>
-            {% if authors %}
-              {% for author in authors %}
-                {% if site.data.authors[author].url -%}
-                  <a href="{{ site.data.authors[author].url }}">{{ site.data.authors[author].name }}</a>
-                {%- else -%}
-                  {{ site.data.authors[author].name }}
-                {%- endif %}
-                {% unless forloop.last %}{{ '</em>, <em>' }}{% endunless %}
-              {% endfor %}
-            {% else %}
-              <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>
-            {% endif %}
-          </em>
-        </span>
-
-        <div>
-          <!-- pageviews -->
-          {% if site.pageviews.provider and site.analytics[site.pageviews.provider].id %}
-            <span>
-              <em id="pageviews">
-                <i class="fas fa-spinner fa-spin small"></i>
-              </em>
-              {{ site.data.locales[lang].post.pageview_measure }}
-            </span>
-          {% endif %}
-        </div>
-      </div>
-    </div>
   </header>
 
   {% if enable_toc %}
@@ -95,12 +23,10 @@ refactor: true
       <i class="fa-solid fa-list-ul fa-fw"></i>
     </button>
   </div>
-
-  <button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm">
+  <button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm mb-3">
     <span class="label ps-2 pe-1">{{- site.data.locales[lang].panel.toc -}}</span>
     <i class="fa-solid fa-angle-right fa-fw"></i>
   </button>
-
   <dialog id="toc-popup" class="p-0">
     <div class="header d-flex flex-row align-items-center justify-content-between">
       <div class="label text-truncate py-2 ms-4">{{- page.title -}}</div>
@@ -112,300 +38,288 @@ refactor: true
   </dialog>
   {% endif %}
 
-  <div class="content">
+  <div class="content mb-3">
     {{ content }}
   </div>
 
-  <!-- MODIFIED BOOK LIST SECTION STARTS HERE -->
-  {% comment %} --- Data Preparation (same as before) --- {% endcomment %}
-  {% assign books_with_dates = "" | split: "" %}
-  {% for book in site.data.books %}
-    {% if book.date %}
-      {% assign books_with_dates = books_with_dates | push: book %}
-    {% endif %}
-  {% endfor %}
-  {% assign sorted_books = books_with_dates | sort: "date" | reverse %}
+  <!-- TABS NAVIGATION -->
+  <ul class="nav nav-tabs mt-4 mb-4 book-view-tabs" id="bookViewTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="timeline-tab-btn" data-bs-toggle="tab" data-bs-target="#timeline-view-content" type="button" role="tab" aria-controls="timeline-view-content" aria-selected="true">
+        <i class="fas fa-calendar-alt me-1"></i> Timeline
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="category-tab-btn" data-bs-toggle="tab" data-bs-target="#category-view-content" type="button" role="tab" aria-controls="category-view-content" aria-selected="false">
+        <i class="fas fa-folder-open me-1"></i> By Category
+      </button>
+    </li>
+  </ul>
 
-  {% assign years = "" | split: "" %}
-  {% for book in sorted_books %}
-    {% assign year_from_book = book.date | date: "%Y" %}
-    {% unless years contains year_from_book %}
-      {% assign years = years | push: year_from_book %}
-    {% endunless %}
-  {% endfor %}
+  <!-- TABS CONTENT -->
+  <div class="tab-content" id="bookViewTabContent">
 
-  <div class="post-content book-list-timeline-layout-container">
-    <div class="books-main-content">
-      {% if years.size > 0 %}
-        {% for year_section in years %}
-          <section id="year-{{ year_section }}" class="book-year-section pt-2">
-            <h2 class="year-heading display-5 mb-4 mt-4">{{ year_section }}</h2>
-            <ul class="list-unstyled">
-              {% for book in sorted_books %}
-                {% assign book_year = book.date | date: "%Y" %}
-                {% if book_year == year_section %}
-                  <li class="book-entry mb-4 pb-3 border-bottom">
-                    {% if book.link %}
-                      <h3 class="h4">
-                        <a href="{{ book.link }}" target="_blank" rel="noopener noreferrer">
-                          {{ book.title }}
-                        </a>
-                      </h3>
-                    {% else %}
-                      <h3 class="h4">{{ book.title }}</h3>
+    <!-- ======== TIMELINE VIEW ======== -->
+    <div class="tab-pane fade show active" id="timeline-view-content" role="tabpanel" aria-labelledby="timeline-tab-btn">
+      {% assign books_for_timeline = site.data.books | where_exp: "item", "item.date" | sort: "date" | reverse %}
+      {% assign years = "" | split: "" %}
+      {% for book in books_for_timeline %}
+        {% assign year_from_book = book.date | date: "%Y" %}
+        {% unless years contains year_from_book %}
+          {% assign years = years | push: year_from_book %}
+        {% endunless %}
+      {% endfor %}
+
+      <div class="book-list-timeline-layout-container">
+        <div class="books-main-content">
+          {% if years.size > 0 %}
+            {% for year_section in years %}
+              <section id="year-{{ year_section }}" class="book-year-section pt-2">
+                <h2 class="year-heading display-5 mb-4 mt-4">{{ year_section }}</h2>
+                <ul class="list-unstyled">
+                  {% for book in books_for_timeline %}
+                    {% assign book_year = book.date | date: "%Y" %}
+                    {% if book_year == year_section %}
+                      <li class="book-entry mb-4 pb-3 border-bottom">
+                        {% if book.link %} <h3 class="h4"><a href="{{ book.link }}" target="_blank" rel="noopener noreferrer">{{ book.title }}</a></h3>
+                        {% else %} <h3 class="h4">{{ book.title }}</h3> {% endif %}
+                        <p class="book-meta mb-1">
+                          {% if book.category %}<span class="me-3"><strong>Category:</strong> {{ book.category }}</span>{% endif %}
+                          {% if book.author %}<span class="me-3"><strong>Author:</strong> {{ book.author }}</span>{% endif %}
+                          {% if book.date %}<span class="me-3"><strong>Date Read:</strong> {{ book.date | date: "%B %d, %Y" }}</span>{% endif %}
+                          {% if book.rating %}<span><strong>Rating:</strong> {{ book.rating }}</span>{% endif %}
+                        </p>
+                        {% if book.reflections %}
+                          <div class="book-reflections mt-2"><strong>Reflections:</strong><br>{{ book.reflections | markdownify }}</div>
+                        {% endif %}
+                      </li>
                     {% endif %}
-                    <p class="book-meta mb-1">
-                      {% if book.author %}
-                        <span class="me-3"><strong>Author:</strong> {{ book.author }}</span>
-                      {% endif %}
-                      {% if book.date %}
-                        <span class="me-3"><strong>Date Read:</strong> {{ book.date | date: "%B %d, %Y" }}</span>
-                      {% endif %}
-                      {% if book.rating %}
-                        <span><strong>Rating:</strong> {{ book.rating }}</span>
-                      {% endif %}
-                    </p>
-                    {% if book.thoughts %}
-                      <div class="book-thoughts mt-2">
-                        <strong>My Thoughts:</strong><br>
-                        {{ book.thoughts | markdownify }}
-                      </div>
-                    {% endif %}
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          </section>
-        {% endfor %}
-      {% else %}
-        <p>No books with reading dates found to display in a timeline.</p>
-      {% endif %}
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endfor %}
+          {% else %} <p>No books with reading dates found for the timeline.</p> {% endif %}
+        </div>
+        {% if years.size > 0 %}
+        <nav class="book-timeline-nav-vertical" aria-label="Book Reading Timeline">
+          <ul class="timeline-years-vertical list-unstyled">
+            {% for year_nav_item in years %}
+              {% assign item_side_class = forloop.index | modulo: 2 %}
+              <li class="timeline-year-item-vertical {% if item_side_class == 1 %}item-left{% else %}item-right{% endif %}">
+                <a href="#year-{{ year_nav_item }}" class="timeline-year-link-vertical">{{ year_nav_item }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
     </div>
 
-    {% if years.size > 0 %}
-    <nav class="book-timeline-nav-vertical" aria-label="Book Reading Timeline">
-      <ul class="timeline-years-vertical list-unstyled">
-        {% for year_nav_item in years %}
-          {% assign item_side_class = forloop.index | modulo: 2 %}
-          <li class="timeline-year-item-vertical {% if item_side_class == 1 %}item-left{% else %}item-right{% endif %}">
-            <a href="#year-{{ year_nav_item }}" class="timeline-year-link-vertical">{{ year_nav_item }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-    </nav>
-    {% endif %}
-  </div>
-  <!-- MODIFIED BOOK LIST SECTION ENDS HERE -->
-
-  <!-- div.post-tail-wrapper -->
+    <!-- ======== CATEGORY VIEW ======== -->
+    <div class="tab-pane fade" id="category-view-content" role="tabpanel" aria-labelledby="category-tab-btn">
+      {% assign books_for_category = site.data.books | where_exp: "item", "item.date" | sort: "date" | reverse %}
+      {% assign categories = "" | split: "" %}
+      {% for book in books_for_category %}
+        {% if book.category %}{% unless categories contains book.category %}{% assign categories = categories | push: book.category %}{% endunless %}{% endif %}
+      {% endfor %}
+      {% assign categories = categories | sort %}
+      <div class="book-list-categories-layout-container">
+        <div class="books-main-content">
+          {% if categories.size > 0 %}
+            {% for category_name in categories %}
+              <section id="category-{{ category_name | slugify }}" class="book-category-section pt-4">
+                <h2 class="category-heading display-5 mb-4 mt-3">{{ category_name }}</h2>
+                <ul class="list-unstyled">
+                  {% assign books_in_category = books_for_category | where: "category", category_name %}
+                  {% for book in books_in_category %}
+                    <li class="book-entry mb-4 pb-3 border-bottom">
+                       {% if book.link %} <h3 class="h4"><a href="{{ book.link }}" target="_blank" rel="noopener noreferrer">{{ book.title }}</a></h3>
+                       {% else %} <h3 class="h4">{{ book.title }}</h3> {% endif %}
+                      <p class="book-meta mb-1">
+                        {% if book.author %}<span class="me-3"><strong>Author:</strong> {{ book.author }}</span>{% endif %}
+                        {% if book.date %}<span class="me-3"><strong>Date Read:</strong> {{ book.date | date: "%B %d, %Y" }}</span>{% endif %}
+                        {% if book.rating %}<span><strong>Rating:</strong> {{ book.rating }}</span>{% endif %}
+                      </p>
+                      {% if book.reflections %}
+                        <div class="book-reflections mt-2"><strong>Reflections:</strong><br>{{ book.reflections | markdownify }}</div>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </section>
+            {% endfor %}
+          {% else %} <p>No books with categories found.</p> {% endif %}
+        </div>
+        {% if categories.size > 0 %}
+        <nav class="book-category-nav-vertical" aria-label="Book Categories">
+          <ul class="category-list-vertical list-unstyled">
+            {% for category_nav_item in categories %}
+              <li class="category-item-vertical"><a href="#category-{{ category_nav_item | slugify }}" class="category-link-vertical">{{ category_nav_item }}</a></li>
+            {% endfor %}
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+    </div>
+  </div><!-- /tab-content -->
 </article>
 
-{% comment %}
-  Add these styles to your theme's CSS file (e.g., _sass/custom/custom.scss).
-  Adjust 'top', 'right', 'width' values and breakpoints as needed.
-{% endcomment %}
 <style>
-  .book-list-timeline-layout-container {
-    position: relative; /* For context if needed, but nav is fixed */
+  /* --- Tab Styling (Theme-Aware and Clickable) --- */
+  .book-view-tabs {
+    position: relative; /* Stacking context */
+    z-index: 1050;      /* High z-index, above typical fixed/sticky elements and Bootstrap modal backdrops (often 1040) */
+    border-bottom: 1px solid var(--bs-border-color); /* Consistent with Chirpy theme */
+  }
+  .book-view-tabs .nav-link {
+    color: var(--bs-gray-600); /* Muted color for inactive tabs */
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-bottom: none; /* Remove bottom border for inactive */
+    padding: 0.5rem 1rem;
+    transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  }
+  .book-view-tabs .nav-link:hover,
+  .book-view-tabs .nav-link:focus {
+    color: var(--bs-primary); /* Use primary color on hover/focus for inactive */
+    border-color: var(--bs-border-color-translucent); /* Subtle border on hover */
+  }
+  .book-view-tabs .nav-link.active {
+    color: var(--bs-primary); /* Primary theme color for active tab text */
+    background-color: var(--bs-body-bg); /* Match page background */
+    border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-body-bg); /* Creates the "connected" look */
+    border-top-left-radius: var(--bs-nav-tabs-border-radius, 0.375rem);
+    border-top-right-radius: var(--bs-nav-tabs-border-radius, 0.375rem);
+    font-weight: 600;
+  }
+  /* Dark mode adjustments for tabs */
+  [data-theme="dark"] .book-view-tabs .nav-link {
+    color: var(--bs-gray-500);
+  }
+  [data-theme="dark"] .book-view-tabs .nav-link:hover,
+  [data-theme="dark"] .book-view-tabs .nav-link:focus {
+    color: var(--bs-primary);
+    border-color: var(--bs-border-color-translucent);
+  }
+  [data-theme="dark"] .book-view-tabs .nav-link.active {
+    color: var(--bs-primary);
+    background-color: var(--bs-body-bg); /* Dark mode page background */
+    border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-body-bg);
   }
 
+
+  /* --- Generic Layout for both views --- */
+  .book-list-timeline-layout-container,
+  .book-list-categories-layout-container {
+    position: relative; /* Needed if a child element (like a non-fixed nav) uses absolute positioning relative to this */
+  }
   .books-main-content {
-    /* Add margin to prevent overlap with the fixed timeline on larger screens */
-    /* Adjust 220px if you change .book-timeline-nav-vertical width + right offset */
-    margin-right: 0; /* Default, will be overridden by media query */
+    margin-right: 0; /* Default for mobile */
   }
 
-  /* Vertical Timeline Navigation - Desktop */
-  .book-timeline-nav-vertical {
-    position: fixed;
-    right: 20px; /* Distance from the right edge of the viewport */
-    top: 100px;  /* IMPORTANT: Adjust based on your site's fixed header height + desired margin */
-    width: 180px; /* Width of the timeline area */
-    max-height: calc(100vh - 120px); /* top (100px) + 20px bottom margin */
+  /* --- Common styles for ALL side navigation panels --- */
+  .book-timeline-nav-vertical,
+  .book-category-nav-vertical {
+    box-sizing: border-box;
+    width: 200px; /* Explicit width */
+    /* Default state: hidden, static, no pointer events */
+    display: none !important;
+    position: static !important; /* Start as static, will be overridden for desktop active */
+    pointer-events: none !important; /* No interaction when not explicitly made active */
+
+    /* Visuals that will apply when it becomes fixed/visible */
+    max-height: calc(100vh - 120px); /* (top offset 100px) + (bottom margin 20px) */
     overflow-y: auto;
-    z-index: 1000; /* Ensure it's above other content */
-    /* For browsers that support newer scrollbar styling: */
+    z-index: 1000; /* Below tabs (1050), above general page content */
     scrollbar-width: thin;
     scrollbar-color: var(--bs-gray-400) transparent;
   }
-  .book-timeline-nav-vertical::-webkit-scrollbar {
-    width: 6px;
+  .book-timeline-nav-vertical::-webkit-scrollbar,
+  .book-category-nav-vertical::-webkit-scrollbar { width: 6px; }
+  .book-timeline-nav-vertical::-webkit-scrollbar-thumb,
+  .book-category-nav-vertical::-webkit-scrollbar-thumb { background-color: var(--bs-gray-400); border-radius: 3px; }
+  .book-timeline-nav-vertical::-webkit-scrollbar-track,
+  .book-category-nav-vertical::-webkit-scrollbar-track { background: transparent; }
+
+  /* --- Styling for Timeline Side Nav (Appearance when active) --- */
+  .book-timeline-nav-vertical {
+    /* Visuals specific to this nav type, applied when it's made visible */
+    background-color: transparent; border: none; box-shadow: none; padding: 0;
   }
-  .book-timeline-nav-vertical::-webkit-scrollbar-thumb {
-    background-color: var(--bs-gray-400);
-    border-radius: 3px;
+  .timeline-years-vertical { position: relative; list-style-type: none; padding: 25px 0; margin: 0; }
+  .timeline-years-vertical::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background-color: var(--bs-border-color-translucent); z-index: 1; }
+  .timeline-year-item-vertical { position: relative; height: 45px; display: flex; align-items: center; }
+  .timeline-year-item-vertical::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background-color: var(--bs-primary); border: 2px solid var(--bs-body-bg); border-radius: 50%; z-index: 2; }
+  .timeline-year-link-vertical { position: absolute; top: 50%; transform: translateY(-50%); padding: 0.3rem 0.6rem; font-size: 0.9em; font-weight: 500; text-decoration: none; background-color: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: var(--bs-border-radius-sm); color: var(--bs-body-color); z-index: 3; min-width: 55px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s ease-in-out; }
+  .timeline-year-link-vertical:hover, .timeline-year-link-vertical:focus { background-color: var(--bs-tertiary-bg); color: var(--bs-primary); border-color: var(--bs-primary); transform: translateY(-50%) scale(1.08); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .timeline-year-item-vertical.item-left .timeline-year-link-vertical { right: calc(50% + 12px); }
+  .timeline-year-item-vertical.item-right .timeline-year-link-vertical { left: calc(50% + 12px); }
+
+  /* --- Styling for Category Side Nav (Appearance when active) --- */
+  .book-category-nav-vertical {
+    /* Visuals specific to this nav type, applied when it's made visible */
+    padding: 0.5rem 0; background-color: var(--bs-body-bg); border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius-lg); box-shadow: var(--bs-box-shadow-sm);
   }
-  .book-timeline-nav-vertical::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  .category-list-vertical { margin: 0; padding: 0.5rem; list-style-type: none; }
+  .category-item-vertical { margin-bottom: 0.25rem; }
+  .category-link-vertical { display: block; padding: 0.5rem 0.75rem; text-decoration: none; color: var(--bs-body-color); border-radius: var(--bs-border-radius-sm); transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out; font-weight: 500; }
+  .category-link-vertical:hover, .category-link-vertical:focus { background-color: var(--bs-primary-bg-subtle); color: var(--bs-primary); }
 
 
-  .timeline-years-vertical {
-    position: relative; /* For positioning the line and items */
-    list-style-type: none;
-    padding: 25px 0; /* Top/bottom padding for the start/end of the line */
-    margin: 0;
-  }
-  /* The central vertical line */
-  .timeline-years-vertical::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%; /* Center of the nav container */
-    transform: translateX(-50%);
-    width: 2px; /* Line thickness */
-    background-color: var(--bs-border-color-translucent, rgba(0,0,0,0.175)); /* Chirpy's translucent border or a gray */
-    z-index: 1; /* Behind dots and links */
-  }
-
-  .timeline-year-item-vertical {
-    position: relative;
-    height: 45px; /* Consistent height for items, allows vertical centering of dot/link */
-    display: flex;
-    align-items: center; /* Helps if you add other elements inside */
-  }
-  /* Small circle on the timeline for each year */
-  .timeline-year-item-vertical::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%; /* Center of the LI, which is center of the nav */
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    background-color: var(--bs-primary);
-    border: 2px solid var(--bs-body-bg); /* Makes dot pop from the line */
-    border-radius: 50%;
-    z-index: 2; /* Above the line, below the link text */
-  }
-
-  .timeline-year-link-vertical {
-    position: absolute; /* Positioned relative to the parent LI */
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9em;
-    font-weight: 500;
-    text-decoration: none;
-    background-color: var(--bs-body-bg);
-    border: 1px solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius-sm);
-    color: var(--bs-body-color);
-    z-index: 3; /* Above the dot and line */
-    min-width: 55px; /* Ensure year (e.g., 2023) fits well */
-    text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    transition: all 0.2s ease-in-out;
-  }
-  .timeline-year-link-vertical:hover,
-  .timeline-year-link-vertical:focus {
-    background-color: var(--bs-tertiary-bg);
-    color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    transform: translateY(-50%) scale(1.08);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-
-  /* Position links to the left or right of the central line */
-  .timeline-year-item-vertical.item-left .timeline-year-link-vertical {
-    /* 50% is center of parent LI (timeline center), 12px is ~half dot width + desired gap */
-    right: calc(50% + 12px);
-  }
-  .timeline-year-item-vertical.item-right .timeline-year-link-vertical {
-    left: calc(50% + 12px);
-  }
-
-  .book-year-section .year-heading {
-    scroll-margin-top: 90px; /* IMPORTANT: Adjust to match/exceed sticky site header height */
-  }
-
-  .book-entry:last-child {
-    border-bottom: none !important;
-  }
-  .book-meta {
-    font-size: 0.9em;
-    color: var(--bs-text-muted); /* Changed to a more reliable muted text variable */
-  }
-  .book-thoughts {
-    <!-- background-color: var(--bs-tertiary-bg); -->
-    background-color: var(--bs-tertiary-bg);
-    border-left: 3px solid var(--bs-primary);
-    padding: 0.75rem 1rem;
-    margin-top: 0.5rem;
-    border-radius: 0.25rem;
-  }
-
-  /* Responsive: On smaller screens (e.g., Bootstrap lg breakpoint) */
-  @media (min-width: 992px) { /* Apply margin only on larger screens */
-    .books-main-content {
-      /* Width of nav (180px) + nav right offset (20px) + extra gap (20px) */
-      margin-right: calc(180px + 20px + 20px);
+  /* --- DESKTOP: Show, fix the active side nav, and adjust main content --- */
+  @media (min-width: 992px) {
+    /* Only the nav within the ACTIVE tab pane is made fixed and visible */
+    .tab-pane.active .book-timeline-nav-vertical,
+    .tab-pane.active .book-category-nav-vertical {
+      display: block !important; /* Override default display:none */
+      position: fixed !important; /* Override default position:static */
+      right: 20px;
+      top: 100px;  /* IMPORTANT: Adjust based on your site's fixed header height */
+      pointer-events: auto !important; /* Allow interaction ONLY for the active nav */
+    }
+    /* Adjust main content margin when a fixed sidebar is active and visible */
+    .tab-pane.active .books-main-content {
+      margin-right: calc(200px + 20px + 20px); /* Side nav width (200px) + right offset (20px) + gap (20px) */
     }
   }
 
+  /* --- MOBILE: Styling for side navs when they are static --- */
   @media (max-width: 991.98px) {
-    .books-main-content {
-      margin-right: 0; /* Reset margin for smaller screens */
-    }
-    .book-timeline-nav-vertical {
-      position: static; /* Revert from fixed */
-      width: 100%;
-      max-height: none;
-      overflow-y: visible;
-      margin-left: 0;
-      margin-bottom: 2.5rem; /* Space below nav when it's on top */
-      padding: 0.5rem 0;
-      right: auto;
-      top: auto;
-      border-bottom: 2px solid var(--bs-border-color); /* Horizontal line style */
-      scrollbar-width: auto; /* Revert scrollbar styles */
-    }
-    .book-timeline-nav-vertical::-webkit-scrollbar { width: auto; }
-    .book-timeline-nav-vertical::-webkit-scrollbar-thumb { background-color: auto; }
+    .books-main-content { margin-right: 0 !important; } /* Ensure no margin on mobile */
 
-
-    .timeline-years-vertical {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 0 0.5rem; /* Horizontal padding for year links */
+    /* Common static styles for the active nav on mobile */
+    .tab-pane.active .book-timeline-nav-vertical,
+    .tab-pane.active .book-category-nav-vertical {
+      display: block !important; /* Ensure visibility */
+      position: static !important; /* Override fixed */
+      width: 100% !important; max-height: none !important; overflow-y: visible !important;
+      margin-bottom: 2.5rem !important; padding: 0 !important; /* Reset padding for base */
+      border: none !important; border-bottom: 2px solid var(--bs-border-color) !important;
+      border-radius: 0 !important; box-shadow: none !important; background-color: transparent !important;
+      pointer-events: auto !important; /* Allow interaction for active mobile nav */
     }
-    .timeline-years-vertical::before {
-      display: none; /* Hide the vertical line */
-    }
-
-    .timeline-year-item-vertical {
-      width: auto; /* Fit content */
-      height: auto; /* Fit content */
-      margin: 0.25rem 0.3rem; /* Spacing for horizontal items */
-      padding: 0;
-    }
-    .timeline-year-item-vertical::before {
-      display: none; /* Hide dots on the line */
-    }
-
-    .timeline-year-item-vertical.item-left .timeline-year-link-vertical,
-    .timeline-year-item-vertical.item-right .timeline-year-link-vertical {
-      position: static; /* Reset absolute positioning */
-      transform: none; /* Reset transform */
-      right: auto;
-      left: auto;
-      text-align: center;
-    }
-    .timeline-year-link-vertical {
-      display: inline-block; /* For horizontal flow */
-      padding: 0.3rem 0.75rem;
-      box-shadow: none;
-      border: 1px solid var(--bs-border-color);
-    }
-    .timeline-year-link-vertical:hover,
-    .timeline-year-link-vertical:focus {
-      background-color: var(--bs-primary-bg-subtle);
-      color: var(--bs-emphasis-color);
-      border-color: var(--bs-primary-border-subtle);
-      transform: none; /* No scale on mobile hover */
-      box-shadow: none;
-    }
+    /* Mobile: Timeline Nav specific list styling */
+    .tab-pane.active .book-timeline-nav-vertical .timeline-years-vertical { display: flex; flex-wrap: wrap; justify-content: center; padding: 0.5rem !important; }
+    .tab-pane.active .book-timeline-nav-vertical .timeline-years-vertical::before,
+    .tab-pane.active .book-timeline-nav-vertical .timeline-year-item-vertical::before { display: none !important; }
+    .tab-pane.active .book-timeline-nav-vertical .timeline-year-item-vertical { width: auto; height: auto; margin: 0.25rem; padding:0; }
+    .tab-pane.active .book-timeline-nav-vertical .timeline-year-link-vertical { position: static; transform: none; display: inline-block; padding: 0.4rem 0.8rem; border: 1px solid var(--bs-border-color); box-shadow:none; }
+    .tab-pane.active .book-timeline-nav-vertical .timeline-year-link-vertical:hover,
+    .tab-pane.active .book-timeline-nav-vertical .timeline-year-link-vertical:focus { background-color: var(--bs-primary-bg-subtle); color: var(--bs-primary); transform: none; box-shadow:none; }
+    /* Mobile: Category Nav specific list styling */
+    .tab-pane.active .book-category-nav-vertical .category-list-vertical { display: flex; flex-wrap: wrap; justify-content: center; padding: 0.5rem !important; }
+    .tab-pane.active .book-category-nav-vertical .category-item-vertical { margin: 0.25rem; }
+    .tab-pane.active .book-category-nav-vertical .category-link-vertical { padding: 0.4rem 0.8rem; border: 1px solid var(--bs-border-color); }
   }
+
+  /* --- Common Section/Entry Styles --- */
+  .book-year-section .year-heading,
+  .book-category-section .category-heading { scroll-margin-top: 90px; border-bottom: 2px solid var(--bs-primary); padding-bottom: 0.5rem; }
+  .book-entry:last-child { border-bottom: none !important; }
+  .book-meta { font-size: 0.9em; color: var(--bs-text-muted); }
+  .book-reflections { background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); border-left: 4px solid var(--bs-info); padding: 1rem; margin-top: 1rem; border-radius: var(--bs-border-radius-md); box-shadow: var(--bs-box-shadow-sm); }
+  .book-reflections strong { color: inherit; }
+  [data-theme="dark"] .book-reflections { background-color: var(--bs-tertiary-bg); color: var(--bs-body-color); } /* Tertiary bg should adapt */
+  [data-theme="dark"] .book-reflections strong { color: inherit; }
 </style>
