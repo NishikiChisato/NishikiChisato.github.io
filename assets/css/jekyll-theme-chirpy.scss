@@ -10,29 +10,3 @@
 
 /* append your custom style below */
 
-/* background picutre */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('../img/custom/home.png') no-repeat center center fixed;
-  background-size: cover;
-  opacity: 0.2; // Adjust transparency (0-1)
-  z-index: -1;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.6); // Light overlay
-  z-index: -1;
-}
-
-
