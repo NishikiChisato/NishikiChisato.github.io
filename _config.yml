@@ -16,7 +16,7 @@ timezone:
 
 title: NishikiChisato's Blog # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the subtitle
+tagline: "Where I Grow: A Journal of My Learning" # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
