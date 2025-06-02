@@ -31,6 +31,10 @@ And the basic Git workflow consist of the following steps:
 
 ## File status
 
+Each file in Git in your working directory can be in one of two states: *tracked* or *untracked*. Tracked files are files that were in the last snapshot, as well as any newly staged files; they can be *unmodified*, *modified*, or *staged*.
+
+Untracked files are everything else--any files in your working directory that were not in your last snapshot and are not in your staging area.
+
 ```mermaid
 sequenceDiagram
   Untracked->>Staged: Add the file
@@ -38,6 +42,12 @@ sequenceDiagram
   Unmodified->>Modified: Edit the file
   Modified->>Staged: Stage the file
   Modified->>Untracked: Remove the file
+```
+
+We can check which files are in which state by using the command:
+
+```bash
+git status
 ```
 
 ## Config
@@ -67,4 +77,24 @@ git config core.editor
 git config --show-origin core.editor
 ```
 
+### First Time Setup
+
+- Setup your identity.
+
+```bash
+git config --global user.name "NishikiChisato"
+git config --global user.email NishikiChisato@outlook.com
+```
+
+- Setup your editor
+
+```bash
+git config --global core.editor nvim
+```
+
+- Setup your default branch name
+
+```bash
+git config --global init.defaultBranch main
+```
 
