@@ -1,12 +1,10 @@
 ---
 layout: post
 title: "[Pro Git] Cheatsheet"
-categories:
-- Command Line Tools
-tags:
-- Git
+categories: [Command Line Tools]
+tags: [Git, Version Control]
+date: 2025-06-01 08:30 +0800
 mermaid: true
-date: 2025-06-02 08:24 +0800
 ---
 # Overview
 
