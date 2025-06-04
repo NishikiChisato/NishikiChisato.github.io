@@ -193,4 +193,85 @@ I**'m always doing** something = I do it **too often or more often than normal**
 - 'The car has broken down again.'; 'That car is useless. It**'s always broking** down.'
 - 'Look! You've made the same mistake again.'; 'Oh no, not again! I**'m always making** the same mistake.'
 
+# Present Continuous and Present Simple 2
+
+This unit focus on some verb usually used in *present simple*, instead of *present continuous*.
+
+## Part A
+
+We use *continuous* forms (I**'m waiting**, it**'s raining** etc.) **for actions and happenings that have started bug not finished**.
+
+**Some verbs (for example, **know** and **like**) are not normally used in this way**. We don't say 'I am knowing', 'they are liking'. we say 'I **know**', 'they **like'.
+
+The following verbs are **not normally used** in the *present continuous*.
+
+||||||
+|-|-|-|-|-|
+|like|want|need|prefer|
+|know|realise|understand|recognise|
+|believe|suppose|remember|mean|
+|belong|fit|contain|consist|seem|
+
+- I'm hungry. I **want** something to eat. (*not* I'm wanting).
+- **Do** you **understand** what I **mean**?
+- Anna **doesn't seem** very happy right now.
+- Don't put the dictionary away. I **need** it. (*compare* Don't put the dictionary away. I**'m using** it)
+- Alan says he's 90 years old, but nobody **believes** him.
+- She told me her name, but I **don't remember** it now.
+- Gary wasn't well earlier, but he **seems** OK now.
+
+## Part B
+
+The usage of *think*.
+
+When **think** means 'believe' or 'have an opinion', **we do not use the *continuous***.
+- I **think** Mary is Canadian, but I'm not sure. (*not* I'm thinking)
+- What **do** you **think** of my idea? (= what is your opinion?)
+- I can't make up my mide. What **do you think** I should do?
+
+When **think** means 'consider', **the *continuous* is possible**:
+- I**'m thinking** about what happened. I often **think** about it.
+- Nicky **is thinking** of giving up her job. (= she is considering it)
+- 'Are you OK? You look worried.'; 'I**'m thinking**'
+- I**'m thinking** of selling my car. Yould you be interested in buying it?
+
+## Part C
+
+The usage of *see*, *hear*, *smell*, *taste*, *look*, *feel*
+
+We normally use the *present simple* (not *continuous*) with **see**/**hear**/**smell**/**taste**
+- **Do** you **see** that man over there? (*not* are you seeing)
+- The room **smells**. Let's open a window.
+- This soup **doesn't taste** very good.
+
+You can use the *present simple* **or** *present continuous* to say how somebody **looks** or **feels** now:
+- You **look** well today. *or* You**'re looking** well today.
+- How **do** you **feel** now? *or* How **are** you **feeling** now?
+*but*
+- I usually **feel** tired in the morning. (*not* I'm usually feeling)
+
+For the sake of accuracy, we use the *present simple*.
+
+## Part D
+
+You can say **he's being**..., **you're being**... etc. to say **how somebody is behaving now**:
+- I can't understand why he**'s being** so selfish. He isn't usually like that. (**being** selfish = behaving selfishly now)
+- 'The path is icy. Don't slip.'; 'Don't worry. I**'m being** very careful.'
+Compare:
+- He never thinks about other people. He**'s** very selfish. (= he is selfish generally, now only now)
+- I don't like to take risks. I**'m** a very careful person.
+
+We use **am**/**is**/**are being** to say how a person is *behaving* (= **doing something they can control**) now. It's not usually possible in other situations:
+- Sam **is** ill. (*not* is being ill, ill can't be control)
+- **Are** you tired? (*not* are you being tired, tired can't be control)
+
+There are two key points here:
+- Doing something they can control.
+- Doing something at or around the time of speaking.
+
+Check the following examples:
+- Sarah **is being** very nice to me at the monment. I wonder why. (can control, around the time of speaking)
+- They **are** very happy. They've just got married. (can control, not around the time of speaking)
+- Would you like something to eat? **Are you** hungry? (can't control, around the time of speaking)
+
 [^1]: **a** **e** **i** **o** **u** are *vowel* letters. The other letters(**b** **c** **d** **f** **g** etc.) are *consonant* letters.
