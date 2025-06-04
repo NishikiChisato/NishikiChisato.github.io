@@ -71,22 +71,7 @@ We say:
 - They **teach** *but* my sister **teaches**; I **have** *but* he **has**
 
 > For Spelling
-> vers + -**s**/-**es** (after **he**/**she**/**it**) -> works, enjoys, washes
->
-> The ending is -**es** when thw word ends in -**s**/-**ss**/-**sh**/-**ch**/-**x**:
-> - bu**s**/bus**es**; mi**ss**/miss**es**, wa**sh**/wash**es**
-> - mat**ch**/match**es**, sear**ch**/search**es**, bo**x**/box**es**
-> Note also:
-> - potato/potato**es**, tomato/tomato**es**, do/do**es**, go/go**es**
->
-> Words ending in -**y** (bab**y**, carr**y**, eas**y** etc.)
-> if a word ends in a consonant[^1] + **y** (-**by**/-**ry**/-**sy**/-**vy** etc.)
-> **y** changes to **ie** before the ending -**s**:
-> - hurr**y**/hurr**ies**, stud**y**/stud**ies**, appl**y**/appl**ies**, tr**y**/tr**ies**
-> 
-> **y** does *not* change if the word ends in a *vowel*[^1] + **y**(-**ay**/-**ey**/-**oy**/-**uy**)
-> - pl**ay**/pl**ays**/pl**ayed**, monk**ey**/monk**eys**, enj**oy**/enj**oys**, b**uy**/b**uys**
-> An exception is: d**ay**/d**aily**
+> TODO: refer Appendix 6
 {: .prompt-tip }
 
 ## Part C
@@ -274,4 +259,82 @@ Check the following examples:
 - They **are** very happy. They've just got married. (can control, not around the time of speaking)
 - Would you like something to eat? **Are you** hungry? (can't control, around the time of speaking)
 
-[^1]: **a** **e** **i** **o** **u** are *vowel* letters. The other letters(**b** **c** **d** **f** **g** etc.) are *consonant* letters.
+# Past Simple (I did)
+
+## Part A
+
+Very often the *past simple* ends in -**ed** (*regular* verbs):
+- I work in a travel agency now. Before that I **worked** in a department store.
+- They **invited** us to their party, but we **decided** not to go.
+- The police **stopped** me on my way home last night.
+- Laura **passed** her exam because she **studied** very hard.
+
+> For Spelling
+> TODO: refer Appendix 6
+{: .prompt-tip }
+
+But many verb are *irregular*. The *past simple* does *not* end in -**ed**. For example:
+- write -> **wrote**
+  - Mozart **wrote** more than 600 pieces of music.
+- see -> **saw**
+  - We **saw** Alice in town a few days ago.
+- go -> **went**
+  - I **went** to the cinema three times last week.
+- shut -> **shut**
+  - It was cold, so I **shut** the window.
+
+> For a list of irregular verbs
+> TODO: refer Appendix 1
+{: .prompt-tip }
+
+## Part B
+
+In questions and negative sentences we use **did**/**didn't** + infinitive:
+
+|||
+|-|-|
+|I|enjoy**ed**|
+|she|**saw**|
+|they|**went**|
+
+||||
+|-|-|-|
+|**did**|you|**enjoy**|
+|**did**|she|**see**|
+|**did**|they|**go**|
+
+
+||||
+|-|-|-|
+|I|**didn't**|**enjoy**|
+|she|**didn't**|**see**|
+|they|**didn't**|**go**|
+
+- I enjoyed the party a lot. **Did** you **enjoy** it?
+- How many people **did** they **invite** to the wedding?
+- I **didn't buy** anything because I **didn't have** any money.
+
+Sometimes **do** is the main verb in the sentence (did you **do**?, I didn't **do**):
+- What **did** you **do** at the weekend? (*not* What did you at the weekend?)
+- I **didn't do** anything. (*not* I didn't anything)
+
+## Part C
+
+The past of **be** (**am**/**is**/**are**) is **was**/**were**:
+
+|||
+|-|-|
+|I/he/she/it|**was**/**were**|
+|we/you/they|**was**/**were**|
+
+|||
+|-|-|
+|**was**|I/he/she/it|
+|**were**|we/you/they|
+
+- **I was** annoyed because **they were** late.
+- **Was the weather** good when **you were** on holiday?
+- **I wasn't** able to come because **they were** so busy.
+- **I wasn't** hungry, so I didn't eat anything.
+- Did you go out last night ot **were you** too tried?
+
