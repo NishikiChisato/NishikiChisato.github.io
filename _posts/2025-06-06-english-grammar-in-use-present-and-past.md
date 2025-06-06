@@ -1,13 +1,17 @@
 ---
 layout: post
 title: "[English Grammar in Use] Present and Past"
-categories: ["English", "English Grammar in Use"]
-tags: ["English Grammar"]
+categories:
+- English
+- English Grammar in Use
+tags:
+- English Grammar
 mermaid: true
+date: 2025-06-06 23:21 +0800
 ---
 # Present Continuous (I'm doing)
 
-## Part A
+## Part 1A
 
 **am/is/are + -ing** is *present continuous*.
 
@@ -21,7 +25,7 @@ He is working -> He's working now, **at the time of speaking**. And the action i
 |he/she/it|**is**|(=he's etc.)|working|
 |we/you/they|**are**|(=we're etc.)|doing etc.|
 
-## Part B
+## Part 1B
 
 I am doing something = **I started doing it and I haven't finished; I'm in the middle of doing it**.
 - Please don't make so much noise. I**'m trying** to work. (*not* I try)
@@ -32,13 +36,13 @@ Sometimes the action is not happening at the time of speaking. For example:
 - Kate wants to work in Italy, so she**'s learning** Italian. (but perhaps she isn't learning Italian at the time of speaking)
 - Some friends of mine **are building** their own house. They hope to finish it next summer. (again, they aren't building at the time of speaking)
 
-## Part C
+## Part 1C
 
 You can use the *present continuous* with **today** / **this week** / **this year** etc. (periods around now):
 - You**'re working** hard **today**. (*not* You work hard today)
 - The company I work for **isn't doing** so well **this year**.
 
-## Part D
+## Part 1D
 
 We use *present continuous* when we talk about **a change that has started to happen**. We often use these verbs in this way:
 - **getting**, **becoming**, **changing**, **improving**, **starting**, **beginning**, **increasing**, **rising**, **falling**, **growing**
@@ -48,7 +52,7 @@ We use *present continuous* when we talk about **a change that has started to ha
 
 # Present Simple (I do)
 
-## Part A
+## Part 2A
 
 **drive**(**s**), **work**(**s**), **do**(**es**) etc. is the *present simple*.
 
@@ -57,7 +61,7 @@ We use *present continuous* when we talk about **a change that has started to ha
 |I/we/you/they|**drive**/**work**/*8do** etc.|
 |he/she/it|**drives**/**works**/**does** etc.|
 
-## Part B
+## Part 2B
 
 We use the present simple to talk about **things in general**. We use it to say that **something happens all the time or repeatedly**, or that **something is true in general**:
 - Nurses **look** after patients in hospitals.
@@ -71,10 +75,11 @@ We say:
 - They **teach** *but* my sister **teaches**; I **have** *but* he **has**
 
 > For Spelling
+>
 > TODO: refer Appendix 6
 {: .prompt-tip }
 
-## Part C
+## Part 2C
 
 We use **do**/**does** to make **questions and negative sentences**:
 
@@ -93,7 +98,7 @@ We use **do**/**does** to make **questions and negative sentences**:
 - What **do** you **do** (**do** is also the main verb, do you **do**/ doesn't **do** etc.)
 - He's always so lazy. He **doesn't do** anything to help.
 
-## Part D
+## Part 2D
 
 We use the *present simple* to say **how often we do things**:
 - **I get** up at 8 o'clock **every morning**.
@@ -101,7 +106,7 @@ We use the *present simple* to say **how often we do things**:
 - Julie **doesn't drink** tea **very often**.
 - Robert usually **goes** away **two or three times a year**.
 
-## Part E
+## Part 2E
 
 Sometimes we do things by saying something. For example, when you promise to do something, you can say '**I promise**...'; when you suggest something, you can say '**I suggest**...'
 - **I promise** I won't be late. (*not* I'm promising)
@@ -111,7 +116,7 @@ In the same way we say: **I apologise**.../**I advise**.../**I insist**.../***I 
 
 # Present Continuous and Present Simple 1
 
-## Part A
+## Part 3A
 
 *present continuous* (**I am doing**)
 
@@ -163,7 +168,7 @@ We use the *simple* for *permanent* situations(things that continue for a long t
 - My parents **live** in London. That have lived there all their lives.
 - Joe isn't lazy. He **works** hard most of the time.
 
-## Part B
+## Part 3B
 
 **I always do** and **I'm always doing**
 
@@ -182,7 +187,7 @@ I**'m always doing** something = I do it **too often or more often than normal**
 
 This unit focus on some verb usually used in *present simple*, instead of *present continuous*.
 
-## Part A
+## Part 4A
 
 We use *continuous* forms (I**'m waiting**, it**'s raining** etc.) **for actions and happenings that have started bug not finished**.
 
@@ -205,7 +210,7 @@ The following verbs are **not normally used** in the *present continuous*.
 - She told me her name, but I **don't remember** it now.
 - Gary wasn't well earlier, but he **seems** OK now.
 
-## Part B
+## Part 4B
 
 The usage of *think*.
 
@@ -220,7 +225,7 @@ When **think** means 'consider', **the *continuous* is possible**:
 - 'Are you OK? You look worried.'; 'I**'m thinking**'
 - I**'m thinking** of selling my car. Yould you be interested in buying it?
 
-## Part C
+## Part 4C
 
 The usage of *see*, *hear*, *smell*, *taste*, *look*, *feel*
 
@@ -237,7 +242,7 @@ You can use the *present simple* **or** *present continuous* to say how somebody
 
 For the sake of accuracy, we use the *present simple*.
 
-## Part D
+## Part 4D
 
 You can say **he's being**..., **you're being**... etc. to say **how somebody is behaving now**:
 - I can't understand why he**'s being** so selfish. He isn't usually like that. (**being** selfish = behaving selfishly now)
@@ -261,7 +266,7 @@ Check the following examples:
 
 # Past Simple (I did)
 
-## Part A
+## Part 5A
 
 Very often the *past simple* ends in -**ed** (*regular* verbs):
 - I work in a travel agency now. Before that I **worked** in a department store.
@@ -270,6 +275,7 @@ Very often the *past simple* ends in -**ed** (*regular* verbs):
 - Laura **passed** her exam because she **studied** very hard.
 
 > For Spelling
+>
 > TODO: refer Appendix 6
 {: .prompt-tip }
 
@@ -284,10 +290,11 @@ But many verb are *irregular*. The *past simple* does *not* end in -**ed**. For 
   - It was cold, so I **shut** the window.
 
 > For a list of irregular verbs
+>
 > TODO: refer Appendix 1
 {: .prompt-tip }
 
-## Part B
+## Part 5B
 
 In questions and negative sentences we use **did**/**didn't** + infinitive:
 
@@ -318,7 +325,7 @@ Sometimes **do** is the main verb in the sentence (did you **do**?, I didn't **d
 - What **did** you **do** at the weekend? (*not* What did you at the weekend?)
 - I **didn't do** anything. (*not* I didn't anything)
 
-## Part C
+## Part 5C
 
 The past of **be** (**am**/**is**/**are**) is **was**/**were**:
 
@@ -338,3 +345,68 @@ The past of **be** (**am**/**is**/**are**) is **was**/**were**:
 - **I wasn't** hungry, so I didn't eat anything.
 - Did you go out last night ot **were you** too tried?
 
+# Past Continuous (I was doing)
+
+## Part 6A
+
+Yesterday Karen and Joe played tennis. They started at 10o'clock and finished at 11.30. So, at 10.30 they **were playing** tennis.
+
+they **were playing** = they were in the middle of playing, they had not finished
+
+**was**/**were + -ing** is the past continuous:
+
+||||
+|-|-|-|-|
+|he/she/it|**was**|**playing**|
+|we/you/they|**were**|**doing** etc.|
+
+## Part 6B
+
+I **was doing** something = I was in the middle of doing it at a certain time. The action or situation started before this time, but had not finished:
+
+```mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'neutral' } }%%
+timeline
+  I started doing: past
+  I was doing: past
+  I finished doing: past
+  I'm doing: now
+```
+
+- This time last year I **was living** in Hong Kong.
+- What **were** you **doing** at 10o'clock last night?
+- I waved to Helen, but she **wasn't looking**.
+
+## Part 6C
+
+Compare I **was doing** (*past continuous*) and I **did** (*past simple*):
+
+|I **was doing** (= in the middle of an action)|I **did** (= complete action)|
+|-|-|
+|We were **walking** home when I met Dan. (in the middle of walking home)|We **walked** home after the party last night. (= all the way, completely)|
+|Kate **was watching** TV when we arrived.|Kate **watched** TV a lot when she was ill last year.|
+
+## Part 6D
+
+You can say that something **happened** (*past simple*) in the middle of something else (*past continuous*):
+- Matt **phoned** while we **were having** dinner.
+- It **was raining** when I **got** up.
+- I **saw** you in the park Yesterday. You **were sitting** on the grass and **reading** a book.
+- I **hurt** my back while I **was working** in the garden.
+- I **was walking** along the street when suddenly I **heared** something behind me. Somebody **was following** me. I was scared and I started to run.
+
+But we use the past simple to say that one thing happened *after* another:
+
+- I **was walking** along the road when I **saw** Dan. So I **stopped**, and we **talked** for a while.
+- 'Did you go out last night?'; 'No, I was too tired.'
+
+Compare:
+
+- When Karen arrived, we **were having** dinner. (= we had already started before she arrived)
+- When Karen arrived, we **had** dinner. (= Karen arrived, and then we had dinner)
+
+## Part 6E
+
+Some verbs (for example, **know** and **want**) are not normally used in continuous forms (**is** + -**ing**, **was** + -**ing** etc.)
+- We were good friends. We **know** each other well. (*not* we were knowing)
+- I was enjoying the party, but Chris **wanted** to go home. (*not* was wanting)
