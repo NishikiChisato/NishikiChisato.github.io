@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[English Grammar in Use]Spelling"
+title: "[English Grammar in Use] Spelling"
 categories: ["English", "English Grammar in Use"]
 tags: ["English Grammar", "Words Spelling"]
 ---
