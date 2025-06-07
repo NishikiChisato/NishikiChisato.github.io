@@ -9,6 +9,40 @@ tags:
 mermaid: true
 date: 2025-06-06 23:21 +0800
 ---
+
+<!--toc:start-->
+- [Present Continuous (I'm doing)](#present-continuous-im-doing)
+  - [Part 1A](#part-1a)
+  - [Part 1B](#part-1b)
+  - [Part 1C](#part-1c)
+  - [Part 1D](#part-1d)
+- [Present Simple (I do)](#present-simple-i-do)
+  - [Part 2A](#part-2a)
+  - [Part 2B](#part-2b)
+  - [Part 2C](#part-2c)
+  - [Part 2D](#part-2d)
+  - [Part 2E](#part-2e)
+- [Present Continuous and Present Simple 1](#present-continuous-and-present-simple-1)
+  - [Part 3A](#part-3a)
+  - [Part 3B](#part-3b)
+- [Present Continuous and Present Simple 2](#present-continuous-and-present-simple-2)
+  - [Part 4A](#part-4a)
+  - [Part 4B](#part-4b)
+  - [Part 4C](#part-4c)
+  - [Part 4D](#part-4d)
+- [Past Simple (I did)](#past-simple-i-did)
+  - [Part 5A](#part-5a)
+  - [Part 5B](#part-5b)
+  - [Part 5C](#part-5c)
+- [Past Continuous (I was doing)](#past-continuous-i-was-doing)
+  - [Part 6A](#part-6a)
+  - [Part 6B](#part-6b)
+  - [Part 6C](#part-6c)
+  - [Part 6D](#part-6d)
+  - [Part 6E](#part-6e)
+- [Conclusion](#conclusion)
+<!--toc:end-->
+
 # Present Continuous (I'm doing)
 
 ## Part 1A
@@ -370,7 +404,7 @@ timeline
   I started doing: past
   I was doing: past
   I finished doing: past
-  I'm doing: now
+  I'm doing/I do: now
 ```
 
 - This time last year I **was living** in Hong Kong.
@@ -410,3 +444,19 @@ Compare:
 Some verbs (for example, **know** and **want**) are not normally used in continuous forms (**is** + -**ing**, **was** + -**ing** etc.)
 - We were good friends. We **know** each other well. (*not* we were knowing)
 - I was enjoying the party, but Chris **wanted** to go home. (*not* was wanting)
+
+# Conclusion
+
+To summarize, let's review the *present simple/continuous* and the *past simple/continuous*.
+
+The *present simple* is used to describe **general truths, habits, or actions that happen repeatedly**. It can also describe permanent situations that continue for a long time.
+
+In contrast, the *present continuous* describes an ongoing action that is happening at the monment of speaking and is not yet complete. It's often used for temporary situations.
+- Note the difference between **I always do**(a habit) and **I always doing**(often used to describe a frequent, and perhaps annoying, habit).
+- Some verbs, known as *stative verbs* (e.g., know, believe, want), are not normally used in the continuous form, even when describing an ongoing state.
+
+The *past simple* is used to describe a single, completed action that happends in the past.
+
+The *past continuous* describes an ongoing action that was in progress at a specific time in the past. The action started before that time but had not yet finished.
+- We often use these two tenses together. For an action that interrupted another, the interrupting action uses the *past simple*, while the ongoing background action uses the *past continuous* (e.g., I **was watching** TV when the phone **rang**).
+- The rule about *stative verbs* not being used in continuous form also applies to the *past continuous*.
