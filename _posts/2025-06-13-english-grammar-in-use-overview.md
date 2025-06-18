@@ -32,6 +32,7 @@ title: Past Simple and Past Continuous and Past Perfect and Past Perfect Continu
 %%{init: { 'logLevel': 'debug', 'theme': 'neutral' } }%%
 flowchart LR
   u5(Unit 5) -->|Past Simple and Past Continuous| u6(Unit 6)
+  u15(Unit 15) -->|Past Perfect Continuous| u16(Unit 16)
 ```
 
 ```mermaid
@@ -43,6 +44,7 @@ flowchart LR
   u5(Unit 5) -->|Past Simple and Present Perfect| u7(Unit 7) -->|Past Simple and Present Perfect| u8(Unit 8) 
   -->|Past Simple and Present Perfect| u12(Unit 12) -->|Past Simple and Present Perfect| u13(Unit 13) 
   -->|Past Simple and Present Perfect| u14(Unit 14)
+  u9(Unit 9) -->|Present Perfect Continuous| u10(Unit 10) -->|Past Perfect Continuous| u16(Unit 16)
 ```
 
 ```mermaid
@@ -71,6 +73,7 @@ title: Single
 --- 
 %%{init: { 'logLevel': 'debug', 'theme': 'neutral' } }%%
 flowchart LR
-  u4(Unit 4) -->|have| u17(Unit 17)
+  u4(Unit 4) -->|have/have got| u17(Unit 17)
   u7(Unit 7) -->|been to| u8(Unit 8) & u126(Unit 126)
+  u18(Unit 18) -->|used to|
 ```
