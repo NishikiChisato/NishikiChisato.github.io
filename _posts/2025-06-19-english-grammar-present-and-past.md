@@ -8,6 +8,14 @@ tags:
 date: 2025-06-19 07:45 +0800
 ---
 
+<!--toc:start-->
+- [Preface](#preface)
+- [Another View of Tenses](#another-view-of-tenses)
+- [Present Tenses](#present-tenses)
+- [Past Tenses](#past-tenses)
+- [Interchangeable?](#interchangeable)
+<!--toc:end-->
+
 # Preface
 
 Recently, I've been studying the present and past tenses from the book *English Grammar in Use*. I found that when I did the exercises, I often couldn't distinguish between the tenses.
