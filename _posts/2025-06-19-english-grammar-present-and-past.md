@@ -14,9 +14,14 @@ date: 2025-06-19 07:45 +0800
 - [Present Tenses](#present-tenses)
 - [Past Tenses](#past-tenses)
 - [Interchangeable?](#interchangeable)
+- [From Input to Insight](#from-input-to-insight)
+  - [Simple and Continuous](#simple-and-continuous)
+    - [Simple](#simple)
+    - [Continuous](#continuous)
+    - [Difference: Permanent vs. Temporary](#difference-permanent-vs-temporary)
 <!--toc:end-->
 
-# Preface
+## Preface
 
 Recently, I've been studying the present and past tenses from the book *English Grammar in Use*. I found that when I did the exercises, I often couldn't distinguish between the tenses.
 
@@ -26,7 +31,7 @@ I decided that simply reading about the tenses wasn't enough. The real breakthro
 
 This article is the direct result of that process. It’s my personal summary, designed to bring order to that chaos. I'm going to walk you through the thought process and the key distinctions that helped me finally make sense of it all. My hope is that by sharing my journey from confusion to clarity, I can help make yours a little smoother too.
 
-# Another View of Tenses
+## Another View of Tenses
 
 We're focusing on the present tenses (Present Simple, Continuous, Perfect, and Perfect Continuous) and the past tenses (Past Simple, Continuous, Perfect, and Perfect Continuous). In my previous exercises, I couldn't always decide which one to use in a given scenario.
 
@@ -44,7 +49,7 @@ The job of each aspect can be checked in the following table.
 | **Perfect** | Connects two different points in time. | "It happened *before* now/then" [^3] |
 | **Perfect Continuous**| Focuses on the duration of an action that leads up to a point in time. | "It has been happening" / "It had been happening" [^4] |
 
-# Present Tenses
+## Present Tenses
 
 The present tenses all connect to the **present moment (now)** in some way.
 
@@ -76,7 +81,7 @@ The present tenses all connect to the **present moment (now)** in some way.
 -   "I **have read** that book." (I finished it. **The result is I know the story now**.)
 -   "I **have been reading** that book." (I am in the middle of it, or I just put it down. **The focus is on the activity of reading**.)
 
-# Past Tenses
+## Past Tenses
 
 These tenses are all set firmly in the **past**. They have no connection to the present.
 
@@ -103,7 +108,7 @@ These tenses are all set firmly in the **past**. They have no connection to the 
     -   *Result in the past:* His eyes were red. (Past Simple)
 -   "By the time he retired, he **had been working** at the company for 40 years." (Focuses on the 40-year duration leading up to the past event of his retirement.)
 
-# Interchangeable?
+## Interchangeable?
 
 **1. Past Simple vs. Present Perfect**
 
@@ -135,6 +140,59 @@ You only need Past Perfect if you need to make it clear that one past action hap
 Use the Past Perfect when the order is not obvious and you need to avoid confusion.
 -   "When I got home, my family **left**." (This sounds like they left at the same moment I arrived).
 -   "When I got home, my family **had left**." (This is clear: they left *before* I arrived).
+
+## From Input to Insight
+
+After exploring the topic through hands-on practice, I've developed my own understanding framework to help me decide which approach to use. I'm writing down these insights as a set of simple rules for future reference.
+
+Since English grammar includes many exceptions, so here, I'll focus on general rules here. I can't possibly list every exceptions in this book thoroughly, so I've chosen a more practical(and lazy) approach: For a specific topic, I'll include just one summary line. If I want to revisit that topic in the future, I should start from the begining and walk through again.
+
+### Simple and Continuous
+
+#### Simple
+
+Basically, if we're talking about things in general(something *happens all the time or repeatedly*), we can use **Present Simple**. We use it to state facts or to describe actions happen regularly or are always true. Think of it to describe the normal state of things.
+
+Its main uses are for:
+
+- Facts and Universal Truth: Actions or states are always true
+  - The sun **rises** in the east.
+  - Water **boils** at 100 degrees Celsius.
+- Habits and Daily Routine: Things that happen repeatedly over a long period
+  - She **drinks** coffee every morning.
+- Permanent Situation: Long-term situations that we don't expect to change
+  - He **lives** in London.
+
+#### Continuous
+
+If we're talking about things happening at or around the time of speaking, we use **Present Continuous**. The key idea is that the action is **in progress, unfinished, not complete or temporary**.
+
+In contrast, **Present Simple** is used for actions that begin in the past, continue into the present, and may extend into the future. More important, thses actions typically **repeatedly** or **habitually**.
+
+So, if we want to describe an action happening right now, at the time of speaking, we should use **Present Continuous**. It describes actions that occur in a **temporary context**, not something permanent or long-term.
+
+Its main uses are for:
+
+- Actions Happening Now: Something in progress at this exact moment
+  - Where's John; He **is taking** a shower.
+- Temporary Situations: Actions that happening for a limited period
+  - He **is living** in London **for a few months**.
+- Developing or Changing Situations: Trends that are in progress around now
+  - The climate **is getting** warmer.
+
+#### Difference: Permanent vs. Temporary 
+
+Present Simple describes permanent states or general habits. It tells us **what a person does**.
+
+- I live in Paris. (This is my permanent home.)
+- She works as a teacher. (This is her profession.)
+
+Present Continuous describes temporary actions or situations. It tells us **what a person is doing now or around now**.
+
+- I am living in Paris for the summer. (This is a temporary arrangement.)
+- She is working on a new project this week. (This is a temporary task, not her whole job.)
+
+In short, when you use **Present Simple**, you are stating a fact **without a specific endpoint**. When you use **Present Continuous**, you are **highlighting that the action is happening within a limited timeframe**.
 
 ---
 
