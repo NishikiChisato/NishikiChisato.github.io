@@ -123,7 +123,7 @@ Its main uses are for:
 - Life Experiences: Talking about experiences (or lack of experiences) up to the present moment. The specific time is not mentioned.
   - "He **has visited** Japan three times." (His life experience *up to now* includes this.)
   - "**Have you ever eaten** sushi?" (I'm asking about your entire life experience.)
-- Actions in an Unfinished Time Period: For actions within a time frame that is not yet over (e.g., *today, this week, this year*).
+- Actions in an Unfinished Time Period: For actions **within a time frame that is not yet over** (e.g., *today, this week, this year*).
   - "I **haven't seen** him **today**." (Today is not over yet, so I might still see him.)
   - "We **have sold** a lot of products **this month**." (The month is still in progress.)
 
@@ -257,11 +257,11 @@ After exploring the topic through hands-on practice, I've developed my own under
 
 For *present* time (We're talking about now):
 - If the action can be classified into **temporary** or **permanent** situation, we use **Simple** or **Continuous**, respectively.
-- If we focus on the different parts of the action, result of action or action itself, we use **Perfect** or **Perfect Continuous**, respectively.
+- If we focus on the different parts of the action, **result of action** or **action itself**, we use **Perfect** or **Perfect Continuous**, respectively.
 
 For *past* time (We're talking about past):
 - If the action can be classified into **complete action** or **ongoing action**, we use **Simple** or **Continuous**, respectively.
-- If we focus on the different parts of the action, result of action or action itself, we use **Perfect** or **Perfect Continuous**, respectively.
+- If we focus on the different parts of the action, **result of action** or **action itself**, we use **Perfect** or **Perfect Continuous**, respectively.
 
 ---
 
