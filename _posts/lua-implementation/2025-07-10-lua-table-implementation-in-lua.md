@@ -19,7 +19,7 @@ tags:
     - [Rehash](#rehash)
   - [Insert operation](#insert-operation)
   - [Get operation](#get-operation)
-    - [Main get function & Generic get function](#main-get-function-generic-get-function)
+    - [Main get function And Generic get function](#main-get-function-and-generic-get-function)
       - [Main get function](#main-get-function)
       - [Generic get function](#generic-get-function)
     - [Next function](#next-function)
@@ -683,7 +683,7 @@ static void luaH_newkey (lua_State *L, Table *t, const TValue *key,
 
 ### Get operation
 
-#### Main get function & Generic get function
+#### Main get function And Generic get function
 
 All get functions are designed to return the value corresponding to the input key.
 
