@@ -166,8 +166,9 @@ The **Past Simple** is the backbone of storytelling. It describes completed acti
 
 Its main uses are for:
 
-- A Completed Action in the Past: The action started and finished at a definite past time.
+- A **Completed Action** in the Past: The action started and finished at a definite past time.
   - "I **visited** my grandmother **yesterday**."
+  - Noted that this action should be completed and happened in the past.
 - A Sequence of Past Actions: Describing a chain of events in the order they happened.
   - "He **woke up**, **brushed** his teeth, and **made** some coffee."
 - A Finished State or Habit: A situation that was true for a time in the past but is now over.
