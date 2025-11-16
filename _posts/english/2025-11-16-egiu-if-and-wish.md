@@ -12,9 +12,9 @@ mermaid:
 ---
 
 <!--toc:start-->
-- [Unit 38: if I do … and if I did …](#unit-38-if-i-do-and-if-i-did)
-- [Unit 39: if I knew … I wish I knew](#unit-39-if-i-knew-i-wish-i-knew)
-- [Unit 40: if I had known … I wish I had known …](#unit-40-if-i-had-known-i-wish-i-had-known)
+- [Unit 38: if I do ... and if I did ...](#unit-38-if-i-do-and-if-i-did)
+- [Unit 39: if I knew ... and I wish I knew](#unit-39-if-i-knew-and-i-wish-i-knew)
+- [Unit 40: if I had known ... I wish I had known ...](#unit-40-if-i-had-known-i-wish-i-had-known)
 - [Unit 41: wish](#unit-41-wish)
 - [Summary](#summary)
   - [The Basics](#the-basics)
@@ -23,7 +23,7 @@ mermaid:
   - [Present and Past](#present-and-past)
 <!--toc:end-->
 
-## Unit 38: if I do … and if I did …
+## Unit 38: if I do ... and if I did ...
 
 1. Different tences
     - For present, if I do…, I will… → means it’s possible to do it
@@ -39,7 +39,7 @@ mermaid:
     - If I won a lot of money, I would/might/could buy a house.
     - If I had a new MacBook, I would/might/could use it to write code.
 
-## Unit 39: if I knew … I wish I knew
+## Unit 39: if I knew ... and I wish I knew
 
 1. When we image what we would do in a situation, we use if + past (if I knew/if you were/if we did etc.), but the meaning is present, not past. → the same as Unit 38 concept 2
     - There are many things I would like to do if I had more time.
@@ -63,7 +63,7 @@ mermaid:
     - She could get a better job if she could speak another language. (She would be able to get a better job if she was able to speak another language.) → could can use in if and non-if part.
     - I wish I could help you. (I wish I were able to help you)
 
-## Unit 40: if I had known … I wish I had known …
+## Unit 40: if I had known ... I wish I had known ...
 
 1. We use if + had (done) to talk about past. → if + past simple means present, if + past perfect means past.
     - If I had known you were in hospital, I would have gone to visit you. (I didn’t know, so I didn’t go to visit you. past tences)
@@ -160,7 +160,7 @@ In this usage, besides `would`, the main clause can also use `could` and `might`
 - If the weather weren't so bad, we **could** go out. (we would be able to)
 - If the weather weren't so bad, we **might** go out. (maybe we would)
 
-### If I knew… I wish I knew
+### If I knew ... I wish I knew
 
 `If I knew` is essentially just a practical form of `if + past`; the verb that follows could be `were`, `did`, or something else. The meaning of `if I knew` is that if I knew something, I would do something else—it's fundamentally about an imaginary situation, and the time it refers to is the present, not the past.
 

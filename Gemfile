@@ -13,3 +13,6 @@ end
 
 gem "wdm", "~> 0.2.0", :platforms => [:mingw, :x64_mingw, :mswin]
 gem 'jekyll-compose', group: [:jekyll_plugins]
+
+gem "logger", "~> 1.7"
+gem "benchmark", "~> 0.5.0"
