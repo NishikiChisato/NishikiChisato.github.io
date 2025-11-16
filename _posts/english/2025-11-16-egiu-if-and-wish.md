@@ -12,18 +12,18 @@ mermaid:
 ---
 
 <!--toc:start-->
-- [Unit 38: if I do ... and if I did ...](#unit-38-if-i-do-and-if-i-did)
-- [Unit 39: if I knew ... and I wish I knew](#unit-39-if-i-knew-and-i-wish-i-knew)
-- [Unit 40: if I had known ... I wish I had known ...](#unit-40-if-i-had-known-i-wish-i-had-known)
+- [Unit 38: if I do and if I did](#unit-38-if-i-do-and-if-i-did)
+- [Unit 39: if I knew and I wish I knew](#unit-39-if-i-knew-and-i-wish-i-knew)
+- [Unit 40: if I had known I wish I had known](#unit-40-if-i-had-known-i-wish-i-had-known)
 - [Unit 41: wish](#unit-41-wish)
 - [Summary](#summary)
   - [The Basics](#the-basics)
-  - [if + past](#if-past)
-  - [If I knew… I wish I knew](#if-i-knew-i-wish-i-knew)
+  - [if plus past](#if-plus-past)
+  - [If I knew I wish I knew](#if-i-knew-i-wish-i-knew)
   - [Present and Past](#present-and-past)
 <!--toc:end-->
 
-## Unit 38: if I do ... and if I did ...
+## Unit 38: if I do and if I did
 
 1. Different tences
     - For present, if I do…, I will… → means it’s possible to do it
@@ -39,7 +39,7 @@ mermaid:
     - If I won a lot of money, I would/might/could buy a house.
     - If I had a new MacBook, I would/might/could use it to write code.
 
-## Unit 39: if I knew ... and I wish I knew
+## Unit 39: if I knew and I wish I knew
 
 1. When we image what we would do in a situation, we use if + past (if I knew/if you were/if we did etc.), but the meaning is present, not past. → the same as Unit 38 concept 2
     - There are many things I would like to do if I had more time.
@@ -63,7 +63,7 @@ mermaid:
     - She could get a better job if she could speak another language. (She would be able to get a better job if she was able to speak another language.) → could can use in if and non-if part.
     - I wish I could help you. (I wish I were able to help you)
 
-## Unit 40: if I had known ... I wish I had known ...
+## Unit 40: if I had known I wish I had known
 
 1. We use if + had (done) to talk about past. → if + past simple means present, if + past perfect means past.
     - If I had known you were in hospital, I would have gone to visit you. (I didn’t know, so I didn’t go to visit you. past tences)
@@ -146,7 +146,7 @@ iwik -- Past --> iwihk
 
 Let's start with the most basic structures: `if I do, I will...` and `if I did, I would...`. The first one applies to situations where doing something is possible. The examples in Unit 38.1 illustrate this well. The difference between `if I do, I will...` and `if I did, I would...` is simply about time frame: the former talks about the present, while the latter talks about the past. They are semantically identical, only differing in tense. It's important to specify here that because these events occur in the present or past, the verbs `do/will` and `did/would` simply represent different tenses. `did` is just the past tense of `do`, and `would` is just the past tense of `will`; `would` carries no other meaning in this context.
 
-### if + past
+### if plus past
 
 Next, let's introduce another usage of `if`: following it with a past tense form. This structure can refer to something that happened in the past, but it can also describe a present situation. When we use it to talk about the present, it applies to scenarios where "we are talking about something that will not happen" or "we don't expect it to happen." It's worth noting that this rule only requires the if-part to be in past tense; it doesn't impose any requirement on the non-if part. This is different from the basic case mentioned above, where both parts of the sentence use a consistent tense.
 
@@ -160,7 +160,7 @@ In this usage, besides `would`, the main clause can also use `could` and `might`
 - If the weather weren't so bad, we **could** go out. (we would be able to)
 - If the weather weren't so bad, we **might** go out. (maybe we would)
 
-### If I knew ... I wish I knew
+### If I knew I wish I knew
 
 `If I knew` is essentially just a practical form of `if + past`; the verb that follows could be `were`, `did`, or something else. The meaning of `if I knew` is that if I knew something, I would do something else—it's fundamentally about an imaginary situation, and the time it refers to is the present, not the past.
 
