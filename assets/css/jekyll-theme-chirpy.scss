@@ -21,6 +21,14 @@ article header h1,
   font-family: "Georgia", "Noto Serif SC", "Songti SC", serif;
 }
 
+.category-trigger .category-arrow {
+  transition: transform 0.2s ease;
+}
+
+.category-trigger[aria-expanded="true"] .category-arrow {
+  transform: rotate(90deg);
+}
+
 .lang-switch a {
   color: var(--text-muted-highlight-color);
   font-weight: 600;

@@ -79,28 +79,27 @@ layout: page
           </span>
         </span>
 
-        <!-- arrow -->
-        {% if sub_categories_size > 0 %}
-          <a
-            href="#{{ LIST_PREFIX }}{{ group_index }}"
-            data-bs-toggle="collapse"
-            aria-expanded="true"
-            aria-label="{{ HEAD_PREFIX }}{{ group_index }}-trigger"
-            class="category-trigger hide-border-bottom"
-          >
-            <i class="fas fa-fw fa-angle-down"></i>
-          </a>
-        {% else %}
-          <span data-bs-toggle="collapse" class="category-trigger hide-border-bottom disabled">
-            <i class="fas fa-fw fa-angle-right"></i>
-          </span>
-        {% endif %}
+        <!-- arrow - always clickable -->
+        <a
+          href="#{{ LIST_PREFIX }}{{ group_index }}"
+          data-bs-toggle="collapse"
+          aria-expanded="{% if sub_categories_size > 0 %}true{% else %}false{% endif %}"
+          aria-label="{{ HEAD_PREFIX }}{{ group_index }}-trigger"
+          class="category-trigger hide-border-bottom"
+        >
+          <i class="fas fa-fw fa-angle-right category-arrow"></i>
+        </a>
       </div>
       <!-- .card-header -->
 
-      <!-- Sub-categories -->
-      {% if sub_categories_size > 0 %}
-        <div id="{{ LIST_PREFIX }}{{ group_index }}" class="collapse show" aria-expanded="true">
+      <!-- Expandable content: sub-categories or post list -->
+      <div
+        id="{{ LIST_PREFIX }}{{ group_index }}"
+        class="collapse{% if sub_categories_size > 0 %} show{% endif %}"
+        aria-expanded="{% if sub_categories_size > 0 %}true{% else %}false{% endif %}"
+      >
+        {% if sub_categories_size > 0 %}
+          <!-- Sub-categories -->
           <ul class="list-group">
             {% for sub_category in sub_categories %}
               <li class="list-group-item">
@@ -128,8 +127,24 @@ layout: page
               </li>
             {% endfor %}
           </ul>
-        </div>
-      {% endif %}
+        {% else %}
+          <!-- Post list for single-level category -->
+          <ul class="list-group">
+            {% for post in posts_of_category %}
+              {% if post.lang and post.lang != "en" %}
+                {% continue %}
+              {% endif %}
+              <li class="list-group-item">
+                <i class="far fa-file-alt fa-fw"></i>
+                <a href="{{ post.url | relative_url }}" class="mx-2">{{ post.title }}</a>
+                <span class="text-muted small font-weight-light">
+                  {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
+                </span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
     </div>
     <!-- .card -->
 
