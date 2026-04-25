@@ -1,12 +1,13 @@
 ---
 layout: post
 title: "[Lua] Stack layout in Lua"
-date: 2025-07-10 20:17 +0800
+date: 2025-07-10 19:42 +0800
 categories:
 - Lua Implementation
 tags:
 - Lua Implementation
-- Lua VM
+- Stack Implementation
+series: "Lua Source Code Analysis"
 ---
 
 <!--toc:start-->

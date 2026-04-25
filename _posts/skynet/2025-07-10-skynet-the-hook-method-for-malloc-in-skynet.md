@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "[Skynet] The hook method for malloc in skynet"
-date: 2025-07-10 20:20 +0800
+date: 2025-07-10 20:39 +0800
 categories:
-- Skynet Implementation
+- Skynet
 tags:
-- Skynet Implementation
+- Skynet
+series: "Skynet Framework Analysis"
 ---
 
 <!--toc:start-->

@@ -1,12 +1,13 @@
 ---
 layout: post
 title: "[Lua] Hash for floating-point in Lua"
-date: 2025-07-10 20:12 +0800
+date: 2025-07-10 18:31 +0800
 categories:
 - Lua Implementation
 tags:
 - Lua Implementation
-- Hash Method
+- Hash Implementation
+series: "Lua Source Code Analysis"
 ---
 
 <!--toc:start-->

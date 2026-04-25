@@ -7,6 +7,7 @@ categories:
 tags:
 - Lua Implementation
 - Table Implementation
+series: "Lua Source Code Analysis"
 ---
 
 <!--toc:start-->
