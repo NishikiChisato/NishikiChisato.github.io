@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[Skynet] The hook method for malloc in skynet"
+lang: en
+ref: skynet-hook-method-for-malloc
+permalink: /en/posts/skynet-the-hook-method-for-malloc-in-skynet/
 date: 2025-07-10 20:39 +0800
 categories:
 - Skynet

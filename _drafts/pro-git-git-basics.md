@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[Pro Git] Git Basics"
+lang: en
+ref: pro-git-git-basics
+permalink: /en/posts/pro-git-git-basics/
 categories: ["Command Line Tools"]
 tags: ["Git", "Version Control"]
 mermaid: true

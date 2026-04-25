@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[Lua] Hash for floating-point in Lua"
+lang: en
+ref: lua-hash-for-floating-point
+permalink: /en/posts/lua-hash-for-floating-point-in-lua/
 date: 2025-07-10 18:31 +0800
 categories:
 - Lua Implementation

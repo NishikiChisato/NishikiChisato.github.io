@@ -20,3 +20,15 @@ article header h1,
 .card-title {
   font-family: "Georgia", "Noto Serif SC", "Songti SC", serif;
 }
+
+.lang-switch a {
+  color: var(--text-muted-highlight-color);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: none;
+
+  &:hover {
+    color: #d2603a;
+    border-bottom: 1px solid #d2603a;
+  }
+}

@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[Lua] Table implementation in Lua"
+lang: en
+ref: lua-table-implementation
+permalink: /en/posts/lua-table-implementation-in-lua/
 date: 2025-07-10 20:13 +0800
 categories:
 - Lua Implementation

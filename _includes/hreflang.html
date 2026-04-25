@@ -1,0 +1,9 @@
+{% comment %} Add hreflang tags for bilingual posts {% endcomment %}
+{% if page.ref %}
+  {% assign translations = site.posts | where: "ref", page.ref %}
+  {% for post in translations %}
+    {% if post.url != page.url %}
+      <link rel="alternate" hreflang="{{ post.lang }}" href="{{ post.url | absolute_url }}" />
+    {% endif %}
+  {% endfor %}
+{% endif %}

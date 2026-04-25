@@ -5,8 +5,8 @@ refactor: true
 
 {% include lang.html %}
 
-{% assign all_pinned = site.posts | where: 'pin', 'true' %}
-{% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+{% assign all_pinned = site.posts | where_exp: 'item', 'item.pin == true and item.lang == "en"' %}
+{% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true and item.lang == "en"' %}
 
 {% assign posts = '' | split: '' %}
 

@@ -1,0 +1,19 @@
+{% comment %} Language switcher for bilingual posts {% endcomment %}
+{% if page.ref %}
+  {% assign translations = site.posts | where: "ref", page.ref %}
+  {% if translations.size > 1 %}
+    {% for post in translations %}
+      {% if post.lang != page.lang %}
+        <span class="lang-switch">
+          {% if post.lang == 'zh' %}
+            <a href="{{ post.url | relative_url }}">中文</a>
+          {% elsif post.lang == 'en' %}
+            <a href="{{ post.url | relative_url }}">English</a>
+          {% else %}
+            <a href="{{ post.url | relative_url }}">{{ post.lang | upcase }}</a>
+          {% endif %}
+        </span>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}

@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[C++] Ownership of resource"
+lang: en
+ref: c-ownership-of-resource
+permalink: /en/posts/c-ownership-of-resource/
 ---
 
 Before resorting to garbage collection, systematically use resource

@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[C++] Understanding return value optimization(RVO)"
+lang: en
+ref: c-understanding-rvo
+permalink: /en/posts/c-understanding-return-value-optimization-rvo/
 ---
 
 An assignment uses a copy or move assignment operator. In principle, the

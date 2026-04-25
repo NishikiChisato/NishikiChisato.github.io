@@ -10,6 +10,10 @@ layout: page
 
 <div id="archives" class="pl-xl-3">
   {% for post in site.posts %}
+    {% if post.lang and post.lang != "en" %}
+      {% continue %}
+    {% endif %}
+
     {% assign cur_year = post.date | date: '%Y' %}
 
     {% if cur_year != last_year %}

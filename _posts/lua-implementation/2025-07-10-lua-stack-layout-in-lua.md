@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[Lua] Stack layout in Lua"
+lang: en
+ref: lua-stack-layout
+permalink: /en/posts/lua-stack-layout-in-lua/
 date: 2025-07-10 19:42 +0800
 categories:
 - Lua Implementation

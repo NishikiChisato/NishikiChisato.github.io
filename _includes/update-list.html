@@ -5,6 +5,9 @@
 {% assign all_list = '' | split: '' %}
 
 {% for post in site.posts %}
+  {% if post.lang and post.lang != "en" %}
+    {% continue %}
+  {% endif %}
   {% assign datetime = post.last_modified_at | default: post.date %}
 
   {% capture elem %}

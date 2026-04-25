@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "[C++ Primer] Part I: The Basics"
+lang: en
+ref: c-primer-part-i-the-basics
+permalink: /en/posts/c-primer-part-i-the-basics/
 categories: ["C++ Primer"]
 tags: ["C++"]
 ---
