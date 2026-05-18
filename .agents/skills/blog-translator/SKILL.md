@@ -45,11 +45,12 @@
     ref: short-kebab-case-id
     permalink: /zh/posts/kebab-case-title/
     hidden: true
+    sitemap: false
     date: YYYY-MM-DD HH:MM +0800
     ---
     ```
 
-    **重要**：中文版必须设置 `hidden: true`，且**不得包含 `categories`、`tags`、`series` 字段**。这样中文文章不会出现在 Archive、Categories、Tags 等列表页面中。中文版只能通过文章页面的语言切换按钮访问。英文版是主版本，中文版是辅助。
+    **重要**：中文版必须设置 `hidden: true` 和 `sitemap: false`，且**不得包含 `categories`、`tags`、`series` 字段**。这样中文文章不会出现在 Archive、Categories、Tags 等列表页面中。中文版只能通过文章页面的语言切换按钮访问。英文版是主版本，中文版是辅助。
 
     ## URL 规范
     - 英文文章：`/en/posts/<slug>/`
@@ -104,7 +105,7 @@
     - 如果原文缺少 `ref` 字段，先为原文添加 `ref`，再创建翻译
     - 如果原文缺少 `permalink`，先为原文添加 `permalink`，再创建翻译
     - 草稿 (`_drafts/`) 也可以翻译，遵循相同的命名和 front matter 规范
-    - **自动补全 `hidden: true`**：如果用户手动创建了中文文章（`lang: zh`）但缺少 `hidden: true`，必须在写入文件前自动添加。所有 `lang: zh` 的文章都必须设置 `hidden: true`，无一例外。
+    - **自动补全 `hidden: true` 和 `sitemap: false`**：如果用户手动创建了中文文章（`lang: zh`）但缺少这些字段，必须在写入文件前自动添加。所有 `lang: zh` 的文章都必须设置 `hidden: true` 和 `sitemap: false`，无一例外。
     - **自动移除 `categories`/`tags`/`series`**：如果用户手动创建了中文文章（`lang: zh`）但包含了 `categories`、`tags` 或 `series` 字段，必须自动移除这些字段，因为中文文章不应出现在列表页面中。
   </instructions>
 </skill>

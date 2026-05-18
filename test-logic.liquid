@@ -1,0 +1,14 @@
+{% assign prev_post = nil %}
+{% assign next_post = nil %}
+
+{% for post in site.posts %}
+  {% if post.lang == "en" and post.hidden != true and post.ref != page.ref %}
+    {% if post.date >= page.date %}
+      {% assign next_post = post %}
+    {% elsif post.date < page.date %}
+      {% if prev_post == nil %}
+        {% assign prev_post = post %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}

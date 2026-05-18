@@ -9,10 +9,8 @@ layout: page
 {% assign df_dayjs_m = site.data.locales[lang].df.archives.dayjs | default: '/ MM' %}
 
 <div id="archives" class="pl-xl-3">
-  {% for post in site.posts %}
-    {% if post.lang and post.lang != "en" %}
-      {% continue %}
-    {% endif %}
+  {% assign archive_posts = site.posts | where_exp: "item", "item.lang == 'en'" %}
+  {% for post in archive_posts %}
 
     {% assign cur_year = post.date | date: '%Y' %}
 

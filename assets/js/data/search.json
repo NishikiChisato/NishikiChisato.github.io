@@ -4,10 +4,8 @@ swcache: true
 ---
 
 [
-  {% for post in site.posts %}
-  {% if post.lang and post.lang != "en" %}
-  {% continue %}
-  {% endif %}
+  {% assign search_posts = site.posts | where_exp: "item", "item.lang == 'en'" %}
+  {% for post in search_posts %}
   {
     "title": {{ post.title | jsonify }},
     "url": {{ post.url | relative_url | jsonify }},

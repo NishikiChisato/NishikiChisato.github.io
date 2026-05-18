@@ -32,6 +32,10 @@
     {% continue %}
   {% endif %}
 
+  {% if post.lang and post.lang != "en" %}
+    {% continue %}
+  {% endif %}
+
   {% assign score = 0 %}
 
   {% for tag in post.tags %}
