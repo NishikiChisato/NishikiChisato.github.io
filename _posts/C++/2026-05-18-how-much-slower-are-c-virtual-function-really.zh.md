@@ -3,7 +3,7 @@ layout: post
 title: "C++ 的虚函数到底有多慢？"
 lang: zh
 sitemap: false
-ref: cxx-virtual-function-overhead
+ref: c++-virtual-function-overhead
 permalink: /zh/posts/how-much-slower-are-c-virtual-functions-really/
 hidden: true
 date: 2026-05-18 22:54 +0800
@@ -105,7 +105,7 @@ BENCHMARK_MAIN();
 
 测试环境为：`Macbook Air M4`
 
-```fish
+```sh
 Unable to determine clock rate from sysctl: hw.cpufrequency: No such file or directory
 This does not affect benchmark measurements, only the metadata output.
 ***WARNING*** Failed to set thread affinity. Estimated CPU frequency may be incorrect.

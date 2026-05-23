@@ -2,11 +2,11 @@
 layout: post
 title: "How much slower are C++ virtual functions, really?"
 lang: en
-ref: cxx-virtual-function-overhead
+ref: c++-virtual-function-overhead
 permalink: /en/posts/how-much-slower-are-c-virtual-functions-really/
 date: 2026-05-18 22:54 +0800
 categories:
-  - CXX-Language
+  - C++
 tags:
   - C++
   - Benchmark
@@ -109,7 +109,7 @@ The general results are as follows:
 
 Test environment: `Macbook Air M4`
 
-```fish
+```sh
 Unable to determine clock rate from sysctl: hw.cpufrequency: No such file or directory
 This does not affect benchmark measurements, only the metadata output.
 ***WARNING*** Failed to set thread affinity. Estimated CPU frequency may be incorrect.
