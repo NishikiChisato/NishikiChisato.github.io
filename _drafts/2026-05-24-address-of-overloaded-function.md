@@ -4,85 +4,63 @@ title: Address of overloaded function
 date: 2026-05-24 09:41 +0800
 ---
 
-# 引入
+# The coincidence: The address of overloaded function
 
-最近在阅读 [sigslot](https://github.com/palacaze/sigslot) 代码的时候，我注意到了一个问题，那就是要如何去拿到指定的 overloaded member function 的地址。
-
-本质上，我们希望去实现一个事件监听类型的库，即我们希望一个 `signal` 对象可以提供三种操作：
-- connect: 将我们指定的函数绑定到这个对象身上
-  - 这种函数可以大体分为两类，一类是可以直接调用的，例如: free function/static member function/lamdba；另一类是需要在对象身上调用的，例如: pointer to member function
-- disconnect: 将我们指定的函数从这个对象身上解绑
-  - 我们可以通过 `connect` 操作所返回的对象来实现解绑
-  - 我们也可以通过手动传入一个函数（对于可以直接调用的函数），亦或是传入一个函数以及这个函数所涉及到的对象（对于成员函数）
-- fire: 调用这个对象身上所有绑定的函数
-
-除了这些基本操作以外，我们还要求生命周期的自动管理，即当绑定到这个 `signal` 对象身上的函数所涉及到的对象 `target` 被销毁时，这个 `signal` 对象会自动删去对应的函数，否则这个函数调用在一个已经删除的对象身上是极度危险的。而反过来也同理，我们同样要求 `target` 会记录它绑定到了哪些 `signal` 对象，当这些 `signal` 对象被销毁时，`target` 也必须要更新自己的内部记录。
-
-换句话说，`signal` 对象需要去跟踪不同的 `target` 对象，这保证了每次函数调用的合法性；而每个 `target` 对象则需要去记录自己在哪些 `signal` 身上绑定了函数，用于在 `target` 销毁时能够找到这些 `signal`，只有这样这些 `signal` 对象才能够删去对应的函数。
-
-我们的重点在于，如何将不同类型的函数以一种统一的形式存储起来
-
-很自然地，我们会想到用 `std::function` 来表示一个通用的可调用的函数，普通函数可以直接对类型相同的 `std::function` 对象进行赋值，而成员函数则可以通过 lamdba 的封装来实现这一点。这种做法可以表示几乎所有函数，比较麻烦的是 overloaded function，但我们依然有办法表示：
+让我们从一个最为平常的场景开始说起。假如你写了一个函数，并且你想要将这个函数绑定到 `std::function` 用作某种 callback function 亦或是其他的行为，很自然地，我们会写出如下代码：
 
 ```cpp
-struct Foo {
-  void foo() {}
-  void foo(int v) {}
-};
+static void func() {}
 
 int main() {
-  Foo obj;
-  // std::function + static_cast
-  std::function<void(Foo*)> func1 = static_cast<void(Foo::*)()>(&Foo::foo);
-  std::function<void(Foo*, int)> func2 = static_cast<void(Foo::*)(int)>(&Foo::foo);
-
-  // lamdba
-  std::function<void()> func3 = [&obj]() {obj.foo();};
-  std::function<void(int)> func4 = [&obj](int v) {obj.foo(v);};
+  std::function<void()> f1 = &func;
+  std::function<void()> f2 = func;
   return 0;
 }
 ```
 
-这种做法比较繁琐，要么让用户麻烦一些，采取 `static_cast` 的形式去手动指定，亦或是使用 lamdba 来做一个 wrapper。
+无论是哪一种写法，都是将 `func` 这个函数的地址赋值给 `std::function<void()>` 对象。我们只需要将 `std::function<void()>` 当成一个可以接受所有返回值为 `void`，参数列表为空的函数地址就行了
 
-然而，我们一般不会采取 `std::function` 的方案。一个很重要的原因在于，我们很难对一个指定的函数做 `disconnect` 的操作，一旦我们将用户传入的函数的地址套上 `std::function` 的外衣，除了通过 `connect` 操作返回的对象以外，我们完全没有办法再次删除它，因为 `std::function` 的[compare function](https://en.cppreference.com/cpp/utility/functional/function/operator_cmp)只支持跟 `std::nullptr_t` 进行比较
+这段代码可以过编译，行为也如预期。我们既可以通过 `func()` 来直接调用，也可以通过 `f1` 和 `f2` 这两个变量来间接调用 `func`。无论我们是直接将一个函数赋值给 `std::function` 亦或是取其地址再赋值，在这个场景下并没有什么区别。在往后的讨论中，我们采取 `&func` 而不是 `func` 来进行讨论
 
-而另外一个比较恶心的问题则是，我们无法去对生命周期进行管理。如果一个对象被销毁，他们我们需要自动删去所有涉及到它的成员函数，而 `std::function` 并没有提供这样的接口。
+TODO: 这里或许可以添加一下关于 `func` 和 `&func` 的区别，得找找标准草案才行
 
-尽管你可以通过 `std::function::target` 这个函数去访问内部存储的类型，但这仅仅只是函数的类型，并且我们还需要在编译期就知道这个类型，无法在运行时自动拿到。
-
-退一步来说，就算我们在运行时拿到了这个函数的地址，我们依然无法知道这个函数所涉及到的对象的地址，也就没有办法确定这个函数是在哪个对象身上调用的。
-
-[sigslot](https://github.com/palacaze/sigslot) 所给出的 [solution](https://github.com/palacaze/sigslot#coping-with-overloaded-functions) 是额外写一个函数，将 overloaded member function 的地址给拿出来，这样就可以跟 free function 一样来处理了。
-
-但作者给出的实现有些问题，以下代码是无法编译的：
+随着开发的进行，我们很有可能会出现需要为 `func` 提供另外一个重载的需求。换句话说，我们会添加如下的代码：
 
 ```cpp
-struct Foo {
-  void foo() {}
-  void foo(int v) {}
-};
-
-template <typename... Args, typename C>
-constexpr auto overload(void (C::*ptr)(Args...)) {
-    return ptr;
-}
-
-template <typename... Args>
-constexpr auto overload(void (*ptr)(Args...)) {
-    return ptr;
-}
+static void func() {}
+static void func(int) {}
 
 int main() {
-  auto p1 = overload<int>(&Foo::foo);
-  auto p2 = overload<>(&Foo::foo); // compile err
+  std::function<void()> f1 = func;
   return 0;
 }
 ```
 
-这段代码我最开始看到 `overload<>(&Foo::foo)` 的时候在想，我没有指定 template argument，那第一个 [pack](https://en.cppreference.com/cpp/language/pack) 难道就不应该是 `void` 么，那应该去匹配不带参数的版本才对呀。
+麻烦的事情来了，一旦我们新增了一个函数，原有的代码直接就报错了。如果要修复原有的代码，我们必须使用 `static_cast`，即：
 
-这似乎是最为直观的想法，但实际上模板的参数推导并不是这么工作的......
+```cpp
+static void func() {}
+static void func(int) {}
+
+int main() {
+  std::function<void()> f1 = static_cast<void(*)()>(&func);
+  return 0;
+}
+```
+
+手动对所有的 `std::function<void()> f1 = func` 修改成 `std::function<void()> f1 = static_cast<void(*)()>(&func)`。如果模式相对固定，并且数量不多，我们可以采取 [sed](https://www.gnu.org/software/sed/manual/sed.html) 亦或是 [nvim](https://neovim.io/) 内置的 [pattern searches](https://neovim.io/doc/user/pattern/#pattern-searches) 来进行替换。但这依然是一个相当耗时的工作
+
+因此出于工程亦或是现实上的考量，我们往往倾向于不去添加这个重载函数，而是另外使用一个新的名字。尽管如此，这依然是一个值得深究的问题，即：
+- 为什么 `std::function<void()> f1 = &func` 会报错，它难道不应该去匹配 `void func()` 这个重载么
+  - 该如何理解 `std::function<void()>`
+- 假如我是一个库的设计者，我提供了一个通用的结构能够存储所有的函数地址，我能否有办法让使用者用一种更加简单的方式去指定自己想要传入的函数
+  - 由于重载函数的判断依据是参数列表不同，我们能否只让使用者指定参数就能够得到预期的重载函数的地址呢？
+
+# What exactly happens when handling an overloaded function?
+
+当我们写下 `func` 或者 `&func` 时，这里的函数名本质上代表的是一个重载集(overload set)，而编译器需要依靠这个重载集出现的上下文当中的目标类型(target type) 来确定重载决议到哪个函数[^ref-over1]。而这里的目标类型，如果不存在的话，则会根据上下文来自动推导出来[^ref-over1.s3]
+
+我们上面所采用的 `static_cast` 的做法，实际上是显示提供了一个目标类型[^ref-over1.6]。因此我们可以初步得出一个结论是，如果目标类型（包含推导出来的）能够匹配多个重载集当中的函数的话，那么代码应该不能过编译
 
 # Deducing template arguments from function call
 
@@ -116,3 +94,6 @@ int main() {
 TODO: 这个推导我不是很满意，得再多找找资料才行
 
 
+[^ref-over1]: https://eel.is/c++draft/over.over#1
+[^ref-over1.s3]: https://eel.is/c++draft/over.over#1.sentence-3
+[^ref-over1.6]: https://eel.is/c++draft/over.over#1.6
