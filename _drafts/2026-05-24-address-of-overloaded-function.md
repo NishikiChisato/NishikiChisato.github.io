@@ -4,9 +4,24 @@ title: Address of overloaded function
 date: 2026-05-24 09:41 +0800
 ---
 
+Proposal:
+N1402: A Proposal to Add Function Object Wrappers
+P0302: Removing Allocator Support in std::function
+P0472: Put std::function's missing const to rest
+P0288: std::any_invocable / std::move_only_function
+P0792: std::function_ref
+
+P0119: Overload sets as function arguments
+P0382: Comments on P0119
+P0834: Lifting overload sets into objects
+P3183: Overload Set Types
+
+N4169: Invoke function template
+P0604: Resolving GB 55, US 84 (std::is_invocable)
+
 # The coincidence: The address of overloaded function
 
-让我们从一个最为平常的场景开始说起。假如你写了一个函数，并且你想要将这个函数绑定到 `std::function` 用作某种 callback function 亦或是其他的行为，很自然地，我们会写出如下代码：
+让我们从一个最简单的场景开始说起。假如你写了一个函数，并且你想要将这个函数绑定到 `std::function` 用作某种 callback function 亦或是其他的行为，很自然地，我们会写出如下代码：
 
 ```cpp
 static void func() {}
