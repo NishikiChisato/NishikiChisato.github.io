@@ -122,6 +122,39 @@ struct Functor {
 int main() {
   Functor obj1{1};
   Functor obj2{10};
+  const std::function<int()> f1(obj1);
+  f1();
+  auto* ptr = f1.target<Functor>();
+  if (ptr) {
+    std::println("val={}", ptr->val);
+  }
+  f1();
+  ptr = f1.target<Functor>();
+  if (ptr) {
+    std::println("val={}", ptr->val);
+  }
+  return 0;
+}
+```
+
+We initially created two objects, `obj1` and `obj2`. If we know the type of the object stored inside `std::function`, then we can get the address of this object directly through the `target()` function. If the `std::function` itself is non-const, then we can use this `target()` function to modify the address inside it (refer to the example below). In the above example, we declared the `std::function` as const because we need to observe the const semantics of `target()`.
+
+Actually, `std::function` provides two overloads, and the overload with const has deep const semantics, meaning I cannot modify the memory block obtained through `target()`.
+
+This design is very fragmented, which is also the cause of many problems. For a `const std::function`, the const of its `operator()` function behaves as shallow const, while its `target()` function behaves as deep const. And the behaviors of these two functions are exactly opposite, that is, the role of `operator()` is to operate on the internal members of `std::function`, while the role of `target()` is to acquire the internal members of `std::function`.
+
+If our `std::function` is declared as non-const, then we can modify its internal members through this `target()` function:
+
+```cpp
+struct Functor {
+  Functor(int v = 0) : val{v}{}
+  int operator()() { return val++; }
+  int val{};
+};
+
+int main() {
+  Functor obj1{1};
+  Functor obj2{10};
   std::function<int()> f1(obj1);
   f1();
   auto* ptr = f1.target<Functor>();
@@ -137,8 +170,6 @@ int main() {
   return 0;
 }
 ```
-
-We initially created two objects, `obj1` and `obj2`. If we know the type of the object stored inside `std::function`, then we can get the address of this object directly through the `target()` function. Furthermore, we can also use this address to modify the object it stores. Therefore, this `target()` function has deep const semantics. That is, I cannot make this `std::function` point to another memory block, but we can freely modify the data in the memory block it points to.
 
 ```cpp
 static void func1() {
@@ -161,11 +192,11 @@ int main() {
 }
 ```
 
-Even if we don't use a `function object`, this `target` will have the same problem when facing a free function.
+Even if we don't use a `function object`, this `target()` will have the same problem when facing a free function:
 
 ## Non-copyable function objects
 
-`std::function` itself supports copy. Its copy-ctor's [Postconditions](https://eel.is/c++draft/function.objects#func.wrap.func.con-3) requires its target to be copyable. Therefore, `std::function` cannot be used with a move-only `function object`, that is:
+`std::function` itself supports copy. Its copy-ctor's [Postconditions](https://eel.is/c++draft/function.objects#func.wrap.func.con-3) requires its `target()` to be copyable. Therefore, `std::function` cannot be used with a move-only `function object`, that is:
 
 ```cpp
 int main() {
