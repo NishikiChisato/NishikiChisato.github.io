@@ -118,6 +118,39 @@ struct Functor {
 int main() {
   Functor obj1{1};
   Functor obj2{10};
+  const std::function<int()> f1(obj1);
+  f1();
+  auto* ptr = f1.target<Functor>();
+  if (ptr) {
+    std::println("val={}", ptr->val);
+  }
+  f1();
+  ptr = f1.target<Functor>();
+  if (ptr) {
+    std::println("val={}", ptr->val);
+  }
+  return 0;
+}
+```
+
+我们一开始创建了两个对象 `obj1` 和 `obj2`。如果我们知道 std::function 内部所保存的对象的类型的话，那么我们可以直接通过 `target()` 函数来拿到这个对象的地址。如果 std::function 本身是 non-const 的话，那么我们可以通过这个 `target()` 函数去修改它内部的地址（参考下面的例子）。在上面的这个例子当中，我们将 std::function 声明成了 const，因为我们需要观察 `target()` 的 const 语义。
+
+实际上 std::function 提供了两个重载，而带有 const 的重载具有的是 deep const 的语义，即我无法去修改通过 `target()` 拿到的这块内存地址。
+
+这种设计十分的割裂，也是众多问题产生的原因。对于一个 const std::function 而言，它的 `operator()` 函数的 const 表现为 shallow const，而它的 `target()` 函数表现为 deep const。而这两个函数的行为又恰好互相相反，即 `operator()` 的作用是操作 std::function 的内部成员，而 `target()` 的作用是获取 std::function 的内部成员。
+
+如果我们的 std::function 声明为 non-const，那么我们可以通过这个 `target()` 函数去修改它的内部成员：
+
+```cpp
+struct Functor {
+  Functor(int v = 0) : val{v}{}
+  int operator()() { return val++; }
+  int val{};
+};
+
+int main() {
+  Functor obj1{1};
+  Functor obj2{10};
   std::function<int()> f1(obj1);
   f1();
   auto* ptr = f1.target<Functor>();
@@ -134,7 +167,7 @@ int main() {
 }
 ```
 
-我们一开始创建了两个对象 `obj1` 和 `obj2`。如果我们知道 std::function 内部所保存的对象的类型的话，那么我们可以直接通过 `target()` 函数来拿到这个对象的地址。更进一步，我们还可以用这个地址去修改它所保存的对象。因此，这个 `target()` 函数具有的是 deep const 的语义。即我无法去让这个 std::function 指向一块其他的内存块，但我们却可以随意修改它所指向的内存块的数据。
+哪怕我们不用 function object，这个 `target()` 在面对 free function 的时候也会有同样的问题：
 
 ```cpp
 static void func1() {
@@ -157,11 +190,9 @@ int main() {
 }
 ```
 
-哪怕我们不用 function object，这个 target 在面对 free function 的时候也会有同样的问题。
-
 ## Non-copyable function objects
 
-std::function 本身是支持 copy 的，它的 copy-ctor 的 [Postconditions](https://eel.is/c++draft/function.objects#func.wrap.func.con-3) 要求它的 target 必须是 copyable。因此，std::function 没办法去跟 move-only 的 function object 搭配使用，即：
+std::function 本身是支持 copy 的，它的 copy-ctor 的 [Postconditions](https://eel.is/c++draft/function.objects#func.wrap.func.con-3) 要求它的 `target()` 必须是 copyable。因此，std::function 没办法去跟 move-only 的 function object 搭配使用，即：
 
 ```cpp
 int main() {
