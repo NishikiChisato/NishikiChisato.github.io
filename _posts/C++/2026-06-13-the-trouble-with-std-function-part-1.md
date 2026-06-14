@@ -171,6 +171,8 @@ int main() {
 }
 ```
 
+Even if we don't use a `function object`, this `target()` will have the same problem when facing a free function:
+
 ```cpp
 static void func1() {
   std::println("func1");
@@ -191,8 +193,6 @@ int main() {
   return 0;
 }
 ```
-
-Even if we don't use a `function object`, this `target()` will have the same problem when facing a free function:
 
 ## Non-copyable function objects
 
