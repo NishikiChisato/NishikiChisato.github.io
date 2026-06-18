@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The trouble with std::function: Part 1"
+title: "The Trouble with std::function - Part 1: Core Concepts and Flaws"
 date: 2026-06-13 14:31:00 +0800
 lang: en
 ref: the-trouble-with-std-function

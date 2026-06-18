@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The trouble with std::function: Part 1"
+title: "std::function 缺陷剖析 - Part 1：核心概念与遗留问题"
 date: 2026-06-13 14:31:00 +0800
 lang: zh
 ref: the-trouble-with-std-function
